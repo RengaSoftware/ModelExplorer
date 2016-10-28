@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{8136be58-daff-444e-bb6d-d8f6e9c3fc66}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{10b07fe3-9182-4aec-85cf-c23b88b37637}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{a709ed22-9f2b-4b2a-8d52-710a368e991c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelExplorerWidget">
+      <UniqueIdentifier>{e1085197-299c-4b85-8add-bdb847e9a682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelExplorerWidget\PropertyView">
+      <UniqueIdentifier>{b884a6a0-17e5-48c6-96cb-e3bf40c39f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelExplorerWidget\TreeView">
+      <UniqueIdentifier>{e8fe9004-40cf-4f54-8c9f-04b448ebf0c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PluginButtons">
+      <UniqueIdentifier>{80e5e6ba-10b6-4a2c-8d0e-2fd091d2d476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RengaEvents">
+      <UniqueIdentifier>{ec60d0a6-310c-4a21-9bee-70cf5e194e4a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModelExplorerWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_resource.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BeamPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="ColumnPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="IsolatedFoundationPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPropertyViewBuilderFactory.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="OpeningPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RailingPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RampPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RoofPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="StairPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="WallFoundationPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RengaStringToQString.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelExplorerPlugin.cpp" />
+    <ClCompile Include="ModelExplorerWidget.cpp">
+      <Filter>ModelExplorerWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RengaEventsHandler.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RengaEventsHandler.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerPlugin.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModelExplorerPlugin.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerButtonHandler.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModelExplorerButtonHandler.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_PluginToolButtons.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_PluginToolButtons.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelTreeView.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModelTreeView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModelTreeView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ObjectSelectionHandler.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ObjectSelectionHandler.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSelectionHandler.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelTreeBuilder.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPropertyView.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ObjectPropertyView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ObjectPropertyView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginToolButtons.cpp">
+      <Filter>PluginButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelExplorerButtonHandler.cpp">
+      <Filter>PluginButtons</Filter>
+    </ClCompile>
+    <ClCompile Include="RengaEventsHandler.cpp">
+      <Filter>RengaEvents</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BeamPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="ColumnPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="IsolatedFoundationPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPropertyViewBuilderFactory.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="OpeningPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RailingPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RampPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RoofPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="StairPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="WallFoundationPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RengaStringToQString.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelTreeBuilder.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyManagers.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Resources\ui\ModelExplorer.ui">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Resources\resource.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ModelExplorerWidget.h">
+      <Filter>ModelExplorerWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ModelExplorerPlugin.h" />
+    <CustomBuild Include="ModelTreeView.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ObjectSelectionHandler.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ObjectPropertyView.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PluginToolButtons.h">
+      <Filter>PluginButtons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ModelExplorerButtonHandler.h">
+      <Filter>PluginButtons</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RengaEventsHandler.h">
+      <Filter>RengaEvents</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\styles\mainFormStyle.qss">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
