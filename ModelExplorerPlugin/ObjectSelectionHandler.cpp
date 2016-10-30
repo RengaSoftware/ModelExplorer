@@ -6,6 +6,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ObjectSelectionHandler.h"
 
 #include <RengaAPI/ModelSelection.h>

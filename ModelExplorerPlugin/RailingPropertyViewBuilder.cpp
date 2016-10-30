@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "RailingPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Railing.h>
 

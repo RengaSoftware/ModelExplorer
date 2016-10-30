@@ -6,6 +6,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "PluginToolButtons.h"
 #include "ModelExplorerButtonHandler.h"
 

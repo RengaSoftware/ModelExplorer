@@ -10,8 +10,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QTranslator>
 
-#include <memory>
-
 #include <RengaAPI/Image.h>
 #include <RengaAPI/Toolbutton.h>
 

@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ColumnPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Column.h>
 

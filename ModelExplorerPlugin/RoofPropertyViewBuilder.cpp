@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "RoofPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Roof.h>
 

@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "WallFoundationPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/WallFoundation.h>
 

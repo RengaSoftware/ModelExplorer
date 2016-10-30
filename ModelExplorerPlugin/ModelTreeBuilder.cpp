@@ -6,10 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ModelTreeBuilder.h"
-#include "RengaStringToQString.h"
-
-#include <assert.h>
 
 #include <RengaAPI/Beam.h>
 #include <RengaAPI/Column.h>

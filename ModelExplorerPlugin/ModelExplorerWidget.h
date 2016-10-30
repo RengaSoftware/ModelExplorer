@@ -10,8 +10,6 @@
 #include "ModelTreeView.h"
 #include "ObjectPropertyView.h"
 
-#include <memory>
-
 #include <QtCore/QTranslator>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>

@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "OpeningPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Opening.h>
 

@@ -6,6 +6,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "RengaEventsHandler.h"
 
 #include <RengaAPI/EventsDispatcher.h>

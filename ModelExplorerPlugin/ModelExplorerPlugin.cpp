@@ -6,11 +6,11 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ModelExplorerPlugin.h"
 #include "PluginToolButtons.h"
 #include "RengaEventsHandler.h"
 #include "ModelExplorerWidget.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Localization.h>
 #include <RengaAPI/Message.h>
@@ -22,7 +22,7 @@ static const QString defaultLocaleFileName = englishLocaleFileName;
 static const QString c_russianLocale = "ru_RU";
 static const QString c_englishLocale = "en_EN";
 
-static const rengabase::String c_loadLocalizationFileError = L"Cannot open localization file";
+static const rengabase::String c_loadLocalizationFileError = L"Cannot open localization file.";
 static const rengabase::String c_error = L"Error";
 
 ModelExplorerPlugin::ModelExplorerPlugin()

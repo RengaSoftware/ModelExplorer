@@ -14,8 +14,6 @@
 #include <QtWidgets/QApplication>
 #endif
 
-#include <memory>
-
 #include <IPlugin.h>
 
 class PluginToolButtons;

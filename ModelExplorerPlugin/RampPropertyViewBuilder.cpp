@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "RampPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Ramp.h>
 

@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "LevelPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Level.h>
 

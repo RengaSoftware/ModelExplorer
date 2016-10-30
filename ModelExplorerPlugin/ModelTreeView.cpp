@@ -6,12 +6,11 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ModelTreeView.h"
 #include "ModelTreeBuilder.h"
 
-#include <assert.h>
-
-#include <QtGui\QStandardItemModel>
+#include <QtGui/QStandardItemModel>
 
 ModelTreeView::ModelTreeView(QTranslator* pTranslator, QWidget* pParent /*= nullptr*/)
   : QTreeView(pParent)

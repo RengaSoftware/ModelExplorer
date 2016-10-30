@@ -6,11 +6,9 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ObjectPropertyView.h"
 #include "ObjectPropertyViewBuilderFactory.h"
-#include "RengaStringToQString.h"
-
-#include <memory>
 
 #include <RengaAPI/Project.h>
 

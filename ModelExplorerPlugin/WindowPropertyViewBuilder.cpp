@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "WindowPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Window.h>
 

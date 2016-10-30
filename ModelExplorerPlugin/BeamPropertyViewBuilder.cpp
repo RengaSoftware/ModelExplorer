@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "BeamPropertyViewBuilder.h"
-#include "RengaStringToQString.h"
 
 #include <RengaAPI/Beam.h>
 

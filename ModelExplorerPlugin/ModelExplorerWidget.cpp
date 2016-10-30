@@ -6,8 +6,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "ModelExplorerWidget.h"
-#include "RengaStringToQString.h"
 
 #include <windows.h>
 

@@ -172,6 +172,7 @@
     <ClCompile Include="RengaEventsHandler.cpp">
       <Filter>RengaEvents</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -240,6 +241,7 @@
     <ClInclude Include="PropertyManagers.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\ui\ModelExplorer.ui">

@@ -6,6 +6,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
+#include "stdafx.h"
 #include "RengaStringToQString.h"
 
 QString rengaStringToQString(const rengabase::String& rengaString)
