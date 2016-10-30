@@ -98,6 +98,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Qt5Cored.lib;Qt5Widgetsd.lib;Qt5Guid.lib;RengaBase.lib;RengaApi.lib;qtpropertybrowser.lib;user32.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y $(SolutionDir)ModelExplorerPlugin.rndesc $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerPlugin.rndesc
+copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_ru.qm
+copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
+copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -111,11 +117,17 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>g:\Renga_builds\default\x64\bin\plugins\ModelExplorerPlugin\$(ProjectName).rne</OutputFile>
+      <OutputFile>$(SolutionDir)\Debug\$(PlatformShortName)\$(ProjectName).rne</OutputFile>
       <AdditionalLibraryDirectories>$(renga_sdk)\lib\$(PlatformShortName);$(QTDIR)\lib\$(PlatformShortName);$(SolutionDir)\$(Configuration)\$(PlatformShortName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Qt5Cored.lib;Qt5Widgetsd.lib;Qt5Guid.lib;RengaBase.lib;RengaApi.lib;qtpropertybrowser.lib;user32.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y $(SolutionDir)ModelExplorerPlugin.rndesc $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerPlugin.rndesc
+copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_ru.qm
+copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
+copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -133,6 +145,12 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>Qt5Core.lib;Qt5Widgets.lib;Qt5Gui.lib;RengaBase.lib;RengaApi.lib;user32.lib;qtpropertybrowser.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y $(SolutionDir)ModelExplorerPlugin.rndesc $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerPlugin.rndesc
+copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_ru.qm
+copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
+copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -152,6 +170,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y $(SolutionDir)ModelExplorerPlugin.rndesc $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerPlugin.rndesc
+copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_ru.qm
+copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
+copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BeamPropertyViewBuilder.cpp" />
