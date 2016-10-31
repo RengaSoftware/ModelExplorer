@@ -1,6 +1,6 @@
 <RengaPlugin>
 	<Name>Model explorer plugin</Name>
-	<Version>0.1</Version>
+	<Version>1.0</Version>
 	<Vendor>Renga Software</Vendor>
 	<Copyright>Copyright “Renga Software” LLC, 2016. All rights reserved.</Copyright>
 	<RequiredAPIVersion>1.1</RequiredAPIVersion>
