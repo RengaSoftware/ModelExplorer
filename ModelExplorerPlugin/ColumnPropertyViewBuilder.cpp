@@ -15,10 +15,10 @@ ColumnPropertyViewBuilder::ColumnPropertyViewBuilder(const PropertyManagers* pPr
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap ColumnPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList ColumnPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Column* pColumn = dynamic_cast<rengaapi::Column*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("column", "name"));
@@ -31,19 +31,19 @@ PropertyMap ColumnPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pColumn->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pColumn->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Column* pColumn = dynamic_cast<rengaapi::Column*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::ColumnQuantities columnQuantities = pColumn->quantities();
 
 	// length, netVolume, crossSectionArea, outerSurfaceArea, perimeter, mass

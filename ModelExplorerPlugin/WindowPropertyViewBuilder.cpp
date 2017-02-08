@@ -15,10 +15,10 @@ WindowPropertyViewBuilder::WindowPropertyViewBuilder(const PropertyManagers* pPr
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap WindowPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList WindowPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Window* pWindow = dynamic_cast<rengaapi::Window*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("window", "name"));
@@ -29,20 +29,20 @@ PropertyMap WindowPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pWindow->offset().inMillimeters());
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pWindow->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap WindowPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList WindowPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Window* pWindow = dynamic_cast<rengaapi::Window*>(pObject);
 	rengaapi::WindowQuantities windowQuantities = pWindow->quantities();
 
-  PropertyMap result;
+  PropertyList result;
 
 	// overallHeight, overallWidth, perimeter, area
 	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("window", "overallHeight"));

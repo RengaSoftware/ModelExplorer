@@ -15,6 +15,6 @@ class OpeningPropertyViewBuilder : public ObjectPropertyViewBuilder
 public:
   OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
 
-	PropertyMap createParametersProperties(rengaapi::ModelObject* pObject); 
-	PropertyMap createQuantitiesProperties(rengaapi::ModelObject* pObject); 
+	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
+	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
 };

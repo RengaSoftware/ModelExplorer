@@ -15,10 +15,10 @@ WallFoundationPropertyViewBuilder::WallFoundationPropertyViewBuilder(const Prope
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap WallFoundationPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList WallFoundationPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::WallFoundation* pWallFoundation = dynamic_cast<rengaapi::WallFoundation*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("wallFoundation", "name"));
@@ -31,19 +31,19 @@ PropertyMap WallFoundationPropertyViewBuilder::createParametersProperties(rengaa
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pWallFoundation->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pWallFoundation->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap WallFoundationPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList WallFoundationPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::WallFoundation* pWallFoundation = dynamic_cast<rengaapi::WallFoundation*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::WallFoundationQuantities wallFoundationQuantities = pWallFoundation->quantities();
 
 	// overallWidth, overallHeight, length, netFootprintArea, netSideArea, netVolume, mass

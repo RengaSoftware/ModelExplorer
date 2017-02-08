@@ -15,10 +15,10 @@ RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* p
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap RailingPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList RailingPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Railing* pRailing = dynamic_cast<rengaapi::Railing*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("railing", "name"));
@@ -28,21 +28,21 @@ PropertyMap RailingPropertyViewBuilder::createParametersProperties(rengaapi::Mod
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRailing->name()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pRailing->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
+	result.push_back(name);
 	setLengthMeasureOptional(result, pRailing->offset(), offset);
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap RailingPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList RailingPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Railing* pRailing = dynamic_cast<rengaapi::Railing*>(pObject);
 	rengaapi::RailingQuantities railingQuantities = pRailing->quantities();
 
 	// height, length
-  PropertyMap result;
+  PropertyList result;
   QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("railing", "height"));
 	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("railing", "length"));
 

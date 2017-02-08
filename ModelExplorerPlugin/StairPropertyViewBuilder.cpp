@@ -15,10 +15,10 @@ StairPropertyViewBuilder::StairPropertyViewBuilder(const PropertyManagers* pProp
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap StairPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList StairPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Stair* pStair = dynamic_cast<rengaapi::Stair*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("stair", "name"));
@@ -31,19 +31,19 @@ PropertyMap StairPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pStair->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pStair->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Stair* pStair = dynamic_cast<rengaapi::Stair*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::StairQuantities stairQuantities = pStair->quantities();
 
 	// height, width, netVolume, numberOfRiser, numberOfTreads, riserHeight, treadLength, netArea, netFloorArea, mass
@@ -64,8 +64,8 @@ PropertyMap StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
   setLengthMeasureOptional(result, stairQuantities.nominalHeight(), height);
   setLengthMeasureOptional(result, stairQuantities.nominalWidth(), width);
 	setVolumeMeasureOptional(result, stairQuantities.netVolume(), netVolume);
-	result.insert(std::make_pair(numberOfRiser->propertyName(), numberOfRiser));
-	result.insert(std::make_pair(numberOfTreads->propertyName(), numberOfTreads));
+	result.push_back(numberOfRiser);
+	result.push_back(numberOfTreads);
 	setLengthMeasureOptional(result, stairQuantities.riserHeight(), riserHeight);
 	setLengthMeasureOptional(result, stairQuantities.treadLength(), treadLength);
 	setAreaMeasureOptional(result, stairQuantities.netArea(), netArea);

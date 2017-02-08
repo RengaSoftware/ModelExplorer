@@ -15,10 +15,10 @@ RoofPropertyViewBuilder::RoofPropertyViewBuilder(const PropertyManagers* pProper
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap RoofPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList RoofPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Roof* pRoof = dynamic_cast<rengaapi::Roof*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("roof", "name"));
@@ -32,19 +32,19 @@ PropertyMap RoofPropertyViewBuilder::createParametersProperties(rengaapi::ModelO
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pRoof->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pRoof->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap RoofPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList RoofPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Roof* pRoof = dynamic_cast<rengaapi::Roof*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	rengaapi::RoofQuantities roofQuantities = pRoof->quantities();
 	rengaapi::RoofMaterialLayerQuantityCollection roofMaterialLayerQuantityCollection = roofQuantities.materialQuantities();

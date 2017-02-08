@@ -15,10 +15,10 @@ IsolatedFoundationPropertyViewBuilder::IsolatedFoundationPropertyViewBuilder(con
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap IsolatedFoundationPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList IsolatedFoundationPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::IsolatedFoundation* pIsolatedFoundation = dynamic_cast<rengaapi::IsolatedFoundation*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("isolatedFoundation", "name"));
@@ -31,19 +31,19 @@ PropertyMap IsolatedFoundationPropertyViewBuilder::createParametersProperties(re
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pIsolatedFoundation->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pIsolatedFoundation->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap IsolatedFoundationPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList IsolatedFoundationPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::IsolatedFoundation* pIsolatedFoundation = dynamic_cast<rengaapi::IsolatedFoundation*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::IsolatedFoundationQuantities isolatedFoundationQuantities = pIsolatedFoundation->quantities();
 
 	// overallWidth, overallDepth, overallHeight, netFootprintArea, netVolume, mass

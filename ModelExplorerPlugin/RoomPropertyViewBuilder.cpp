@@ -15,10 +15,10 @@ RoomPropertyViewBuilder::RoomPropertyViewBuilder(const PropertyManagers* pProper
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap RoomPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList RoomPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Room* pRoom = dynamic_cast<rengaapi::Room*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, roomNumber, offset
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("room", "name"));
@@ -29,20 +29,20 @@ PropertyMap RoomPropertyViewBuilder::createParametersProperties(rengaapi::ModelO
 	m_pPropertyManagers->m_pStringManager->setValue(roomNumber, rengaStringToQString(pRoom->roomNumber()));
   m_pPropertyManagers->m_pDoubleManager->setValue(offset, pRoom->offset().inMillimeters());
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(roomNumber->propertyName(), roomNumber));
-	result.insert(std::make_pair(offset->propertyName(), offset));
+	result.push_back(name);
+	result.push_back(roomNumber);
+	result.push_back(offset);
 
   return result;
 }
 
 
-PropertyMap RoomPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList RoomPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Room* pRoom = dynamic_cast<rengaapi::Room*>(pObject);
 	rengaapi::RoomQuantities roomQuantities = pRoom->quantities();
 
-  PropertyMap result;
+  PropertyList result;
 
 	// nominalHeight, grossVolume, grossFloorArea, grossPerimeter
   QtProperty* nominalHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("room", "nominalHeight"));

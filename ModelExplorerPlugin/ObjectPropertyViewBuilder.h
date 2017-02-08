@@ -11,6 +11,7 @@
 #include "PropertyManagers.h"
 
 #include <qteditorfactory.h>
+#include <qtpropertycommon.h>
 
 #include <RengaAPI/MaterialId.h>
 #include <RengaBase/LengthMeasureOptional.h>
@@ -22,18 +23,18 @@ class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
 public:
 	ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
 
-	virtual PropertyMap createParametersProperties(rengaapi::ModelObject* pObject) = 0;
-	virtual PropertyMap createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0;
-	PropertyMap createUserAttributesProperties(rengaapi::ModelObject* pObject);
+	virtual PropertyList createParametersProperties(rengaapi::ModelObject* pObject) = 0;
+	virtual PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0;
+	PropertyList createUserAttributesProperties(rengaapi::ModelObject* pObject);
 
 	static QString getMaterialName(const rengaapi::MaterialId& materialId);
 
-	void setLengthMeasureOptional(PropertyMap& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty);
-	void setAreaMeasureOptional(PropertyMap& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty);
-	void setVolumeMeasureOptional(PropertyMap& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty);
+	void setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty);
+	void setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty);
+	void setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty);
 
-	void setOneLayeredMass(PropertyMap& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty);
-	void setMultiLayeredMass(PropertyMap& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty);
+	void setOneLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty);
+	void setMultiLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty);
 
 protected:
   const PropertyManagers* m_pPropertyManagers;

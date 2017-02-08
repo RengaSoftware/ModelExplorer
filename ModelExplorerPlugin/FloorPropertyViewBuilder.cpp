@@ -15,10 +15,10 @@ FloorPropertyViewBuilder::FloorPropertyViewBuilder(const PropertyManagers* pProp
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap FloorPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList FloorPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Floor* pFloor = dynamic_cast<rengaapi::Floor*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("floor", "name"));
@@ -31,19 +31,19 @@ PropertyMap FloorPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pFloor->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pFloor->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap FloorPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList FloorPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Floor* pFloor = dynamic_cast<rengaapi::Floor*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	rengaapi::FloorQuantities floorQuantities = pFloor->quantities();
 	rengaapi::FloorMaterialLayerQuantityCollection floorMaterialLayerQuantityCollection = floorQuantities.materialQuantities();

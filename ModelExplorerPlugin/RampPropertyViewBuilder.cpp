@@ -15,10 +15,10 @@ RampPropertyViewBuilder::RampPropertyViewBuilder(const PropertyManagers* pProper
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap RampPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList RampPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Ramp* pRamp = dynamic_cast<rengaapi::Ramp*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("ramp", "name"));
@@ -31,19 +31,19 @@ PropertyMap RampPropertyViewBuilder::createParametersProperties(rengaapi::ModelO
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pRamp->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pRamp->mark()));
 	
-	result.insert(std::make_pair(name->propertyName(), name));
-  result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+  result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
   
 	return result;
 }
 
 
-PropertyMap RampPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList RampPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Ramp* pRamp = dynamic_cast<rengaapi::Ramp*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::RampQuantities rampQuantities = pRamp->quantities();
 
 	//thickness, height, width, netVolume, netArea, netFloorArea, mass

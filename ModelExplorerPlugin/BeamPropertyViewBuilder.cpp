@@ -15,10 +15,10 @@ BeamPropertyViewBuilder::BeamPropertyViewBuilder(const PropertyManagers* pProper
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap BeamPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList BeamPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Beam* pBeam = dynamic_cast<rengaapi::Beam*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, material, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("beam", "name"));
@@ -31,19 +31,19 @@ PropertyMap BeamPropertyViewBuilder::createParametersProperties(rengaapi::ModelO
 	m_pPropertyManagers->m_pStringManager->setValue(material, getMaterialName(pBeam->material()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pBeam->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(material->propertyName(), material));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(material);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Beam* pBeam = dynamic_cast<rengaapi::Beam*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 	rengaapi::BeamQuantities beamQuantities = pBeam->quantities();
 
 	// length, netVolume, crossSectionArea, outerSurfaceArea, perimeter, mass

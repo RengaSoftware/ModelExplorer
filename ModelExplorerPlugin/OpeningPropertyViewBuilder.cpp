@@ -15,10 +15,10 @@ OpeningPropertyViewBuilder::OpeningPropertyViewBuilder(const PropertyManagers* p
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap OpeningPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList OpeningPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Opening* pOpening = dynamic_cast<rengaapi::Opening*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("opening", "name"));
@@ -29,20 +29,20 @@ PropertyMap OpeningPropertyViewBuilder::createParametersProperties(rengaapi::Mod
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pOpening->offset().inMillimeters());
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pOpening->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap OpeningPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList OpeningPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Opening* pOpening = dynamic_cast<rengaapi::Opening*>(pObject);
 	rengaapi::OpeningQuantities openingQuantities = pOpening->quantities();
 
-  PropertyMap result;
+  PropertyList result;
 
 	// thickness, volume, perimeter, area
   QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "thickness"));

@@ -22,9 +22,9 @@ ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPr
   , m_pTranslator(pTranslator)
 {}
 
-PropertyMap ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi::ModelObject* pObject)
+PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi::ModelObject* pObject)
 {
-	PropertyMap pResult;
+	PropertyList pResult;
 
   rengaapi::UserAttributeRegister userAttributeRegister = rengaapi::Project::userAttributeRegister();
   rengaapi::UserAttributeIdCollection attributeCollection = userAttributeRegister.attributes();
@@ -81,7 +81,7 @@ PropertyMap ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi::
 						assert(false);
 				}
 				if (pUserAttributeProperty != nullptr)
-					pResult.insert(std::make_pair(pUserAttributeProperty->propertyName(), pUserAttributeProperty));
+					pResult.push_back(pUserAttributeProperty);
       }
     }
   }
@@ -125,34 +125,34 @@ QString ObjectPropertyViewBuilder::getMaterialName(const rengaapi::MaterialId& m
 	return resultString;
 }
 
-void ObjectPropertyViewBuilder::setLengthMeasureOptional(PropertyMap& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty)
 {
 	if (measure.hasValue())
 	{
 		m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, measure.getValue()->inMillimeters());
-		insertPlace.insert(std::make_pair(pProperty->propertyName(), pProperty));
+		insertPlace.push_back(pProperty);
 	}
 }
 
-void ObjectPropertyViewBuilder::setAreaMeasureOptional(PropertyMap& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty)
 {
 	if (measure.hasValue())
 	{
 		m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, measure.getValue()->inMeters2());
-		insertPlace.insert(std::make_pair(pProperty->propertyName(), pProperty));
+		insertPlace.push_back(pProperty);
 	}
 }
 
-void ObjectPropertyViewBuilder::setVolumeMeasureOptional(PropertyMap& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty)
 {
 	if (measure.hasValue())
 	{
 		m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, measure.getValue()->inMeters3());
-		insertPlace.insert(std::make_pair(pProperty->propertyName(), pProperty));
+		insertPlace.push_back(pProperty);
 	}
 }
 
-void ObjectPropertyViewBuilder::setOneLayeredMass(PropertyMap& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setOneLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty)
 {
 	assert(rengaapi::Materials::materialType(materialId) == rengaapi::Materials::MaterialType::OneLayered);
 
@@ -167,10 +167,10 @@ void ObjectPropertyViewBuilder::setOneLayeredMass(PropertyMap& insertPlace, cons
 	double mass = material.density() * volumeMeasure.getValue()->inMeters3();
 	m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, mass);
 
-	insertPlace.insert(std::make_pair(pProperty->propertyName(), pProperty));
+	insertPlace.push_back(pProperty);
 }
 
-void ObjectPropertyViewBuilder::setMultiLayeredMass(PropertyMap& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setMultiLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty)
 {
 	assert (rengaapi::Materials::materialType(materialId) == rengaapi::Materials::MaterialType::MultiLayered);
 
@@ -194,5 +194,5 @@ void ObjectPropertyViewBuilder::setMultiLayeredMass(PropertyMap& insertPlace, co
   }
 	m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, mass);
 
-	insertPlace.insert(std::make_pair(pProperty->propertyName(), pProperty));
+	insertPlace.push_back(pProperty);
 }

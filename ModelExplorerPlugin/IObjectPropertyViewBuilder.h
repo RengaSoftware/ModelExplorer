@@ -12,12 +12,12 @@
 
 #include <RengaAPI/ModelObject.h>
 
-typedef std::map<QString, QtProperty*> PropertyMap;
+typedef std::list<QtProperty*> PropertyList;
 
 class IObjectPropertyViewBuilder
 {
 public:
-	virtual PropertyMap createParametersProperties(rengaapi::ModelObject* pObject) = 0; 
-	virtual PropertyMap createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0; 
-	virtual PropertyMap createUserAttributesProperties(rengaapi::ModelObject* pObject) = 0;
+	virtual PropertyList createParametersProperties(rengaapi::ModelObject* pObject) = 0; 
+	virtual PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0; 
+	virtual PropertyList createUserAttributesProperties(rengaapi::ModelObject* pObject) = 0;
 };

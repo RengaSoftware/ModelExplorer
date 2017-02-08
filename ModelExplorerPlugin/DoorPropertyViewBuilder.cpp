@@ -15,10 +15,10 @@ DoorPropertyViewBuilder::DoorPropertyViewBuilder(const PropertyManagers* pProper
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap DoorPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList DoorPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Door* pDoor = dynamic_cast<rengaapi::Door*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, offset, mark
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("door", "name"));
@@ -29,20 +29,20 @@ PropertyMap DoorPropertyViewBuilder::createParametersProperties(rengaapi::ModelO
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pDoor->offset().inMillimeters());
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pDoor->mark()));
 
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(offset->propertyName(), offset));
-	result.insert(std::make_pair(mark->propertyName(), mark));
+	result.push_back(name);
+	result.push_back(offset);
+	result.push_back(mark);
 
   return result;
 }
 
 
-PropertyMap DoorPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+PropertyList DoorPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
   rengaapi::Door* pDoor = dynamic_cast<rengaapi::Door*>(pObject);
 	rengaapi::DoorQuantities doorQuantities = pDoor->quantities();
 
-	PropertyMap result;
+	PropertyList result;
 
   // overallHeight, overallWidth, perimeter, area
 	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "overallHeight"));

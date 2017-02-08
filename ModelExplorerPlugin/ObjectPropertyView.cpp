@@ -74,40 +74,51 @@ void ObjectPropertyView::clearPropertyManagers()
   m_pGroupManager->clear();
 }
 
-void ObjectPropertyView::buildPropertyViewAsList(const PropertyMap& parameters, const PropertyMap& calculated, const PropertyMap& userDefinedProperties)
+void ObjectPropertyView::buildPropertyViewAsList(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
 {
   // show in list mode
-  PropertyMap allProperties;
-  allProperties.insert(parameters.begin(), parameters.end());
-  allProperties.insert(calculated.begin(), calculated.end());
-  allProperties.insert(userDefinedProperties.begin(), userDefinedProperties.end());
+  PropertyList allProperties;
+  allProperties.insert(allProperties.end(), parameters.cbegin(), parameters.cend());
+  allProperties.insert(allProperties.end(), calculated.cbegin(), calculated.cend());
+  allProperties.insert(allProperties.end(), userDefinedProperties.cbegin(), userDefinedProperties.cend());
+
+  allProperties.sort([](QtProperty* left, QtProperty* right) -> bool
+                    {
+	                  return left->propertyName() < right->propertyName();
+                    });
 
   for (auto it = allProperties.begin(); it != allProperties.end(); ++it)
-    addProperty(it->second);
+    addProperty(*it);
 }
 
-void ObjectPropertyView::buildPropertyViewSingleCategory(const QString& categoryName, const PropertyMap& categoryProperties)
+void ObjectPropertyView::buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties)
 {
   if(categoryProperties.empty())
     return;
 
   QtProperty* pCategoryProperty = m_pGroupManager->addProperty(categoryName);
   pCategoryProperty->setBold(true);
+  
+  PropertyList singleCategoryProperties(categoryProperties);
+  singleCategoryProperties.sort([](QtProperty* left, QtProperty* right) -> bool
+                               {
+                                 return left->propertyName() < right->propertyName();
+                               });
 
-  for (auto it = categoryProperties.begin(); it != categoryProperties.end(); ++it)
-    pCategoryProperty->addSubProperty(it->second);
+  for (auto it = singleCategoryProperties.begin(); it != singleCategoryProperties.end(); ++it)
+    pCategoryProperty->addSubProperty(*it);
 
   addProperty(pCategoryProperty);
 }
 
-void ObjectPropertyView::buildPropertyViewByCategory(const PropertyMap& parameters, const PropertyMap& calculated, const PropertyMap& userDefinedProperties)
+void ObjectPropertyView::buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
 {
   buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Object parameters"), parameters);
   buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Calculated characteristics"), calculated);
   buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Object properties"), userDefinedProperties);
 }
 
-bool ObjectPropertyView::createProperties(PropertyMap& parameters, PropertyMap& calculated, PropertyMap& userDefinedProperties)
+bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)
 {
   // get modelObject from project
   rengaapi::Model projectModel = rengaapi::Project::model();
@@ -131,7 +142,7 @@ void ObjectPropertyView::buildPropertyView()
 {	
   clearPropertyManagers();
 
-  PropertyMap parameters, calculated, userDefinedProperties;
+  PropertyList parameters, calculated, userDefinedProperties;
   if(createProperties(parameters, calculated, userDefinedProperties) == false)
     return;
 
@@ -180,8 +191,11 @@ void ObjectPropertyView::changeUserAttribute(QtProperty* property, rengaapi::Use
     if (modelOperation.start().isOk())
     {
       // change attribute value
-      pSelectedObject->setUserAttributeValue(userAttributeId, userAttributeValue);
-      modelOperation.apply();
+	  rengaapi::Status status = pSelectedObject->setUserAttributeValue(userAttributeId, userAttributeValue); // no fail, why?
+	  if (status.isOk())
+	  {
+		modelOperation.apply();
+	  }
       return;
     }
   }

@@ -15,10 +15,10 @@ LevelPropertyViewBuilder::LevelPropertyViewBuilder(const PropertyManagers* pProp
   : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
 {}
 
-PropertyMap LevelPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+PropertyList LevelPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Level* pLevel = dynamic_cast<rengaapi::Level*>(pObject);
-	PropertyMap result;
+	PropertyList result;
 
 	// name, elevation
 	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("level", "name"));
@@ -27,13 +27,13 @@ PropertyMap LevelPropertyViewBuilder::createParametersProperties(rengaapi::Model
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pLevel->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(elevation, pLevel->elevation().inMeters());
 	
-	result.insert(std::make_pair(name->propertyName(), name));
-	result.insert(std::make_pair(elevation->propertyName(), elevation));
+	result.push_back(name);
+	result.push_back(elevation);
 
   return result;
 }
 
-PropertyMap LevelPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject*)
+PropertyList LevelPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject*)
 {
-  return PropertyMap();
+  return PropertyList();
 }

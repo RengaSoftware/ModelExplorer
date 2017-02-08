@@ -37,10 +37,10 @@ private slots:
 private:
   void initPropertyManagers();
   void clearPropertyManagers();
-  bool createProperties(PropertyMap& parameters, PropertyMap& calculated, PropertyMap& properties);
-  void buildPropertyViewAsList(const PropertyMap& parameters, const PropertyMap& calculated, const PropertyMap& properties);
-  void buildPropertyViewByCategory(const PropertyMap& parameters, const PropertyMap& calculated, const PropertyMap& properties);
-  void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyMap& categoryProperties);
+  bool createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& properties);
+  void buildPropertyViewAsList(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
+  void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
+  void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
   void buildPropertyView();
   void changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue userAttributeValue);
 
