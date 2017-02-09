@@ -222,7 +222,8 @@ public:
 				doubleType = 1
 			};
 
-		QtStringPropertyManager(QObject *parent = 0, valueTupe type = valueTupe::stringType);
+		QtStringPropertyManager(QObject *parent = 0);
+		QtStringPropertyManager(QObject *parent, const valueTupe type, const uint precision, const bool allowScientific);
     ~QtStringPropertyManager();
 
     QString value(const QtProperty *property) const;
@@ -240,7 +241,12 @@ protected:
     virtual void initializeProperty(QtProperty *property);
     virtual void uninitializeProperty(QtProperty *property);
 private:
-		valueTupe m_valueType;
+        valueTupe m_valueType;
+        uint m_precision;
+        bool m_allowScientific;
+
+        void setValueInternal(QtProperty *property, const QString &val);
+
     QtStringPropertyManagerPrivate *d_ptr;
     Q_DECLARE_PRIVATE(QtStringPropertyManager)
     Q_DISABLE_COPY(QtStringPropertyManager)

@@ -38,16 +38,16 @@ void ObjectPropertyView::changeMode(ObjectPropertyView::Mode newMode)
 void ObjectPropertyView::initPropertyManagers()
 {
   m_propertyManagers.m_pIntManager = new QtIntPropertyManager(this);
-  m_propertyManagers.m_pDoubleManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType);
-  m_propertyManagers.m_pDoubleUserAttributeManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType);
-  m_propertyManagers.m_pStringManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::stringType);
-  m_propertyManagers.m_pStringUserAttributeManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::stringType);
+  m_propertyManagers.m_pDoubleManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType, c_defaultPrecision, false);
+  m_propertyManagers.m_pDoubleUserAttributeManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType, c_userAttrPrecision, true);
+  m_propertyManagers.m_pStringManager = new QtStringPropertyManager(this);
+  m_propertyManagers.m_pStringUserAttributeManager = new QtStringPropertyManager(this);
 
   auto pIntReadOnlyPropertyFactory = new QtSpinBoxFactory(this, true);
-  auto pDoublePropertyFactory = new QtLineEditFactory(this, QtLineEditFactory::valueType::doubleType, false);
-  auto pDoubleReadOnlyPropertyFactory = new QtLineEditFactory(this, QtLineEditFactory::valueType::doubleType, true);
-  auto pStringPropertyFactory = new QtLineEditFactory(this, QtLineEditFactory::valueType::stringType, false);
-  auto pStringReadOnlyPropertyFactory = new QtLineEditFactory(this, QtLineEditFactory::valueType::stringType, true);
+  auto pDoublePropertyFactory = new QtLineEditFactory(this, false);
+  auto pDoubleReadOnlyPropertyFactory = new QtLineEditFactory(this, true);
+  auto pStringPropertyFactory = new QtLineEditFactory(this, false);
+  auto pStringReadOnlyPropertyFactory = new QtLineEditFactory(this, true);
 
   setFactoryForManager(m_propertyManagers.m_pIntManager, pIntReadOnlyPropertyFactory);
   setFactoryForManager(m_propertyManagers.m_pDoubleManager, pDoubleReadOnlyPropertyFactory);

@@ -1330,12 +1330,22 @@ public:
 /*!
     Creates a manager with the given \a parent.
 */
-QtStringPropertyManager::QtStringPropertyManager(QObject *parent, valueTupe type)
+QtStringPropertyManager::QtStringPropertyManager(QObject *parent)
     : QtAbstractPropertyManager(parent)
 {
     d_ptr = new QtStringPropertyManagerPrivate;
     d_ptr->q_ptr = this;
-		m_valueType = type;
+        m_valueType = QtStringPropertyManager::valueTupe::stringType;
+}
+
+QtStringPropertyManager::QtStringPropertyManager(QObject *parent, const valueTupe type, const uint precision, const bool allowScientific)
+    : QtAbstractPropertyManager(parent)
+{
+    d_ptr = new QtStringPropertyManagerPrivate;
+    d_ptr->q_ptr = this;
+		m_valueType = QtStringPropertyManager::valueTupe::doubleType;
+        m_precision = precision;
+        m_allowScientific = allowScientific;
 }
 
 /*!
@@ -1381,20 +1391,7 @@ QString QtStringPropertyManager::valueText(const QtProperty *property) const
     const QtStringPropertyManagerPrivate::PropertyValueMap::const_iterator it = d_ptr->m_values.constFind(property);
     if (it == d_ptr->m_values.constEnd())
         return QString();
-		QString result = it.value().val;
-		switch (m_valueType)
-		{
-		case QtStringPropertyManager::doubleType :
-		{
-			formatDoubleString(result);
-			break;
-		}
-		case QtStringPropertyManager::stringType :
-			break;
-		default :
-			break;
-		}
-    return result;
+    return it.value().val;
 }
 
 /*!
@@ -1408,6 +1405,31 @@ QString QtStringPropertyManager::valueText(const QtProperty *property) const
     \sa value(), setRegExp(), valueChanged()
 */
 void QtStringPropertyManager::setValue(QtProperty *property, const QString &val)
+{
+    QString newValue(val);
+    if (m_valueType == QtStringPropertyManager::valueTupe::doubleType)
+    {
+        bool isCorrectDouble = false;
+	    double doubleValue = val.toDouble(&isCorrectDouble);
+	    if (isCorrectDouble)
+	    {
+            newValue = formatDoubleToString(doubleValue, m_allowScientific, m_precision);
+	    }
+        else
+        {
+            newValue = value(property);
+        }
+    }
+    setValueInternal(property, newValue);
+}
+
+
+void QtStringPropertyManager::setValue(QtProperty *property, const double val)
+{
+    setValueInternal(property, formatDoubleToString(val, m_allowScientific, m_precision));
+}
+
+void QtStringPropertyManager::setValueInternal(QtProperty *property, const QString & val)
 {
     const QtStringPropertyManagerPrivate::PropertyValueMap::iterator it = d_ptr->m_values.find(property);
     if (it == d_ptr->m_values.end())
@@ -1427,13 +1449,6 @@ void QtStringPropertyManager::setValue(QtProperty *property, const QString &val)
 
     emit propertyChanged(property);
     emit valueChanged(property, data.val);
-}
-
-
-void QtStringPropertyManager::setValue(QtProperty *property, const double val)
-{
-		const QString newValue = QString::number(val, 'f', 3);
-		setValue(property, newValue);
 }
 
 /*!

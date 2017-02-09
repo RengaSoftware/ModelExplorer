@@ -1031,24 +1031,8 @@ void QtLineEditFactoryPrivate::slotSetValue()
             QtStringPropertyManager *manager = q_ptr->propertyManager(property);
             if (!manager)
                 return;
-
-						QString newValue = itEditor.key()->text();
-						switch(q_ptr->m_valueType)
-						{
-							case QtLineEditFactory::valueType::doubleType:
-							{
-								if (!formatDoubleString(newValue))
-								{
-									newValue = manager->value(property);
-									itEditor.key()->setText(newValue);
-								}
-							}
-							case QtLineEditFactory::valueType::stringType:
-								break;
-							default:
-								break;
-						}
-						manager->setValue(property, newValue);
+			QString newValue = itEditor.key()->text();
+			manager->setValue(property, newValue);
             return;
         }
 }
@@ -1065,13 +1049,12 @@ void QtLineEditFactoryPrivate::slotSetValue()
 /*!
     Creates a factory with the given \a parent.
 */
-QtLineEditFactory::QtLineEditFactory(QObject *parent, valueType valueType, bool isreadOnly)
+QtLineEditFactory::QtLineEditFactory(QObject *parent, bool isreadOnly)
     : QtAbstractEditorFactory<QtStringPropertyManager>(parent)
 {
     d_ptr = new QtLineEditFactoryPrivate();
     d_ptr->q_ptr = this;
 		m_isReadOnly = isreadOnly;
-		m_valueType = valueType;
 }
 
 /*!
@@ -1113,18 +1096,6 @@ QWidget *QtLineEditFactory::createEditor(QtStringPropertyManager *manager,
     }
 
 		QString newValue = manager->value(property);
-		switch (m_valueType)
-		{
-		case QtLineEditFactory::doubleType:
-		{
-			formatDoubleString(newValue);
-			break;
-		}
-		case QtLineEditFactory::stringType:
-			break;
-		default:
-			break;
-		}
 
 		editor->setText(newValue);
 		editor->setReadOnly(m_isReadOnly);

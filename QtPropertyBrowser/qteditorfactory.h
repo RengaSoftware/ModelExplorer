@@ -221,13 +221,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtLineEditFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-		enum valueType
-		{
-			stringType = 0,
-			doubleType = 1
-		};
-
-		QtLineEditFactory(QObject *parent = 0, valueType valueType = valueType::stringType, bool isreadOnly = false);
+		QtLineEditFactory(QObject *parent = 0, bool isreadOnly = false);
     ~QtLineEditFactory();
 
 protected:
@@ -238,7 +232,6 @@ protected:
 private:
     QtLineEditFactoryPrivate *d_ptr;
 		bool m_isReadOnly;
-		valueType m_valueType;
     Q_DECLARE_PRIVATE(QtLineEditFactory)
     Q_DISABLE_COPY(QtLineEditFactory)
     Q_PRIVATE_SLOT(d_func(), void slotPropertyChanged(QtProperty *, const QString &))

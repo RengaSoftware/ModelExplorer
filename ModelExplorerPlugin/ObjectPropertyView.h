@@ -15,6 +15,9 @@
 #include <RengaAPI/ObjectId.h>
 #include <RengaAPI/UserAttributeValue.h>
 
+const uint c_defaultPrecision = 2;
+const uint c_userAttrPrecision = 15;
+
 class ObjectPropertyView : public QtTreePropertyBrowser
 {
   Q_OBJECT

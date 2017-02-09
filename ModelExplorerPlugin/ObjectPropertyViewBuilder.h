@@ -11,7 +11,6 @@
 #include "PropertyManagers.h"
 
 #include <qteditorfactory.h>
-#include <qtpropertycommon.h>
 
 #include <RengaAPI/MaterialId.h>
 #include <RengaBase/LengthMeasureOptional.h>
