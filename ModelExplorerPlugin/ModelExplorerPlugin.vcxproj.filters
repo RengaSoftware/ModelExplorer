@@ -39,6 +39,11 @@
     <Filter Include="RengaEvents">
       <UniqueIdentifier>{ec60d0a6-310c-4a21-9bee-70cf5e194e4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerWidget.cpp">

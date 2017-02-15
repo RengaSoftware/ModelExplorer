@@ -9,6 +9,7 @@
 #pragma once
 #include <QtWidgets/QTreeView>
 #include <QtCore/QTranslator.h>
+#include <QtGui/QStandardItemModel>
 
 #include "ObjectSelectionHandler.h"
 
@@ -17,7 +18,7 @@
 class ModelTreeView : public QTreeView
 {
   Q_OBJECT
-
+  friend class ModelExplorerWidget;
 public:
   ModelTreeView(QTranslator* pTranslator, QWidget* pParent = nullptr);
   ~ModelTreeView();
@@ -29,8 +30,18 @@ private slots:
   void onRebuildTree();
   void onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected);
   void onRengaObjectSelected(const rengaapi::ObjectId&);
+  void showSelectedItem();
+  void hideSelectedItem();
+  void onTreeItemClicked(const QModelIndex& current);
+
+private:
+  void changeItemVisibility(bool show);
+  void updateVisibilityIcon(const QModelIndex& iconIndex, const rengaapi::ObjectId& selectedObjectId);
+  void changeChildrenVisibility(const QModelIndex& iconIndex, bool visible);
+  void makeParentVisible(QStandardItem* childItem);
 
 private:
   QTranslator* m_pTranslator;
   ObjectSelectionHandler m_objectSelectionHandler;
+  std::unique_ptr<QStandardItemModel> m_pModel;
 };

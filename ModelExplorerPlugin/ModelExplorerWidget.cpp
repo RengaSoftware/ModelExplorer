@@ -39,13 +39,20 @@ ModelExplorerWidget::ModelExplorerWidget(QTranslator* pTranslator)
   QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", m_pTranslator->translate("propertyView", "refresh"));
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
+  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", m_pTranslator->translate("propertyView", "visible"));
+  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", m_pTranslator->translate("propertyView", "hidden")); // TODO translations
+
   // top toolbar
   QToolBar* pTopToolBar = createToolBar(m_pUi->layoutWidget);
   pTopToolBar->addWidget(pRefreshButton);
+  pTopToolBar->addWidget(pShowButton);
+  pTopToolBar->addWidget(pHideButton);
   m_pUi->topVerticalLayout->addWidget(pTopToolBar);
 
   // tree view
   createModelTreeView();
+  connect(pShowButton, SIGNAL(clicked()), m_pModelTreeView, SLOT(showSelectedItem()));
+  connect(pHideButton, SIGNAL(clicked()), m_pModelTreeView, SLOT(hideSelectedItem()));
   m_pUi->topVerticalLayout->addWidget(m_pModelTreeView);
 
   // view mode buttons

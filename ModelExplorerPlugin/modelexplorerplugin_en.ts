@@ -5,11 +5,11 @@
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation type="vanished">Property</translation>
+        <translation>Property</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="vanished">Value</translation>
+        <translation>Value</translation>
     </message>
 </context>
 <context>
@@ -226,59 +226,59 @@
     <name>modelObjects</name>
     <message>
         <source>Columns</source>
-        <translation type="vanished">Columns</translation>
+        <translation>Columns</translation>
     </message>
     <message>
         <source>Floors</source>
-        <translation type="vanished">Floors</translation>
+        <translation>Floors</translation>
     </message>
     <message>
         <source>Openings</source>
-        <translation type="vanished">Openings</translation>
+        <translation>Openings</translation>
     </message>
     <message>
         <source>Roofs</source>
-        <translation type="vanished">Roofs</translation>
+        <translation>Roofs</translation>
     </message>
     <message>
         <source>Beams</source>
-        <translation type="vanished">Beams</translation>
+        <translation>Beams</translation>
     </message>
     <message>
         <source>Stairs</source>
-        <translation type="vanished">Stairs</translation>
+        <translation>Stairs</translation>
     </message>
     <message>
         <source>Ramps</source>
-        <translation type="vanished">Ramps</translation>
+        <translation>Ramps</translation>
     </message>
     <message>
         <source>Windows</source>
-        <translation type="vanished">Windows</translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <source>Doors</source>
-        <translation type="vanished">Doors</translation>
+        <translation>Doors</translation>
     </message>
     <message>
         <source>Railings</source>
-        <translation type="vanished">Railings</translation>
+        <translation>Railings</translation>
     </message>
     <message>
         <source>Walls</source>
-        <translation type="vanished">Walls</translation>
+        <translation>Walls</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation type="vanished">Rooms</translation>
+        <translation>Rooms</translation>
     </message>
     <message>
         <source>Isolated foundations</source>
-        <translation type="vanished">Isolated foundations</translation>
+        <translation>Isolated foundations</translation>
     </message>
     <message>
         <source>Wall foundations</source>
-        <translation type="vanished">Wall foundations</translation>
+        <translation>Wall foundations</translation>
     </message>
 </context>
 <context>
@@ -336,6 +336,14 @@
     <message>
         <source>refresh</source>
         <translation>Refresh plugin</translation>
+    </message>
+    <message>
+        <source>visible</source>
+        <translation>Show object</translation>
+    </message>
+    <message>
+        <source>hidden</source>
+        <translation>Hide object</translation>
     </message>
     <message>
         <source>category</source>

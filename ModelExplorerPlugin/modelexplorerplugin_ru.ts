@@ -5,11 +5,11 @@
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation type="vanished">Свойство</translation>
+        <translation>Свойство</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="vanished">Значение</translation>
+        <translation>Значение</translation>
     </message>
 </context>
 <context>
@@ -226,59 +226,59 @@
     <name>modelObjects</name>
     <message>
         <source>Columns</source>
-        <translation type="vanished">Колонны</translation>
+        <translation>Колонны</translation>
     </message>
     <message>
         <source>Floors</source>
-        <translation type="vanished">Перекрытия</translation>
+        <translation>Перекрытия</translation>
     </message>
     <message>
         <source>Openings</source>
-        <translation type="vanished">Проемы</translation>
+        <translation>Проемы</translation>
     </message>
     <message>
         <source>Roofs</source>
-        <translation type="vanished">Кровли</translation>
+        <translation>Кровли</translation>
     </message>
     <message>
         <source>Beams</source>
-        <translation type="vanished">Балки</translation>
+        <translation>Балки</translation>
     </message>
     <message>
         <source>Stairs</source>
-        <translation type="vanished">Лестницы</translation>
+        <translation>Лестницы</translation>
     </message>
     <message>
         <source>Ramps</source>
-        <translation type="vanished">Пандусы</translation>
+        <translation>Пандусы</translation>
     </message>
     <message>
         <source>Windows</source>
-        <translation type="vanished">Окна</translation>
+        <translation>Окна</translation>
     </message>
     <message>
         <source>Doors</source>
-        <translation type="vanished">Двери</translation>
+        <translation>Двери</translation>
     </message>
     <message>
         <source>Railings</source>
-        <translation type="vanished">Ограждения</translation>
+        <translation>Ограждения</translation>
     </message>
     <message>
         <source>Walls</source>
-        <translation type="vanished">Стены</translation>
+        <translation>Стены</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation type="vanished">Помещения</translation>
+        <translation>Помещения</translation>
     </message>
     <message>
         <source>Isolated foundations</source>
-        <translation type="vanished">Одиночные фундаменты</translation>
+        <translation>Одиночные фундаменты</translation>
     </message>
     <message>
         <source>Wall foundations</source>
-        <translation type="vanished">Ленточные фундаменты</translation>
+        <translation>Ленточные фундаменты</translation>
     </message>
 </context>
 <context>
@@ -336,6 +336,14 @@
     <message>
         <source>refresh</source>
         <translation>Обновить плагин</translation>
+    </message>
+    <message>
+        <source>visible</source>
+        <translation>Показать объект</translation>
+    </message>
+    <message>
+        <source>hidden</source>
+        <translation>Скрыть объект</translation>
     </message>
     <message>
         <source>category</source>

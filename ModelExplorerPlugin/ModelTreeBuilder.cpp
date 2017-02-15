@@ -17,6 +17,7 @@
 #include <RengaAPI/Level.h>
 #include <RengaAPI/Model.h>
 #include <RengaAPI/ModelObjectTypes.h>
+#include <RengaAPI/ObjectVisibility.h>
 #include <RengaAPI/Opening.h>
 #include <RengaAPI/Project.h>
 #include <RengaAPI/Railing.h>
@@ -63,14 +64,14 @@ ModelTreeBuilder::ObjectTypeData ModelTreeBuilder::createTypeNodeData(rengaapi::
 
 QStandardItemModel* ModelTreeBuilder::buildModelTree()
 {
-	QStandardItemModel* pResultModel = new QStandardItemModel();
+  QStandardItemModel* pResultModel = new QStandardItemModel();
   rengaapi::Model rengaProjectModel = rengaapi::Project::model();
 
   rengaapi::ObjectFilter levelsFilter = rengaapi::ObjectFilter::createObjectFilterByType(rengaapi::ModelObjectTypes::LevelType);
   rengaapi::ModelObjectCollection levelsCollection = rengaProjectModel.objects(levelsFilter);
   
   // get level objects
-	std::list<rengaapi::Level*> levels;
+  std::list<rengaapi::Level*> levels;
   for (auto pObj : levelsCollection)
 	{
     rengaapi::Level* pLevelObject = dynamic_cast<rengaapi::Level*>(pObj);
@@ -83,58 +84,69 @@ QStandardItemModel* ModelTreeBuilder::buildModelTree()
     return pLevel1->elevation().inMillimeters() < pLevel2->elevation().inMillimeters();
   });
 
-	// build subtree for each level
-	rengaapi::ModelObjectCollection objCollection = rengaProjectModel.objects();
+  // build subtree for each level
+  rengaapi::ModelObjectCollection objCollection = rengaProjectModel.objects();
   for (auto pLevel : levels)
-	{
-		QStandardItem* pLevelItem = buildLevelSubtree(pLevel->objectId(), objCollection);
-		pResultModel->appendRow(pLevelItem);
-	}
+  {
+    QList<QStandardItem*> pLevelItem = buildLevelSubtree(pLevel->objectId(), objCollection);
+    pResultModel->appendRow(pLevelItem);
+  }
 
-	return pResultModel;
+  return pResultModel;
 }
 
-QStandardItem* ModelTreeBuilder::createLevelObjectItem(const rengaapi::ModelObject* pObject) const
+QList<QStandardItem*> ModelTreeBuilder::createLevelObjectItem(const rengaapi::ModelObject* pObject) const
 {
-	assert(pObject != nullptr);
+  assert(pObject != nullptr);
   assert(pObject->type() == rengaapi::ModelObjectTypes::LevelType);
 
   QString levelNodeName = rengaStringToQString(pObject->name());
+  bool isVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
   QVariant levelNodeData(pObject->objectId().id());
   
-  return createItem(levelNodeName, QString(":/icons/Level"), levelNodeData);
+  return createItem(levelNodeName, QString(":/icons/Level"), isVisible, levelNodeData);
 }
 
-QStandardItem* ModelTreeBuilder::createItem(const QString& name, const QString& iconPath, QVariant data /*= QVariant()*/) const
+QList<QStandardItem*> ModelTreeBuilder::createItem(const QString& name, const QString& iconPath, bool isVisible, QVariant data /*= QVariant()*/) const
 {
   QStandardItem* pModelObjectItem = new QStandardItem(name);
 
   pModelObjectItem->setIcon(QIcon(iconPath));
+
+  QStandardItem* pModelObjectVisibilityItem = new QStandardItem();
+  isVisible ^= true; // TODO: default state comes from RendaSDK with inverted state. It's a bug!
+  pModelObjectVisibilityItem->setIcon(QIcon(QString(isVisible ? ":/icons/Visible" : ":/icons/Hidden")));
+
   if(data.isValid())
     pModelObjectItem->setData(data, ModelTreeBuilder::objectIDRole);
+  pModelObjectVisibilityItem->setData(QVariant(isVisible), ModelTreeBuilder::objectIDRole);
 
-  return pModelObjectItem;
+  QList<QStandardItem*> resutlList;
+  resutlList.append(pModelObjectItem);
+  resutlList.append(pModelObjectVisibilityItem);
+
+  return resutlList;
 }
 
-QStandardItem* ModelTreeBuilder::buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection)
+QList<QStandardItem*> ModelTreeBuilder::buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection)
 {
-	QStandardItem* pLevelItem = createLevelObjectItem(objCollection.get(levelId));
+  QList<QStandardItem*> pLevelItem = createLevelObjectItem(objCollection.get(levelId));
 
   for(auto objectTypeData : m_objectTypeDataArray)
-    pLevelItem->appendRow( buildObjectsSubtree(objCollection, objectTypeData, levelId) );
+    pLevelItem.at(0)->appendRow( buildObjectsSubtree(objCollection, objectTypeData, levelId) );
 
   return pLevelItem;
 }
 
-QStandardItem* ModelTreeBuilder::buildObjectsSubtree(const rengaapi::ModelObjectCollection& objCollection, 
+QList<QStandardItem*> ModelTreeBuilder::buildObjectsSubtree(const rengaapi::ModelObjectCollection& objCollection, 
                                                                           const ObjectTypeData& typeData, 
                                                                           rengaapi::ObjectId levelId) const
 {
-  QStandardItem* pObjectsByTypeAndLevelSubtree = createItem(typeData.m_typeNodeName, QString(":/icons/Folder"));
+  QList<QStandardItem*> pObjectsByTypeAndLevelSubtree = createItem(typeData.m_typeNodeName, QString(":/icons/Folder"), false);
 
   for (auto pObject : objCollection)
   {
-		assert(pObject != nullptr);
+    assert(pObject != nullptr);
     if(pObject->type() != typeData.m_type)
       continue;
 
@@ -243,10 +255,11 @@ QStandardItem* ModelTreeBuilder::buildObjectsSubtree(const rengaapi::ModelObject
 
     QString objectItemName = rengaStringToQString(pObject->name());
     QString objectItemIconPath(typeData.m_iconPath);
+    bool isVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
     QVariant objectItemData(pObject->objectId().id());
     
-    QStandardItem* pObjectItem = createItem(objectItemName, objectItemIconPath, objectItemData);
-    pObjectsByTypeAndLevelSubtree->appendRow(pObjectItem);
+    QList<QStandardItem*> pObjectItem = createItem(objectItemName, objectItemIconPath, isVisible, objectItemData);
+    pObjectsByTypeAndLevelSubtree.at(0)->appendRow(pObjectItem);
   }
 
   return pObjectsByTypeAndLevelSubtree;

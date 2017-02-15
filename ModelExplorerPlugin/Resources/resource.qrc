@@ -6,6 +6,7 @@
     <file>icons/Door.png</file>
     <file>icons/Floor.png</file>
     <file>icons/Folder.png</file>
+    <file>icons/Hidden.png</file>
     <file>icons/Isolated_foundation.png</file>
     <file>icons/Level.png</file>
     <file>icons/List.png</file>
@@ -16,6 +17,7 @@
     <file>icons/Roof.png</file>
     <file>icons/Room.png</file>
     <file>icons/Stair.png</file>
+    <file>icons/Visible.png</file>
     <file>icons/Wall.png</file>
     <file>icons/Wall_foundation.png</file>
     <file>icons/Window.png</file>

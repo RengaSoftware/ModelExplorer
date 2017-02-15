@@ -17,6 +17,8 @@
 
 class ModelTreeBuilder
 {
+  friend class ModelTreeView;
+
 public:
 	ModelTreeBuilder(const QTranslator* pTranslator);
 	QStandardItemModel* buildModelTree();
@@ -36,14 +38,14 @@ private:
 private:
   ObjectTypeData createTypeNodeData(rengaapi::ObjectType type, QString translationLiteral, QString iconPath);
 
-  QStandardItem* buildObjectsSubtree(
+  QList<QStandardItem*> buildObjectsSubtree(
     const rengaapi::ModelObjectCollection& objCollection,     
     const ObjectTypeData& typeData, 
     rengaapi::ObjectId levelId) const;
   
-  QStandardItem* createLevelObjectItem(const rengaapi::ModelObject* pLevel) const;
-  QStandardItem* createItem(const QString& name, const QString& iconPath, QVariant data = QVariant()) const;
-  QStandardItem* buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection);
+  QList<QStandardItem*> createLevelObjectItem(const rengaapi::ModelObject* pLevel) const;
+  QList<QStandardItem*> createItem(const QString& name, const QString& iconPath, bool isVisible, QVariant data = QVariant()) const;
+  QList<QStandardItem*> buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection);
 
 private:
   const QTranslator* m_pTranslator;
