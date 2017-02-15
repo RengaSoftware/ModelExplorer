@@ -17,13 +17,11 @@
 
 class ModelTreeBuilder
 {
-  friend class ModelTreeView;
-
 public:
-	ModelTreeBuilder(const QTranslator* pTranslator);
-	QStandardItemModel* buildModelTree();
+  ModelTreeBuilder(const QTranslator* pTranslator);
+  QStandardItemModel* buildModelTree();
 
-	static int objectIDRole;
+  static int objectIDRole;
 
 private:
   struct ObjectTypeData
@@ -42,7 +40,7 @@ private:
     const rengaapi::ModelObjectCollection& objCollection,     
     const ObjectTypeData& typeData, 
     rengaapi::ObjectId levelId) const;
-  
+
   QList<QStandardItem*> createLevelObjectItem(const rengaapi::ModelObject* pLevel) const;
   QList<QStandardItem*> createItem(const QString& name, const QString& iconPath, bool isVisible, QVariant data = QVariant()) const;
   QList<QStandardItem*> buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection);

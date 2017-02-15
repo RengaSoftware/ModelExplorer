@@ -40,7 +40,7 @@ ModelExplorerWidget::ModelExplorerWidget(QTranslator* pTranslator)
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
   QPushButton* pShowButton = createPushButton(":/icons/Visible.png", m_pTranslator->translate("propertyView", "visible"));
-  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", m_pTranslator->translate("propertyView", "hidden")); // TODO translations
+  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", m_pTranslator->translate("propertyView", "hidden"));
 
   // top toolbar
   QToolBar* pTopToolBar = createToolBar(m_pUi->layoutWidget);
@@ -106,7 +106,6 @@ QPushButton* ModelExplorerWidget::createPushButton(const QString& iconPath, cons
   // Note: Focus does not go to all the buttons in QButtonGroup
   // https://bugreports.qt.io/browse/QTBUG-52036
   pButton->setFocusPolicy(Qt::StrongFocus);
-  
   pButton->setToolTip(tooltip);
   return pButton;
 }

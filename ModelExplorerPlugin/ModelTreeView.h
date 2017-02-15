@@ -18,7 +18,7 @@
 class ModelTreeView : public QTreeView
 {
   Q_OBJECT
-  friend class ModelExplorerWidget;
+
 public:
   ModelTreeView(QTranslator* pTranslator, QWidget* pParent = nullptr);
   ~ModelTreeView();
@@ -36,9 +36,9 @@ private slots:
 
 private:
   void changeItemVisibility(bool show);
-  void updateVisibilityIcon(const QModelIndex& iconIndex, const rengaapi::ObjectId& selectedObjectId);
+  void updateVisibilityIcon(const QModelIndex& itemIndex, const QModelIndex& iconIndex);
   void changeChildrenVisibility(const QModelIndex& iconIndex, bool visible);
-  void makeParentVisible(QStandardItem* childItem);
+  void showParentItems(QStandardItem* childItem);
 
 private:
   QTranslator* m_pTranslator;
