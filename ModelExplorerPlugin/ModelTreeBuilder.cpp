@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "ModelTreeBuilder.h"
+#include "RengaObjectVisibility.h"
 
 #include <RengaAPI/Beam.h>
 #include <RengaAPI/Column.h>
@@ -17,7 +18,6 @@
 #include <RengaAPI/Level.h>
 #include <RengaAPI/Model.h>
 #include <RengaAPI/ModelObjectTypes.h>
-#include <RengaAPI/ObjectVisibility.h>
 #include <RengaAPI/Opening.h>
 #include <RengaAPI/Project.h>
 #include <RengaAPI/Railing.h>
@@ -101,7 +101,7 @@ QList<QStandardItem*> ModelTreeBuilder::createLevelObjectItem(const rengaapi::Mo
   assert(pObject->type() == rengaapi::ModelObjectTypes::LevelType);
 
   QString levelNodeName = rengaStringToQString(pObject->name());
-  bool isVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
+  bool isVisible = getRengaObjectVisibility(pObject->objectId());
   QVariant levelNodeData(pObject->objectId().id());
 
   return createItem(levelNodeName, QString(":/icons/Level"), isVisible, levelNodeData);
@@ -111,11 +111,10 @@ QList<QStandardItem*> ModelTreeBuilder::createItem(const QString& name, const QS
 {
   QStandardItem* pModelObjectItem = new QStandardItem(name);
   pModelObjectItem->setIcon(QIcon(iconPath));
-  if(data.isValid())
+  if(!data.isNull())
     pModelObjectItem->setData(data, ModelTreeBuilder::objectIDRole);
 
   QStandardItem* pModelObjectVisibilityItem = new QStandardItem();
-  isVisible ^= true; // TODO: default state comes from RendaSDK with inverted state. It's a bug!
   pModelObjectVisibilityItem->setIcon(QIcon(QString(isVisible ? ":/icons/Visible" : ":/icons/Hidden")));
   pModelObjectVisibilityItem->setData(QVariant(isVisible), ModelTreeBuilder::objectIDRole);
 
@@ -139,7 +138,7 @@ QList<QStandardItem*> ModelTreeBuilder::buildObjectsSubtree(const rengaapi::Mode
                                                             const ObjectTypeData& typeData, 
                                                             rengaapi::ObjectId levelId) const
 {
-  QList<QStandardItem*> pObjectsByTypeAndLevelSubtree = createItem(typeData.m_typeNodeName, QString(":/icons/Folder"), !false); // TODO: remove ! after bugfix
+  QList<QStandardItem*> pObjectsByTypeAndLevelSubtree = createItem(typeData.m_typeNodeName, QString(":/icons/Folder"), !false); // TODO: remove ! after bugfix ¹21933
   bool isVisible = false;
 
   for (auto pObject : objCollection)
@@ -253,18 +252,18 @@ QList<QStandardItem*> ModelTreeBuilder::buildObjectsSubtree(const rengaapi::Mode
 
     QString objectItemName = rengaStringToQString(pObject->name());
     QString objectItemIconPath(typeData.m_iconPath);
-    bool isChildVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
+    bool isChildVisible = getRengaObjectVisibility(pObject->objectId());
     QVariant objectItemData(pObject->objectId().id());
 
     QList<QStandardItem*> pObjectItem = createItem(objectItemName, objectItemIconPath, isChildVisible, objectItemData);
     pObjectsByTypeAndLevelSubtree.at(0)->appendRow(pObjectItem);
-    isVisible |= !isChildVisible; // TODO: remove ! after bugfix
+    isVisible |= isChildVisible;
   }
 
   if (pObjectsByTypeAndLevelSubtree.at(0)->rowCount() == 0)
   {
     // get level visibility
-    isVisible = !rengaapi::ObjectVisibility::isVisibleIn3DView(levelId); // TODO: remove ! after bugfix
+    isVisible = getRengaObjectVisibility(levelId);
   }
 
   QStandardItem* icon = pObjectsByTypeAndLevelSubtree.back();

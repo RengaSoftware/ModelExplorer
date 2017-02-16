@@ -9,11 +9,13 @@
 #include "stdafx.h"
 #include "ModelTreeView.h"
 #include "ModelTreeBuilder.h"
+#include "RengaObjectVisibility.h"
 
 #include <QtWidgets/QHeaderView.h>
 
-#include <RengaAPI/ObjectIdCollection.h>
-#include <RengaAPI/ObjectVisibility.h>
+const uint c_iconColumnSize = 30;
+const QItemSelectionModel::SelectionFlags c_selectRows = QItemSelectionModel::SelectionFlag::Select | QItemSelectionModel::Rows;
+const QItemSelectionModel::SelectionFlags c_selectCurrentRows = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
 
 ModelTreeView::ModelTreeView(QTranslator* pTranslator, QWidget* pParent /*= nullptr*/)
   : QTreeView(pParent)
@@ -36,15 +38,14 @@ void ModelTreeView::onRebuildTree()
 {
   ModelTreeBuilder builder(m_pTranslator);
 
-  m_pModel.reset(builder.buildModelTree());
-  setModel(m_pModel.get());
+  setModel(builder.buildModelTree());
 
   // set columns width & resize mode
   QHeaderView* treeHeader  = this->header();
   treeHeader->setStretchLastSection(false);
   treeHeader->setSectionResizeMode(treeHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
   treeHeader->setSectionResizeMode(treeHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
-  treeHeader->resizeSection(1, 18);
+  treeHeader->resizeSection(1, c_iconColumnSize);
 
   // check this
   QItemSelectionModel* pSelectionModel = selectionModel();
@@ -54,7 +55,7 @@ void ModelTreeView::onRebuildTree()
 
 
   // select first element in tree after rebuild
-  pSelectionModel->select(m_pModel->index(0, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+  pSelectionModel->select(getModel()->index(0, 0), c_selectRows);
 }
 
 void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected)
@@ -67,7 +68,7 @@ void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QIt
     {
       // get selected object id from tree view
       QModelIndex selectedObjectIndex = indexList.at(0);
-      QVariant data = m_pModel->data(selectedObjectIndex, ModelTreeBuilder::objectIDRole);
+      QVariant data = getModel()->data(selectedObjectIndex, ModelTreeBuilder::objectIDRole);
       if (data.type() != QVariant::Invalid)
       {
         bool ok = false;
@@ -76,7 +77,7 @@ void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QIt
         {
           selectedObjectId.setId(id);
           // update visibility only for rengaapi::ModelObjects
-          const QModelIndex selectedIconIndex = m_pModel->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
+          const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
           updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
         }
       }
@@ -99,8 +100,8 @@ void ModelTreeView::onRengaObjectSelected(const rengaapi::ObjectId& objectId)
   if (!indexList.empty())
   {
     QItemSelectionModel* pSelectionModel = selectionModel();
-    pSelectionModel->setCurrentIndex(indexList.first(), QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
-    pSelectionModel->select(indexList.first(), QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+    pSelectionModel->setCurrentIndex(indexList.first(), c_selectCurrentRows);
+    pSelectionModel->select(indexList.first(), c_selectCurrentRows);
 
     expand(indexList.first());
   }
@@ -121,32 +122,32 @@ void ModelTreeView::onTreeItemClicked(const QModelIndex& iconIndex)
   if (iconIndex.column() == 0)
     return;
 
-  const QModelIndex itemIndex = m_pModel->index(iconIndex.row(), 0, iconIndex.parent());
-  QStandardItem* item = m_pModel->itemFromIndex(itemIndex);
-  QStandardItem* iconItem = m_pModel->itemFromIndex(iconIndex);
+  const QModelIndex itemIndex = getModel()->index(iconIndex.row(), 0, iconIndex.parent());
+  QStandardItem* item = getModel()->itemFromIndex(itemIndex);
+  QStandardItem* iconItem = getModel()->itemFromIndex(iconIndex);
 
   bool isVisible;
   QVariant data = item->data();
-  if (data.type() == QVariant::Invalid)
+  if (isModelObject(data))
+  {
+    isVisible = isModelObjectVisible(data);
+    isVisible ^= true;
+  }
+  else
   {
     // get folder visibility
     updateVisibilityIcon(itemIndex, iconIndex);
     isVisible = iconItem->data().toBool();
     isVisible ^= true;
   }
-  else
-  {
-    isVisible = isModelObjectVisible(data);
-    isVisible ^= true;
-  }
 
   // show parent items only if current item visible
-  // Note: when you show level, all objects on level will be shown. It's renga bug, this behaviour will be changed later
+  // Note: when you show level, all objects on level will be shown. It's renga bug ¹21908
   if (isVisible)
     showParentItems(item);
 
   // hide/show all children
-  changeChildrenVisibility(iconIndex, isVisible);
+  changeVisibilityWithChildren(iconIndex, isVisible);
 }
 
 void ModelTreeView::changeItemVisibility(bool show)
@@ -156,24 +157,24 @@ void ModelTreeView::changeItemVisibility(bool show)
   if (len == 0)
     return;
 
-  assert(len >= 2);
-  QModelIndex itemIndex = list.first();
+  assert(len == 2);
+  QModelIndex itemIndex = list.at(0);
   QModelIndex iconIndex = list.at(1);
   assert(itemIndex.row() == iconIndex.row());
 
   updateVisibilityIcon(itemIndex, iconIndex);
 
   if (show)
-    showParentItems(m_pModel->itemFromIndex(itemIndex));
-  changeChildrenVisibility(iconIndex, show);
+    showParentItems(getModel()->itemFromIndex(itemIndex));
+  changeVisibilityWithChildren(iconIndex, show);
 }
 
 void ModelTreeView::updateVisibilityIcon(const QModelIndex& itemIndex, const QModelIndex& iconIndex)
 {
-  QStandardItem* selectedItem = m_pModel->itemFromIndex(itemIndex);
+  QStandardItem* selectedItem = getModel()->itemFromIndex(itemIndex);
   bool isVisible = false;
   QVariant data = selectedItem->data();
-  if (data.isValid())
+  if (isModelObject(data))
   {
     // get actual rengaapi::ModelObject visibility
     isVisible = isModelObjectVisible(data);
@@ -207,19 +208,16 @@ void ModelTreeView::updateVisibilityIcon(const QModelIndex& itemIndex, const QMo
   setIcon(iconIndex, isVisible);
 }
 
-void ModelTreeView::changeChildrenVisibility(const QModelIndex& iconIndex, bool visible)
+void ModelTreeView::changeVisibilityWithChildren(const QModelIndex& iconIndex, bool visible)
 {
-  // change visibility of current item in renga if necessary
-  const QModelIndex itemIndex = m_pModel->index(iconIndex.row(), 0, iconIndex.parent());
-  QStandardItem* item = m_pModel->itemFromIndex(itemIndex);
+  // change visibility of current item in renga
+  const QModelIndex itemIndex = getModel()->index(iconIndex.row(), 0, iconIndex.parent());
+  QStandardItem* item = getModel()->itemFromIndex(itemIndex);
   QVariant data = item->data();
-  if (data.isValid())
+  if (isModelObject(data))
   {
     setModelObjectVisibility(data, visible);
-    // in some cases objects don't change visibility
-    // for example, railing won't be shown if it's stairs hidden
-    // so check actual object state
-    visible = isModelObjectVisible(data);
+    // sometimes renga doesn't show objects correctly, it's a bug ¹21932
   }
 
   if (item->rowCount() > 0)
@@ -229,9 +227,9 @@ void ModelTreeView::changeChildrenVisibility(const QModelIndex& iconIndex, bool 
     for (size_t i = 0; i < item->rowCount(); ++i)
     {
       QModelIndex childItemIndex = item->child(i)->index();
-      QModelIndex childIconIndex = m_pModel->index(childItemIndex.row(), 1, itemIndex);
-      changeChildrenVisibility(childIconIndex, visible);
-      hasVisibleChild |= m_pModel->itemFromIndex(childIconIndex)->data().toBool();
+      QModelIndex childIconIndex = getModel()->index(childItemIndex.row(), 1, itemIndex);
+      changeVisibilityWithChildren(childIconIndex, visible);
+      hasVisibleChild |= getModel()->itemFromIndex(childIconIndex)->data().toBool();
     }
     visible = hasVisibleChild;
   }
@@ -248,13 +246,13 @@ void ModelTreeView::showParentItems(QStandardItem* child)
 
   // make icon visible
   QModelIndex parentIndex = parent->index();
-  QModelIndex parentIconIndex = m_pModel->index(parentIndex.row(), 1, parentIndex.parent());
+  QModelIndex parentIconIndex = getModel()->index(parentIndex.row(), 1, parentIndex.parent());
 
   setIcon(parentIconIndex, true);
 
   // show object in renga
   QVariant parentData = parent->data();
-  if (parentData.isValid() && !isModelObjectVisible(parentData))
+  if (isModelObject(parentData) && !isModelObjectVisible(parentData))
     setModelObjectVisibility(parentData, true);
 
   showParentItems(parent);
@@ -262,28 +260,27 @@ void ModelTreeView::showParentItems(QStandardItem* child)
 
 bool ModelTreeView::isModelObjectVisible(const QVariant& data)
 {
-  assert(data.isValid());
-  bool ok = false;
-  uint id = data.toUInt(&ok);
-  assert(ok);
-  rengaapi::ObjectId objectId(id);
-  return !rengaapi::ObjectVisibility::isVisibleIn3DView(objectId); // TODO: if (!visible) after bugfix
+  const rengaapi::ObjectId objectId = getRengaObjectIdFromData(data);
+  return getRengaObjectVisibility(objectId);
 }
 
 void ModelTreeView::setModelObjectVisibility(const QVariant& data, const bool visible)
 {
-  assert(data.isValid());
+  const rengaapi::ObjectId objectId = getRengaObjectIdFromData(data);
+  setRengaObjectVisibility(objectId, visible);
+}
+
+rengaapi::ObjectId ModelTreeView::getRengaObjectIdFromData(const QVariant& data) const
+{
   bool ok = false;
   uint id = data.toUInt(&ok);
   assert(ok);
-  rengaapi::ObjectIdCollection objectIdCollection;
-  objectIdCollection.add(rengaapi::ObjectId(id));
-  rengaapi::ObjectVisibility::setVisibleIn3DView(objectIdCollection, visible);
+  return rengaapi::ObjectId(id);
 }
 
-void ModelTreeView::setIcon(const QModelIndex iconIndex, bool visible)
+void ModelTreeView::setIcon(const QModelIndex& iconIndex, bool visible)
 {
-  QStandardItem* iconItem = m_pModel->itemFromIndex(iconIndex);
+  QStandardItem* iconItem = getModel()->itemFromIndex(iconIndex);
   iconItem->setIcon(QIcon(visible ? ":/icons/Visible" : ":/icons/Hidden"));
   iconItem->setData(QVariant(visible));
 }

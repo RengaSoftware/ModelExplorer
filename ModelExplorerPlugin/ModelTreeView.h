@@ -37,15 +37,25 @@ private slots:
 private:
   void changeItemVisibility(bool show);
   void updateVisibilityIcon(const QModelIndex& itemIndex, const QModelIndex& iconIndex);
-  void changeChildrenVisibility(const QModelIndex& iconIndex, bool visible);
+  void changeVisibilityWithChildren(const QModelIndex& iconIndex, bool visible);
   void showParentItems(QStandardItem* childItem);
 
   bool isModelObjectVisible(const QVariant& data);
   void setModelObjectVisibility(const QVariant& data, const bool visible);
-  void setIcon(const QModelIndex iconIndex, bool visible);
+  rengaapi::ObjectId getRengaObjectIdFromData(const QVariant& data) const;
+  void setIcon(const QModelIndex& iconIndex, bool visible);
+
+  inline QStandardItemModel* getModel()
+  {
+    return dynamic_cast<QStandardItemModel*>(model());
+  }
+
+  inline bool isModelObject(const QVariant& data)
+  {
+    return !data.isNull();
+  }
 
 private:
   QTranslator* m_pTranslator;
   ObjectSelectionHandler m_objectSelectionHandler;
-  std::unique_ptr<QStandardItemModel> m_pModel;
 };

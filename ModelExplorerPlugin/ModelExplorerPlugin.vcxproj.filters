@@ -242,6 +242,9 @@
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="RengaObjectVisibility.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\ui\ModelExplorer.ui">

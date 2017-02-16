@@ -367,6 +367,7 @@ copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configurati
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(renga_sdk)\Include" "-I.\..\QtPropertyBrowser" "-fstdafx.h" "-f../../RengaEventsHandler.h"</Command>
     </CustomBuild>
+    <ClInclude Include="RengaObjectVisibility.h" />
     <ClInclude Include="RengaStringToQString.h" />
     <ClInclude Include="RoofPropertyViewBuilder.h" />
     <ClInclude Include="RoomPropertyViewBuilder.h" />
