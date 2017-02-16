@@ -40,6 +40,10 @@ private:
   void changeChildrenVisibility(const QModelIndex& iconIndex, bool visible);
   void showParentItems(QStandardItem* childItem);
 
+  bool isModelObjectVisible(const QVariant& data);
+  void setModelObjectVisibility(const QVariant& data, const bool visible);
+  void setIcon(const QModelIndex iconIndex, bool visible);
+
 private:
   QTranslator* m_pTranslator;
   ObjectSelectionHandler m_objectSelectionHandler;

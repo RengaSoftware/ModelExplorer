@@ -136,16 +136,12 @@ void ModelTreeView::onTreeItemClicked(const QModelIndex& iconIndex)
   }
   else
   {
-    // get actual rengaapi::ModelObject visibility
-    bool ok = false;
-    uint id = data.toUInt(&ok);
-    assert(ok);
-    const rengaapi::ObjectId objectId(id);
-    isVisible = !rengaapi::ObjectVisibility::isVisibleIn3DView(objectId); // TODO: RengaSDK returns inverted visibility value, it's a bug!
+    isVisible = isModelObjectVisible(data);
     isVisible ^= true;
   }
 
   // show parent items only if current item visible
+  // Note: when you show level, all objects on level will be shown. It's renga bug, this behaviour will be changed later
   if (isVisible)
     showParentItems(item);
 
@@ -167,7 +163,6 @@ void ModelTreeView::changeItemVisibility(bool show)
 
   updateVisibilityIcon(itemIndex, iconIndex);
 
-  // TODO: 
   if (show)
     showParentItems(m_pModel->itemFromIndex(itemIndex));
   changeChildrenVisibility(iconIndex, show);
@@ -180,34 +175,36 @@ void ModelTreeView::updateVisibilityIcon(const QModelIndex& itemIndex, const QMo
   QVariant data = selectedItem->data();
   if (data.isValid())
   {
-    bool ok = false;
-    uint id = data.toUInt(&ok);
-    assert(ok);
-    rengaapi::ObjectId objectId(id);
-    isVisible = !rengaapi::ObjectVisibility::isVisibleIn3DView(objectId); // TODO: remove ! after bugfix
+    // get actual rengaapi::ModelObject visibility
+    isVisible = isModelObjectVisible(data);
   }
   else
   {
-    for (size_t i=0;i<selectedItem->rowCount();++i)
+    // get folder visibility
+    if (selectedItem->rowCount() > 0)
     {
-      QStandardItem* childItem = selectedItem->child(i);
-      data = childItem->data();
-      assert(data.isValid());
-      bool ok = false;
-      uint id = data.toUInt(&ok);
-      assert(ok);
-      rengaapi::ObjectId childId(id);
-      if (!rengaapi::ObjectVisibility::isVisibleIn3DView(childId)) // TODO: remove ! after bugfix
+      // look for children items
+      for (size_t i = 0; i < selectedItem->rowCount(); ++i)
       {
-        isVisible = true;
-        break;
+        QStandardItem* childItem = selectedItem->child(i);
+        data = childItem->data();
+        if (isModelObjectVisible(data))
+        {
+          isVisible = true;
+          break;
+        }
       }
+    }
+    else
+    {
+      // get level visibility
+      QStandardItem* parent = selectedItem->parent();
+      data = parent->data();
+      isVisible = isModelObjectVisible(data);
     }
   }
 
-  QStandardItem* selectedIcon = m_pModel->itemFromIndex(iconIndex);
-  selectedIcon->setIcon(QIcon(isVisible ? ":/icons/Visible" : ":/icons/Hidden"));
-  selectedIcon->setData(QVariant(isVisible));
+  setIcon(iconIndex, isVisible);
 }
 
 void ModelTreeView::changeChildrenVisibility(const QModelIndex& iconIndex, bool visible)
@@ -218,18 +215,11 @@ void ModelTreeView::changeChildrenVisibility(const QModelIndex& iconIndex, bool 
   QVariant data = item->data();
   if (data.isValid())
   {
-    bool ok;
-    uint id = data.toUInt(&ok);
-    assert(ok);
-    rengaapi::ObjectId objectId(id);
-    rengaapi::ObjectIdCollection objectIdCollection;
-    objectIdCollection.add(objectId);
-    rengaapi::ObjectVisibility::setVisibleIn3DView(objectIdCollection, visible);
-
+    setModelObjectVisibility(data, visible);
     // in some cases objects don't change visibility
     // for example, railing won't be shown if it's stairs hidden
     // so check actual object state
-    visible = !rengaapi::ObjectVisibility::isVisibleIn3DView(data.toUInt()); // TODO: remove ! after bugfix
+    visible = isModelObjectVisible(data);
   }
 
   if (item->rowCount() > 0)
@@ -247,9 +237,7 @@ void ModelTreeView::changeChildrenVisibility(const QModelIndex& iconIndex, bool 
   }
 
   // change visibility of current item in tree
-  QStandardItem* iconItem = m_pModel->itemFromIndex(iconIndex);
-  iconItem->setIcon(QIcon(visible ? ":/icons/Visible" : ":/icons/Hidden"));
-  iconItem->setData(QVariant(visible));
+  setIcon(iconIndex, visible);
 }
 
 void ModelTreeView::showParentItems(QStandardItem* child)
@@ -261,25 +249,41 @@ void ModelTreeView::showParentItems(QStandardItem* child)
   // make icon visible
   QModelIndex parentIndex = parent->index();
   QModelIndex parentIconIndex = m_pModel->index(parentIndex.row(), 1, parentIndex.parent());
-  QStandardItem* parentIcon = m_pModel->itemFromIndex(parentIconIndex);
-  parentIcon->setIcon(QIcon(":/icons/Visible"));
-  parentIcon->setData(QVariant(true));
+
+  setIcon(parentIconIndex, true);
 
   // show object in renga
   QVariant parentData = parent->data();
-  if (parentData.isValid())
-  {
-    bool ok = false;
-    uint id = parentData.toUInt(&ok);
-    assert(ok);
-    rengaapi::ObjectId objectId(id);
-    if (rengaapi::ObjectVisibility::isVisibleIn3DView(objectId)) // TODO: if (!visible) after bugfix
-    {
-      rengaapi::ObjectIdCollection objectIdCollection;
-      objectIdCollection.add(objectId);
-      rengaapi::ObjectVisibility::setVisibleIn3DView(objectIdCollection, true);
-    }
-  }
+  if (parentData.isValid() && !isModelObjectVisible(parentData))
+    setModelObjectVisibility(parentData, true);
 
   showParentItems(parent);
+}
+
+bool ModelTreeView::isModelObjectVisible(const QVariant& data)
+{
+  assert(data.isValid());
+  bool ok = false;
+  uint id = data.toUInt(&ok);
+  assert(ok);
+  rengaapi::ObjectId objectId(id);
+  return !rengaapi::ObjectVisibility::isVisibleIn3DView(objectId); // TODO: if (!visible) after bugfix
+}
+
+void ModelTreeView::setModelObjectVisibility(const QVariant& data, const bool visible)
+{
+  assert(data.isValid());
+  bool ok = false;
+  uint id = data.toUInt(&ok);
+  assert(ok);
+  rengaapi::ObjectIdCollection objectIdCollection;
+  objectIdCollection.add(rengaapi::ObjectId(id));
+  rengaapi::ObjectVisibility::setVisibleIn3DView(objectIdCollection, visible);
+}
+
+void ModelTreeView::setIcon(const QModelIndex iconIndex, bool visible)
+{
+  QStandardItem* iconItem = m_pModel->itemFromIndex(iconIndex);
+  iconItem->setIcon(QIcon(visible ? ":/icons/Visible" : ":/icons/Hidden"));
+  iconItem->setData(QVariant(visible));
 }

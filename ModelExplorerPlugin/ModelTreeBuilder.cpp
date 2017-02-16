@@ -140,7 +140,7 @@ QList<QStandardItem*> ModelTreeBuilder::buildObjectsSubtree(const rengaapi::Mode
                                                             rengaapi::ObjectId levelId) const
 {
   QList<QStandardItem*> pObjectsByTypeAndLevelSubtree = createItem(typeData.m_typeNodeName, QString(":/icons/Folder"), !false); // TODO: remove ! after bugfix
-  bool hasVisibleChild = false;
+  bool isVisible = false;
 
   for (auto pObject : objCollection)
   {
@@ -253,20 +253,23 @@ QList<QStandardItem*> ModelTreeBuilder::buildObjectsSubtree(const rengaapi::Mode
 
     QString objectItemName = rengaStringToQString(pObject->name());
     QString objectItemIconPath(typeData.m_iconPath);
-    bool isVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
+    bool isChildVisible = rengaapi::ObjectVisibility::isVisibleIn3DView(pObject->objectId());
     QVariant objectItemData(pObject->objectId().id());
 
-    QList<QStandardItem*> pObjectItem = createItem(objectItemName, objectItemIconPath, isVisible, objectItemData);
+    QList<QStandardItem*> pObjectItem = createItem(objectItemName, objectItemIconPath, isChildVisible, objectItemData);
     pObjectsByTypeAndLevelSubtree.at(0)->appendRow(pObjectItem);
-    hasVisibleChild |= !isVisible; // TODO: remove ! after bugfix
+    isVisible |= !isChildVisible; // TODO: remove ! after bugfix
   }
 
-  if (hasVisibleChild)
+  if (pObjectsByTypeAndLevelSubtree.at(0)->rowCount() == 0)
   {
-    QStandardItem* icon = pObjectsByTypeAndLevelSubtree.back();
-    icon->setIcon(QIcon(":/icons/Visible"));
-    icon->setData(QVariant(true), ModelTreeBuilder::objectIDRole);
+    // get level visibility
+    isVisible = !rengaapi::ObjectVisibility::isVisibleIn3DView(levelId); // TODO: remove ! after bugfix
   }
+
+  QStandardItem* icon = pObjectsByTypeAndLevelSubtree.back();
+  icon->setIcon(QIcon(isVisible ? ":/icons/Visible" : ":/icons/Hidden"));
+  icon->setData(QVariant(isVisible), ModelTreeBuilder::objectIDRole);
 
   return pObjectsByTypeAndLevelSubtree;
 }
