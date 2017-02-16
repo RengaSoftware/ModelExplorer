@@ -74,13 +74,13 @@ void ObjectPropertyView::clearPropertyManagers()
   m_pGroupManager->clear();
 }
 
-void ObjectPropertyView::buildPropertyViewAsList(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
+void ObjectPropertyView::buildPropertyViewAsList(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)
 {
   // show in list mode
   PropertyList allProperties;
-  allProperties.insert(allProperties.end(), parameters.cbegin(), parameters.cend());
-  allProperties.insert(allProperties.end(), calculated.cbegin(), calculated.cend());
-  allProperties.insert(allProperties.end(), userDefinedProperties.cbegin(), userDefinedProperties.cend());
+  allProperties.splice(allProperties.end(), parameters);
+  allProperties.splice(allProperties.end(), calculated);
+  allProperties.splice(allProperties.end(), userDefinedProperties);
 
   allProperties.sort([](QtProperty* left, QtProperty* right) -> bool
                     {

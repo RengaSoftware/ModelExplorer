@@ -41,7 +41,7 @@ private:
   void initPropertyManagers();
   void clearPropertyManagers();
   bool createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& properties);
-  void buildPropertyViewAsList(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
+  void buildPropertyViewAsList(PropertyList& parameters, PropertyList& calculated, PropertyList& properties);
   void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
   void buildPropertyView();

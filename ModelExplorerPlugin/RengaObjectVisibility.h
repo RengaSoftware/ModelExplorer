@@ -14,6 +14,8 @@
 #include <RengaAPI/ObjectVisibility.h>
 #include <RengaAPI/View.h>
 
+typedef std::list<rengaapi::ObjectId> ObjectIdList;
+
 static bool getRengaObjectVisibility(const rengaapi::ObjectId& objectId)
 {
   rengaapi::View* pView = rengaapi::Application::activeView();
@@ -31,10 +33,11 @@ static bool getRengaObjectVisibility(const rengaapi::ObjectId& objectId)
   }
 }
 
-static void setRengaObjectVisibility(const rengaapi::ObjectId& objectId, const bool visible)
+static void setRengaObjectVisibility(const ObjectIdList& objectIdList, const bool visible)
 {
   rengaapi::ObjectIdCollection objectIdCollection;
-  objectIdCollection.add(objectId);
+  for (auto& id : objectIdList)
+    objectIdCollection.add(id);
 
   rengaapi::View* pView = rengaapi::Application::activeView();
   switch(pView->type())

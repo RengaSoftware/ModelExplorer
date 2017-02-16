@@ -12,6 +12,7 @@
 #include <QtGui/QStandardItemModel>
 
 #include "ObjectSelectionHandler.h"
+#include "RengaObjectVisibility.h"
 
 #include <RengaAPI/ObjectId.h>
 
@@ -30,18 +31,17 @@ private slots:
   void onRebuildTree();
   void onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected);
   void onRengaObjectSelected(const rengaapi::ObjectId&);
+  void onTreeItemClicked(const QModelIndex& current);
   void showSelectedItem();
   void hideSelectedItem();
-  void onTreeItemClicked(const QModelIndex& current);
 
 private:
   void changeItemVisibility(bool show);
   void updateVisibilityIcon(const QModelIndex& itemIndex, const QModelIndex& iconIndex);
-  void changeVisibilityWithChildren(const QModelIndex& iconIndex, bool visible);
-  void showParentItems(QStandardItem* childItem);
+  ObjectIdList getObjectIdListWithChildren(const QModelIndex& iconIndex, bool visible);
+  ObjectIdList getParentObjectIdList(QStandardItem* childItem);
 
   bool isModelObjectVisible(const QVariant& data);
-  void setModelObjectVisibility(const QVariant& data, const bool visible);
   rengaapi::ObjectId getRengaObjectIdFromData(const QVariant& data) const;
   void setIcon(const QModelIndex& iconIndex, bool visible);
 
