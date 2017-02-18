@@ -17,6 +17,14 @@
 #include <RengaBase/AreaMeasureOptional.h>
 #include <RengaBase/VolumeMeasureOptional.h>
 
+enum MeasureUnit
+{
+  Meter = 0,
+  Centimeter = 1,
+  Millimeter = 2,
+  Inch = 3
+};
+
 class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
 {
 public:
@@ -28,9 +36,9 @@ public:
 
 	static QString getMaterialName(const rengaapi::MaterialId& materialId);
 
-	void setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty);
-	void setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty);
-	void setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty);
+  void setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Millimeter);
+  void setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Meter);
+  void setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Meter);
 
 	void setOneLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty);
 	void setMultiLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty);

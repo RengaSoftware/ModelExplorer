@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>crossSectionArea</source>
-        <translation>Площадь сечения, м²</translation>
+        <translation>Площадь сечения, см²</translation>
     </message>
     <message>
         <source>outerSurfaceArea</source>

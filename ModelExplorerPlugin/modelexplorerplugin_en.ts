@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>crossSectionArea</source>
-        <translation>Cross section area, m²</translation>
+        <translation>Cross section area, cm²</translation>
     </message>
     <message>
         <source>outerSurfaceArea</source>
