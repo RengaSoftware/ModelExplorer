@@ -36,8 +36,8 @@ ModelTreeView::~ModelTreeView()
 void ModelTreeView::onRebuildTree()
 {
   ModelTreeBuilder builder(m_pTranslator);
-
-  setModel(builder.buildModelTree());
+  m_pModel.reset(builder.buildModelTree());
+  setModel(m_pModel.get());
 
   // set columns width & resize mode
   QHeaderView* treeHeader  = this->header();

@@ -58,4 +58,5 @@ private:
 private:
   QTranslator* m_pTranslator;
   ObjectSelectionHandler m_objectSelectionHandler;
+  std::unique_ptr<QStandardItemModel> m_pModel;
 };
