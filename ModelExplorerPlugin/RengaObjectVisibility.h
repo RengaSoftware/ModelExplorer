@@ -22,11 +22,11 @@ static bool getRengaObjectVisibility(const rengaapi::ObjectId& objectId)
   switch(pView->type())
   {
   case rengaapi::ViewType::View3D:
-    return !rengaapi::ObjectVisibility::isVisibleIn3DView(objectId); // TODO: remove ! after bugfix ¹21933
+    return rengaapi::ObjectVisibility::isVisibleIn3DView(objectId);
   case rengaapi::ViewType::Level:
     {
       rengaapi::ObjectId levelId = dynamic_cast<rengaapi::LevelView*>(pView)->levelId();
-      return !rengaapi::ObjectVisibility::isVisibleOnLevel(objectId, levelId); // TODO: remove ! after bugfix ¹21933
+      return rengaapi::ObjectVisibility::isVisibleOnLevel(objectId, levelId);
     }
   default:
     return false;
