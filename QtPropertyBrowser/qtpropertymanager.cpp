@@ -1409,16 +1409,23 @@ void QtStringPropertyManager::setValue(QtProperty *property, const QString &val)
     QString newValue(val);
     if (m_valueType == QtStringPropertyManager::valueTupe::doubleType)
     {
-        bool isCorrectDouble = false;
-	    double doubleValue = val.toDouble(&isCorrectDouble);
-	    if (isCorrectDouble)
-	    {
-            newValue = formatDoubleToString(doubleValue, m_allowScientific, m_precision);
-	    }
-        else
-        {
-            newValue = value(property);
-        }
+      bool isCorrectDouble = false;
+      
+      // bug in Qt workaround 
+      // https://bugreports.qt.io/browse/QTBUG-41256
+      newValue.replace(QChar('.'), QLocale::system().decimalPoint());
+      // end bug in Qt workaround
+
+      double doubleValue = QLocale::system().toDouble(newValue, &isCorrectDouble);
+
+      if (isCorrectDouble)
+      {
+        newValue = formatDoubleToString(doubleValue, m_allowScientific, m_precision);
+      }
+      else
+      {
+        newValue = value(property);
+      }
     }
     setValueInternal(property, newValue);
 }
