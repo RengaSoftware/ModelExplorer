@@ -13,7 +13,7 @@
 class FloorPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	FloorPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	FloorPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

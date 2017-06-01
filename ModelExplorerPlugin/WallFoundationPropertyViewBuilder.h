@@ -13,7 +13,7 @@
 class WallFoundationPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	WallFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	WallFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

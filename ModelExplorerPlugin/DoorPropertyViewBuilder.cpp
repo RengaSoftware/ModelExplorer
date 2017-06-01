@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Door.h>
 
-DoorPropertyViewBuilder::DoorPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+DoorPropertyViewBuilder::DoorPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList DoorPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,9 +21,9 @@ PropertyList DoorPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("door", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "offset"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("door", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("door", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "offset"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("door", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pDoor->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pDoor->offset().inMillimeters());
@@ -45,10 +45,10 @@ PropertyList DoorPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	PropertyList result;
 
   // overallHeight, overallWidth, perimeter, area
-	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "overallHeight"));
-	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "overallWidth"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "perimeter"));
-	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("door", "area"));
+	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "overallHeight"));
+	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "overallWidth"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "perimeter"));
+	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "area"));
 
 	setLengthMeasureOptional(result, doorQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, doorQuantities.overallWidth(), overallWidth);

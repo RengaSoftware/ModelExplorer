@@ -16,9 +16,8 @@ const uint c_iconColumnSize = 30;
 const QItemSelectionModel::SelectionFlags c_selectRows = QItemSelectionModel::SelectionFlag::Select | QItemSelectionModel::Rows;
 const QItemSelectionModel::SelectionFlags c_selectCurrentRows = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
 
-ModelTreeView::ModelTreeView(QTranslator* pTranslator, QWidget* pParent /*= nullptr*/)
+ModelTreeView::ModelTreeView(QWidget* pParent /*= nullptr*/)
   : QTreeView(pParent)
-  , m_pTranslator(pTranslator)
 {
   connect(&m_objectSelectionHandler, 
     SIGNAL(objectSelected(const rengaapi::ObjectId&)), 
@@ -35,7 +34,7 @@ ModelTreeView::~ModelTreeView()
 
 void ModelTreeView::onRebuildTree()
 {
-  ModelTreeBuilder builder(m_pTranslator);
+  ModelTreeBuilder builder;
   m_pModel.reset(builder.buildModelTree());
   setModel(m_pModel.get());
 

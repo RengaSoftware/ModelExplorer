@@ -13,7 +13,7 @@
 class BeamPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Level.h>
 
-LevelPropertyViewBuilder::LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+LevelPropertyViewBuilder::LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList LevelPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,8 +21,8 @@ PropertyList LevelPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	PropertyList result;
 
 	// name, elevation
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("level", "name"));
-	QtProperty* elevation = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("level", "elevation"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("level", "name"));
+	QtProperty* elevation = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("level", "elevation"));
 
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pLevel->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(elevation, pLevel->elevation().inMeters());

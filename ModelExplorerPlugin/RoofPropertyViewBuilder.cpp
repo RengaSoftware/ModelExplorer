@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Roof.h>
 
-RoofPropertyViewBuilder::RoofPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+RoofPropertyViewBuilder::RoofPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList RoofPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,10 +21,10 @@ PropertyList RoofPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("roof", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("roof", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("roof", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("roof", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRoof->name()));
 
@@ -55,10 +55,10 @@ PropertyList RoofPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
   }
 
 	// thickness, netVolume, totalSurfaceArea, mass
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("roof", "thickness"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("roof", "netVolume"));
-	QtProperty* totalSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("roof", "totalSurfaceArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("roof", "mass"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "thickness"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "netVolume"));
+	QtProperty* totalSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "totalSurfaceArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "mass"));
 
   setLengthMeasureOptional(result, roofQuantities.nominalThickness(), thickness);
 	setVolumeMeasureOptional(result, roofQuantities.netVolume(), netVolume);

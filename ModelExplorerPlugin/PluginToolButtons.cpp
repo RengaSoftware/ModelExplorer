@@ -19,8 +19,7 @@
 static const rengabase::String c_error = L"Error";
 static const rengabase::String c_openPluginIconError = L"Unable to open icon file";
 
-PluginToolButtons::PluginToolButtons(const std::wstring& pluginPath, const QTranslator* pTranslator)
-  : m_pTranslator(pTranslator)
+PluginToolButtons::PluginToolButtons(const std::wstring& pluginPath)
 {
   rengaapi::ToolButton modelExplorerToolButton = createModelExplorerButton(pluginPath);
   // create new buttons here
@@ -39,7 +38,7 @@ rengaapi::ToolButton PluginToolButtons::createModelExplorerButton(const std::wst
   rengaapi::ToolButton toolButton;
   toolButton.setClickHandler(m_pModelExplorerButtonHandler.get());
 
-  QString tooltip = m_pTranslator->translate("plugin", "windowName");
+  QString tooltip = QApplication::translate("plugin", "windowName");
   toolButton.setToolTip(rengabase::rengaStringFromStdWString(tooltip.toStdWString()));
 
   rengaapi::Image icon;

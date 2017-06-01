@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Opening.h>
 
-OpeningPropertyViewBuilder::OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+OpeningPropertyViewBuilder::OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList OpeningPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,9 +21,9 @@ PropertyList OpeningPropertyViewBuilder::createParametersProperties(rengaapi::Mo
 	PropertyList result;
 
 	// name, offset, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("opening", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "offset"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("opening", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("opening", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "offset"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("opening", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pOpening->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pOpening->offset().inMillimeters());
@@ -45,10 +45,10 @@ PropertyList OpeningPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mo
   PropertyList result;
 
 	// thickness, volume, perimeter, area
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "thickness"));
-	QtProperty* volume = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "volume"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "perimeter"));
-	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("opening", "area"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "thickness"));
+	QtProperty* volume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "volume"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "perimeter"));
+	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "area"));
 
   setLengthMeasureOptional(result, openingQuantities.nominalThickness(), thickness);
 	setVolumeMeasureOptional(result, openingQuantities.volume(), volume);

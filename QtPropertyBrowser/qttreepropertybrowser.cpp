@@ -158,7 +158,6 @@ private:
     bool m_markPropertiesWithoutValue;
     bool m_browserChangedBlocked;
     QIcon m_expandIcon;
-		QTranslator* translator;
 };
 
 // ------------ QtPropertyEditorView
@@ -424,8 +423,8 @@ void QtTreePropertyBrowserPrivate::init(QWidget *parent)
 
     m_treeWidget->setColumnCount(2);
     QStringList labels;
-    labels.append(translator->translate("QtTreePropertyBrowser", "Property"));
-    labels.append(translator->translate("QtTreePropertyBrowser", "Value"));
+    labels.append(QApplication::translate("QtTreePropertyBrowser", "Property"));
+    labels.append(QApplication::translate("QtTreePropertyBrowser", "Value"));
     m_treeWidget->setHeaderLabels(labels);
     m_treeWidget->setAlternatingRowColors(true);
     m_treeWidget->setEditTriggers(QAbstractItemView::EditKeyPressed);
@@ -713,14 +712,13 @@ void QtTreePropertyBrowserPrivate::editItem(QtBrowserItem *browserItem)
 /*!
     Creates a property browser with the given \a parent.
 */
-QtTreePropertyBrowser::QtTreePropertyBrowser(QTranslator* newTranslator, QWidget *parent)
+QtTreePropertyBrowser::QtTreePropertyBrowser(QWidget *parent)
     : QtAbstractPropertyBrowser(parent)
 {
     d_ptr = new QtTreePropertyBrowserPrivate;
     d_ptr->q_ptr = this;
-		d_ptr->translator = newTranslator;
-
     d_ptr->init(this);
+
     connect(this, SIGNAL(currentItemChanged(QtBrowserItem*)), this, SLOT(slotCurrentBrowserItemChanged(QtBrowserItem*)));
 }
 

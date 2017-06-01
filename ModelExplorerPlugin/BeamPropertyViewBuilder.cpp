@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Beam.h>
 
-BeamPropertyViewBuilder::BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+BeamPropertyViewBuilder::BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList BeamPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,10 +21,10 @@ PropertyList BeamPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("beam", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("beam", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("beam", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("beam", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("beam", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("beam", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pBeam->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pBeam->offset().inMillimeters());
@@ -47,12 +47,12 @@ PropertyList BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	rengaapi::BeamQuantities beamQuantities = pBeam->quantities();
 
 	// length, netVolume, crossSectionArea, outerSurfaceArea, perimeter, mass
-	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "length"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "netVolume"));
-	QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "crossSectionArea"));
-	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "outerSurfaceArea"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "perimeter"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("beam", "mass"));
+	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "length"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "netVolume"));
+	QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "crossSectionArea"));
+	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "outerSurfaceArea"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "perimeter"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "mass"));
 
 	setLengthMeasureOptional(result, beamQuantities.nominalLength(), length);
 	setVolumeMeasureOptional(result, beamQuantities.netVolume(), netVolume);

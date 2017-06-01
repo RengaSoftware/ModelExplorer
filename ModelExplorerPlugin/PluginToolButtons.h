@@ -8,7 +8,6 @@
 
 #pragma once
 #include <QtCore/QObject>
-#include <QtCore/QTranslator>
 
 #include <RengaAPI/Image.h>
 #include <RengaAPI/Toolbutton.h>
@@ -20,7 +19,7 @@ class PluginToolButtons : public QObject
   Q_OBJECT
 
 public:
-  PluginToolButtons(const std::wstring& pluginPath, const QTranslator* pTranslator);
+  PluginToolButtons(const std::wstring& pluginPath);
 
 signals:
   void modelExplorerButtonClicked();

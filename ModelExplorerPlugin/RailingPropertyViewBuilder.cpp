@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Railing.h>
 
-RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList RailingPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,9 +21,9 @@ PropertyList RailingPropertyViewBuilder::createParametersProperties(rengaapi::Mo
 	PropertyList result;
 
 	// name, offset, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("railing", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("railing", "offset"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("railing", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("railing", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("railing", "offset"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("railing", "mark"));
 
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRailing->name()));
 	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pRailing->mark()));
@@ -43,8 +43,8 @@ PropertyList RailingPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mo
 
 	// height, length
   PropertyList result;
-  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("railing", "height"));
-	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("railing", "length"));
+  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("railing", "height"));
+	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("railing", "length"));
 
   setLengthMeasureOptional(result, railingQuantities.nominalHeight(), height);
 	setLengthMeasureOptional(result, railingQuantities.nominalLength(), length);

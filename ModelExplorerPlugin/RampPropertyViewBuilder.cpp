@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Ramp.h>
 
-RampPropertyViewBuilder::RampPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+RampPropertyViewBuilder::RampPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList RampPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,10 +21,10 @@ PropertyList RampPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("ramp", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("ramp", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("ramp", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("ramp", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("ramp", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("ramp", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRamp->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pRamp->offset().inMillimeters());
@@ -47,13 +47,13 @@ PropertyList RampPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	rengaapi::RampQuantities rampQuantities = pRamp->quantities();
 
 	//thickness, height, width, netVolume, netArea, netFloorArea, mass
-  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "height"));
-  QtProperty* width = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "width"));
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "thickness"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "netVolume"));
-	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "netArea"));
-	QtProperty* netFloorArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "netFloorArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("ramp", "mass"));
+  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "height"));
+  QtProperty* width = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "width"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "thickness"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "netVolume"));
+	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "netArea"));
+	QtProperty* netFloorArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "netFloorArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("ramp", "mass"));
 
   setLengthMeasureOptional(result, rampQuantities.nominalHeight(), height);
   setLengthMeasureOptional(result, rampQuantities.nominalWidth(), width);

@@ -8,7 +8,6 @@
 
 #pragma once
 #include <QtWidgets/QTreeView>
-#include <QtCore/QTranslator.h>
 #include <QtGui/QStandardItemModel>
 
 #include "ObjectSelectionHandler.h"
@@ -21,7 +20,7 @@ class ModelTreeView : public QTreeView
   Q_OBJECT
 
 public:
-  ModelTreeView(QTranslator* pTranslator, QWidget* pParent = nullptr);
+  ModelTreeView(QWidget* pParent = nullptr);
   ~ModelTreeView();
 
 signals:
@@ -56,7 +55,6 @@ private:
   }
 
 private:
-  QTranslator* m_pTranslator;
   ObjectSelectionHandler m_objectSelectionHandler;
   std::unique_ptr<QStandardItemModel> m_pModel;
 };

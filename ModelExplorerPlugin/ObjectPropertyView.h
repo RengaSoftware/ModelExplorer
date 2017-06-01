@@ -29,7 +29,7 @@ public:
 		ListMode = 1,
 	};
 	
-	ObjectPropertyView(QTranslator* pTranslator, QWidget* pParent);
+	ObjectPropertyView(QWidget* pParent);
 	void setSelectedObjectId(rengaapi::ObjectId objId);
 	void changeMode(ObjectPropertyView::Mode newMode);
 
@@ -48,7 +48,6 @@ private:
   void changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue userAttributeValue);
 
 private:
-  QTranslator* m_pTranslator;
   QtGroupPropertyManager* m_pGroupManager;
   PropertyManagers m_propertyManagers;
 	rengaapi::ObjectId m_currentObjectId;

@@ -21,14 +21,13 @@
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
 
-ModelExplorerWidget::ModelExplorerWidget(QTranslator* pTranslator)
+ModelExplorerWidget::ModelExplorerWidget()
   : QWidget(nullptr, Qt::Tool)
-  , m_pTranslator(pTranslator)
 {
   m_pUi.reset(new Ui::ModelExplorerDialog());
   m_pUi->setupUi(this);
 
-  setWindowTitle(m_pTranslator->translate("plugin", "windowName"));
+  setWindowTitle(QApplication::translate("plugin", "windowName"));
 
   // load main window stylesheet
   QFile styleFile(":/styles/mainFormStyle.qss");
@@ -36,11 +35,11 @@ ModelExplorerWidget::ModelExplorerWidget(QTranslator* pTranslator)
     setStyleSheet(styleFile.readAll());
 
   // load UI
-  QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", m_pTranslator->translate("propertyView", "refresh"));
+  QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", QApplication::translate("propertyView", "refresh"));
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
-  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", m_pTranslator->translate("propertyView", "visible"));
-  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", m_pTranslator->translate("propertyView", "hidden"));
+  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("propertyView", "visible"));
+  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", QApplication::translate("propertyView", "hidden"));
 
   // top toolbar
   QToolBar* pTopToolBar = createToolBar(m_pUi->layoutWidget);
@@ -56,11 +55,11 @@ ModelExplorerWidget::ModelExplorerWidget(QTranslator* pTranslator)
   m_pUi->topVerticalLayout->addWidget(m_pModelTreeView);
 
   // view mode buttons
-  QPushButton* pCategoryButton = createPushButton(":/icons/Category.png", m_pTranslator->translate("propertyView", "category"));
+  QPushButton* pCategoryButton = createPushButton(":/icons/Category.png", QApplication::translate("propertyView", "category"));
   pCategoryButton->setCheckable(true);
   pCategoryButton->setChecked(true);
 
-  QPushButton* pListButton = createPushButton(":/icons/List.png", m_pTranslator->translate("propertyView", "list"));
+  QPushButton* pListButton = createPushButton(":/icons/List.png", QApplication::translate("propertyView", "list"));
   pListButton->setCheckable(true);
 
   // bottom toolbar
@@ -123,7 +122,7 @@ QToolBar* ModelExplorerWidget::createToolBar(QWidget* parentWidget)
 
 void ModelExplorerWidget::createModelTreeView()
 {
-  m_pModelTreeView = new ModelTreeView(m_pTranslator, m_pUi->layoutWidget);
+  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget);
   m_pModelTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
   m_pModelTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
   m_pModelTreeView->setHeaderHidden(true);
@@ -135,7 +134,7 @@ void ModelExplorerWidget::createModelTreeView()
 
 void ModelExplorerWidget::createPropertyView()
 {
-  m_pPropertyView = new ObjectPropertyView(m_pTranslator, this);
+  m_pPropertyView = new ObjectPropertyView(this);
   m_pPropertyView->setResizeMode(QtTreePropertyBrowser::Interactive);
   m_pPropertyView->setHeaderVisible(true);
   m_pPropertyView->setAlternatingRowColors(false);

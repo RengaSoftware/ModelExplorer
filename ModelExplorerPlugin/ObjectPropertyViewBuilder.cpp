@@ -17,9 +17,8 @@
 #include <RengaBase/LengthMeasure.h>
 #include <RengaBase/VolumeMeasure.h>
 
-ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator)
+ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers)
   : m_pPropertyManagers(pPropertyManagers)
-  , m_pTranslator(pTranslator)
 {}
 
 PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi::ModelObject* pObject)

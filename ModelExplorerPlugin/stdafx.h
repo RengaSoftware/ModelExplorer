@@ -12,5 +12,8 @@
 #include <memory>
 #include <assert.h>
 
+// qt includes
+#include <QtWidgets/QApplication>
+
 // local common includes
 #include "RengaStringToQString.h"

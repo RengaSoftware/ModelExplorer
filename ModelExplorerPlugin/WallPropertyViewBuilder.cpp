@@ -11,8 +11,8 @@
 
 #include <RengaAPI/Wall.h>
 
-WallPropertyViewBuilder::WallPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator) 
-  : ObjectPropertyViewBuilder(pPropertyManagers, pTranslator)
+WallPropertyViewBuilder::WallPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
+  : ObjectPropertyViewBuilder(pPropertyManagers)
 {}
 
 PropertyList WallPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
@@ -21,10 +21,10 @@ PropertyList WallPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("wall", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("wall", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(m_pTranslator->translate("wall", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("wall", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("wall", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("wall", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pWall->name()));
   m_pPropertyManagers->m_pDoubleManager->setValue(offset, pWall->offset().inMillimeters());
@@ -54,13 +54,13 @@ PropertyList WallPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
   }
 
 	// length, thickness, height, netVolume, netFootprintArea, netSideArea, mass
-  QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "length"));
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "thickness"));
-  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "height"));
-  QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "netVolume"));
-	QtProperty* netFootprintArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "netFootprintArea"));
-	QtProperty* netSideArea = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "netSideArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(m_pTranslator->translate("wall", "mass"));
+  QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "length"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "thickness"));
+  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "height"));
+  QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "netVolume"));
+	QtProperty* netFootprintArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "netFootprintArea"));
+	QtProperty* netSideArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "netSideArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "mass"));
 
 	setLengthMeasureOptional(result, wallQuantities.nominalLength(), length);
   setLengthMeasureOptional(result, wallQuantities.nominalThickness(), thickness);

@@ -13,7 +13,7 @@
 class LevelPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

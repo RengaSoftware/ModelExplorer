@@ -13,7 +13,7 @@
 class IsolatedFoundationPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

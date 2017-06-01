@@ -13,9 +13,8 @@
 #include <RengaAPI/Project.h>
 
 
-ObjectPropertyView::ObjectPropertyView(QTranslator* pTranslator, QWidget* pParent)
-  : QtTreePropertyBrowser(pTranslator, pParent)
-  , m_pTranslator(pTranslator)
+ObjectPropertyView::ObjectPropertyView(QWidget* pParent)
+  : QtTreePropertyBrowser(pParent)
   , m_currentObjectId(0)
   , m_propertyViewMode(CategoryMode)
 {
@@ -113,9 +112,9 @@ void ObjectPropertyView::buildPropertyViewSingleCategory(const QString& category
 
 void ObjectPropertyView::buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
 {
-  buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Object parameters"), parameters);
-  buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Calculated characteristics"), calculated);
-  buildPropertyViewSingleCategory(m_pTranslator->translate("propertyView", "Object properties"), userDefinedProperties);
+  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Object parameters"), parameters);
+  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Calculated characteristics"), calculated);
+  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Object properties"), userDefinedProperties);
 }
 
 bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)
@@ -129,7 +128,7 @@ bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList
   if (pSelectedObject == nullptr)
     return false;
 
-  ObjectPropertyViewBuilderFactory propertyBuilderFactory(&m_propertyManagers, m_pTranslator);
+  ObjectPropertyViewBuilderFactory propertyBuilderFactory(&m_propertyManagers);
   std::unique_ptr<IObjectPropertyViewBuilder> objectPropertyViewBuilder(propertyBuilderFactory.createBuilder(pSelectedObject));
 
   parameters = objectPropertyViewBuilder->createParametersProperties(pSelectedObject);

@@ -88,6 +88,7 @@ bool ModelExplorerPlugin::loadTranslator(const std::wstring& pluginPath)
   }
   else
   {
+    QApplication::installTranslator(&m_translator);
     return true;
   }
 }
@@ -100,13 +101,13 @@ void ModelExplorerPlugin::subscribeOnRengaEvents()
 
 void ModelExplorerPlugin::addPluginButtons(const std::wstring& pluginPath)
 {
-  m_pPluginToolButtons.reset(new PluginToolButtons(pluginPath, &m_translator));
+  m_pPluginToolButtons.reset(new PluginToolButtons(pluginPath));
   connect(m_pPluginToolButtons.get(), SIGNAL(modelExplorerButtonClicked()), this, SLOT(onModelExplorerButtonClicked()));
 }
 
 void ModelExplorerPlugin::onModelExplorerButtonClicked()
 {
-  m_pWidget.reset(new ModelExplorerWidget(&m_translator));
+  m_pWidget.reset(new ModelExplorerWidget());
   m_pWidget->readModelAndShow();
 }
 

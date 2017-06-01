@@ -14,10 +14,9 @@
 class ObjectPropertyViewBuilderFactory
 {
 public:
-  ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+  ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers);
 	ObjectPropertyViewBuilder* createBuilder(rengaapi::ModelObject* pModelObject);
 
 private:
   const PropertyManagers* m_pPropertyManagers;
-  const QTranslator* m_pTranslator;
 };

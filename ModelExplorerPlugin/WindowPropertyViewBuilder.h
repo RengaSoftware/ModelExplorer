@@ -13,7 +13,7 @@
 class WindowPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	WindowPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	WindowPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

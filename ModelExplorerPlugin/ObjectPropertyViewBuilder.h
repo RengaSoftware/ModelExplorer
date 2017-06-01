@@ -28,7 +28,7 @@ enum MeasureUnit
 class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
 {
 public:
-	ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+	ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	virtual PropertyList createParametersProperties(rengaapi::ModelObject* pObject) = 0;
 	virtual PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0;
@@ -45,5 +45,4 @@ public:
 
 protected:
   const PropertyManagers* m_pPropertyManagers;
-  const QTranslator* m_pTranslator;
 };

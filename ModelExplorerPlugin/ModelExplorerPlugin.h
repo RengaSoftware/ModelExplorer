@@ -10,10 +10,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QTranslator>
 
-#ifdef _DEBUG
-#include <QtWidgets/QApplication>
-#endif
-
 #include <IPlugin.h>
 
 class PluginToolButtons;

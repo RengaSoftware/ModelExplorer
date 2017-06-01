@@ -13,7 +13,7 @@
 class StairPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  StairPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+  StairPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

@@ -13,7 +13,7 @@
 class RoomPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  RoomPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+  RoomPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 

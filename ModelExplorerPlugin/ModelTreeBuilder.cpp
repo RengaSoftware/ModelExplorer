@@ -37,8 +37,7 @@ ModelTreeBuilder::ObjectTypeData::ObjectTypeData(rengaapi::ObjectType type, QStr
   , m_iconPath(iconPath)
 {}
 
-ModelTreeBuilder::ModelTreeBuilder(const QTranslator* pTranslator)
-  : m_pTranslator(pTranslator)
+ModelTreeBuilder::ModelTreeBuilder()
 {
   m_objectTypeDataArray.push_back( createTypeNodeData(rengaapi::ModelObjectTypes::WallType, "Walls", ":/icons/Wall"));
   m_objectTypeDataArray.push_back( createTypeNodeData(rengaapi::ModelObjectTypes::ColumnType, "Columns", ":/icons/Column"));
@@ -58,7 +57,7 @@ ModelTreeBuilder::ModelTreeBuilder(const QTranslator* pTranslator)
 
 ModelTreeBuilder::ObjectTypeData ModelTreeBuilder::createTypeNodeData(rengaapi::ObjectType type, QString translationLiteral, QString iconPath)
 {
-  QString typeNodeName = m_pTranslator->translate("modelObjects", translationLiteral.toStdString().data());
+  QString typeNodeName = QApplication::translate("modelObjects", translationLiteral.toStdString().data());
   return ObjectTypeData(type, typeNodeName, iconPath);
 }
 

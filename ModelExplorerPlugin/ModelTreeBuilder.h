@@ -8,7 +8,6 @@
 
 #pragma once
 #include <QtGui/QStandardItemModel>
-#include <QtCore/QTranslator.h>
 
 #include <RengaAPI/ObjectType.h>
 #include <RengaAPI/ObjectId.h>
@@ -18,7 +17,7 @@
 class ModelTreeBuilder
 {
 public:
-  ModelTreeBuilder(const QTranslator* pTranslator);
+  ModelTreeBuilder();
   QStandardItemModel* buildModelTree();
 
   static int objectIDRole;
@@ -46,6 +45,5 @@ private:
   QList<QStandardItem*> buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection);
 
 private:
-  const QTranslator* m_pTranslator;
   std::list<ObjectTypeData> m_objectTypeDataArray;
 };

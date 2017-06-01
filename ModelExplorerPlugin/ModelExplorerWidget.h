@@ -10,7 +10,6 @@
 #include "ModelTreeView.h"
 #include "ObjectPropertyView.h"
 
-#include <QtCore/QTranslator>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
 
@@ -26,7 +25,7 @@ class ModelExplorerWidget : public QWidget
   Q_OBJECT
 
 public:
-  ModelExplorerWidget(QTranslator* pTranslator);
+  ModelExplorerWidget();
   ~ModelExplorerWidget();
 
 public:
@@ -49,7 +48,6 @@ private:
 
 private:
   std::unique_ptr<Ui::ModelExplorerDialog> m_pUi;
-  QTranslator* m_pTranslator;
   ModelTreeView* m_pModelTreeView;
   ObjectPropertyView* m_pPropertyView;
 };

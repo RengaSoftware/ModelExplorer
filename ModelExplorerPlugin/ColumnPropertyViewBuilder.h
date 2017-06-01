@@ -13,7 +13,7 @@
 class ColumnPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  ColumnPropertyViewBuilder(const PropertyManagers* pPropertyManagers, const QTranslator* pTranslator);
+  ColumnPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
 
 	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
 	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
