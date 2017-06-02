@@ -1,8 +1,7 @@
 This plugin allows you to browse Renga model, obtain the object parameters and quantities, change values of custom user-defined object attributes.
 
-To build the plugin you need RengaSDK and Qt.
+To build the plugin you need RengaSDK and Qt 5.8.1.
 You can download the latest version of RengaSDK from "http://rengacad.com/ru/support/sdk/".
-You can download required Qt libraries from "https://github.com/RengaSoftware/Qt-5.6.1-VS2012".
 There are two environment variables (renga_sdk, qt5_path) used in plugin.
 You should add these variables to the system, and specify paths to RengaSDK folder and Qt folder accordingly.
 Alternatively you can set required paths in Visual Studio.
