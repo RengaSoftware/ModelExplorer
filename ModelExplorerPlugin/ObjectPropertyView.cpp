@@ -151,24 +151,38 @@ void ObjectPropertyView::buildPropertyView()
     buildPropertyViewByCategory(parameters, calculated, userDefinedProperties);
 }
 
-void ObjectPropertyView::userDoubleAttributeChanged(QtProperty* property, const QString& newValue)
+void ObjectPropertyView::userDoubleAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
 {
-  bool ok = false;
-  double newDoubleValue = newValue.toDouble(&ok);
-  if (ok)
+  if (newValue.isEmpty())
   {
-    rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(newDoubleValue);
-    changeUserAttribute(property, userAttributeValue);
+    changeUserAttribute(userAttributeProperty, nullptr); // will reset the attribute value
+  }
+  else
+  {
+    bool ok = false;
+    double newDoubleValue = QLocale::system().toDouble(newValue, &ok);
+    if (ok)
+    {
+      rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(newDoubleValue);
+      changeUserAttribute(userAttributeProperty, &userAttributeValue);
+    }
   }
 }
 
-void ObjectPropertyView::userStringAttributeChanged(QtProperty* property, const QString& newValue)
+void ObjectPropertyView::userStringAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
 {
-  rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(rengabase::rengaStringFromStdWString(newValue.toStdWString()));
-  changeUserAttribute(property, userAttributeValue);
+  if (newValue.isEmpty())
+  {
+    changeUserAttribute(userAttributeProperty, nullptr); // will reset the attribute value
+  }
+  else
+  {
+    rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(rengabase::rengaStringFromStdWString(newValue.toStdWString()));
+    changeUserAttribute(userAttributeProperty, &userAttributeValue);
+  }
 }
 
-void ObjectPropertyView::changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue userAttributeValue)
+void ObjectPropertyView::changeUserAttribute(QtProperty* userAttributeProperty, rengaapi::UserAttributeValue* pUserAttributeValue)
 {
   rengaapi::Model projectModel = rengaapi::Project::model();
   rengaapi::ModelObjectCollection modelObjectCollection = projectModel.objects();
@@ -177,7 +191,7 @@ void ObjectPropertyView::changeUserAttribute(QtProperty* property, rengaapi::Use
   if(pSelectedObject == nullptr)
     return;
 
-  rengabase::String userAttributeUuidAsString = rengabase::rengaStringFromStdWString(property->data().toStdWString());
+  rengabase::String userAttributeUuidAsString = rengabase::rengaStringFromStdWString(userAttributeProperty->data().toStdWString());
   rengabase::UUID userAttributeIdUuid = rengabase::UUID::fromString(userAttributeUuidAsString);
   rengaapi::UserAttributeId userAttributeId = rengaapi::UserAttributeId(userAttributeIdUuid);
 
@@ -189,13 +203,15 @@ void ObjectPropertyView::changeUserAttribute(QtProperty* property, rengaapi::Use
     // start model operation
     if (modelOperation.start().isOk())
     {
-      // change attribute value
-	  rengaapi::Status status = pSelectedObject->setUserAttributeValue(userAttributeId, userAttributeValue); // no fail, why?
-	  if (status.isOk())
-	  {
-		modelOperation.apply();
-	  }
-      return;
+      // change or reset attribute value
+      rengaapi::Status status;
+      if(pUserAttributeValue != nullptr)
+        status = pSelectedObject->setUserAttributeValue(userAttributeId, *pUserAttributeValue);
+      else
+        status = pSelectedObject->resetUserAttributeValue(userAttributeId);
+
+      if (status.isOk())
+        modelOperation.apply();
     }
   }
 }

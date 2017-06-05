@@ -45,7 +45,7 @@ private:
   void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
   void buildPropertyView();
-  void changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue userAttributeValue);
+  void changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue* pUserAttributeValue);
 
 private:
   QtGroupPropertyManager* m_pGroupManager;
