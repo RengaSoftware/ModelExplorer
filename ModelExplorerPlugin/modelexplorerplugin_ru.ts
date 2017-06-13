@@ -47,6 +47,14 @@
         <translation>Периметр, мм</translation>
     </message>
     <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Полная ширина сечения, см</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallHeight</source>
+        <translation>Полная высота сечения, см</translation>
+    </message>
+    <message>
         <source>crossSectionArea</source>
         <translation>Площадь сечения, см²</translation>
     </message>
