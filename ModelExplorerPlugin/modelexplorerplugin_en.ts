@@ -94,6 +94,14 @@
         <translation>Volume, m³</translation>
     </message>
     <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Cross section overall width, mm²</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallDepth</source>
+        <translation>Cross section overall depth, mm²</translation>
+    </message>
+    <message>
         <source>crossSectionArea</source>
         <translation>Cross section area, m²</translation>
     </message>

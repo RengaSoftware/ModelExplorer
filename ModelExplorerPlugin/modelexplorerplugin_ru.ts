@@ -94,6 +94,14 @@
         <translation>Объем, м³</translation>
     </message>
     <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Полная ширина поперечного сечения, мм²</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallDepth</source>
+        <translation>Полная глубина поперечного сечения, мм²</translation>
+    </message>
+    <message>
         <source>crossSectionArea</source>
         <translation>Площадь поперечного сечения, м²</translation>
     </message>
