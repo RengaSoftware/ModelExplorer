@@ -47,6 +47,14 @@
         <translation>Perimeter, mm</translation>
     </message>
     <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Сross section width, cm</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallHeight</source>
+        <translation>Cross section height, cm</translation>
+    </message>
+    <message>
         <source>crossSectionArea</source>
         <translation>Cross section area, cm²</translation>
     </message>
@@ -84,6 +92,14 @@
     <message>
         <source>netVolume</source>
         <translation>Volume, m³</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Cross section overall width, mm²</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallDepth</source>
+        <translation>Cross section overall depth, mm²</translation>
     </message>
     <message>
         <source>crossSectionArea</source>

@@ -12,6 +12,8 @@
 
 #include <QtWidgets/QHeaderView.h>
 
+#include <RengaAPI/ModelSelection.h>
+
 const uint c_iconColumnSize = 30;
 const QItemSelectionModel::SelectionFlags c_selectRows = QItemSelectionModel::SelectionFlag::Select | QItemSelectionModel::Rows;
 const QItemSelectionModel::SelectionFlags c_selectCurrentRows = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
@@ -77,6 +79,10 @@ void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QIt
           // update visibility only for rengaapi::ModelObjects
           const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
           updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
+
+          rengaapi::ObjectIdCollection objectIds;
+          objectIds.add(rengaapi::ObjectId(id));
+          rengaapi::ModelSelection::setSelection(objectIds);
         }
       }
     }

@@ -49,13 +49,17 @@ PropertyList BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	// length, netVolume, crossSectionArea, outerSurfaceArea, perimeter, mass
 	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "length"));
 	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "netVolume"));
-	QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "crossSectionArea"));
+  QtProperty* crossSectionOverallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "crossSectionOverallWidth"));
+  QtProperty* crossSectionOverallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "crossSectionOverallHeight"));
+  QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "crossSectionArea"));
 	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "outerSurfaceArea"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "perimeter"));
 	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("beam", "mass"));
 
 	setLengthMeasureOptional(result, beamQuantities.nominalLength(), length);
 	setVolumeMeasureOptional(result, beamQuantities.netVolume(), netVolume);
+  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallWidth(), crossSectionOverallWidth, MeasureUnit::Centimeter);
+  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallHeight(), crossSectionOverallHeight, MeasureUnit::Centimeter);
   setAreaMeasureOptional(result, beamQuantities.crossSectionArea(), crossSectionArea, MeasureUnit::Centimeter);
 	setAreaMeasureOptional(result, beamQuantities.outerSurfaceArea(), outerSurfaceArea);
 	setLengthMeasureOptional(result, beamQuantities.perimeter(), perimeter);

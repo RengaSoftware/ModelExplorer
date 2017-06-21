@@ -47,6 +47,14 @@
         <translation>Периметр, мм</translation>
     </message>
     <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Полная ширина сечения, см</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallHeight</source>
+        <translation>Полная высота сечения, см</translation>
+    </message>
+    <message>
         <source>crossSectionArea</source>
         <translation>Площадь сечения, см²</translation>
     </message>
@@ -84,6 +92,14 @@
     <message>
         <source>netVolume</source>
         <translation>Объем, м³</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Полная ширина поперечного сечения, мм²</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallDepth</source>
+        <translation>Полная глубина поперечного сечения, мм²</translation>
     </message>
     <message>
         <source>crossSectionArea</source>
