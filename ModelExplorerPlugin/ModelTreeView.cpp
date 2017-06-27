@@ -82,7 +82,7 @@ void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QIt
 
           rengaapi::ObjectIdCollection objectIds;
           objectIds.add(rengaapi::ObjectId(id));
-          rengaapi::ModelSelection::setSelection(objectIds);
+          rengaapi::ModelSelection::setSelectionInActiveView(objectIds);
         }
       }
     }
