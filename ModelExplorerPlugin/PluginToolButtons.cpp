@@ -38,7 +38,7 @@ rengaapi::ToolButton PluginToolButtons::createModelExplorerButton(const std::wst
   rengaapi::ToolButton toolButton;
   toolButton.setClickHandler(m_pModelExplorerButtonHandler.get());
 
-  QString tooltip = QApplication::translate("plugin", "windowName");
+  QString tooltip = QApplication::translate("ModelExplorerDialog", "Model explorer");
   toolButton.setToolTip(rengabase::rengaStringFromStdWString(tooltip.toStdWString()));
 
   rengaapi::Image icon;

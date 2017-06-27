@@ -27,20 +27,20 @@ static const rengabase::String c_error = L"Error";
 
 ModelExplorerPlugin::ModelExplorerPlugin()
 {
-#ifdef _DEBUG
-//   NOTE: To debug a plugin you should create a debug QApplication in the plugin, 
-//   put the debug Qt dlls (can be found in separate repository) into the plugin folder (Renga installation folder/Plugins/PluginName), 
-//   put qwindowsd.dll into the "platform" folder in the plugin folder
-//   and set library paths to the application, as shown below
-  
-  QStringList paths = QCoreApplication::libraryPaths();
-  paths.append("your plugin folder path");
-  QCoreApplication::setLibraryPaths(paths);
-  
-  int argc = 0;
-  char** argv = 0;
-  m_pApp.reset(new QApplication(argc, argv));
-#endif
+//#ifdef _DEBUG
+////   NOTE: To debug a plugin you should create a debug QApplication in the plugin, 
+////   put the debug Qt dlls (can be found in separate repository) into the plugin folder (Renga installation folder/Plugins/PluginName), 
+////   put qwindowsd.dll into the "platform" folder in the plugin folder
+////   and set library paths to the application, as shown below
+//  
+//  QStringList paths = QCoreApplication::libraryPaths();
+//  paths.append("your plugin folder path");
+//  QCoreApplication::setLibraryPaths(paths);
+//  
+//  int argc = 0;
+//  char** argv = 0;
+//  m_pApp.reset(new QApplication(argc, argv));
+//#endif
 }
 
 ModelExplorerPlugin::~ModelExplorerPlugin()

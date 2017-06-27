@@ -2,14 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ModelExplorerDialog</name>
+    <message>
+        <source>Model explorer</source>
+        <extracomment>1.0</extracomment>
+        <translation>Обозреватель модели</translation>
+    </message>
+</context>
+<context>
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation>Свойство</translation>
+        <translation type="vanished">Свойство</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значение</translation>
+        <translation type="vanished">Значение</translation>
     </message>
 </context>
 <context>
@@ -48,11 +56,11 @@
     </message>
     <message>
         <source>crossSectionOverallWidth</source>
-        <translation>Полная ширина сечения, см</translation>
+        <translation>Полная ширина поперечного сечения, мм</translation>
     </message>
     <message>
         <source>crossSectionOverallHeight</source>
-        <translation>Полная высота сечения, см</translation>
+        <translation>Полная высота поперечного сечения, мм</translation>
     </message>
     <message>
         <source>crossSectionArea</source>
@@ -95,15 +103,11 @@
     </message>
     <message>
         <source>crossSectionOverallWidth</source>
-        <translation>Полная ширина поперечного сечения, мм²</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallDepth</source>
-        <translation>Полная глубина поперечного сечения, мм²</translation>
+        <translation>Полная ширина поперечного сечения, мм</translation>
     </message>
     <message>
         <source>crossSectionArea</source>
-        <translation>Площадь поперечного сечения, м²</translation>
+        <translation>Площадь поперечного сечения, см²</translation>
     </message>
     <message>
         <source>outerSurfaceArea</source>
@@ -111,7 +115,11 @@
     </message>
     <message>
         <source>perimeter</source>
-        <translation>Периметр сечения, мм</translation>
+        <translation>Периметр поперечного сечения, мм</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallHeight</source>
+        <translation>Полная высота поперечного сечения, мм</translation>
     </message>
 </context>
 <context>
@@ -242,59 +250,59 @@
     <name>modelObjects</name>
     <message>
         <source>Columns</source>
-        <translation>Колонны</translation>
+        <translation type="vanished">Колонны</translation>
     </message>
     <message>
         <source>Floors</source>
-        <translation>Перекрытия</translation>
+        <translation type="vanished">Перекрытия</translation>
     </message>
     <message>
         <source>Openings</source>
-        <translation>Проемы</translation>
+        <translation type="vanished">Проемы</translation>
     </message>
     <message>
         <source>Roofs</source>
-        <translation>Кровли</translation>
+        <translation type="vanished">Кровли</translation>
     </message>
     <message>
         <source>Beams</source>
-        <translation>Балки</translation>
+        <translation type="vanished">Балки</translation>
     </message>
     <message>
         <source>Stairs</source>
-        <translation>Лестницы</translation>
+        <translation type="vanished">Лестницы</translation>
     </message>
     <message>
         <source>Ramps</source>
-        <translation>Пандусы</translation>
+        <translation type="vanished">Пандусы</translation>
     </message>
     <message>
         <source>Windows</source>
-        <translation>Окна</translation>
+        <translation type="vanished">Окна</translation>
     </message>
     <message>
         <source>Doors</source>
-        <translation>Двери</translation>
+        <translation type="vanished">Двери</translation>
     </message>
     <message>
         <source>Railings</source>
-        <translation>Ограждения</translation>
+        <translation type="vanished">Ограждения</translation>
     </message>
     <message>
         <source>Walls</source>
-        <translation>Стены</translation>
+        <translation type="vanished">Стены</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>Помещения</translation>
+        <translation type="vanished">Помещения</translation>
     </message>
     <message>
         <source>Isolated foundations</source>
-        <translation>Одиночные фундаменты</translation>
+        <translation type="vanished">Одиночные фундаменты</translation>
     </message>
     <message>
         <source>Wall foundations</source>
-        <translation>Ленточные фундаменты</translation>
+        <translation type="vanished">Ленточные фундаменты</translation>
     </message>
 </context>
 <context>
@@ -326,13 +334,6 @@
     <message>
         <source>area</source>
         <translation>Площадь, м²</translation>
-    </message>
-</context>
-<context>
-    <name>plugin</name>
-    <message>
-        <source>windowName</source>
-        <translation>Обозреватель модели</translation>
     </message>
 </context>
 <context>

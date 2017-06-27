@@ -27,5 +27,6 @@ QString formatDoubleToString(const double value, const bool allowScientific, con
   else
   {
     assert(false);
+    return QString();
   }
 }

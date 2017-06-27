@@ -105,6 +105,9 @@ copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>update_translations.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -129,6 +132,9 @@ copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>update_translations.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -152,6 +158,9 @@ copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>update_translations.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -177,6 +186,9 @@ copy /y $(ProjectDir)modelexplorerplugin_ru.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(PlatformShortName)\modelexplorerplugin_en.qm
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>update_translations.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BeamPropertyViewBuilder.cpp" />

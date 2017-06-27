@@ -27,8 +27,6 @@ ModelExplorerWidget::ModelExplorerWidget()
   m_pUi.reset(new Ui::ModelExplorerDialog());
   m_pUi->setupUi(this);
 
-  setWindowTitle(QApplication::translate("plugin", "windowName"));
-
   // load main window stylesheet
   QFile styleFile(":/styles/mainFormStyle.qss");
   if(styleFile.open(QIODevice::ReadOnly))

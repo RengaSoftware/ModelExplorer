@@ -50,7 +50,7 @@ PropertyList ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
 	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "length"));
 	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "netVolume"));
   QtProperty* crossSectionOverallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionOverallWidth"));
-  QtProperty* crossSectionOverallDepth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionOverallDepth"));
+  QtProperty* crossSectionOverallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionOverallHeight"));
   QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionArea"));
 	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "outerSurfaceArea"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "perimeter"));
@@ -59,8 +59,8 @@ PropertyList ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
 	setLengthMeasureOptional(result, columnQuantities.nominalLength(), length);
 	setVolumeMeasureOptional(result, columnQuantities.netVolume(), netVolume);
   setLengthMeasureOptional(result, columnQuantities.crossSectionOverallWidth(), crossSectionOverallWidth);
-  setLengthMeasureOptional(result, columnQuantities.crossSectionOverallDepth(), crossSectionOverallDepth);
-  setAreaMeasureOptional(result, columnQuantities.crossSectionArea(), crossSectionArea);
+  setLengthMeasureOptional(result, columnQuantities.crossSectionOverallHeight(), crossSectionOverallHeight);
+  setAreaMeasureOptional(result, columnQuantities.crossSectionArea(), crossSectionArea, MeasureUnit::Centimeter);
 	setAreaMeasureOptional(result, columnQuantities.outerSurfaceArea(), outerSurfaceArea);
 	setLengthMeasureOptional(result, columnQuantities.perimeter(), perimeter);
 	setOneLayeredMass(result, pColumn->material(), columnQuantities.netVolume(), mass);

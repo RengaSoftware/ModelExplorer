@@ -2,14 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>ModelExplorerDialog</name>
+    <message>
+        <source>Model explorer</source>
+        <extracomment>1.0</extracomment>
+        <translation>Model explorer</translation>
+    </message>
+</context>
+<context>
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation>Property</translation>
+        <translation type="vanished">Property</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Value</translation>
+        <translation type="vanished">Value</translation>
     </message>
 </context>
 <context>
@@ -48,11 +56,11 @@
     </message>
     <message>
         <source>crossSectionOverallWidth</source>
-        <translation>Сross section width, cm</translation>
+        <translation>Сross section overall width, mm</translation>
     </message>
     <message>
         <source>crossSectionOverallHeight</source>
-        <translation>Cross section height, cm</translation>
+        <translation>Cross section overall height, mm</translation>
     </message>
     <message>
         <source>crossSectionArea</source>
@@ -95,15 +103,11 @@
     </message>
     <message>
         <source>crossSectionOverallWidth</source>
-        <translation>Cross section overall width, mm²</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallDepth</source>
-        <translation>Cross section overall depth, mm²</translation>
+        <translation>Cross section overall width, mm</translation>
     </message>
     <message>
         <source>crossSectionArea</source>
-        <translation>Cross section area, m²</translation>
+        <translation>Cross section area, cm²</translation>
     </message>
     <message>
         <source>outerSurfaceArea</source>
@@ -111,7 +115,11 @@
     </message>
     <message>
         <source>perimeter</source>
-        <translation>Cross perimeter, mm</translation>
+        <translation>Cross section perimeter, mm</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallHeight</source>
+        <translation>Cross section overall height, mm</translation>
     </message>
 </context>
 <context>
@@ -242,59 +250,59 @@
     <name>modelObjects</name>
     <message>
         <source>Columns</source>
-        <translation>Columns</translation>
+        <translation type="vanished">Columns</translation>
     </message>
     <message>
         <source>Floors</source>
-        <translation>Floors</translation>
+        <translation type="vanished">Floors</translation>
     </message>
     <message>
         <source>Openings</source>
-        <translation>Openings</translation>
+        <translation type="vanished">Openings</translation>
     </message>
     <message>
         <source>Roofs</source>
-        <translation>Roofs</translation>
+        <translation type="vanished">Roofs</translation>
     </message>
     <message>
         <source>Beams</source>
-        <translation>Beams</translation>
+        <translation type="vanished">Beams</translation>
     </message>
     <message>
         <source>Stairs</source>
-        <translation>Stairs</translation>
+        <translation type="vanished">Stairs</translation>
     </message>
     <message>
         <source>Ramps</source>
-        <translation>Ramps</translation>
+        <translation type="vanished">Ramps</translation>
     </message>
     <message>
         <source>Windows</source>
-        <translation>Windows</translation>
+        <translation type="vanished">Windows</translation>
     </message>
     <message>
         <source>Doors</source>
-        <translation>Doors</translation>
+        <translation type="vanished">Doors</translation>
     </message>
     <message>
         <source>Railings</source>
-        <translation>Railings</translation>
+        <translation type="vanished">Railings</translation>
     </message>
     <message>
         <source>Walls</source>
-        <translation>Walls</translation>
+        <translation type="vanished">Walls</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>Rooms</translation>
+        <translation type="vanished">Rooms</translation>
     </message>
     <message>
         <source>Isolated foundations</source>
-        <translation>Isolated foundations</translation>
+        <translation type="vanished">Isolated foundations</translation>
     </message>
     <message>
         <source>Wall foundations</source>
-        <translation>Wall foundations</translation>
+        <translation type="vanished">Wall foundations</translation>
     </message>
 </context>
 <context>
@@ -326,13 +334,6 @@
     <message>
         <source>area</source>
         <translation>Area, m²</translation>
-    </message>
-</context>
-<context>
-    <name>plugin</name>
-    <message>
-        <source>windowName</source>
-        <translation>Model explorer</translation>
     </message>
 </context>
 <context>

@@ -58,8 +58,8 @@ PropertyList BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 
 	setLengthMeasureOptional(result, beamQuantities.nominalLength(), length);
 	setVolumeMeasureOptional(result, beamQuantities.netVolume(), netVolume);
-  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallWidth(), crossSectionOverallWidth, MeasureUnit::Centimeter);
-  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallHeight(), crossSectionOverallHeight, MeasureUnit::Centimeter);
+  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallWidth(), crossSectionOverallWidth);
+  setLengthMeasureOptional(result, beamQuantities.crossSectionOverallHeight(), crossSectionOverallHeight);
   setAreaMeasureOptional(result, beamQuantities.crossSectionArea(), crossSectionArea, MeasureUnit::Centimeter);
 	setAreaMeasureOptional(result, beamQuantities.outerSurfaceArea(), outerSurfaceArea);
 	setLengthMeasureOptional(result, beamQuantities.perimeter(), perimeter);
