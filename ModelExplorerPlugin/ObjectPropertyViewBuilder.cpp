@@ -227,7 +227,8 @@ void ObjectPropertyViewBuilder::setMultiLayeredMass(PropertyList& insertPlace, c
     return;
 
   rengaapi::MaterialLayersCollection materialLayers = layeredMaterial.layers();
-  assert(volumeMeasureCollection.size() == materialLayers.size());
+  if (volumeMeasureCollection.size() != materialLayers.size())
+    return;
 
   double mass = 0.0;
   for(size_t i = 0; i < materialLayers.size(); ++i)
