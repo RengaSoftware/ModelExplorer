@@ -152,6 +152,10 @@
         <source>area</source>
         <translation>Площадь, м²</translation>
     </message>
+    <message>
+        <source>innerSurfaceArea</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>floor</name>
@@ -689,6 +693,10 @@
     <message>
         <source>area</source>
         <translation>Площадь, м²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceArea</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

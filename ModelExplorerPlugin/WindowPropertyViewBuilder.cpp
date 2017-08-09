@@ -49,11 +49,13 @@ PropertyList WindowPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
 	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "overallWidth"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "perimeter"));
 	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "area"));
+	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceArea"));
 
 	setLengthMeasureOptional(result, windowQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, windowQuantities.overallWidth(), overallWidth);
 	setLengthMeasureOptional(result, windowQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, windowQuantities.area(), area);
+	setAreaMeasureOptional(result, windowQuantities.innerSurfaceArea(), innerSurfaceArea);
 
   return result;
 }

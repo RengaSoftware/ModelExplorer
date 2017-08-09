@@ -49,11 +49,13 @@ PropertyList DoorPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "overallWidth"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "perimeter"));
 	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "area"));
+	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "innerSurfaceArea"));
 
 	setLengthMeasureOptional(result, doorQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, doorQuantities.overallWidth(), overallWidth);
 	setLengthMeasureOptional(result, doorQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, doorQuantities.area(), area);
+	setAreaMeasureOptional(result, doorQuantities.innerSurfaceArea(), innerSurfaceArea);
 
   return result;
 }
