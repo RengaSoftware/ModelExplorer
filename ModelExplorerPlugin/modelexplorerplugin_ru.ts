@@ -496,7 +496,7 @@
     </message>
     <message>
         <source>innerSurfaceArea</source>
-        <translation type="unfinished"></translation>
+        <translation>Площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 <context>
@@ -680,6 +680,10 @@
     <message>
         <source>area</source>
         <translation>Площадь, м²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceArea</source>
+        <translation>Площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 <context>
@@ -1038,7 +1042,7 @@
     </message>
     <message>
         <source>innerSurfaceArea</source>
-        <translation type="unfinished"></translation>
+        <translation>Площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 </TS>

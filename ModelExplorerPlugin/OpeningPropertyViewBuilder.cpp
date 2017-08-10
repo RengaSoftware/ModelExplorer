@@ -49,11 +49,13 @@ PropertyList OpeningPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mo
 	QtProperty* volume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "volume"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "perimeter"));
 	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "area"));
+  QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("opening", "innerSurfaceArea"));
 
   setLengthMeasureOptional(result, openingQuantities.nominalThickness(), thickness);
 	setVolumeMeasureOptional(result, openingQuantities.volume(), volume);
 	setLengthMeasureOptional(result, openingQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, openingQuantities.area(), area);
+  setAreaMeasureOptional(result, openingQuantities.innerSurfaceArea(), innerSurfaceArea);
 
   return result;
 }
