@@ -33,8 +33,6 @@ private:
   };
 
 private:
-  ObjectTypeData createTypeNodeData(rengaapi::ObjectType type, QString translationLiteral, QString iconPath);
-
   QList<QStandardItem*> buildObjectsSubtree(
     const rengaapi::ModelObjectCollection& objCollection,     
     const ObjectTypeData& typeData, 
