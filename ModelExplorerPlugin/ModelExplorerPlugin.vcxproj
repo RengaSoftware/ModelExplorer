@@ -133,8 +133,7 @@ copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>update_translations.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -188,8 +187,7 @@ copy /y $(ProjectDir)modelexplorerplugin_en.qm $(SolutionDir)$(Configuration)\$(
 copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configuration)\$(PlatformShortName)\ModelExplorerIcon.png</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>update_translations.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
