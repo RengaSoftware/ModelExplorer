@@ -498,6 +498,14 @@
         <source>innerSurfaceArea</source>
         <translation>Площадь внутренней поверхности, м²</translation>
     </message>
+    <message>
+        <source>innerSurfaceInternalArea</source>
+        <translation>Внутренняя площадь внутренней поверхности, м²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceExternalArea</source>
+        <translation>Внешняя площадь внутренней поверхности, м²</translation>
+    </message>
 </context>
 <context>
     <name>floor</name>
@@ -1043,6 +1051,14 @@
     <message>
         <source>innerSurfaceArea</source>
         <translation>Площадь внутренней поверхности, м²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceInternalArea</source>
+        <translation>Внутренняя площадь внутренней поверхности, м²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceExternalArea</source>
+        <translation>Внешняя площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 </TS>

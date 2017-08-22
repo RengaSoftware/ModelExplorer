@@ -50,12 +50,16 @@ PropertyList WindowPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "perimeter"));
 	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "area"));
 	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceArea"));
+  QtProperty* innerSurfaceInternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceInternalArea"));
+  QtProperty* innerSurfaceExternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceExternalArea"));
 
 	setLengthMeasureOptional(result, windowQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, windowQuantities.overallWidth(), overallWidth);
 	setLengthMeasureOptional(result, windowQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, windowQuantities.area(), area);
 	setAreaMeasureOptional(result, windowQuantities.innerSurfaceArea(), innerSurfaceArea);
+  setAreaMeasureOptional(result, windowQuantities.innerSurfaceInternalArea(), innerSurfaceInternalArea);
+  setAreaMeasureOptional(result, windowQuantities.innerSurfaceExternalArea(), innerSurfaceExternalArea);
 
   return result;
 }

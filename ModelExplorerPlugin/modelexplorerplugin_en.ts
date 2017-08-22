@@ -498,6 +498,14 @@
         <source>innerSurfaceArea</source>
         <translation>Inner surface area, m²</translation>
     </message>
+    <message>
+        <source>innerSurfaceInternalArea</source>
+        <translation>Inner surface internal area, m²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceExternalArea</source>
+        <translation>Inner surface external area, m²</translation>
+    </message>
 </context>
 <context>
     <name>floor</name>
@@ -1043,6 +1051,14 @@
     <message>
         <source>innerSurfaceArea</source>
         <translation>Inner surface area, m²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceInternalArea</source>
+        <translation>Inner surface internal area, m²</translation>
+    </message>
+    <message>
+        <source>innerSurfaceExternalArea</source>
+        <translation>Inner surface external area, m²</translation>
     </message>
 </context>
 </TS>

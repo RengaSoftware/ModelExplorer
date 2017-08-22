@@ -50,12 +50,16 @@ PropertyList DoorPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "perimeter"));
 	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "area"));
 	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "innerSurfaceArea"));
+  QtProperty* innerSurfaceInternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "innerSurfaceInternalArea"));
+  QtProperty* innerSurfaceExternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("door", "innerSurfaceExternalArea"));
 
 	setLengthMeasureOptional(result, doorQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, doorQuantities.overallWidth(), overallWidth);
 	setLengthMeasureOptional(result, doorQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, doorQuantities.area(), area);
 	setAreaMeasureOptional(result, doorQuantities.innerSurfaceArea(), innerSurfaceArea);
+  setAreaMeasureOptional(result, doorQuantities.innerSurfaceInternalArea(), innerSurfaceInternalArea);
+  setAreaMeasureOptional(result, doorQuantities.innerSurfaceExternalArea(), innerSurfaceExternalArea);
 
   return result;
 }
