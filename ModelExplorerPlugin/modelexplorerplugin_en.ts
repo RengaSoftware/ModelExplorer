@@ -923,6 +923,10 @@
         <source>netFloorArea</source>
         <translation>Footprint area, m²</translation>
     </message>
+    <message>
+        <source>nominalThickness</source>
+        <translation>Thickness, mm</translation>
+    </message>
 </context>
 <context>
     <name>wall</name>

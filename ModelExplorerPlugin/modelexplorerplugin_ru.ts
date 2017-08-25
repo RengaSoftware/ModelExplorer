@@ -504,7 +504,7 @@
     </message>
     <message>
         <source>innerSurfaceExternalArea</source>
-        <translation>Внешняя площадь внутренней поверхности, м²</translation>
+        <translation>Наружняя площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 <context>
@@ -923,6 +923,10 @@
         <source>netFloorArea</source>
         <translation>Площадь основания, м²</translation>
     </message>
+    <message>
+        <source>nominalThickness</source>
+        <translation>Толщина, мм</translation>
+    </message>
 </context>
 <context>
     <name>wall</name>
@@ -1058,7 +1062,7 @@
     </message>
     <message>
         <source>innerSurfaceExternalArea</source>
-        <translation>Внешняя площадь внутренней поверхности, м²</translation>
+        <translation>Наружняя площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 </TS>

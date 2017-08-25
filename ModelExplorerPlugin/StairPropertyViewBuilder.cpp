@@ -49,6 +49,7 @@ PropertyList StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mode
 	// height, width, netVolume, numberOfRiser, numberOfTreads, riserHeight, treadLength, netArea, netFloorArea, mass
   QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "height"));
   QtProperty* width = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "width"));
+  QtProperty* nominalThickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "nominalThickness"));
 	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "netVolume"));
 	QtProperty* numberOfRiser = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("stair", "numberOfRiser"));
 	QtProperty* numberOfTreads = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("stair", "numberOfTreads"));
@@ -63,6 +64,7 @@ PropertyList StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mode
 
   setLengthMeasureOptional(result, stairQuantities.nominalHeight(), height);
   setLengthMeasureOptional(result, stairQuantities.nominalWidth(), width);
+  setLengthMeasureOptional(result, stairQuantities.nominalThickness(), nominalThickness);
 	setVolumeMeasureOptional(result, stairQuantities.netVolume(), netVolume);
 	result.push_back(numberOfRiser);
 	result.push_back(numberOfTreads);
