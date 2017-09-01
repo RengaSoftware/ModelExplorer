@@ -61,7 +61,7 @@ PropertyList WallFoundationPropertyViewBuilder::createQuantitiesProperties(renga
 	setAreaMeasureOptional(result, wallFoundationQuantities.netFootprintArea(), netFootprintArea);
 	setAreaMeasureOptional(result, wallFoundationQuantities.netSideArea(), netSideArea);
 	setVolumeMeasureOptional(result, wallFoundationQuantities.netVolume(), netVolume);
-	setOneLayeredMass(result, pWallFoundation->material(), wallFoundationQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, wallFoundationQuantities.netMass(), mass);
 
   return result;
 }

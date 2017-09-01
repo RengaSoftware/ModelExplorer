@@ -199,48 +199,26 @@ void ObjectPropertyViewBuilder::setVolumeMeasureOptional(PropertyList& insertPla
   }
 }
 
-void ObjectPropertyViewBuilder::setOneLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const rengabase::VolumeMeasureOptional& volumeMeasure, QtProperty* pProperty)
+void ObjectPropertyViewBuilder::setMassMeasureOptional(PropertyList & insertPlace, const rengabase::MassMeasureOptional & measure, QtProperty * pProperty, MassMeasureUnit unit)
 {
-  assert(rengaapi::Materials::materialType(materialId) == rengaapi::Materials::MaterialType::OneLayered);
-
-  if (!volumeMeasure.hasValue())
-    return;
-
-  rengaapi::Material material;
-  rengaapi::Materials::material(materialId, material);
-  if (material.isNull())
-    return;
-
-  double mass = material.density() * volumeMeasure.getValue()->inMeters3();
-  m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, mass);
-
-  insertPlace.push_back(pProperty);
-}
-
-void ObjectPropertyViewBuilder::setMultiLayeredMass(PropertyList& insertPlace, const rengaapi::MaterialId& materialId, const std::vector<rengabase::VolumeMeasureOptional> volumeMeasureCollection, QtProperty* pProperty)
-{
-  assert (rengaapi::Materials::materialType(materialId) == rengaapi::Materials::MaterialType::MultiLayered);
-
-  rengaapi::LayeredMaterial layeredMaterial;
-  rengaapi::Materials::layeredMaterial(materialId, layeredMaterial);
-  if (layeredMaterial.isNull())
-    return;
-
-  rengaapi::MaterialLayersCollection materialLayers = layeredMaterial.layers();
-  if (volumeMeasureCollection.size() != materialLayers.size())
-    return;
-
-  double mass = 0.0;
-  for(size_t i = 0; i < materialLayers.size(); ++i)
+  if (measure.hasValue())
   {
-    if (volumeMeasureCollection[i].hasValue())
-    {
-      rengaapi::Material materialLayer = materialLayers.get(i).material();
-      if (!materialLayer.isNull())
-        mass += materialLayer.density() * volumeMeasureCollection[i].getValue()->inMeters3();
-    }
-  }
-  m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, mass);
+    const rengabase::MassMeasure* massMeasure = measure.getValue();
+    double propertyValue;
 
-  insertPlace.push_back(pProperty);
+    switch (unit)
+    {
+    case ObjectPropertyViewBuilder::kg:
+      propertyValue = massMeasure->inKilograms();
+      break;
+    case ObjectPropertyViewBuilder::ton:
+      propertyValue = massMeasure->inTons();
+      break;
+    default:
+      propertyValue = massMeasure->inKilograms();
+      break;
+    }
+    m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, propertyValue);
+    insertPlace.push_back(pProperty);
+  }
 }

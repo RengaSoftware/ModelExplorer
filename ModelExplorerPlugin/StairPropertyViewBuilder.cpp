@@ -72,7 +72,7 @@ PropertyList StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mode
 	setLengthMeasureOptional(result, stairQuantities.treadLength(), treadLength);
 	setAreaMeasureOptional(result, stairQuantities.netArea(), netArea);
 	setAreaMeasureOptional(result, stairQuantities.netFloorArea(), netFloorArea);
-	setOneLayeredMass(result, pStair->material(), stairQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, stairQuantities.netMass(), mass);
 	
   return result;
 }

@@ -44,26 +44,17 @@ PropertyList RoofPropertyViewBuilder::createParametersProperties(rengaapi::Model
 PropertyList RoofPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Roof* pRoof = dynamic_cast<rengaapi::Roof*>(pObject);
-	PropertyList result;
+  rengaapi::RoofQuantities roofQuantities = pRoof->quantities();
 
-	rengaapi::RoofQuantities roofQuantities = pRoof->quantities();
-	rengaapi::RoofMaterialLayerQuantityCollection roofMaterialLayerQuantityCollection = roofQuantities.materialQuantities();
-	std::vector<rengabase::VolumeMeasureOptional> volumeCollection;
-	for (size_t i = 0 ; i < roofMaterialLayerQuantityCollection.size() ; ++i)
-  {
-		volumeCollection.push_back(roofMaterialLayerQuantityCollection.get(i).netVolume());
-  }
-
-	// thickness, netVolume, totalSurfaceArea, mass
   QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "thickness"));
 	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "netVolume"));
 	QtProperty* totalSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "totalSurfaceArea"));
 	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "mass"));
 
+  PropertyList result;
   setLengthMeasureOptional(result, roofQuantities.nominalThickness(), thickness);
 	setVolumeMeasureOptional(result, roofQuantities.netVolume(), netVolume);
 	setAreaMeasureOptional(result, roofQuantities.totalSurfaceArea(), totalSurfaceArea);
-	setMultiLayeredMass(result, pRoof->material(), volumeCollection, mass);
-
+	setMassMeasureOptional(result, roofQuantities.netMass(), mass);
   return result;
 }

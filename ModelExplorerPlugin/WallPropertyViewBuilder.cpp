@@ -43,17 +43,8 @@ PropertyList WallPropertyViewBuilder::createParametersProperties(rengaapi::Model
 PropertyList WallPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Wall* pWall = dynamic_cast<rengaapi::Wall*>(pObject);
-	PropertyList result;
-
 	rengaapi::WallQuantities wallQuantities = pWall->quantities();
-	rengaapi::WallMaterialLayerQuantityCollection wallMaterialLayerQuantityCollection = wallQuantities.materialQuantities();
-	std::vector<rengabase::VolumeMeasureOptional> volumeCollection;
-	for (size_t i = 0 ; i < wallMaterialLayerQuantityCollection.size() ; ++i)
-  {
-		volumeCollection.push_back(wallMaterialLayerQuantityCollection.get(i).netVolume());
-  }
-
-	// length, thickness, height, netVolume, netFootprintArea, netSideArea, mass
+	
   QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "length"));
   QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "thickness"));
   QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "height"));
@@ -62,13 +53,13 @@ PropertyList WallPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	QtProperty* netSideArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "netSideArea"));
 	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("wall", "mass"));
 
+  PropertyList result;
 	setLengthMeasureOptional(result, wallQuantities.nominalLength(), length);
   setLengthMeasureOptional(result, wallQuantities.nominalThickness(), thickness);
   setLengthMeasureOptional(result, wallQuantities.nominalHeight(), height);
 	setVolumeMeasureOptional(result, wallQuantities.netVolume(), netVolume);
 	setAreaMeasureOptional(result, wallQuantities.netFootprintArea(), netFootprintArea);
 	setAreaMeasureOptional(result, wallQuantities.netSideArea(), netSideArea);
-	setMultiLayeredMass(result, pWall->material(), volumeCollection, mass);
-
+	setMassMeasureOptional(result, wallQuantities.netMass(), mass);
   return result;
 }

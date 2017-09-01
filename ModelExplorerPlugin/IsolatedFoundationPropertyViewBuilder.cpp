@@ -59,7 +59,7 @@ PropertyList IsolatedFoundationPropertyViewBuilder::createQuantitiesProperties(r
 	setLengthMeasureOptional(result, isolatedFoundationQuantities.overallHeight(), overallHeight);
 	setAreaMeasureOptional(result, isolatedFoundationQuantities.netFootprintArea(), netFootprintArea);
 	setVolumeMeasureOptional(result, isolatedFoundationQuantities.netVolume(), netVolume);
-	setOneLayeredMass(result, pIsolatedFoundation->material(), isolatedFoundationQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, isolatedFoundationQuantities.netMass(), mass);
 
   return result;
 }

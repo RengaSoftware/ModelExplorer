@@ -43,28 +43,19 @@ PropertyList FloorPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 PropertyList FloorPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
 {
 	rengaapi::Floor* pFloor = dynamic_cast<rengaapi::Floor*>(pObject);
-	PropertyList result;
+  rengaapi::FloorQuantities floorQuantities = pFloor->quantities();
 
-	rengaapi::FloorQuantities floorQuantities = pFloor->quantities();
-	rengaapi::FloorMaterialLayerQuantityCollection floorMaterialLayerQuantityCollection = floorQuantities.materialQuantities();
-	std::vector<rengabase::VolumeMeasureOptional> volumeCollection;
-	for (size_t i = 0 ; i < floorMaterialLayerQuantityCollection.size() ; ++i)
-  {
-		volumeCollection.push_back(floorMaterialLayerQuantityCollection.get(i).netVolume());
-  }
-
-	// nominalThickness, netVolume, perimeter, netArea, mass
   QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "thickness"));
 	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "netVolume"));
 	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "perimeter"));
 	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "netArea"));
 	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "mass"));
 
+  PropertyList result;
 	setLengthMeasureOptional(result, floorQuantities.nominalThickness(), thickness);
   setVolumeMeasureOptional(result, floorQuantities.netVolume(), netVolume);
 	setLengthMeasureOptional(result, floorQuantities.perimeter(), perimeter);
 	setAreaMeasureOptional(result, floorQuantities.netArea(), netArea);
-	setMultiLayeredMass(result, pFloor->material(), volumeCollection, mass);
-
+	setMassMeasureOptional(result, floorQuantities.netMass(), mass);
   return result;
 }

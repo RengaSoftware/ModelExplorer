@@ -63,7 +63,7 @@ PropertyList BeamPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
   setAreaMeasureOptional(result, beamQuantities.crossSectionArea(), crossSectionArea, MeasureUnit::Centimeter);
 	setAreaMeasureOptional(result, beamQuantities.outerSurfaceArea(), outerSurfaceArea);
 	setLengthMeasureOptional(result, beamQuantities.perimeter(), perimeter);
-	setOneLayeredMass(result, pBeam->material(), beamQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, beamQuantities.netMass(), mass);
 
   return result;
 }

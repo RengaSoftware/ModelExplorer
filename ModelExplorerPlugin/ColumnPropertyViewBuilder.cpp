@@ -63,7 +63,7 @@ PropertyList ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
   setAreaMeasureOptional(result, columnQuantities.crossSectionArea(), crossSectionArea, MeasureUnit::Centimeter);
 	setAreaMeasureOptional(result, columnQuantities.outerSurfaceArea(), outerSurfaceArea);
 	setLengthMeasureOptional(result, columnQuantities.perimeter(), perimeter);
-	setOneLayeredMass(result, pColumn->material(), columnQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, columnQuantities.netMass(), mass);
 
   return result;
 }

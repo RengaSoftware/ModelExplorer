@@ -61,7 +61,7 @@ PropertyList RampPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	setVolumeMeasureOptional(result, rampQuantities.netVolume(), netVolume);
 	setAreaMeasureOptional(result, rampQuantities.netArea(), netArea);
 	setAreaMeasureOptional(result, rampQuantities.netFloorArea(), netFloorArea);
-	setOneLayeredMass(result, pRamp->material(), rampQuantities.netVolume(), mass);
+	setMassMeasureOptional(result, rampQuantities.netMass(), mass);
 
   return result;
 }
