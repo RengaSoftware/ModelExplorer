@@ -57,4 +57,5 @@ private:
 private:
   ObjectSelectionHandler m_objectSelectionHandler;
   std::unique_ptr<QStandardItemModel> m_pModel;
+  bool m_wasObjectSelectedInModel;
 };

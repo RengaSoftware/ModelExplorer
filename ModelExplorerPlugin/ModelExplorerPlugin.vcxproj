@@ -192,6 +192,7 @@ copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configurati
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BeamPropertyViewBuilder.cpp" />
+    <ClCompile Include="BoolGuard.cpp" />
     <ClCompile Include="ColumnPropertyViewBuilder.cpp" />
     <ClCompile Include="DoorPropertyViewBuilder.cpp" />
     <ClCompile Include="FloorPropertyViewBuilder.cpp" />
@@ -297,6 +298,7 @@ copy /y $(ProjectDir)Resources\ModelExplorerIcon.png $(SolutionDir)$(Configurati
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BeamPropertyViewBuilder.h" />
+    <ClInclude Include="BoolGuard.h" />
     <ClInclude Include="ColumnPropertyViewBuilder.h" />
     <ClInclude Include="DoorPropertyViewBuilder.h" />
     <ClInclude Include="FloorPropertyViewBuilder.h" />

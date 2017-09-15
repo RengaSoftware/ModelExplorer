@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "ModelTreeView.h"
 #include "ModelTreeBuilder.h"
+#include "BoolGuard.h"
 
 #include <QtWidgets/QHeaderView.h>
 
@@ -19,7 +20,8 @@ const QItemSelectionModel::SelectionFlags c_selectRows = QItemSelectionModel::Se
 const QItemSelectionModel::SelectionFlags c_selectCurrentRows = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
 
 ModelTreeView::ModelTreeView(QWidget* pParent /*= nullptr*/)
-  : QTreeView(pParent)
+  : QTreeView(pParent),
+    m_wasObjectSelectedInModel(false)
 {
   connect(&m_objectSelectionHandler, 
     SIGNAL(objectSelected(const rengaapi::ObjectId&)), 
@@ -80,9 +82,12 @@ void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QIt
           const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
           updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
 
-          rengaapi::ObjectIdCollection objectIds;
-          objectIds.add(rengaapi::ObjectId(id));
-          rengaapi::ModelSelection::setSelectionInActiveView(objectIds);
+          if (!m_wasObjectSelectedInModel)
+          {
+            rengaapi::ObjectIdCollection objectIds;
+            objectIds.add(rengaapi::ObjectId(id));
+            rengaapi::ModelSelection::setSelectionInActiveView(objectIds);
+          }
         }
       }
     }
@@ -104,6 +109,9 @@ void ModelTreeView::onRengaObjectSelected(const rengaapi::ObjectId& objectId)
   if (!indexList.empty())
   {
     QItemSelectionModel* pSelectionModel = selectionModel();
+
+    BoolGuard guard(m_wasObjectSelectedInModel, true);
+
     pSelectionModel->setCurrentIndex(indexList.first(), c_selectCurrentRows);
     pSelectionModel->select(indexList.first(), c_selectCurrentRows);
 
