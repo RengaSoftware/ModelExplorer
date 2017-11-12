@@ -21,10 +21,10 @@ PropertyList RoofPropertyViewBuilder::createParametersProperties(rengaapi::Model
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("roof", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_roof", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_roof", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_roof", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_roof", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRoof->name()));
 
@@ -46,10 +46,10 @@ PropertyList RoofPropertyViewBuilder::createQuantitiesProperties(rengaapi::Model
 	rengaapi::Roof* pRoof = dynamic_cast<rengaapi::Roof*>(pObject);
   rengaapi::RoofQuantities roofQuantities = pRoof->quantities();
 
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "thickness"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "netVolume"));
-	QtProperty* totalSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "totalSurfaceArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("roof", "mass"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_roof", "thickness"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_roof", "netVolume"));
+	QtProperty* totalSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_roof", "totalSurfaceArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_roof", "mass"));
 
   PropertyList result;
   setLengthMeasureOptional(result, roofQuantities.nominalThickness(), thickness);

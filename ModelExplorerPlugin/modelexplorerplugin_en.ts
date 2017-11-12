@@ -363,7 +363,7 @@
     </message>
 </context>
 <context>
-    <name>beam</name>
+    <name>me_beam</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -414,7 +414,7 @@
     </message>
 </context>
 <context>
-    <name>column</name>
+    <name>me_column</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -465,7 +465,7 @@
     </message>
 </context>
 <context>
-    <name>door</name>
+    <name>me_door</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -508,7 +508,7 @@
     </message>
 </context>
 <context>
-    <name>floor</name>
+    <name>me_floor</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -547,7 +547,7 @@
     </message>
 </context>
 <context>
-    <name>isolatedFoundation</name>
+    <name>me_isolatedFoundation</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -590,7 +590,7 @@
     </message>
 </context>
 <context>
-    <name>level</name>
+    <name>me_level</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -601,7 +601,7 @@
     </message>
 </context>
 <context>
-    <name>modelObjects</name>
+    <name>me_modelObjects</name>
     <message>
         <source>Columns</source>
         <translation>Columns</translation>
@@ -660,7 +660,7 @@
     </message>
 </context>
 <context>
-    <name>opening</name>
+    <name>me_opening</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -695,7 +695,7 @@
     </message>
 </context>
 <context>
-    <name>propertyView</name>
+    <name>me_propertyView</name>
     <message>
         <source>Object parameters</source>
         <translation>Object parameters</translation>
@@ -730,7 +730,7 @@
     </message>
 </context>
 <context>
-    <name>railing</name>
+    <name>me_railing</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -753,7 +753,7 @@
     </message>
 </context>
 <context>
-    <name>ramp</name>
+    <name>me_ramp</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -800,7 +800,7 @@
     </message>
 </context>
 <context>
-    <name>roof</name>
+    <name>me_roof</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -835,7 +835,7 @@
     </message>
 </context>
 <context>
-    <name>room</name>
+    <name>me_room</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -866,7 +866,7 @@
     </message>
 </context>
 <context>
-    <name>stair</name>
+    <name>me_stair</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -929,7 +929,7 @@
     </message>
 </context>
 <context>
-    <name>wall</name>
+    <name>me_wall</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -976,7 +976,7 @@
     </message>
 </context>
 <context>
-    <name>wallFoundation</name>
+    <name>me_wallFoundation</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -1023,7 +1023,7 @@
     </message>
 </context>
 <context>
-    <name>window</name>
+    <name>me_window</name>
     <message>
         <source>name</source>
         <translation>Name</translation>

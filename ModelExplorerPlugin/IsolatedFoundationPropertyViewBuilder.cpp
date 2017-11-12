@@ -21,10 +21,10 @@ PropertyList IsolatedFoundationPropertyViewBuilder::createParametersProperties(r
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("isolatedFoundation", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("isolatedFoundation", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("isolatedFoundation", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_isolatedFoundation", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_isolatedFoundation", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_isolatedFoundation", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pIsolatedFoundation->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pIsolatedFoundation->offset().inMillimeters());
@@ -47,12 +47,12 @@ PropertyList IsolatedFoundationPropertyViewBuilder::createQuantitiesProperties(r
 	rengaapi::IsolatedFoundationQuantities isolatedFoundationQuantities = pIsolatedFoundation->quantities();
 
 	// overallWidth, overallDepth, overallHeight, netFootprintArea, netVolume, mass
-	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "overallWidth"));
-	QtProperty* overallDepth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "overallDepth"));
-	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "overallHeight"));
-	QtProperty* netFootprintArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "netFootprintArea"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "netVolume"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("isolatedFoundation", "mass"));
+	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "overallWidth"));
+	QtProperty* overallDepth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "overallDepth"));
+	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "overallHeight"));
+	QtProperty* netFootprintArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "netFootprintArea"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "netVolume"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_isolatedFoundation", "mass"));
 
 	setLengthMeasureOptional(result, isolatedFoundationQuantities.overallWidth(), overallWidth);
 	setLengthMeasureOptional(result, isolatedFoundationQuantities.overallDepth(), overallDepth);

@@ -21,8 +21,8 @@ PropertyList LevelPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	PropertyList result;
 
 	// name, elevation
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("level", "name"));
-	QtProperty* elevation = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("level", "elevation"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_level", "name"));
+	QtProperty* elevation = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_level", "elevation"));
 
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pLevel->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(elevation, pLevel->elevation().inMeters());

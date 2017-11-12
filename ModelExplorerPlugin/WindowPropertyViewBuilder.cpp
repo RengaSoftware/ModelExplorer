@@ -21,9 +21,9 @@ PropertyList WindowPropertyViewBuilder::createParametersProperties(rengaapi::Mod
 	PropertyList result;
 
 	// name, offset, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("window", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "offset"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("window", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_window", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "offset"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_window", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pWindow->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pWindow->offset().inMillimeters());
@@ -45,13 +45,13 @@ PropertyList WindowPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
   PropertyList result;
 
 	// overallHeight, overallWidth, perimeter, area
-	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "overallHeight"));
-	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "overallWidth"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "perimeter"));
-	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "area"));
-	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceArea"));
-  QtProperty* innerSurfaceInternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceInternalArea"));
-  QtProperty* innerSurfaceExternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("window", "innerSurfaceExternalArea"));
+	QtProperty* overallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "overallHeight"));
+	QtProperty* overallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "overallWidth"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "perimeter"));
+	QtProperty* area = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "area"));
+	QtProperty* innerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "innerSurfaceArea"));
+  QtProperty* innerSurfaceInternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "innerSurfaceInternalArea"));
+  QtProperty* innerSurfaceExternalArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_window", "innerSurfaceExternalArea"));
 
 	setLengthMeasureOptional(result, windowQuantities.overallHeight(), overallHeight);
 	setLengthMeasureOptional(result, windowQuantities.overallWidth(), overallWidth);

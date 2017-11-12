@@ -21,10 +21,10 @@ PropertyList ColumnPropertyViewBuilder::createParametersProperties(rengaapi::Mod
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("column", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("column", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("column", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_column", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_column", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_column", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pColumn->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pColumn->offset().inMillimeters());
@@ -47,14 +47,14 @@ PropertyList ColumnPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mod
 	rengaapi::ColumnQuantities columnQuantities = pColumn->quantities();
 
 	// length, netVolume, crossSectionArea, outerSurfaceArea, perimeter, mass
-	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "length"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "netVolume"));
-  QtProperty* crossSectionOverallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionOverallWidth"));
-  QtProperty* crossSectionOverallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionOverallHeight"));
-  QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "crossSectionArea"));
-	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "outerSurfaceArea"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "perimeter"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("column", "mass"));
+	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "length"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "netVolume"));
+  QtProperty* crossSectionOverallWidth = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "crossSectionOverallWidth"));
+  QtProperty* crossSectionOverallHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "crossSectionOverallHeight"));
+  QtProperty* crossSectionArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "crossSectionArea"));
+	QtProperty* outerSurfaceArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "outerSurfaceArea"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "perimeter"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_column", "mass"));
 
 	setLengthMeasureOptional(result, columnQuantities.nominalLength(), length);
 	setVolumeMeasureOptional(result, columnQuantities.netVolume(), netVolume);

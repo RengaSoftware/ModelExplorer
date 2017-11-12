@@ -112,9 +112,9 @@ void ObjectPropertyView::buildPropertyViewSingleCategory(const QString& category
 
 void ObjectPropertyView::buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
 {
-  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Object parameters"), parameters);
-  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Calculated characteristics"), calculated);
-  buildPropertyViewSingleCategory(QApplication::translate("propertyView", "Object properties"), userDefinedProperties);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters"), parameters);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Calculated characteristics"), calculated);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object properties"), userDefinedProperties);
 }
 
 bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)

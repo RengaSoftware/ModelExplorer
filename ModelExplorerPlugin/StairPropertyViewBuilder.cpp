@@ -21,10 +21,10 @@ PropertyList StairPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("stair", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("stair", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("stair", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_stair", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_stair", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_stair", "mark"));
 
 	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pStair->name()));
   m_pPropertyManagers->m_pDoubleManager->setValue(offset, pStair->offset().inMillimeters());
@@ -47,17 +47,17 @@ PropertyList StairPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mode
 	rengaapi::StairQuantities stairQuantities = pStair->quantities();
 
 	// height, width, netVolume, numberOfRiser, numberOfTreads, riserHeight, treadLength, netArea, netFloorArea, mass
-  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "height"));
-  QtProperty* width = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "width"));
-  QtProperty* nominalThickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "nominalThickness"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "netVolume"));
-	QtProperty* numberOfRiser = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("stair", "numberOfRiser"));
-	QtProperty* numberOfTreads = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("stair", "numberOfTreads"));
-	QtProperty* riserHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "riserHeight"));
-	QtProperty* treadLength = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "treadLength"));
-	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "netArea"));
-	QtProperty* netFloorArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "netFloorArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("stair", "mass"));
+  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "height"));
+  QtProperty* width = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "width"));
+  QtProperty* nominalThickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "nominalThickness"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "netVolume"));
+	QtProperty* numberOfRiser = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("me_stair", "numberOfRiser"));
+	QtProperty* numberOfTreads = m_pPropertyManagers->m_pIntManager->addProperty(QApplication::translate("me_stair", "numberOfTreads"));
+	QtProperty* riserHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "riserHeight"));
+	QtProperty* treadLength = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "treadLength"));
+	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "netArea"));
+	QtProperty* netFloorArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "netFloorArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_stair", "mass"));
 
 	m_pPropertyManagers->m_pIntManager->setValue(numberOfRiser, stairQuantities.numberOfRiser());
 	m_pPropertyManagers->m_pIntManager->setValue(numberOfTreads, stairQuantities.numberOfTreads());

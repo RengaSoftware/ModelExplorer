@@ -33,11 +33,11 @@ ModelExplorerWidget::ModelExplorerWidget()
     setStyleSheet(styleFile.readAll());
 
   // load UI
-  QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", QApplication::translate("propertyView", "refresh"));
+  QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", QApplication::translate("me_propertyView", "refresh"));
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
-  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("propertyView", "visible"));
-  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", QApplication::translate("propertyView", "hidden"));
+  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "visible"));
+  QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", QApplication::translate("me_propertyView", "hidden"));
 
   // top toolbar
   QToolBar* pTopToolBar = createToolBar(m_pUi->layoutWidget);
@@ -53,11 +53,11 @@ ModelExplorerWidget::ModelExplorerWidget()
   m_pUi->topVerticalLayout->addWidget(m_pModelTreeView);
 
   // view mode buttons
-  QPushButton* pCategoryButton = createPushButton(":/icons/Category.png", QApplication::translate("propertyView", "category"));
+  QPushButton* pCategoryButton = createPushButton(":/icons/Category.png", QApplication::translate("me_propertyView", "category"));
   pCategoryButton->setCheckable(true);
   pCategoryButton->setChecked(true);
 
-  QPushButton* pListButton = createPushButton(":/icons/List.png", QApplication::translate("propertyView", "list"));
+  QPushButton* pListButton = createPushButton(":/icons/List.png", QApplication::translate("me_propertyView", "list"));
   pListButton->setCheckable(true);
 
   // bottom toolbar

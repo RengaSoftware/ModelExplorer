@@ -21,10 +21,10 @@ PropertyList FloorPropertyViewBuilder::createParametersProperties(rengaapi::Mode
 	PropertyList result;
 
 	// name, offset, material, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("floor", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "offset"));
-	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("floor", "material"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("floor", "mark"));
+	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_floor", "name"));
+	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "offset"));
+	QtProperty* material = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_floor", "material"));
+	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_floor", "mark"));
 
   m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pFloor->name()));
 	m_pPropertyManagers->m_pDoubleManager->setValue(offset, pFloor->offset().inMillimeters());
@@ -45,11 +45,11 @@ PropertyList FloorPropertyViewBuilder::createQuantitiesProperties(rengaapi::Mode
 	rengaapi::Floor* pFloor = dynamic_cast<rengaapi::Floor*>(pObject);
   rengaapi::FloorQuantities floorQuantities = pFloor->quantities();
 
-  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "thickness"));
-	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "netVolume"));
-	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "perimeter"));
-	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "netArea"));
-	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("floor", "mass"));
+  QtProperty* thickness = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "thickness"));
+	QtProperty* netVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "netVolume"));
+	QtProperty* perimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "perimeter"));
+	QtProperty* netArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "netArea"));
+	QtProperty* mass = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_floor", "mass"));
 
   PropertyList result;
 	setLengthMeasureOptional(result, floorQuantities.nominalThickness(), thickness);

@@ -39,20 +39,20 @@ ModelTreeBuilder::ObjectTypeData::ObjectTypeData(rengaapi::ObjectType type, QStr
 
 ModelTreeBuilder::ModelTreeBuilder()
 {
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WallType, QApplication::translate("modelObjects", "Walls"), ":/icons/Wall"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::ColumnType, QApplication::translate("modelObjects", "Columns"), ":/icons/Column"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::FloorType, QApplication::translate("modelObjects", "Floors"), ":/icons/Floor"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::OpeningType, QApplication::translate("modelObjects", "Openings"), ":/icons/Opening"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RoofType, QApplication::translate("modelObjects", "Roofs"), ":/icons/Roof"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::BeamType, QApplication::translate("modelObjects", "Beams"), ":/icons/Beam"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::StairType, QApplication::translate("modelObjects", "Stairs"), ":/icons/Stair"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RampType, QApplication::translate("modelObjects", "Ramps"), ":/icons/Ramp"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WindowType, QApplication::translate("modelObjects", "Windows"), ":/icons/Window"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::DoorType, QApplication::translate("modelObjects", "Doors"), ":/icons/Door"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RailingType, QApplication::translate("modelObjects", "Railings"), ":/icons/Railing"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RoomType, QApplication::translate("modelObjects", "Rooms"), ":/icons/Room"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::IsolatedFoundationType, QApplication::translate("modelObjects", "Isolated foundations"), ":/icons/Isolated_foundation"));
-  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WallFoundationType, QApplication::translate("modelObjects", "Wall foundations"), ":/icons/Wall_foundation"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WallType, QApplication::translate("me_modelObjects", "Walls"), ":/icons/Wall"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::ColumnType, QApplication::translate("me_modelObjects", "Columns"), ":/icons/Column"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::FloorType, QApplication::translate("me_modelObjects", "Floors"), ":/icons/Floor"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::OpeningType, QApplication::translate("me_modelObjects", "Openings"), ":/icons/Opening"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RoofType, QApplication::translate("me_modelObjects", "Roofs"), ":/icons/Roof"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::BeamType, QApplication::translate("me_modelObjects", "Beams"), ":/icons/Beam"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::StairType, QApplication::translate("me_modelObjects", "Stairs"), ":/icons/Stair"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RampType, QApplication::translate("me_modelObjects", "Ramps"), ":/icons/Ramp"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WindowType, QApplication::translate("me_modelObjects", "Windows"), ":/icons/Window"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::DoorType, QApplication::translate("me_modelObjects", "Doors"), ":/icons/Door"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RailingType, QApplication::translate("me_modelObjects", "Railings"), ":/icons/Railing"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::RoomType, QApplication::translate("me_modelObjects", "Rooms"), ":/icons/Room"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::IsolatedFoundationType, QApplication::translate("me_modelObjects", "Isolated foundations"), ":/icons/Isolated_foundation"));
+  m_objectTypeDataArray.push_back( ObjectTypeData(rengaapi::ModelObjectTypes::WallFoundationType, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation"));
 }
 
 QStandardItemModel* ModelTreeBuilder::buildModelTree()
