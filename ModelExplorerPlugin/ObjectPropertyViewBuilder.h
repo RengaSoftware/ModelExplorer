@@ -12,41 +12,29 @@
 
 #include <qteditorfactory.h>
 
-#include <RengaAPI/MaterialId.h>
-#include <RengaBase/LengthMeasureOptional.h>
-#include <RengaBase/AreaMeasureOptional.h>
-#include <RengaBase/VolumeMeasureOptional.h>
-#include <RengaBase/MassMeasureOptional.h>
 
 class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
 {
 public:
-	ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
+  ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
 
-	virtual PropertyList createParametersProperties(rengaapi::ModelObject* pObject) = 0;
-	virtual PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0;
-	PropertyList createUserAttributesProperties(rengaapi::ModelObject* pObject);
+  virtual void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject);
+  virtual void createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject);
 
-	static QString getMaterialName(const rengaapi::MaterialId& materialId);
+  PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject);
 
-  enum MeasureUnit
-  {
-    Meter = 0,
-    Centimeter = 1,
-    Millimeter = 2,
-    Inch = 3
-  };
-  void setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Millimeter);
-  void setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Meter);
-  void setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit = MeasureUnit::Meter);
+  QString getMaterialName(const Renga::MaterialId& materialId);
+  QString getLayeredMaterialName(const Renga::LayeredMaterialId& layeredMaterialId);
 
-  enum MassMeasureUnit
-  {
-    kg,
-    ton
-  };
-  void setMassMeasureOptional(PropertyList& insertPlace, const rengabase::MassMeasureOptional& measure, QtProperty* pProperty, MassMeasureUnit unit = MassMeasureUnit::kg);
+  void addValue(PropertyList& propertyList, const QString& name, const int value) const;
+  void addValue(PropertyList& propertyList, const QString& name, const double value) const;
+  void addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
+  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const;
+  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
+
+  //void pushValue(PropertyList& propertyList, QtProperty* pProperty);
 
 protected:
+  Renga::IApplicationPtr m_pApplication;
   const PropertyManagers* m_pPropertyManagers;
 };

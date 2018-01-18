@@ -14,9 +14,10 @@
 class ObjectPropertyViewBuilderFactory
 {
 public:
-  ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers);
-	ObjectPropertyViewBuilder* createBuilder(rengaapi::ModelObject* pModelObject);
+  ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  ObjectPropertyViewBuilder* createBuilder(Renga::IModelObjectPtr pModelObject);
 
 private:
+  Renga::IApplicationPtr m_pApplication;
   const PropertyManagers* m_pPropertyManagers;
 };

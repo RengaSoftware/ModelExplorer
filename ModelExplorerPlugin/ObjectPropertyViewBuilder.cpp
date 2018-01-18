@@ -8,81 +8,151 @@
 
 #include "stdafx.h"
 #include "ObjectPropertyViewBuilder.h"
+#include "GuidUtils.h"
 
-#include <RengaAPI/Materials.h>
-#include <RengaAPI/Project.h>
-#include <RengaAPI/UserAttributeRegister.h>
-#include <RengaAPI/UserAttributeDescription.h>
-#include <RengaBase/AreaMeasure.h>
-#include <RengaBase/LengthMeasure.h>
-#include <RengaBase/VolumeMeasure.h>
+#include <Renga/QuantityIds.h>
 
-ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers)
-  : m_pPropertyManagers(pPropertyManagers)
-{}
 
-PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi::ModelObject* pObject)
+ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+  m_pApplication(pApplication),
+  m_pPropertyManagers(pPropertyManagers)
+{
+}
+
+void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
+{
+  addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(pObject->GetName()));
+
+  Renga::ILevelObjectPtr pLevelObject;
+  pObject->QueryInterface(&pLevelObject);
+  if (pLevelObject)
+    addValue(propertyList, QApplication::translate("me_mo", "offset"), pLevelObject->GetOffset());
+
+  Renga::IObjectWithMarkPtr pObjectWithMark;
+  pObject->QueryInterface(&pObjectWithMark);
+  if (pObjectWithMark)
+    addValue(propertyList, QApplication::translate("me_mo", "mark"), QString::fromWCharArray(pObjectWithMark->GetMark()));
+
+  Renga::IObjectWithMaterialPtr pObjectWithMaterial;
+  pObject->QueryInterface(&pObjectWithMaterial);
+  if (pObjectWithMaterial)
+    addValue(propertyList, QApplication::translate("me_mo", "material"), getMaterialName(pObjectWithMaterial->GetMaterialId()));
+
+  Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
+  pObject->QueryInterface(&pObjectWithLayeredMaterial);
+  if (pObjectWithLayeredMaterial)
+    addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
+}
+
+void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
+{
+  using namespace Renga;
+
+  auto pQuantities = pObject->GetQuantities();
+
+  PropertyList result;
+
+  addValue(propertyList, QApplication::translate("me_mo", "overallWidth"), pQuantities, QuantityIds::OverallWidth);
+  addValue(propertyList, QApplication::translate("me_mo", "overallHeight"), pQuantities, QuantityIds::OverallHeight);
+  addValue(propertyList, QApplication::translate("me_mo", "overallWidth"), pQuantities, QuantityIds::OverallWidth);
+
+  addValue(propertyList, QApplication::translate("me_mo", "thickness"), pQuantities, QuantityIds::NominalThickness);
+  addValue(propertyList, QApplication::translate("me_mo", "length"), pQuantities, QuantityIds::NominalLength);
+  addValue(propertyList, QApplication::translate("me_mo", "width"), pQuantities, QuantityIds::NominalWidth);
+  addValue(propertyList, QApplication::translate("me_mo", "height"), pQuantities, QuantityIds::NominalHeight);
+
+  addValue(propertyList, QApplication::translate("me_mo", "perimeter"), pQuantities, QuantityIds::Perimeter);
+
+  addValue(propertyList, QApplication::translate("me_mo", "volume"), pQuantities, QuantityIds::Volume);
+  addValue(propertyList, QApplication::translate("me_mo", "netVolume"), pQuantities, QuantityIds::NetVolume);
+  addValue(propertyList, QApplication::translate("me_mo", "mass"), pQuantities, QuantityIds::NetMass);
+
+  addValue(propertyList, QApplication::translate("me_mo", "crossSectionOverallWidth"), pQuantities, QuantityIds::CrossSectionOverallWidth);
+  addValue(propertyList, QApplication::translate("me_mo", "crossSectionOverallHeight"), pQuantities, QuantityIds::CrossSectionOverallHeight);
+  addValue(propertyList, QApplication::translate("me_mo", "crossSectionArea"), pQuantities, QuantityIds::CrossSectionArea);
+
+  addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceArea"), pQuantities, QuantityIds::InnerSurfaceArea);
+  addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceInternalArea"), pQuantities, QuantityIds::InnerSurfaceInternalArea);
+  addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceExternalArea"), pQuantities, QuantityIds::InnerSurfaceExternalArea);
+
+  addValue(propertyList, QApplication::translate("me_mo", "outerSurfaceArea"), pQuantities, QuantityIds::OuterSurfaceArea);
+
+  addValue(propertyList, QApplication::translate("me_mo", "area"), pQuantities, QuantityIds::Area);
+  addValue(propertyList, QApplication::translate("me_mo", "netArea"), pQuantities, QuantityIds::NetArea);
+  addValue(propertyList, QApplication::translate("me_mo", "netFloorArea"), pQuantities, QuantityIds::NetFloorArea);
+  addValue(propertyList, QApplication::translate("me_mo", "netFootprintArea"), pQuantities, QuantityIds::NetFootprintArea);
+  addValue(propertyList, QApplication::translate("me_mo", "netSideArea"), pQuantities, QuantityIds::NetSideArea);
+  addValue(propertyList, QApplication::translate("me_mo", "totalSurfaceArea"), pQuantities, QuantityIds::TotalSurfaceArea);
+
+  addValue(propertyList, QApplication::translate("me_mo", "grossVolume"), pQuantities, Renga::QuantityIds::GrossVolume);
+  addValue(propertyList, QApplication::translate("me_mo", "grossFloorArea"), pQuantities, Renga::QuantityIds::GrossFloorArea);
+  addValue(propertyList, QApplication::translate("me_mo", "grossPerimeter"), pQuantities, Renga::QuantityIds::GrossPerimeter);
+
+  addValue(propertyList, QApplication::translate("me_mo", "numberOfRiser"), pQuantities, QuantityIds::NumberOfRiser);
+  addValue(propertyList, QApplication::translate("me_mo", "numberOfTreads"), pQuantities, QuantityIds::NumberOfTreads);
+  addValue(propertyList, QApplication::translate("me_mo", "riserHeight"), pQuantities, QuantityIds::RiserHeight);
+  addValue(propertyList, QApplication::translate("me_mo", "treadLength"), pQuantities, QuantityIds::TreadLength);
+}
+
+PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IModelObjectPtr pObject)
 {
   PropertyList pResult;
 
-  rengaapi::UserAttributeRegister userAttributeRegister = rengaapi::Project::userAttributeRegister();
-  rengaapi::UserAttributeIdCollection attributeCollection = userAttributeRegister.attributes();
+  auto pProject = m_pApplication->GetProject();
+  auto pPropertyManager = pProject->GetPropertyManager();
 
   // block signals before filling properties
   m_pPropertyManagers->m_pStringUserAttributeManager->blockSignals(true);
   m_pPropertyManagers->m_pDoubleUserAttributeManager->blockSignals(true);
 
   // check all attributes
-  for (size_t i = 0; i < attributeCollection.size(); ++i)
+  for (int i = 0; i < pPropertyManager->GetPropertyCount(); ++i)
   {
-    const rengaapi::UserAttributeId& attributeId = attributeCollection.get(i);
+    auto propertyId = pPropertyManager->GetProperty(i);
 
     // check if objectType has attribute
-    if (userAttributeRegister.typeHasAttribute(pObject->type(), attributeId))
+    if (!pPropertyManager->IsPropertyAssignedToType(propertyId, pObject->GetObjectType()))
+      continue;
+
+    auto pProperties = pObject->GetProperties();
+    auto pProperty = pProperties->GetProperty(propertyId);
+
+    if (!pProperty)
+      continue;
+
+    auto propertyDescription = pPropertyManager->GetPropertyDescription(propertyId);
+    if (propertyDescription.type == Renga::PropertyType::PropertyType_Undefined)
+      continue;
+
+    const auto attributeName = QString::fromWCharArray(propertyDescription.name);
+    const auto propertyIdString = QString::fromStdString((GuidToString(propertyId)));
+
+    QtProperty* pUserAttributeProperty(nullptr);
+    switch (propertyDescription.type)
     {
-      rengaapi::UserAttributeDescription userAttributeDescription;
-
-      // get attribute description
-      if (userAttributeRegister.attributeDescription(attributeId, userAttributeDescription).code() == rengaapi::Status::Success)
+    case Renga::PropertyType::PropertyType_Double:
       {
-        rengaapi::UserAttributeValue userAttributeValue;
-
-        // check if object has value for current attribute
-        rengaapi::Status status = pObject->getUserAttributeValue(attributeId, userAttributeValue);
-        QtProperty* pUserAttributeProperty = nullptr;
-        QString attributeName = rengaStringToQString(userAttributeDescription.name());
-
-        switch (userAttributeDescription.type())
-        {
-        case rengaapi::UserAttributeType::Double:
-          {
-            pUserAttributeProperty = m_pPropertyManagers->m_pDoubleUserAttributeManager->addProperty(attributeName);
-            if (status.code() == rengaapi::Status::Success)
-            {
-              m_pPropertyManagers->m_pDoubleUserAttributeManager->setValue(pUserAttributeProperty, userAttributeValue.asDouble());
-            }
-            pUserAttributeProperty->setModified(true);
-            pUserAttributeProperty->setData(rengaStringToQString(attributeId.id().toString()));
-          }
-          break;
-        case rengaapi::UserAttributeType::String:
-          {
-            pUserAttributeProperty = m_pPropertyManagers->m_pStringUserAttributeManager->addProperty(attributeName);
-            if (status.code() == rengaapi::Status::Success)
-            {
-              m_pPropertyManagers->m_pStringUserAttributeManager->setValue(pUserAttributeProperty, rengaStringToQString(userAttributeValue.asString()));
-            }
-            pUserAttributeProperty->setModified(true);
-            pUserAttributeProperty->setData(rengaStringToQString(attributeId.id().toString()));
-          }
-          break;
-        default:
-          assert(false);
-        }
-        if (pUserAttributeProperty != nullptr)
-          pResult.push_back(pUserAttributeProperty);
+        auto pManager = m_pPropertyManagers->m_pDoubleUserAttributeManager;
+        auto pQtProperty = pManager->addProperty(attributeName);
+        pManager->setValue(pQtProperty, pProperty->GetDoubleValue());
+        pUserAttributeProperty = pQtProperty;
       }
+      break;
+    case Renga::PropertyType::PropertyType_String:
+      {
+        auto pManager = m_pPropertyManagers->m_pStringUserAttributeManager;
+        auto pQtProperty = pManager->addProperty(attributeName);
+        pManager->setValue(pQtProperty, QString::fromWCharArray(pProperty->GetStringValue()));
+        pUserAttributeProperty = pQtProperty;
+      }
+      break;
+    default:
+      assert(false);
     }
+    pUserAttributeProperty->setModified(true);
+    pUserAttributeProperty->setData(propertyIdString);
+
+    pResult.push_back(pUserAttributeProperty);
   }
 
   // unblock signals
@@ -92,133 +162,48 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(rengaapi:
   return pResult;
 }
 
-QString ObjectPropertyViewBuilder::getMaterialName(const rengaapi::MaterialId& materialId)
+QString ObjectPropertyViewBuilder::getMaterialName(const Renga::MaterialId& materialId)
 {
-  rengaapi::Materials::MaterialType materialType= rengaapi::Materials::materialType(materialId);
-  QString resultString = QString();
-  switch(materialType)
-  {
-  case rengaapi::Materials::MaterialType::Grid:
-    {
-      rengaapi::GridMaterial gridMaterial;
-      rengaapi::Materials::gridMaterial(materialId, gridMaterial);
-      // grid materials are nameless, return collection name
-      resultString = rengaStringToQString(materialId.collectionName());
-    }
-    break;
-  case rengaapi::Materials::MaterialType::OneLayered:
-    {
-      rengaapi::Material material;
-      rengaapi::Materials::material(materialId, material);
-      resultString = rengaStringToQString(material.name_());
-    }
-    break;
-  case rengaapi::Materials::MaterialType::MultiLayered:
-    {
-      rengaapi::LayeredMaterial layeredMaterial;
-      rengaapi::Materials::layeredMaterial(materialId, layeredMaterial);
-      resultString = rengaStringToQString(layeredMaterial.name_());
-    }
-    break;
-  }
-  return resultString;
+  auto pProject = m_pApplication->GetProject();
+  auto pMaterialManager = pProject->GetMaterialManager();
+  auto pMaterial = pMaterialManager->GetMaterial(materialId);
+  if (!pMaterial)
+    return QString();
+
+  return QString::fromWCharArray(pMaterial->GetName());
 }
 
-void ObjectPropertyViewBuilder::setLengthMeasureOptional(PropertyList& insertPlace, const rengabase::LengthMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit)
+QString ObjectPropertyViewBuilder::getLayeredMaterialName(const Renga::LayeredMaterialId& layeredMaterialId)
 {
-  if (measure.hasValue())
-  {
-    const rengabase::LengthMeasure* lengthMeasure = measure.getValue();
-    double propertyValue;
-    switch (unit)
-    {
-    case Meter:
-      propertyValue = lengthMeasure->inMeters();
-      break;
-    case Centimeter:
-      propertyValue = lengthMeasure->inCentimeters();
-      break;
-    case Inch:
-      propertyValue = lengthMeasure->inInches();
-      break;
-    case Millimeter:
-    default:
-      propertyValue = lengthMeasure->inMillimeters();
-      break;
-    }
-    m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, propertyValue);
-    insertPlace.push_back(pProperty);
-  }
+  auto pProject = m_pApplication->GetProject();
+  auto pLayeredMaterialManager = pProject->GetLayeredMaterialManager();
+  auto pLayeredMaterial = pLayeredMaterialManager->GetLayeredMaterial(layeredMaterialId);
+  if (!pLayeredMaterial)
+    return QString();
+
+  return QString::fromWCharArray(pLayeredMaterial->GetName());
 }
 
-void ObjectPropertyViewBuilder::setAreaMeasureOptional(PropertyList& insertPlace, const rengabase::AreaMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit)
+void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const int value) const
 {
-  if (measure.hasValue())
-  {
-    const rengabase::AreaMeasure* areaMeasure = measure.getValue();
-    double propertyValue;
-    switch (unit)
-    {
-    case Centimeter:
-      propertyValue = areaMeasure->inCentimeters2();
-      break;
-    case Millimeter:
-      propertyValue = areaMeasure->inMillimeters2();
-      break;
-    case Meter:
-    default:
-      propertyValue = areaMeasure->inMeters2();
-      break;
-    }
-    m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, propertyValue);
-    insertPlace.push_back(pProperty);
-  }
+  m_pPropertyManagers->addValue(propertyList, name, value);
 }
 
-void ObjectPropertyViewBuilder::setVolumeMeasureOptional(PropertyList& insertPlace, const rengabase::VolumeMeasureOptional& measure, QtProperty* pProperty, MeasureUnit unit)
+void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const double value) const
 {
-  if (measure.hasValue())
-  {
-    const rengabase::VolumeMeasure* volumeMeasure = measure.getValue();
-    double propertyValue;
-    switch (unit)
-    {
-    case Centimeter:
-      propertyValue = volumeMeasure->inCentimeters3();
-      break;
-    case Millimeter:
-      propertyValue = volumeMeasure->inMillimeters3();
-      break;
-    case Meter:
-    default:
-      propertyValue = volumeMeasure->inMeters3();
-      break;
-    }
-    m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, propertyValue);
-    insertPlace.push_back(pProperty);
-  }
+  m_pPropertyManagers->addValue(propertyList, name, value);
 }
 
-void ObjectPropertyViewBuilder::setMassMeasureOptional(PropertyList & insertPlace, const rengabase::MassMeasureOptional & measure, QtProperty * pProperty, MassMeasureUnit unit)
+void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const QString& value) const
 {
-  if (measure.hasValue())
-  {
-    const rengabase::MassMeasure* massMeasure = measure.getValue();
-    double propertyValue;
+  m_pPropertyManagers->addValue(propertyList, name, value);
+}
 
-    switch (unit)
-    {
-    case ObjectPropertyViewBuilder::kg:
-      propertyValue = massMeasure->inKilograms();
-      break;
-    case ObjectPropertyViewBuilder::ton:
-      propertyValue = massMeasure->inTons();
-      break;
-    default:
-      propertyValue = massMeasure->inKilograms();
-      break;
-    }
-    m_pPropertyManagers->m_pDoubleManager->setValue(pProperty, propertyValue);
-    insertPlace.push_back(pProperty);
-  }
+void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const {
+  m_pPropertyManagers->addValue(propertyList, name, pQuantityContainer, quantityId);
+}
+
+void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const
+{
+  m_pPropertyManagers->addValue(propertyList, name, pQuantity);
 }

@@ -9,51 +9,19 @@
 #include "stdafx.h"
 #include "RoomPropertyViewBuilder.h"
 
-#include <RengaAPI/Room.h>
 
-RoomPropertyViewBuilder::RoomPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
-  : ObjectPropertyViewBuilder(pPropertyManagers)
-{}
-
-PropertyList RoomPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+RoomPropertyViewBuilder::RoomPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
 {
-	rengaapi::Room* pRoom = dynamic_cast<rengaapi::Room*>(pObject);
-	PropertyList result;
-
-	// name, roomNumber, offset
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_room", "name"));
-	QtProperty* roomNumber = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_room", "roomNumber"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_room", "offset"));
-
-	m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRoom->roomName()));
-	m_pPropertyManagers->m_pStringManager->setValue(roomNumber, rengaStringToQString(pRoom->roomNumber()));
-  m_pPropertyManagers->m_pDoubleManager->setValue(offset, pRoom->offset().inMillimeters());
-
-	result.push_back(name);
-	result.push_back(roomNumber);
-	result.push_back(offset);
-
-  return result;
 }
 
-
-PropertyList RoomPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
+void RoomPropertyViewBuilder::createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
 {
-	rengaapi::Room* pRoom = dynamic_cast<rengaapi::Room*>(pObject);
-	rengaapi::RoomQuantities roomQuantities = pRoom->quantities();
+  ObjectPropertyViewBuilder::createParametersProperties(propertyList, pObject);
 
-  PropertyList result;
+  Renga::IRoomPtr pRoom;
+  pObject->QueryInterface(&pRoom);
 
-	// nominalHeight, grossVolume, grossFloorArea, grossPerimeter
-  QtProperty* nominalHeight = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_room", "nominalHeight"));
-	QtProperty* grossVolume = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_room", "grossVolume"));
-	QtProperty* grossFloorArea = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_room", "grossFloorArea"));
-	QtProperty* grossPerimeter = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_room", "grossPerimeter"));
-
-  setLengthMeasureOptional(result, roomQuantities.nominalHeight(), nominalHeight);
-	setVolumeMeasureOptional(result, roomQuantities.grossVolume(), grossVolume);
-	setAreaMeasureOptional(result, roomQuantities.grossFloorArea(), grossFloorArea);
-	setLengthMeasureOptional(result, roomQuantities.grossPerimeter(), grossPerimeter);
-
-  return result;
+  addValue(propertyList, QApplication::translate("me_room", "name"), QString::fromWCharArray(pRoom->GetRoomName()));
+  addValue(propertyList, QApplication::translate("me_room", "roomNumber"), QString::fromWCharArray(pRoom->GetRoomNumber()));
 }

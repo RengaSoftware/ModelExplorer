@@ -13,8 +13,5 @@
 class IsolatedFoundationPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
-
-	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
-	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
+  IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
 };

@@ -13,8 +13,5 @@
 class RampPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-	RampPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
-
-	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
-	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
+  RampPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
 };

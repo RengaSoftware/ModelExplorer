@@ -12,8 +12,6 @@
 
 #include <qttreepropertybrowser.h>
 
-#include <RengaAPI/ObjectId.h>
-#include <RengaAPI/UserAttributeValue.h>
 
 const uint c_defaultPrecision = 2;
 const uint c_userAttrPrecision = 15;
@@ -23,15 +21,15 @@ class ObjectPropertyView : public QtTreePropertyBrowser
   Q_OBJECT
 
 public:
-	enum Mode
-	{
-		CategoryMode = 0,
-		ListMode = 1,
-	};
-	
-	ObjectPropertyView(QWidget* pParent);
-	void setSelectedObjectId(rengaapi::ObjectId objId);
-	void changeMode(ObjectPropertyView::Mode newMode);
+  enum Mode
+  {
+    CategoryMode = 0,
+    ListMode = 1,
+  };
+
+  ObjectPropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
+  void setSelectedObjectId(int objId);
+  void changeMode(ObjectPropertyView::Mode newMode);
 
 private slots:
   void userDoubleAttributeChanged(QtProperty* property, const QString& newValue);
@@ -45,11 +43,19 @@ private:
   void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
   void buildPropertyView();
-  void changeUserAttribute(QtProperty* property, rengaapi::UserAttributeValue* pUserAttributeValue);
+
+
+  Renga::IPropertyPtr getProperty(QtProperty* property);
+  Renga::IOperationPtr createOperation();
+
+  void resetUserAttribute(QtProperty* property);
+  void changeUserAttribute(QtProperty* property, const double value);
+  void changeUserAttribute(QtProperty* property, const std::wstring& value);
 
 private:
+  Renga::IApplicationPtr m_pApplication;
   QtGroupPropertyManager* m_pGroupManager;
   PropertyManagers m_propertyManagers;
-	rengaapi::ObjectId m_currentObjectId;
-	Mode m_propertyViewMode;
+  int m_currentObjectId;
+  Mode m_propertyViewMode;
 };

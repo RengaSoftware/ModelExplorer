@@ -10,14 +10,13 @@
 
 #include <qttreepropertybrowser.h>
 
-#include <RengaAPI/ModelObject.h>
 
 typedef std::list<QtProperty*> PropertyList;
 
 class IObjectPropertyViewBuilder
 {
 public:
-	virtual PropertyList createParametersProperties(rengaapi::ModelObject* pObject) = 0; 
-	virtual PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject) = 0; 
-	virtual PropertyList createUserAttributesProperties(rengaapi::ModelObject* pObject) = 0;
+  virtual void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
+  virtual void createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
+  virtual PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject) = 0;
 };

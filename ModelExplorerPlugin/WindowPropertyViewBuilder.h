@@ -10,11 +10,7 @@
 
 #include "ObjectPropertyViewBuilder.h"
 
-class WindowPropertyViewBuilder : public ObjectPropertyViewBuilder
-{
+class WindowPropertyViewBuilder : public ObjectPropertyViewBuilder {
 public:
-	WindowPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
-
-	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
-	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
+  WindowPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
 };

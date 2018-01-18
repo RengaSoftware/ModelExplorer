@@ -7,17 +7,21 @@
 //
 
 #pragma once
+
 #include <QtCore/QObject>
 
-#include <RengaAPI/IInvokable.h>
+#include <Renga/ActionEventHandler.hpp>
 
-class ModelExplorerButtonHandler : public QObject, public rengaapi::IInvokable
+
+class ModelExplorerButtonHandler : public QObject, public Renga::ActionEventHandler
 {
   Q_OBJECT
 
 public:
-  // rengaapi::IInvokable
-  void invoke();
+  ModelExplorerButtonHandler(Renga::IActionPtr pAction);
+
+  void OnTriggered() override;
+  void OnToggled(bool checked) override;
 
 signals:
   void buttonClicked();

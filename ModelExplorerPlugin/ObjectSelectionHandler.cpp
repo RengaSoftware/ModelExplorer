@@ -9,24 +9,22 @@
 #include "stdafx.h"
 #include "ObjectSelectionHandler.h"
 
-#include <RengaAPI/ModelSelection.h>
+#include <atlsafe.h>
 
-ObjectSelectionHandler::ObjectSelectionHandler()
+
+ObjectSelectionHandler::ObjectSelectionHandler(Renga::ISelectionPtr pSelection) :
+  Renga::SelectionEventHandler(pSelection),
+  m_pSelection(pSelection)
 {
-  rengaapi::ModelSelection::addChangesHandler(this);
 }
 
-ObjectSelectionHandler::~ObjectSelectionHandler()
+void ObjectSelectionHandler::OnModelSelectionChanged()
 {
-  rengaapi::ModelSelection::removeChangesHandler(this);
-}
+  CComSafeArray<int> selectedObjectIds(m_pSelection->GetSelectedModelObjects());
 
-void ObjectSelectionHandler::invoke()
-{
-  rengaapi::ObjectIdCollection selectedObjCollection = rengaapi::ModelSelection::objectIds();
-  if (selectedObjCollection.size() == 0)
+  if (selectedObjectIds.GetCount() == 0)
     return;
 
-  auto firstSelectedObjectId = selectedObjCollection.get(0).id();
+  auto firstSelectedObjectId = selectedObjectIds.GetAt(0);
   emit objectSelected(firstSelectedObjectId);
 }

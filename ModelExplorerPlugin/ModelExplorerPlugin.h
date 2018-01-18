@@ -10,7 +10,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTranslator>
 
-#include <IPlugin.h>
+#include <Renga/IPlugin.h>
+
 
 class PluginToolButtons;
 class RengaEventsHandler;
@@ -38,8 +39,12 @@ private:
   bool loadTranslator(const std::wstring& pluginPath);
   QString translationFileName();
 
+private:
   QTranslator m_translator;
-  
+
+  Renga::IApplicationPtr m_pApplication;
+  Renga::IUIPtr m_pUI;
+
 #ifdef _DEBUG
   // NOTE: To debug plugin you should create debug QApplication in plugin.
   std::unique_ptr<QApplication> m_pApp;

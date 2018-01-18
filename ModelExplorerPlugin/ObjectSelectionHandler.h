@@ -7,22 +7,24 @@
 //
 
 #pragma once
+
 #include <QtCore/QObject>
 
-#include <RengaAPI/IInvokable.h>
-#include <RengaAPI/ObjectId.h>
+#include <Renga/SelectionEventHandler.hpp>
 
-class ObjectSelectionHandler : public QObject, public rengaapi::IInvokable
+
+class ObjectSelectionHandler : public QObject, public Renga::SelectionEventHandler
 {
   Q_OBJECT
 
 public:
-	ObjectSelectionHandler();
-  ~ObjectSelectionHandler();
+  ObjectSelectionHandler(Renga::ISelectionPtr pSelection);
 
-  // rengaapi::IInvokable
-	void invoke();
+  void OnModelSelectionChanged() override;
 
 signals:
-  void objectSelected(const rengaapi::ObjectId&);
+  void objectSelected(const int&);
+
+private:
+  Renga::ISelectionPtr m_pSelection;
 };

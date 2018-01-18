@@ -9,7 +9,17 @@
 #include "stdafx.h"
 #include "ModelExplorerButtonHandler.h"
 
-void ModelExplorerButtonHandler::invoke()
+
+ModelExplorerButtonHandler::ModelExplorerButtonHandler(Renga::IActionPtr pAction) :
+  Renga::ActionEventHandler(pAction)
+{
+}
+
+void ModelExplorerButtonHandler::OnTriggered()
 {
   emit buttonClicked();
+}
+
+void ModelExplorerButtonHandler::OnToggled(bool checked)
+{
 }

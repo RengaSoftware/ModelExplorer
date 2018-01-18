@@ -7,17 +7,14 @@
 //
 
 #pragma once
+
 #include <QtGui/QStandardItemModel>
 
-#include <RengaAPI/ObjectType.h>
-#include <RengaAPI/ObjectId.h>
-#include <RengaAPI/ModelObject.h>
-#include <RengaAPI/ModelObjectCollection.h>
 
 class ModelTreeBuilder
 {
 public:
-  ModelTreeBuilder();
+  ModelTreeBuilder(Renga::IApplicationPtr pApplication);
   QStandardItemModel* buildModelTree();
 
   static int objectIDRole;
@@ -25,23 +22,26 @@ public:
 private:
   struct ObjectTypeData
   {
-    ObjectTypeData(rengaapi::ObjectType type, QString translationLiteral, QString iconPath);
+    ObjectTypeData(GUID type, QString translationLiteral, QString iconPath);
 
-    rengaapi::ObjectType m_type;
+    GUID m_type;
     QString m_typeNodeName;
     QString m_iconPath;
   };
 
 private:
-  QList<QStandardItem*> buildObjectsSubtree(
-    const rengaapi::ModelObjectCollection& objCollection,     
-    const ObjectTypeData& typeData, 
-    rengaapi::ObjectId levelId) const;
+  void add(GUID type, const QString& translationLiteral, QString iconPath);
 
-  QList<QStandardItem*> createLevelObjectItem(const rengaapi::ModelObject* pLevel) const;
+  QList<QStandardItem*> buildObjectsSubtree(
+    const Renga::IModelObjectCollectionPtr objCollection,
+    const ObjectTypeData& typeData, 
+    int levelId) const;
+
+  QList<QStandardItem*> createLevelObjectItem(Renga::IModelObjectPtr pLevel) const;
   QList<QStandardItem*> createItem(const QString& name, const QString& iconPath, bool isVisible, QVariant data = QVariant()) const;
-  QList<QStandardItem*> buildLevelSubtree(const rengaapi::ObjectId& levelId, const rengaapi::ModelObjectCollection& objCollection);
+  QList<QStandardItem*> buildLevelSubtree(const int levelId, const Renga::IModelObjectCollectionPtr objCollection);
 
 private:
+  Renga::IApplicationPtr m_pApplication;
   std::list<ObjectTypeData> m_objectTypeDataArray;
 };

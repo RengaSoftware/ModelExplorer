@@ -15,5 +15,4 @@
 // qt includes
 #include <QtWidgets/QApplication>
 
-// local common includes
-#include "RengaStringToQString.h"
+#include <Renga/CreateApplication.hpp>

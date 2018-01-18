@@ -363,7 +363,18 @@
     </message>
 </context>
 <context>
-    <name>me_beam</name>
+    <name>me_level</name>
+    <message>
+        <source>name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <source>elevation</source>
+        <translation>Высотная отметка, м</translation>
+    </message>
+</context>
+<context>
+    <name>me_mo</name>
     <message>
         <source>name</source>
         <translation>Имя</translation>
@@ -371,120 +382,22 @@
     <message>
         <source>offset</source>
         <translation>Смещение от уровня, мм</translation>
+    </message>
+    <message>
+        <source>mark</source>
+        <translation>Марка</translation>
     </message>
     <message>
         <source>material</source>
         <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Длина, мм</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Периметр, мм</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallWidth</source>
-        <translation>Полная ширина поперечного сечения, мм</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallHeight</source>
-        <translation>Полная высота поперечного сечения, мм</translation>
-    </message>
-    <message>
-        <source>crossSectionArea</source>
-        <translation>Площадь сечения, см²</translation>
-    </message>
-    <message>
-        <source>outerSurfaceArea</source>
-        <translation>Площадь боковой поверхности, м²</translation>
-    </message>
-</context>
-<context>
-    <name>me_column</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Длина, мм</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallWidth</source>
-        <translation>Полная ширина поперечного сечения, мм</translation>
-    </message>
-    <message>
-        <source>crossSectionArea</source>
-        <translation>Площадь поперечного сечения, см²</translation>
-    </message>
-    <message>
-        <source>outerSurfaceArea</source>
-        <translation>Площадь боковой поверхности, м²</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Периметр поперечного сечения, мм</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallHeight</source>
-        <translation>Полная высота поперечного сечения, мм</translation>
-    </message>
-</context>
-<context>
-    <name>me_door</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
     </message>
     <message>
         <source>overallHeight</source>
-        <translation>Высота проема, мм</translation>
+        <translation>Высота, мм</translation>
     </message>
     <message>
         <source>overallWidth</source>
-        <translation>Ширина проема, мм</translation>
+        <translation>Ширина, мм</translation>
     </message>
     <message>
         <source>perimeter</source>
@@ -506,98 +419,97 @@
         <source>innerSurfaceExternalArea</source>
         <translation>Наружняя площадь внутренней поверхности, м²</translation>
     </message>
-</context>
-<context>
-    <name>me_floor</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
     <message>
         <source>thickness</source>
-        <translation>Толщина, мм</translation>
+        <translation>Толщина, мм / Глубина, мм</translation>
     </message>
     <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
+        <source>length</source>
+        <translation>Длина, мм</translation>
     </message>
     <message>
-        <source>material</source>
-        <translation>Материал</translation>
+        <source>width</source>
+        <translation>Ширина, мм</translation>
     </message>
     <message>
-        <source>mark</source>
-        <translation>Марка</translation>
+        <source>height</source>
+        <translation>Высота, мм</translation>
     </message>
     <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
+        <source>volume</source>
+        <translation>Объем, вырезанный проемом, м³</translation>
     </message>
     <message>
         <source>netVolume</source>
         <translation>Объем, м³</translation>
     </message>
     <message>
-        <source>perimeter</source>
-        <translation>Периметр, мм</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Площадь, м²</translation>
-    </message>
-</context>
-<context>
-    <name>me_isolatedFoundation</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
         <source>mass</source>
         <translation>Масса, кг</translation>
     </message>
     <message>
-        <source>overallWidth</source>
-        <translation>Ширина, мм</translation>
+        <source>crossSectionOverallWidth</source>
+        <translation>Полная ширина поперечного сечения, мм</translation>
     </message>
     <message>
-        <source>overallDepth</source>
-        <translation>Глубина, мм</translation>
+        <source>crossSectionOverallHeight</source>
+        <translation>Полная высота поперечного сечения, мм</translation>
     </message>
     <message>
-        <source>overallHeight</source>
-        <translation>Высота, мм</translation>
+        <source>crossSectionArea</source>
+        <translation>Площадь сечения, м² / Площадь поперечного сечения, м²</translation>
+    </message>
+    <message>
+        <source>outerSurfaceArea</source>
+        <translation>Площадь боковой поверхности, м²</translation>
+    </message>
+    <message>
+        <source>netArea</source>
+        <translation>Площадь, м² / Площадь верхней поверхности, м²</translation>
+    </message>
+    <message>
+        <source>netFloorArea</source>
+        <translation>Площадь основания, м²</translation>
     </message>
     <message>
         <source>netFootprintArea</source>
         <translation>Площадь основания, м²</translation>
     </message>
     <message>
-        <source>netVolume</source>
+        <source>netSideArea</source>
+        <translation>Площадь боковой поверхности, м²</translation>
+    </message>
+    <message>
+        <source>totalSurfaceArea</source>
+        <translation>Площадь поверхности, м²</translation>
+    </message>
+    <message>
+        <source>grossVolume</source>
         <translation>Объем, м³</translation>
     </message>
-</context>
-<context>
-    <name>me_level</name>
     <message>
-        <source>name</source>
-        <translation>Имя</translation>
+        <source>grossFloorArea</source>
+        <translation>Площадь  основания, м²</translation>
     </message>
     <message>
-        <source>elevation</source>
-        <translation>Высотная отметка, м</translation>
+        <source>grossPerimeter</source>
+        <translation>Периметр, мм</translation>
+    </message>
+    <message>
+        <source>numberOfRiser</source>
+        <translation>Количество подступенков</translation>
+    </message>
+    <message>
+        <source>numberOfTreads</source>
+        <translation>Количество ступеней</translation>
+    </message>
+    <message>
+        <source>riserHeight</source>
+        <translation>Высота подступенка, мм</translation>
+    </message>
+    <message>
+        <source>treadLength</source>
+        <translation>Ширина проступи, мм</translation>
     </message>
 </context>
 <context>
@@ -660,41 +572,6 @@
     </message>
 </context>
 <context>
-    <name>me_opening</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Глубина, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>volume</source>
-        <translation>Объем, вырезанный проемом, м³</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Периметр, мм</translation>
-    </message>
-    <message>
-        <source>area</source>
-        <translation>Площадь, м²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceArea</source>
-        <translation>Площадь внутренней поверхности, м²</translation>
-    </message>
-</context>
-<context>
     <name>me_propertyView</name>
     <message>
         <source>Object parameters</source>
@@ -730,111 +607,6 @@
     </message>
 </context>
 <context>
-    <name>me_railing</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Длина, мм</translation>
-    </message>
-</context>
-<context>
-    <name>me_ramp</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Толщина, мм</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>Ширина, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Площадь верхней поверхности, м²</translation>
-    </message>
-    <message>
-        <source>netFloorArea</source>
-        <translation>Площадь основания, м²</translation>
-    </message>
-</context>
-<context>
-    <name>me_roof</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Толщина, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>totalSurfaceArea</source>
-        <translation>Площадь поверхности, м²</translation>
-    </message>
-</context>
-<context>
     <name>me_room</name>
     <message>
         <source>name</source>
@@ -843,226 +615,6 @@
     <message>
         <source>roomNumber</source>
         <translation>Номер помещения</translation>
-    </message>
-    <message>
-        <source>nominalHeight</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>grossVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>grossFloorArea</source>
-        <translation>Площадь  основания, м²</translation>
-    </message>
-    <message>
-        <source>grossPerimeter</source>
-        <translation>Периметр, мм</translation>
-    </message>
-</context>
-<context>
-    <name>me_stair</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>Ширина, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>numberOfRiser</source>
-        <translation>Количество подступенков</translation>
-    </message>
-    <message>
-        <source>numberOfTreads</source>
-        <translation>Количество ступеней</translation>
-    </message>
-    <message>
-        <source>riserHeight</source>
-        <translation>Высота подступенка, мм</translation>
-    </message>
-    <message>
-        <source>treadLength</source>
-        <translation>Ширина проступи, мм</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Площадь верхней поверхности, м²</translation>
-    </message>
-    <message>
-        <source>netFloorArea</source>
-        <translation>Площадь основания, м²</translation>
-    </message>
-    <message>
-        <source>nominalThickness</source>
-        <translation>Толщина, мм</translation>
-    </message>
-</context>
-<context>
-    <name>me_wall</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Толщина, мм</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Длина, мм</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Площадь основания, м²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Площадь боковой поверхности, м²</translation>
-    </message>
-</context>
-<context>
-    <name>me_wallFoundation</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Масса, кг</translation>
-    </message>
-    <message>
-        <source>overallWidth</source>
-        <translation>Ширина, мм</translation>
-    </message>
-    <message>
-        <source>overallHeight</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Длина, мм</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Площадь основания, м²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Площадь боковой поверхности, м²</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Объем, м³</translation>
-    </message>
-</context>
-<context>
-    <name>me_window</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>overallHeight</source>
-        <translation>Высота, мм</translation>
-    </message>
-    <message>
-        <source>overallWidth</source>
-        <translation>Ширина, мм</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Периметр, мм</translation>
-    </message>
-    <message>
-        <source>area</source>
-        <translation>Площадь, м²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceArea</source>
-        <translation>Площадь внутренней поверхности, м²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceInternalArea</source>
-        <translation>Внутренняя площадь внутренней поверхности, м²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceExternalArea</source>
-        <translation>Наружняя площадь внутренней поверхности, м²</translation>
     </message>
 </context>
 </TS>

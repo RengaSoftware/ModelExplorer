@@ -9,22 +9,17 @@
 #include "stdafx.h"
 #include "RengaEventsHandler.h"
 
-#include <RengaAPI/EventsDispatcher.h>
 
-RengaEventsHandler::RengaEventsHandler()
+RengaEventsHandler::RengaEventsHandler(Renga::IApplicationPtr pApplication) :
+  Renga::ApplicationEventHandler(pApplication)
 {
-  rengaapi::EventsDispatcher::registerEventHandler(this);
 }
 
-RengaEventsHandler::~RengaEventsHandler()
+void RengaEventsHandler::OnApplicationClose(Renga::IApplicationCloseEvent* pEvent)
 {
-  rengaapi::EventsDispatcher::unregisterEventHandler(this);
 }
 
-void RengaEventsHandler::process(rengaapi::IEvent& event)
+void RengaEventsHandler::OnProjectClose(Renga::IProjectCloseEvent* pEvent)
 {
-  if (event.type() == rengaapi::IEvent::Type::ProjectClose)
-  {
-    emit projectAboutToClose();
-  }
+  emit projectAboutToClose();
 }

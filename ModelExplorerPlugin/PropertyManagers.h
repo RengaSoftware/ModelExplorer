@@ -11,17 +11,24 @@
 #include <qtpropertymanager.h>
 #include <qtpropertybrowser.h>
 
+#include "IObjectPropertyViewBuilder.h"
+
+
 class PropertyManagers
 {
 public:
-  PropertyManagers()
-    : m_pIntManager(nullptr)
-    , m_pDoubleManager(nullptr)
-    , m_pStringManager(nullptr)
-    , m_pDoubleUserAttributeManager(nullptr)
-    , m_pStringUserAttributeManager(nullptr)
-  {}
+  PropertyManagers();
 
+  QtProperty* addValue(const QString& name, const double value) const;
+  QtProperty* addValue(const QString& name, const QString& value) const;
+
+  void addValue(PropertyList& propertyList, const QString& name, const int value) const;
+  void addValue(PropertyList& propertyList, const QString& name, const double value) const;
+  void addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
+  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const;
+  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
+
+public:
   QtIntPropertyManager* m_pIntManager;
   QtStringPropertyManager* m_pDoubleManager;
   QtStringPropertyManager* m_pStringManager;

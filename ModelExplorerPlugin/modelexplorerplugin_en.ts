@@ -363,109 +363,18 @@
     </message>
 </context>
 <context>
-    <name>me_beam</name>
+    <name>me_level</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Length, mm</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Perimeter, mm</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallWidth</source>
-        <translation>Сross section overall width, mm</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallHeight</source>
-        <translation>Cross section overall height, mm</translation>
-    </message>
-    <message>
-        <source>crossSectionArea</source>
-        <translation>Cross section area, cm²</translation>
-    </message>
-    <message>
-        <source>outerSurfaceArea</source>
-        <translation>Outer surface area, m²</translation>
+        <source>elevation</source>
+        <translation>Elevation, m</translation>
     </message>
 </context>
 <context>
-    <name>me_column</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Length, mm</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallWidth</source>
-        <translation>Cross section overall width, mm</translation>
-    </message>
-    <message>
-        <source>crossSectionArea</source>
-        <translation>Cross section area, cm²</translation>
-    </message>
-    <message>
-        <source>outerSurfaceArea</source>
-        <translation>Outer surface area, m²</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Cross section perimeter, mm</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallHeight</source>
-        <translation>Cross section overall height, mm</translation>
-    </message>
-</context>
-<context>
-    <name>me_door</name>
+    <name>me_mo</name>
     <message>
         <source>name</source>
         <translation>Name</translation>
@@ -506,98 +415,101 @@
         <source>innerSurfaceExternalArea</source>
         <translation>Inner surface external area, m²</translation>
     </message>
-</context>
-<context>
-    <name>me_floor</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
     <message>
         <source>thickness</source>
-        <translation>Thickness, mm</translation>
+        <translation>Thickness, mm / Depth, mm</translation>
     </message>
     <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
+        <source>length</source>
+        <translation>Length, mm</translation>
     </message>
     <message>
-        <source>material</source>
-        <translation>Material</translation>
+        <source>width</source>
+        <translation>Width, mm</translation>
     </message>
     <message>
-        <source>mark</source>
-        <translation>Mark</translation>
+        <source>height</source>
+        <translation>Height, mm</translation>
     </message>
     <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
+        <source>volume</source>
+        <translation>Volume cut by the opening, m³</translation>
     </message>
     <message>
         <source>netVolume</source>
         <translation>Volume, m³</translation>
     </message>
     <message>
-        <source>perimeter</source>
-        <translation>Perimeter, mm</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Area, m²</translation>
-    </message>
-</context>
-<context>
-    <name>me_isolatedFoundation</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
         <source>mass</source>
         <translation>Mass, kg</translation>
     </message>
     <message>
-        <source>overallWidth</source>
-        <translation>Width, mm</translation>
+        <source>crossSectionOverallWidth</source>
+        <translation></translation>
     </message>
     <message>
-        <source>overallDepth</source>
-        <translation>Depth, mm</translation>
+        <source>crossSectionOverallHeight</source>
+        <translation>Cross section overall height, mm</translation>
     </message>
     <message>
-        <source>overallHeight</source>
-        <translation>Height, mm</translation>
+        <source>crossSectionArea</source>
+        <translation>Cross section area, m²</translation>
+    </message>
+    <message>
+        <source>outerSurfaceArea</source>
+        <translation>Outer surface area, m²</translation>
+    </message>
+    <message>
+        <source>netArea</source>
+        <translation>Area, m² / Top surface area, m²</translation>
+    </message>
+    <message>
+        <source>netFloorArea</source>
+        <translation>Footprint area, m²</translation>
     </message>
     <message>
         <source>netFootprintArea</source>
         <translation>Footprint area, m²</translation>
     </message>
     <message>
-        <source>netVolume</source>
+        <source>netSideArea</source>
+        <translation>Side area, m²</translation>
+    </message>
+    <message>
+        <source>totalSurfaceArea</source>
+        <translation>Surface area, m²</translation>
+    </message>
+    <message>
+        <source>grossVolume</source>
         <translation>Volume, m³</translation>
     </message>
-</context>
-<context>
-    <name>me_level</name>
     <message>
-        <source>name</source>
-        <translation>Name</translation>
+        <source>grossFloorArea</source>
+        <translation>Floor area, m²</translation>
     </message>
     <message>
-        <source>elevation</source>
-        <translation>Elevation, m</translation>
+        <source>grossPerimeter</source>
+        <translation>Perimeter, mm</translation>
+    </message>
+    <message>
+        <source>numberOfRiser</source>
+        <translation>Number of riser</translation>
+    </message>
+    <message>
+        <source>numberOfTreads</source>
+        <translation>Number of treads</translation>
+    </message>
+    <message>
+        <source>riserHeight</source>
+        <translation>Riser height, mm</translation>
+    </message>
+    <message>
+        <source>treadLength</source>
+        <translation>Tread length, mm</translation>
+    </message>
+    <message>
+        <source>material</source>
+        <translation>Material</translation>
     </message>
 </context>
 <context>
@@ -660,41 +572,6 @@
     </message>
 </context>
 <context>
-    <name>me_opening</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Depth, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>volume</source>
-        <translation>Volume cut by the opening, m³</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Perimeter, mm</translation>
-    </message>
-    <message>
-        <source>area</source>
-        <translation>Area, m²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceArea</source>
-        <translation>Inner surface area, m²</translation>
-    </message>
-</context>
-<context>
     <name>me_propertyView</name>
     <message>
         <source>Object parameters</source>
@@ -730,111 +607,6 @@
     </message>
 </context>
 <context>
-    <name>me_railing</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Length, mm</translation>
-    </message>
-</context>
-<context>
-    <name>me_ramp</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Thickness, mm</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>Width, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Top surface area, m²</translation>
-    </message>
-    <message>
-        <source>netFloorArea</source>
-        <translation>Footprint area, m²</translation>
-    </message>
-</context>
-<context>
-    <name>me_roof</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Thickness, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>totalSurfaceArea</source>
-        <translation>Surface area, m²</translation>
-    </message>
-</context>
-<context>
     <name>me_room</name>
     <message>
         <source>name</source>
@@ -843,226 +615,6 @@
     <message>
         <source>roomNumber</source>
         <translation>Room number</translation>
-    </message>
-    <message>
-        <source>nominalHeight</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>grossVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>grossFloorArea</source>
-        <translation>Floor area, m²</translation>
-    </message>
-    <message>
-        <source>grossPerimeter</source>
-        <translation>Perimeter, mm</translation>
-    </message>
-</context>
-<context>
-    <name>me_stair</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>width</source>
-        <translation>Width, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>numberOfRiser</source>
-        <translation>Number of riser</translation>
-    </message>
-    <message>
-        <source>numberOfTreads</source>
-        <translation>Number of treads</translation>
-    </message>
-    <message>
-        <source>riserHeight</source>
-        <translation>Riser height, mm</translation>
-    </message>
-    <message>
-        <source>treadLength</source>
-        <translation>Tread length, mm</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Top surface area, m²</translation>
-    </message>
-    <message>
-        <source>netFloorArea</source>
-        <translation>Footprint area, m²</translation>
-    </message>
-    <message>
-        <source>nominalThickness</source>
-        <translation>Thickness, mm</translation>
-    </message>
-</context>
-<context>
-    <name>me_wall</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>thickness</source>
-        <translation>Thickness, mm</translation>
-    </message>
-    <message>
-        <source>height</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Length, mm</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Footprint area, m²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Side area, m²</translation>
-    </message>
-</context>
-<context>
-    <name>me_wallFoundation</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>mass</source>
-        <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>overallWidth</source>
-        <translation>Width, mm</translation>
-    </message>
-    <message>
-        <source>overallHeight</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation>Length, mm</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Footprint area, m²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Side area, m²</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Volume, m³</translation>
-    </message>
-</context>
-<context>
-    <name>me_window</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
-    <message>
-        <source>overallHeight</source>
-        <translation>Height, mm</translation>
-    </message>
-    <message>
-        <source>overallWidth</source>
-        <translation>Width, mm</translation>
-    </message>
-    <message>
-        <source>perimeter</source>
-        <translation>Perimeter, mm</translation>
-    </message>
-    <message>
-        <source>area</source>
-        <translation>Area, m²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceArea</source>
-        <translation>Inner surface area, m²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceInternalArea</source>
-        <translation>Inner surface internal area, m²</translation>
-    </message>
-    <message>
-        <source>innerSurfaceExternalArea</source>
-        <translation>Inner surface external area, m²</translation>
     </message>
 </context>
 </TS>

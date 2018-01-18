@@ -9,45 +9,8 @@
 #include "stdafx.h"
 #include "RailingPropertyViewBuilder.h"
 
-#include <RengaAPI/Railing.h>
 
-RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
-  : ObjectPropertyViewBuilder(pPropertyManagers)
-{}
-
-PropertyList RailingPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
 {
-	rengaapi::Railing* pRailing = dynamic_cast<rengaapi::Railing*>(pObject);
-	PropertyList result;
-
-	// name, offset, mark
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_railing", "name"));
-	QtProperty* offset = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_railing", "offset"));
-	QtProperty* mark = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_railing", "mark"));
-
-  m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pRailing->name()));
-	m_pPropertyManagers->m_pStringManager->setValue(mark, rengaStringToQString(pRailing->mark()));
-
-	result.push_back(name);
-	setLengthMeasureOptional(result, pRailing->offset(), offset);
-	result.push_back(mark);
-
-  return result;
-}
-
-
-PropertyList RailingPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject* pObject)
-{
-	rengaapi::Railing* pRailing = dynamic_cast<rengaapi::Railing*>(pObject);
-	rengaapi::RailingQuantities railingQuantities = pRailing->quantities();
-
-	// height, length
-  PropertyList result;
-  QtProperty* height = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_railing", "height"));
-	QtProperty* length = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_railing", "length"));
-
-  setLengthMeasureOptional(result, railingQuantities.nominalHeight(), height);
-	setLengthMeasureOptional(result, railingQuantities.nominalLength(), length);
-
-  return result;
 }

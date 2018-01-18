@@ -13,23 +13,22 @@
 #include "ObjectSelectionHandler.h"
 #include "RengaObjectVisibility.h"
 
-#include <RengaAPI/ObjectId.h>
 
 class ModelTreeView : public QTreeView
 {
   Q_OBJECT
 
 public:
-  ModelTreeView(QWidget* pParent = nullptr);
+  ModelTreeView(QWidget* pParent, Renga::IApplicationPtr pApplication);
   ~ModelTreeView();
 
 signals:
-  void modelObjectSelectionChanged(rengaapi::ObjectId objectId);
+  void modelObjectSelectionChanged(int objectId);
 
 private slots:
   void onRebuildTree();
   void onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected);
-  void onRengaObjectSelected(const rengaapi::ObjectId&);
+  void onRengaObjectSelected(const int&);
   void onTreeItemClicked(const QModelIndex& current);
   void showSelectedItem();
   void hideSelectedItem();
@@ -41,7 +40,7 @@ private:
   ObjectIdList getParentObjectIdList(QStandardItem* childItem);
 
   bool isModelObjectVisible(const QVariant& data);
-  rengaapi::ObjectId getRengaObjectIdFromData(const QVariant& data) const;
+  int getRengaObjectIdFromData(const QVariant& data) const;
   void setIcon(const QModelIndex& iconIndex, bool visible);
 
   inline QStandardItemModel* getModel()
@@ -55,7 +54,8 @@ private:
   }
 
 private:
-  ObjectSelectionHandler m_objectSelectionHandler;
+  Renga::IApplicationPtr m_pApplication;
+  std::unique_ptr<ObjectSelectionHandler> m_objectSelectionHandler;
   std::unique_ptr<QStandardItemModel> m_pModel;
   bool m_wasObjectSelectedInModel;
 };

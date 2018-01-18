@@ -7,20 +7,21 @@
 //
 
 #pragma once
+
 #include <QtCore/QObject>
 
-#include <RengaAPI/IEventHandler.h>
+#include <Renga/ApplicationEventHandler.hpp>
 
-class RengaEventsHandler : public QObject, public rengaapi::IEventHandler
+
+class RengaEventsHandler : public QObject, public Renga::ApplicationEventHandler
 {
   Q_OBJECT
 
 public:
-  RengaEventsHandler();
-  ~RengaEventsHandler();
+  RengaEventsHandler(Renga::IApplicationPtr pApplication);
 
-  //rengaapi::IEventHandler
-  void process(rengaapi::IEvent& event);
+  void OnApplicationClose(Renga::IApplicationCloseEvent* pEvent) override;
+  void OnProjectClose(Renga::IProjectCloseEvent* pEvent) override;
 
 signals:
   void projectAboutToClose();

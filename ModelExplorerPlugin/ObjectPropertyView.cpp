@@ -9,29 +9,29 @@
 #include "stdafx.h"
 #include "ObjectPropertyView.h"
 #include "ObjectPropertyViewBuilderFactory.h"
+#include "GuidUtils.h"
 
-#include <RengaAPI/Project.h>
 
-
-ObjectPropertyView::ObjectPropertyView(QWidget* pParent)
-  : QtTreePropertyBrowser(pParent)
-  , m_currentObjectId(0)
-  , m_propertyViewMode(CategoryMode)
+ObjectPropertyView::ObjectPropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication) :
+  QtTreePropertyBrowser(pParent),
+  m_pApplication(pApplication),
+  m_currentObjectId(0),
+  m_propertyViewMode(CategoryMode)
 {
   m_pGroupManager = new QtGroupPropertyManager(this);
   initPropertyManagers();
 }
 
-void ObjectPropertyView::setSelectedObjectId(const rengaapi::ObjectId objId)
+void ObjectPropertyView::setSelectedObjectId(const int objId)
 {
-	m_currentObjectId = objId;
-	buildPropertyView();
+  m_currentObjectId = objId;
+  buildPropertyView();
 }
 
 void ObjectPropertyView::changeMode(ObjectPropertyView::Mode newMode)
 {
-	m_propertyViewMode = newMode;
-	buildPropertyView();
+  m_propertyViewMode = newMode;
+  buildPropertyView();
 }
 
 void ObjectPropertyView::initPropertyManagers()
@@ -83,7 +83,7 @@ void ObjectPropertyView::buildPropertyViewAsList(PropertyList& parameters, Prope
 
   allProperties.sort([](QtProperty* left, QtProperty* right) -> bool
                     {
-	                  return left->propertyName() < right->propertyName();
+                    return left->propertyName() < right->propertyName();
                     });
 
   for (auto it = allProperties.begin(); it != allProperties.end(); ++it)
@@ -119,26 +119,30 @@ void ObjectPropertyView::buildPropertyViewByCategory(const PropertyList& paramet
 
 bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)
 {
-  // get modelObject from project
-  rengaapi::Model projectModel = rengaapi::Project::model();
-  rengaapi::ModelObjectCollection pModelObjects = projectModel.objects();
-  rengaapi::ModelObject* pSelectedObject = pModelObjects.get(m_currentObjectId);
+  auto pProject = m_pApplication->GetProject();
+  auto pModel = pProject->GetModel();
+  auto pModelObjectCollection = pModel->GetObjects();
+  auto pSelectedObject = pModelObjectCollection->GetObjectById(m_currentObjectId);
 
   // check if object was found in collection
   if (pSelectedObject == nullptr)
     return false;
 
-  ObjectPropertyViewBuilderFactory propertyBuilderFactory(&m_propertyManagers);
+  ObjectPropertyViewBuilderFactory propertyBuilderFactory(&m_propertyManagers, m_pApplication);
   std::unique_ptr<IObjectPropertyViewBuilder> objectPropertyViewBuilder(propertyBuilderFactory.createBuilder(pSelectedObject));
 
-  parameters = objectPropertyViewBuilder->createParametersProperties(pSelectedObject);
-  calculated = objectPropertyViewBuilder->createQuantitiesProperties(pSelectedObject);
+
+  parameters.clear();
+  calculated.clear();
+
+  objectPropertyViewBuilder->createParametersProperties(parameters, pSelectedObject);
+  objectPropertyViewBuilder->createQuantitiesProperties(calculated, pSelectedObject);
   userDefinedProperties = objectPropertyViewBuilder->createUserAttributesProperties(pSelectedObject);
   return true;
 }
 
 void ObjectPropertyView::buildPropertyView()
-{	
+{
   clearPropertyManagers();
 
   PropertyList parameters, calculated, userDefinedProperties;
@@ -154,64 +158,91 @@ void ObjectPropertyView::buildPropertyView()
 void ObjectPropertyView::userDoubleAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
 {
   if (newValue.isEmpty())
-  {
-    changeUserAttribute(userAttributeProperty, nullptr); // will reset the attribute value
-  }
+    resetUserAttribute(userAttributeProperty); // will reset the attribute value
   else
   {
     bool ok = false;
     double newDoubleValue = QLocale::system().toDouble(newValue, &ok);
     if (ok)
-    {
-      rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(newDoubleValue);
-      changeUserAttribute(userAttributeProperty, &userAttributeValue);
-    }
+      changeUserAttribute(userAttributeProperty, newDoubleValue);
   }
 }
 
 void ObjectPropertyView::userStringAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
 {
   if (newValue.isEmpty())
-  {
-    changeUserAttribute(userAttributeProperty, nullptr); // will reset the attribute value
-  }
+    resetUserAttribute(userAttributeProperty); // will reset the attribute value
   else
-  {
-    rengaapi::UserAttributeValue userAttributeValue = rengaapi::UserAttributeValue(rengabase::rengaStringFromStdWString(newValue.toStdWString()));
-    changeUserAttribute(userAttributeProperty, &userAttributeValue);
-  }
+    changeUserAttribute(userAttributeProperty, newValue.toStdWString());
 }
 
-void ObjectPropertyView::changeUserAttribute(QtProperty* userAttributeProperty, rengaapi::UserAttributeValue* pUserAttributeValue)
+Renga::IPropertyPtr ObjectPropertyView::getProperty(QtProperty* userAttributeProperty)
 {
-  rengaapi::Model projectModel = rengaapi::Project::model();
-  rengaapi::ModelObjectCollection modelObjectCollection = projectModel.objects();
-  rengaapi::ModelObject* pSelectedObject = modelObjectCollection.get(rengaapi::ObjectId(m_currentObjectId));
+  auto pProject = m_pApplication->GetProject();
+  auto pModel = pProject->GetModel();
+  auto pModelObjectCollection = pModel->GetObjects();
+  auto pSelectedObject = pModelObjectCollection->GetObjectById(m_currentObjectId);
+  if (!pSelectedObject)
+    return nullptr;
 
-  if(pSelectedObject == nullptr)
+  const auto propertyId = GuidFromString(userAttributeProperty->data().toStdString());
+
+  auto pProperties = pSelectedObject->GetProperties();
+  return pProperties->GetProperty(propertyId);
+}
+
+Renga::IOperationPtr ObjectPropertyView::createOperation()
+{
+  auto pProject = m_pApplication->GetProject();
+  auto pModel = pProject->GetModel();
+  return pModel->CreateOperation();
+}
+
+void ObjectPropertyView::resetUserAttribute(QtProperty* userAttributeProperty)
+{
+  auto pProperty = getProperty(userAttributeProperty);
+  if (!pProperty)
     return;
 
-  rengabase::String userAttributeUuidAsString = rengabase::rengaStringFromStdWString(userAttributeProperty->data().toStdWString());
-  rengabase::UUID userAttributeIdUuid = rengabase::UUID::fromString(userAttributeUuidAsString);
-  rengaapi::UserAttributeId userAttributeId = rengaapi::UserAttributeId(userAttributeIdUuid);
+  auto pOperation = createOperation();
+  pOperation->Start();
 
-  rengaapi::UserAttributeRegister userAttributeRegister = rengaapi::Project::userAttributeRegister();
-  if (userAttributeRegister.typeHasAttribute(pSelectedObject->type(), userAttributeId))
-  {
-    rengaapi::Operation modelOperation = projectModel.createOperation();
+  if (pProperty->GetType() == Renga::PropertyType::PropertyType_Double)
+    pProperty->SetDoubleValue(0.);
+  else if (pProperty->GetType() == Renga::PropertyType::PropertyType_String)
+    pProperty->SetStringValue(L"");
 
-    // start model operation
-    if (modelOperation.start().isOk())
-    {
-      // change or reset attribute value
-      rengaapi::Status status;
-      if(pUserAttributeValue != nullptr)
-        status = pSelectedObject->setUserAttributeValue(userAttributeId, *pUserAttributeValue);
-      else
-        status = pSelectedObject->resetUserAttributeValue(userAttributeId);
+  pOperation->Apply();
+}
 
-      if (status.isOk())
-        modelOperation.apply();
-    }
-  }
+void ObjectPropertyView::changeUserAttribute(QtProperty* userAttributeProperty, const double value)
+{
+  auto pProperty = getProperty(userAttributeProperty);
+  if (!pProperty)
+    return;
+
+  if (pProperty->GetType() != Renga::PropertyType::PropertyType_Double)
+    return;
+
+  auto pOperation = createOperation();
+
+  pOperation->Start();
+  pProperty->SetDoubleValue(value);
+  pOperation->Apply();
+}
+
+void ObjectPropertyView::changeUserAttribute(QtProperty* userAttributeProperty, const std::wstring& value)
+{
+  auto pProperty = getProperty(userAttributeProperty);
+  if (!pProperty)
+    return;
+
+  if (pProperty->GetType() != Renga::PropertyType::PropertyType_Double)
+    return;
+
+  auto pOperation = createOperation();
+
+  pOperation->Start();
+  pProperty->SetStringValue(value.c_str());
+  pOperation->Apply();
 }

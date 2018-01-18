@@ -9,31 +9,19 @@
 #include "stdafx.h"
 #include "LevelPropertyViewBuilder.h"
 
-#include <RengaAPI/Level.h>
 
-LevelPropertyViewBuilder::LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers) 
-  : ObjectPropertyViewBuilder(pPropertyManagers)
-{}
-
-PropertyList LevelPropertyViewBuilder::createParametersProperties(rengaapi::ModelObject* pObject)
+LevelPropertyViewBuilder::LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
 {
-	rengaapi::Level* pLevel = dynamic_cast<rengaapi::Level*>(pObject);
-	PropertyList result;
-
-	// name, elevation
-	QtProperty* name = m_pPropertyManagers->m_pStringManager->addProperty(QApplication::translate("me_level", "name"));
-	QtProperty* elevation = m_pPropertyManagers->m_pDoubleManager->addProperty(QApplication::translate("me_level", "elevation"));
-
-  m_pPropertyManagers->m_pStringManager->setValue(name, rengaStringToQString(pLevel->name()));
-	m_pPropertyManagers->m_pDoubleManager->setValue(elevation, pLevel->elevation().inMeters());
-	
-	result.push_back(name);
-	result.push_back(elevation);
-
-  return result;
 }
 
-PropertyList LevelPropertyViewBuilder::createQuantitiesProperties(rengaapi::ModelObject*)
+void LevelPropertyViewBuilder::createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
 {
-  return PropertyList();
+  ObjectPropertyViewBuilder::createParametersProperties(propertyList, pObject);
+
+  Renga::ILevelPtr pLevel;
+  pObject->QueryInterface(&pLevel);
+
+  addValue(propertyList, QApplication::translate("me_level", "name"), QString::fromWCharArray(pLevel->GetLevelName()));
+  addValue(propertyList, QApplication::translate("me_level", "elevation"), pLevel->GetElevation());
 }

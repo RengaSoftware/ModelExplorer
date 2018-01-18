@@ -25,50 +25,53 @@
 #include "IsolatedFoundationPropertyViewBuilder.h"
 #include "WallFoundationPropertyViewBuilder.h"
 
-#include <RengaAPI/ModelObjectTypes.h>
-#include <RengaAPI/Project.h>
+#include <Renga/ObjectTypes.h>
 
 
-ObjectPropertyViewBuilderFactory::ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers)
-  : m_pPropertyManagers(pPropertyManagers)
-{}
-
-ObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilder(rengaapi::ModelObject* pSelectedObject)
+ObjectPropertyViewBuilderFactory::ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+  m_pApplication(pApplication),
+  m_pPropertyManagers(pPropertyManagers)
 {
-	ObjectPropertyViewBuilder* pResult = nullptr;
-	
-	if (pSelectedObject != nullptr)
-	{
-		if (pSelectedObject->type() == rengaapi::ModelObjectTypes::LevelType)
-		  pResult = new LevelPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::WallType) 
-			pResult = new WallPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::ColumnType) 
-			pResult = new ColumnPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::FloorType)
-			pResult = new FloorPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::OpeningType)
-			pResult = new OpeningPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::RoofType)
-			pResult = new RoofPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::BeamType)
-			pResult = new BeamPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::StairType)
-			pResult = new StairPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::RampType)
-			pResult = new RampPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::WindowType)
-			pResult = new WindowPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::DoorType)
-			pResult = new DoorPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::RailingType)
-			pResult = new RailingPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::RoomType)
-			pResult = new RoomPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::IsolatedFoundationType)
-			pResult = new IsolatedFoundationPropertyViewBuilder(m_pPropertyManagers);
-		else if (pSelectedObject->type() == rengaapi::ModelObjectTypes::WallFoundationType)
-			pResult = new WallFoundationPropertyViewBuilder(m_pPropertyManagers);
-	}
-	return pResult;
+}
+
+ObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilder(Renga::IModelObjectPtr pSelectedObject)
+{
+  ObjectPropertyViewBuilder* pResult = nullptr;
+
+  if (!pSelectedObject)
+    return pResult;
+
+  const auto type = pSelectedObject->GetObjectType();
+  if (type == Renga::ObjectTypes::Level)
+    pResult = new LevelPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Wall)
+    pResult = new WallPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Column)
+    pResult = new ColumnPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Floor)
+    pResult = new FloorPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Opening)
+    pResult = new OpeningPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Roof)
+    pResult = new RoofPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Beam)
+    pResult = new BeamPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Stair)
+    pResult = new StairPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Ramp)
+    pResult = new RampPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Window)
+    pResult = new WindowPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Door)
+    pResult = new DoorPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Railing)
+    pResult = new RailingPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Room)
+    pResult = new RoomPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::IsolatedFoundation)
+    pResult = new IsolatedFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::WallFoundation)
+    pResult = new WallFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+
+  return pResult;
 }

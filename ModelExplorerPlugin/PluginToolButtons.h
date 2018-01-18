@@ -7,10 +7,9 @@
 //
 
 #pragma once
+
 #include <QtCore/QObject>
 
-#include <RengaAPI/Image.h>
-#include <RengaAPI/Toolbutton.h>
 
 class ModelExplorerButtonHandler;
 
@@ -19,16 +18,17 @@ class PluginToolButtons : public QObject
   Q_OBJECT
 
 public:
-  PluginToolButtons(const std::wstring& pluginPath);
+  PluginToolButtons(Renga::IUIPtr pUI, const std::wstring& pluginPath);
 
 signals:
   void modelExplorerButtonClicked();
 
 private:
-  rengaapi::ToolButton createModelExplorerButton(const std::wstring& pluginPath);
-  bool loadIcon(const std::wstring& iconPath, rengaapi::Image::Format iconFormat, rengaapi::Image& outIcon) const;
+  Renga::IActionPtr createModelExplorerButton(const std::wstring& pluginPath);
+  bool loadIcon(const std::wstring& iconPath, Renga::ImageFormat iconFormat, Renga::IImagePtr& outIcon) const;
 
 private:
   const QTranslator* m_pTranslator;
   std::unique_ptr<ModelExplorerButtonHandler> m_pModelExplorerButtonHandler;
+  Renga::IUIPtr m_pUI;
 };

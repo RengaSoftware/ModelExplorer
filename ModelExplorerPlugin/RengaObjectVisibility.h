@@ -8,50 +8,38 @@
 
 #include "stdafx.h"
 
-#include <RengaAPI/Application.h>
-#include <RengaAPI/LevelView.h>
-#include <RengaAPI/ObjectId.h>
-#include <RengaAPI/ObjectVisibility.h>
-#include <RengaAPI/View.h>
+#include <atlsafe.h>
 
-typedef std::list<rengaapi::ObjectId> ObjectIdList;
 
-static bool getRengaObjectVisibility(const rengaapi::ObjectId& objectId)
+typedef std::list<int> ObjectIdList;
+
+static bool getRengaObjectVisibility(Renga::IApplicationPtr pApplication, const int& objectId)
 {
-  rengaapi::View* pView = rengaapi::Application::activeView();
-  switch(pView->type())
-  {
-  case rengaapi::ViewType::View3D:
-    return rengaapi::ObjectVisibility::isVisibleIn3DView(objectId);
-  case rengaapi::ViewType::Level:
-    {
-      rengaapi::ObjectId levelId = dynamic_cast<rengaapi::LevelView*>(pView)->levelId();
-      return rengaapi::ObjectVisibility::isVisibleOnLevel(objectId, levelId);
-    }
-  default:
+  auto pView = pApplication->GetActiveView();
+
+  Renga::IModelViewPtr pModelView;
+  pView->QueryInterface(&pModelView);
+
+  if (!pModelView)
     return false;
-  }
+
+  return pModelView->IsObjectVisible(objectId);
 }
 
-static void setRengaObjectVisibility(const ObjectIdList& objectIdList, const bool visible)
+static void setRengaObjectVisibility(Renga::IApplicationPtr pApplication, const ObjectIdList& objectIdList, const bool visible)
 {
-  rengaapi::ObjectIdCollection objectIdCollection;
-  for (auto& id : objectIdList)
-    objectIdCollection.add(id);
+  auto pView = pApplication->GetActiveView();
 
-  rengaapi::View* pView = rengaapi::Application::activeView();
-  switch(pView->type())
-  {
-  case rengaapi::ViewType::View3D:
-    rengaapi::ObjectVisibility::setVisibleIn3DView(objectIdCollection, visible);
-    break;
-  case rengaapi::ViewType::Level:
-    {
-      rengaapi::ObjectId levelId = dynamic_cast<rengaapi::LevelView*>(pView)->levelId();
-      rengaapi::ObjectVisibility::setVisibleOnLevel(objectIdCollection, levelId, visible);
-      break;
-    }
-  default:
-    break;
-  }
+  Renga::IModelViewPtr pModelView;
+  pView->QueryInterface(&pModelView);
+
+  if (!pModelView)
+    return;
+
+  CComSafeArray<int> idsSafeArray(static_cast<ULONG>(objectIdList.size()));
+  LONG i(0);
+  for (auto id : objectIdList)
+    idsSafeArray.SetAt(i++, id);
+
+  pModelView->SetObjectsVisibility(idsSafeArray,visible);
 }

@@ -12,8 +12,6 @@
 #include "RengaEventsHandler.h"
 #include "ModelExplorerWidget.h"
 
-#include <RengaAPI/Localization.h>
-#include <RengaAPI/Message.h>
 
 static const QString russianLocaleFileName = "modelexplorerplugin_ru.qm";
 static const QString englishLocaleFileName = "modelexplorerplugin_en.qm";
@@ -22,14 +20,18 @@ static const QString defaultLocaleFileName = englishLocaleFileName;
 static const QString c_russianLocale = "ru_RU";
 static const QString c_englishLocale = "en_EN";
 
-static const rengabase::String c_loadLocalizationFileError = L"Cannot open localization file.";
-static const rengabase::String c_error = L"Error";
+static const wchar_t* c_loadLocalizationFileError = L"Cannot open localization file.";
+static const wchar_t* c_error = L"Error";
 
 ModelExplorerPlugin::ModelExplorerPlugin()
-{}
+{
+  ::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+}
 
 ModelExplorerPlugin::~ModelExplorerPlugin()
-{}
+{
+  ::CoUninitialize();
+}
 
 bool ModelExplorerPlugin::initialize(const wchar_t* pluginPath)
 {
@@ -48,7 +50,14 @@ bool ModelExplorerPlugin::initialize(const wchar_t* pluginPath)
   m_pApp.reset(new QApplication(argc, argv));
 #endif
 
-	if(!loadTranslator(pluginPath))
+  auto pApplication = Renga::CreateApplication();
+  if (!pApplication)
+    return false;
+
+  m_pApplication = pApplication;
+  m_pUI = m_pApplication->GetUI();
+
+  if (!loadTranslator(pluginPath))
     return false;
 
   subscribeOnRengaEvents();
@@ -60,14 +69,14 @@ bool ModelExplorerPlugin::initialize(const wchar_t* pluginPath)
 void ModelExplorerPlugin::stop()
 {
   m_pPluginToolButtons.reset(nullptr);
-	m_pRengaEventsHandler.reset(nullptr);
+  m_pRengaEventsHandler.reset(nullptr);
   m_pWidget.reset(nullptr);
 }
 
 QString ModelExplorerPlugin::translationFileName()
 {
   // get application locale
-  QString appLocale = rengaStringToQString(rengaapi::Localization::currentLocale_());
+  const QString appLocale = QString::fromWCharArray(m_pApplication->GetCurrentLocale());
 
   // get translation file name
   if (appLocale == c_russianLocale)
@@ -83,7 +92,7 @@ bool ModelExplorerPlugin::loadTranslator(const std::wstring& pluginPath)
   // load QTranslator
   if (!m_translator.load(translationFileName(), QString::fromStdWString(pluginPath)))
   {
-    rengaapi::Message::showMessageBox(rengaapi::Message::Error, c_error, c_loadLocalizationFileError);
+    m_pUI->ShowMessageBox(Renga::MessageIcon::MessageIcon_Error, c_error, c_loadLocalizationFileError);
     return false;
   }
   else
@@ -95,19 +104,19 @@ bool ModelExplorerPlugin::loadTranslator(const std::wstring& pluginPath)
 
 void ModelExplorerPlugin::subscribeOnRengaEvents()
 {
-  m_pRengaEventsHandler.reset(new RengaEventsHandler());
+  m_pRengaEventsHandler.reset(new RengaEventsHandler(m_pApplication));
   connect(m_pRengaEventsHandler.get(), SIGNAL(projectAboutToClose()), this, SLOT(onProjectAboutToClose()));
 }
 
 void ModelExplorerPlugin::addPluginButtons(const std::wstring& pluginPath)
 {
-  m_pPluginToolButtons.reset(new PluginToolButtons(pluginPath));
+  m_pPluginToolButtons.reset(new PluginToolButtons(m_pUI, pluginPath));
   connect(m_pPluginToolButtons.get(), SIGNAL(modelExplorerButtonClicked()), this, SLOT(onModelExplorerButtonClicked()));
 }
 
 void ModelExplorerPlugin::onModelExplorerButtonClicked()
 {
-  m_pWidget.reset(new ModelExplorerWidget());
+  m_pWidget.reset(new ModelExplorerWidget(m_pApplication));
   m_pWidget->readModelAndShow();
 }
 

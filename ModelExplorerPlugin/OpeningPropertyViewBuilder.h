@@ -13,8 +13,5 @@
 class OpeningPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers);
-
-	PropertyList createParametersProperties(rengaapi::ModelObject* pObject); 
-	PropertyList createQuantitiesProperties(rengaapi::ModelObject* pObject); 
+  OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
 };

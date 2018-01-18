@@ -13,7 +13,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
 
-#include <RengaAPI/ObjectId.h>
 
 namespace Ui
 {
@@ -25,7 +24,7 @@ class ModelExplorerWidget : public QWidget
   Q_OBJECT
 
 public:
-  ModelExplorerWidget();
+  ModelExplorerWidget(Renga::IApplicationPtr pApplication);
   ~ModelExplorerWidget();
 
 public:
@@ -36,7 +35,7 @@ signals:
 
 private slots:
   void setPropertyViewMode(int buttonId);
-  void onObjectSelectedInTree(const rengaapi::ObjectId& id);
+  void onObjectSelectedInTree(const int& id);
 
 private:
   QPushButton* createPushButton(const QString& iconPath, const QString& tooltip);
@@ -47,6 +46,7 @@ private:
   void updateOwner();
 
 private:
+  Renga::IApplicationPtr m_pApplication;
   std::unique_ptr<Ui::ModelExplorerDialog> m_pUi;
   ModelTreeView* m_pModelTreeView;
   ObjectPropertyView* m_pPropertyView;

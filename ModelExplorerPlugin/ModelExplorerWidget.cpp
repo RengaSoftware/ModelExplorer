@@ -16,13 +16,13 @@
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>
 
-#include <RengaAPI/Application.h>
 
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
 
-ModelExplorerWidget::ModelExplorerWidget()
-  : QWidget(nullptr, Qt::Tool)
+ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
+  QWidget(nullptr, Qt::Tool),
+  m_pApplication(pApplication)
 {
   m_pUi.reset(new Ui::ModelExplorerDialog());
   m_pUi->setupUi(this);
@@ -85,7 +85,7 @@ void ModelExplorerWidget::setPropertyViewMode(int pressedButtonId)
   m_pPropertyView->changeMode(ObjectPropertyView::Mode(pressedButtonId));
 }
 
-void ModelExplorerWidget::onObjectSelectedInTree(const rengaapi::ObjectId& id)
+void ModelExplorerWidget::onObjectSelectedInTree(const int& id)
 {
   m_pPropertyView->setSelectedObjectId(id);
 }
@@ -120,28 +120,33 @@ QToolBar* ModelExplorerWidget::createToolBar(QWidget* parentWidget)
 
 void ModelExplorerWidget::createModelTreeView()
 {
-  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget);
+  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget, m_pApplication);
   m_pModelTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
   m_pModelTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
   m_pModelTreeView->setHeaderHidden(true);
 
   connect(this, SIGNAL(rebuildModelTree()), m_pModelTreeView, SLOT(onRebuildTree()));
-  connect(m_pModelTreeView, SIGNAL(modelObjectSelectionChanged(const rengaapi::ObjectId&)), 
-    this, SLOT(onObjectSelectedInTree(const rengaapi::ObjectId&)));
+  connect(m_pModelTreeView, SIGNAL(modelObjectSelectionChanged(const int&)), 
+    this, SLOT(onObjectSelectedInTree(const int&)));
 }
 
 void ModelExplorerWidget::createPropertyView()
 {
-  m_pPropertyView = new ObjectPropertyView(this);
+  m_pPropertyView = new ObjectPropertyView(this, m_pApplication);
   m_pPropertyView->setResizeMode(QtTreePropertyBrowser::Interactive);
   m_pPropertyView->setHeaderVisible(true);
   m_pPropertyView->setAlternatingRowColors(false);
   m_pPropertyView->setSplitterPosition(150);
 }
 
+HWND toWinHandle(int id) {
+  uint64_t value = id;
+  return reinterpret_cast<HWND>(value);
+}
+
 void ModelExplorerWidget::updatePlacement()
 {
-  auto rengaMainWindowHwnd = (HWND) rengaapi::Application::topLevelWindow();
+  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetTopLevelWindow());
 
   RECT parentWindowRect;
   GetWindowRect(rengaMainWindowHwnd, &parentWindowRect);
@@ -151,8 +156,8 @@ void ModelExplorerWidget::updatePlacement()
 
 void ModelExplorerWidget::updateOwner()
 {
-  auto pluginWindowHwnd = (HWND) this->winId();
-  auto rengaMainWindowHwnd = (HWND) rengaapi::Application::topLevelWindow();
+  auto pluginWindowHwnd = (HWND)this->winId();
+  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetTopLevelWindow());
   SetWindowLongPtr(pluginWindowHwnd, GWLP_HWNDPARENT, (LONG_PTR)rengaMainWindowHwnd);
 }
 
