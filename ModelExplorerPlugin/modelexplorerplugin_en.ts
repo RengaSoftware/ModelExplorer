@@ -570,6 +570,10 @@
         <source>Wall foundations</source>
         <translation>Wall foundations</translation>
     </message>
+    <message>
+        <source>Assembly instances</source>
+        <translation>Assembly Instances</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

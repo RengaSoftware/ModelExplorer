@@ -182,6 +182,9 @@
     <ClCompile Include="GuidUtils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="AssemblyInstancePropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="GuidUtils.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="AssemblyInstancePropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

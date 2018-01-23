@@ -112,6 +112,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssemblyInstancePropertyViewBuilder.cpp" />
     <ClCompile Include="BeamPropertyViewBuilder.cpp" />
     <ClCompile Include="BoolGuard.cpp" />
     <ClCompile Include="ColumnPropertyViewBuilder.cpp" />
@@ -199,6 +200,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="WindowPropertyViewBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssemblyInstancePropertyViewBuilder.h" />
     <ClInclude Include="BeamPropertyViewBuilder.h" />
     <ClInclude Include="BoolGuard.h" />
     <ClInclude Include="ColumnPropertyViewBuilder.h" />
