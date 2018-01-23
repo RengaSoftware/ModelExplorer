@@ -207,10 +207,7 @@ void ObjectPropertyView::resetUserAttribute(QtProperty* userAttributeProperty)
   auto pOperation = createOperation();
   pOperation->Start();
 
-  if (pProperty->GetType() == Renga::PropertyType::PropertyType_Double)
-    pProperty->SetDoubleValue(0.);
-  else if (pProperty->GetType() == Renga::PropertyType::PropertyType_String)
-    pProperty->SetStringValue(L"");
+  pProperty->ResetValue();
 
   pOperation->Apply();
 }
@@ -237,7 +234,7 @@ void ObjectPropertyView::changeUserAttribute(QtProperty* userAttributeProperty, 
   if (!pProperty)
     return;
 
-  if (pProperty->GetType() != Renga::PropertyType::PropertyType_Double)
+  if (pProperty->GetType() != Renga::PropertyType::PropertyType_String)
     return;
 
   auto pOperation = createOperation();
