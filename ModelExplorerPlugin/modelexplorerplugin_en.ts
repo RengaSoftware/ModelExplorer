@@ -574,6 +574,10 @@
         <source>Assembly instances</source>
         <translation>Assembly Instances</translation>
     </message>
+    <message>
+        <source>Elements</source>
+        <translation>Elements</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

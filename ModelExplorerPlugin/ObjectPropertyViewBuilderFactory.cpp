@@ -25,6 +25,7 @@
 #include "IsolatedFoundationPropertyViewBuilder.h"
 #include "WallFoundationPropertyViewBuilder.h"
 #include "AssemblyInstancePropertyViewBuilder.h"
+#include "ElementPropertyViewBuilder.h"
 
 #include <Renga/ObjectTypes.h>
 
@@ -75,6 +76,8 @@ ObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilder(Renga
     pResult = new WallFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
   else if (type == Renga::ObjectTypes::AssemblyInstance)
     pResult = new AssemblyInstancePropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+  else if (type == Renga::ObjectTypes::Element)
+    pResult = new ElementPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
 
   return pResult;
 }

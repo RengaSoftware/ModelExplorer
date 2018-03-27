@@ -39,7 +39,8 @@ ModelTreeBuilder::ModelTreeBuilder(Renga::IApplicationPtr pApplication) :
   add(Renga::ObjectTypes::Room, QApplication::translate("me_modelObjects", "Rooms"), ":/icons/Room");
   add(Renga::ObjectTypes::IsolatedFoundation, QApplication::translate("me_modelObjects", "Isolated foundations"), ":/icons/Isolated_foundation");
   add(Renga::ObjectTypes::WallFoundation, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation");
-  add(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Wall_foundation");
+  add(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly");
+  add(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element");
 }
 
 void ModelTreeBuilder::add(GUID type, const QString& translationLiteral, QString iconPath)

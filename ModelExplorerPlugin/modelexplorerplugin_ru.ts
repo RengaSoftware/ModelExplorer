@@ -574,6 +574,10 @@
         <source>Assembly instances</source>
         <translation>Сборки</translation>
     </message>
+    <message>
+        <source>Elements</source>
+        <translation>Элементы</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>
