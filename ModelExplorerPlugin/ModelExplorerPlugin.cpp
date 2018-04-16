@@ -71,6 +71,7 @@ void ModelExplorerPlugin::stop()
   m_pPluginToolButtons.reset(nullptr);
   m_pRengaEventsHandler.reset(nullptr);
   m_pWidget.reset(nullptr);
+  m_pApplication = nullptr;
 }
 
 QString ModelExplorerPlugin::translationFileName()

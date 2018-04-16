@@ -42,6 +42,12 @@ void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propert
   pObject->QueryInterface(&pObjectWithLayeredMaterial);
   if (pObjectWithLayeredMaterial)
     addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
+
+  Renga::IObjectWithMaterialListPtr pObjectWithMaterialList;
+  pObject->QueryInterface(&pObjectWithMaterialList);
+  if (pObjectWithMaterialList)
+    for (size_t i = 0; i < pObjectWithMaterialList->GetMaterialCount(); i++)
+      addValue(propertyList, QApplication::translate("me_mo", "material"), getMaterialName(pObjectWithMaterialList->GetMaterialId(i)));
 }
 
 void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)

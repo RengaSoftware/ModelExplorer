@@ -16,6 +16,7 @@ typedef std::list<QtProperty*> PropertyList;
 class IObjectPropertyViewBuilder
 {
 public:
+  virtual ~IObjectPropertyViewBuilder() {}
   virtual void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
   virtual void createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
   virtual PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject) = 0;

@@ -131,7 +131,6 @@ bool ObjectPropertyView::createProperties(PropertyList& parameters, PropertyList
   ObjectPropertyViewBuilderFactory propertyBuilderFactory(&m_propertyManagers, m_pApplication);
   std::unique_ptr<IObjectPropertyViewBuilder> objectPropertyViewBuilder(propertyBuilderFactory.createBuilder(pSelectedObject));
 
-
   parameters.clear();
   calculated.clear();
 
