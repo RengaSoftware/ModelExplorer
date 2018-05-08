@@ -80,7 +80,9 @@ QStandardItemModel* ModelTreeBuilder::buildModelTree()
   // build subtree for each level
   for (auto pLevel : levels)
   {
-    QList<QStandardItem*> pLevelItem = buildLevelSubtree(pLevel->GetId(), pModelObjectCollection);
+    Renga::IModelObjectPtr levelModelObject;
+    pLevel->QueryInterface(&levelModelObject);
+    QList<QStandardItem*> pLevelItem = buildLevelSubtree(levelModelObject->GetId(), pModelObjectCollection);
     pResultModel->appendRow(pLevelItem);
   }
 

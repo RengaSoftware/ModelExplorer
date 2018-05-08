@@ -23,8 +23,8 @@ public:
 
   PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject);
 
-  QString getMaterialName(const Renga::MaterialId& materialId);
-  QString getLayeredMaterialName(const Renga::LayeredMaterialId& layeredMaterialId);
+  QString getMaterialName(const int& materialId);
+  QString getLayeredMaterialName(const int& layeredMaterialId);
 
   void addValue(PropertyList& propertyList, const QString& name, const int value) const;
   void addValue(PropertyList& propertyList, const QString& name, const double value) const;

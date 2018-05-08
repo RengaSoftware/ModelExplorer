@@ -114,7 +114,7 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
   // check all attributes
   for (int i = 0; i < pPropertyManager->GetPropertyCount(); ++i)
   {
-    auto propertyId = pPropertyManager->GetProperty(i);
+    auto propertyId = pPropertyManager->GetPropertyId(i);
 
     // check if objectType has attribute
     if (!pPropertyManager->IsPropertyAssignedToType(propertyId, pObject->GetObjectType()))
@@ -133,7 +133,7 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
     const auto attributeName = QString::fromWCharArray(propertyDescription.name);
     const auto propertyIdString = QString::fromStdString((GuidToString(propertyId)));
 
-    QtProperty* pUserAttributeProperty(nullptr);
+    QtProperty* pQtProperty(nullptr);
     switch (propertyDescription.type)
     {
     case Renga::PropertyType::PropertyType_Double:
@@ -141,7 +141,7 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
         auto pManager = m_pPropertyManagers->m_pDoubleUserAttributeManager;
         auto pQtProperty = pManager->addProperty(attributeName);
         pManager->setValue(pQtProperty, pProperty->GetDoubleValue());
-        pUserAttributeProperty = pQtProperty;
+        pQtProperty = pQtProperty;
       }
       break;
     case Renga::PropertyType::PropertyType_String:
@@ -149,16 +149,16 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
         auto pManager = m_pPropertyManagers->m_pStringUserAttributeManager;
         auto pQtProperty = pManager->addProperty(attributeName);
         pManager->setValue(pQtProperty, QString::fromWCharArray(pProperty->GetStringValue()));
-        pUserAttributeProperty = pQtProperty;
+        pQtProperty = pQtProperty;
       }
       break;
     default:
       assert(false);
     }
-    pUserAttributeProperty->setModified(true);
-    pUserAttributeProperty->setData(propertyIdString);
+    pQtProperty->setModified(true);
+    pQtProperty->setData(propertyIdString);
 
-    pResult.push_back(pUserAttributeProperty);
+    pResult.push_back(pQtProperty);
   }
 
   // unblock signals
@@ -168,7 +168,7 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
   return pResult;
 }
 
-QString ObjectPropertyViewBuilder::getMaterialName(const Renga::MaterialId& materialId)
+QString ObjectPropertyViewBuilder::getMaterialName(const int& materialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pMaterialManager = pProject->GetMaterialManager();
@@ -179,11 +179,11 @@ QString ObjectPropertyViewBuilder::getMaterialName(const Renga::MaterialId& mate
   return QString::fromWCharArray(pMaterial->GetName());
 }
 
-QString ObjectPropertyViewBuilder::getLayeredMaterialName(const Renga::LayeredMaterialId& layeredMaterialId)
+QString ObjectPropertyViewBuilder::getLayeredMaterialName(const int& layeredMaterialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pLayeredMaterialManager = pProject->GetLayeredMaterialManager();
-  auto pLayeredMaterial = pLayeredMaterialManager->GetLayeredMaterial(layeredMaterialId);
+  auto pLayeredMaterial = pLayeredMaterialManager->GetLayeredMaterialById(layeredMaterialId);
   if (!pLayeredMaterial)
     return QString();
 
