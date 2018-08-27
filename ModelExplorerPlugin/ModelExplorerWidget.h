@@ -7,13 +7,14 @@
 //
 
 #pragma once
-#include "ModelTreeView.h"
 #include "ObjectPropertyView.h"
 
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
+#include <QtGui/QStandardItemModel>
 
 #include "ObjectSelectionHandler.h"
+#include "RengaObjectVisibility.h"
 
 namespace Ui
 {

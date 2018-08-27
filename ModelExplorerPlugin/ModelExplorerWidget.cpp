@@ -97,11 +97,6 @@ void ModelExplorerWidget::setPropertyViewMode(int pressedButtonId)
   m_pPropertyView->changeMode(ObjectPropertyView::Mode(pressedButtonId));
 }
 
-//void ModelExplorerWidget::onObjectSelectedInTree(const int& id)
-//{
-//  m_pPropertyView->setSelectedObjectId(id);
-//}
-
 void ModelExplorerWidget::buildTreeViewModel()
 {
   TreeViewModelBuilder treeViewModelBuilder(m_pApplication);
@@ -286,18 +281,6 @@ void ModelExplorerWidget::createTreeView()
 
   connect(m_pTreeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTreeViewItemClicked(const QModelIndex&)));
 }
-
-//void ModelExplorerWidget::createModelTreeView()
-//{
-//  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget, m_pApplication);
-//  m_pModelTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
-//  m_pModelTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//  m_pModelTreeView->setHeaderHidden(true);
-//
-//  connect(this, SIGNAL(rebuildModelTree()), m_pModelTreeView, SLOT(onRebuildTree()));
-//  /*connect(m_pModelTreeView, SIGNAL(modelObjectSelectionChanged(const int&)), 
-//    this, SLOT(onObjectSelectedInTree(const int&)));*/
-//}
 
 void ModelExplorerWidget::createPropertyView()
 {
@@ -539,18 +522,6 @@ void ModelExplorerWidget::selectModelObject(int modelObjectId)
 
   auto pSelection = m_pApplication->Selection;
   pSelection->SetSelectedObjects(objectIds);
-
-  /*const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
-  updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
-
-  if (!m_wasObjectSelectedInModel)
-  {
-    CComSafeArray<int> idsSafeArray(static_cast<ULONG>(1));
-    idsSafeArray.SetAt(0, id);
-
-    auto pSelection = m_pApplication->GetSelection();
-    pSelection->SetSelectedObjects(idsSafeArray);
-  }*/
 }
 
 void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIndex, const QModelIndex& visibilityIconIndex)
