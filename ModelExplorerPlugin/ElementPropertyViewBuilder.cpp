@@ -10,7 +10,10 @@
 #include "ElementPropertyViewBuilder.h"
 
 
-ElementPropertyViewBuilder::ElementPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication)
-  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+ElementPropertyViewBuilder::ElementPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject)
+  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

@@ -13,5 +13,8 @@
 class ElementPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  ElementPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  ElementPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

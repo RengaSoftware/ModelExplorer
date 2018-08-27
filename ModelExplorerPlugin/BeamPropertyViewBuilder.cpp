@@ -10,7 +10,10 @@
 #include "BeamPropertyViewBuilder.h"
 
 
-BeamPropertyViewBuilder::BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+BeamPropertyViewBuilder::BeamPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

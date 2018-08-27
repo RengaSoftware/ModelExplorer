@@ -13,5 +13,8 @@
 class RoofPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  RoofPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  RoofPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

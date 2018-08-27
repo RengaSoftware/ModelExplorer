@@ -12,5 +12,8 @@
 
 class WindowPropertyViewBuilder : public ObjectPropertyViewBuilder {
 public:
-  WindowPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  WindowPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

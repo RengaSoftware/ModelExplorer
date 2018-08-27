@@ -13,5 +13,8 @@
 class ColumnPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  ColumnPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  ColumnPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

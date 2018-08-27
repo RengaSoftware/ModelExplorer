@@ -10,7 +10,10 @@
 #include "AssemblyInstancePropertyViewBuilder.h"
 
 
-AssemblyInstancePropertyViewBuilder::AssemblyInstancePropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+AssemblyInstancePropertyViewBuilder::AssemblyInstancePropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

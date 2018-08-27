@@ -13,5 +13,8 @@
 class OpeningPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  OpeningPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  OpeningPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

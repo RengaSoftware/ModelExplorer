@@ -8,14 +8,18 @@
 
 #pragma once
 
-#include "ObjectPropertyViewBuilder.h"
+#include "IObjectPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
 class ObjectPropertyViewBuilderFactory
 {
 public:
   ObjectPropertyViewBuilderFactory(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
-  ObjectPropertyViewBuilder* createBuilder(Renga::IModelObjectPtr pModelObject);
+  
+  IObjectPropertyViewBuilder* createBuilderForModelObject(Renga::IModelObjectPtr pModelObject);
+  IObjectPropertyViewBuilder* createBuilderForMaterialLayer(Renga::IMaterialLayerPtr pMaterialLayer, Renga::ILayerPtr pLayer);
+  IObjectPropertyViewBuilder* createBuilderForRebarUsage(Renga::IRebarUsagePtr pRebarUsage);
+  IObjectPropertyViewBuilder* createBuilderForReinforcementUnitUsage(Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
 
 private:
   Renga::IApplicationPtr m_pApplication;

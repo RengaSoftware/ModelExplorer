@@ -10,7 +10,10 @@
 #include "IsolatedFoundationPropertyViewBuilder.h"
 
 
-IsolatedFoundationPropertyViewBuilder::IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+IsolatedFoundationPropertyViewBuilder::IsolatedFoundationPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

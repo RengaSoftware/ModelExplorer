@@ -20,7 +20,7 @@ ObjectSelectionHandler::ObjectSelectionHandler(Renga::ISelectionPtr pSelection) 
 
 void ObjectSelectionHandler::OnModelSelectionChanged()
 {
-  CComSafeArray<int> selectedObjectIds(m_pSelection->GetSelectedModelObjects());
+  CComSafeArray<int> selectedObjectIds(m_pSelection->GetSelectedObjects());
 
   if (selectedObjectIds.GetCount() == 0)
     return;

@@ -10,7 +10,10 @@
 #include "RailingPropertyViewBuilder.h"
 
 
-RailingPropertyViewBuilder::RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+RailingPropertyViewBuilder::RailingPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

@@ -13,5 +13,8 @@
 class BeamPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  BeamPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  BeamPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

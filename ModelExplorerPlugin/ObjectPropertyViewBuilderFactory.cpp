@@ -27,6 +27,10 @@
 #include "AssemblyInstancePropertyViewBuilder.h"
 #include "ElementPropertyViewBuilder.h"
 
+#include "MaterialLayerPropertyViewBuilder.h"
+#include "RebarUsagePropertyViewBuilder.h"
+#include "ReinforcementUnitUsagePropertyViewBuilder.h"
+
 #include <Renga/ObjectTypes.h>
 
 
@@ -36,48 +40,67 @@ ObjectPropertyViewBuilderFactory::ObjectPropertyViewBuilderFactory(const Propert
 {
 }
 
-ObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilder(Renga::IModelObjectPtr pSelectedObject)
+IObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilderForModelObject(Renga::IModelObjectPtr pSelectedObject)
 {
-  ObjectPropertyViewBuilder* pResult = nullptr;
+  IObjectPropertyViewBuilder* pResult = nullptr;
 
   if (!pSelectedObject)
     return pResult;
 
   const auto type = pSelectedObject->GetObjectType();
   if (type == Renga::ObjectTypes::Level)
-    pResult = new LevelPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new LevelPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Wall)
-    pResult = new WallPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new WallPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Column)
-    pResult = new ColumnPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new ColumnPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Floor)
-    pResult = new FloorPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new FloorPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Opening)
-    pResult = new OpeningPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new OpeningPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Roof)
-    pResult = new RoofPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new RoofPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Beam)
-    pResult = new BeamPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new BeamPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Stair)
-    pResult = new StairPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new StairPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Ramp)
-    pResult = new RampPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new RampPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Window)
-    pResult = new WindowPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new WindowPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Door)
-    pResult = new DoorPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new DoorPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Railing)
-    pResult = new RailingPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new RailingPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Room)
-    pResult = new RoomPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new RoomPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::IsolatedFoundation)
-    pResult = new IsolatedFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new IsolatedFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::WallFoundation)
-    pResult = new WallFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new WallFoundationPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::AssemblyInstance)
-    pResult = new AssemblyInstancePropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new AssemblyInstancePropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
   else if (type == Renga::ObjectTypes::Element)
-    pResult = new ElementPropertyViewBuilder(m_pPropertyManagers, m_pApplication);
+    pResult = new ElementPropertyViewBuilder(m_pPropertyManagers, m_pApplication, pSelectedObject);
 
   return pResult;
+}
+
+IObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilderForMaterialLayer(
+  Renga::IMaterialLayerPtr pMaterialLayer,
+  Renga::ILayerPtr pLayer)
+{
+  return new MaterialLayerPropertyViewBuilder(
+    m_pPropertyManagers, m_pApplication, pMaterialLayer, pLayer);
+}
+
+IObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilderForRebarUsage(Renga::IRebarUsagePtr pRebarUsage)
+{
+  return new RebarUsagePropertyViewBuilder(m_pPropertyManagers, m_pApplication, pRebarUsage);
+}
+
+IObjectPropertyViewBuilder* ObjectPropertyViewBuilderFactory::createBuilderForReinforcementUnitUsage(
+  Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage)
+{
+  return new ReinforcementUnitUsagePropertyViewBuilder(m_pPropertyManagers, m_pApplication, pReinforcementUnitUsage);
 }

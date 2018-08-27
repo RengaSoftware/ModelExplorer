@@ -13,5 +13,8 @@
 class RailingPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  RailingPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  RailingPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

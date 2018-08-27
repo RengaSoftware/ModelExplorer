@@ -12,5 +12,8 @@
 
 class AssemblyInstancePropertyViewBuilder : public ObjectPropertyViewBuilder {
 public:
-  AssemblyInstancePropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  AssemblyInstancePropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

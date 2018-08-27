@@ -374,6 +374,64 @@
     </message>
 </context>
 <context>
+    <name>me_materialLayer</name>
+    <message>
+        <source>thickness</source>
+        <translation>Thickness, mm</translation>
+    </message>
+    <message>
+        <source>noMaterial</source>
+        <translation>No material</translation>
+    </message>
+    <message>
+        <source>material</source>
+        <translation>Material</translation>
+    </message>
+    <message>
+        <source>nominalThickness</source>
+        <translation>Nominal thickness, mm</translation>
+    </message>
+    <message>
+        <source>nominalLength</source>
+        <translation>Nominal length</translation>
+    </message>
+    <message>
+        <source>nominalHeight</source>
+        <translation>Nominal height</translation>
+    </message>
+    <message>
+        <source>netVolume</source>
+        <translation>Net volume, m³</translation>
+    </message>
+    <message>
+        <source>netMass</source>
+        <translation>Net mass, kg</translation>
+    </message>
+    <message>
+        <source>netArea</source>
+        <translation>Net area, m²</translation>
+    </message>
+    <message>
+        <source>netFootprintArea</source>
+        <translation>Net footprint area, m²</translation>
+    </message>
+    <message>
+        <source>netSideArea</source>
+        <translation>Net side area, m²</translation>
+    </message>
+    <message>
+        <source>totalSurfaceArea</source>
+        <translation>Total surface area, m²</translation>
+    </message>
+</context>
+<context>
+    <name>me_materials</name>
+    <message>
+        <source>No material</source>
+        <translation>No material</translation>
+    </message>
+</context>
+<context>
     <name>me_mo</name>
     <message>
         <source>name</source>
@@ -612,6 +670,25 @@
     <message>
         <source>list</source>
         <translation>In alphabet order</translation>
+    </message>
+</context>
+<context>
+    <name>me_reinforcement</name>
+    <message>
+        <source>name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>totalRebarLength</source>
+        <translation>Total reinforcement rebar length, mm</translation>
+    </message>
+    <message>
+        <source>totalRebarMass</source>
+        <translation>Total reinforcement rebar mass, kg</translation>
+    </message>
+    <message>
+        <source>reinforcementUnitCount</source>
+        <translation>Reinforcement unit count</translation>
     </message>
 </context>
 <context>

@@ -10,7 +10,10 @@
 #include "DoorPropertyViewBuilder.h"
 
 
-DoorPropertyViewBuilder::DoorPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication)
-  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+DoorPropertyViewBuilder::DoorPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject)
+  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

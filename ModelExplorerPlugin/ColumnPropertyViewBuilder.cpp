@@ -10,7 +10,10 @@
 #include "ColumnPropertyViewBuilder.h"
 
 
-ColumnPropertyViewBuilder::ColumnPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication)
-  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+ColumnPropertyViewBuilder::ColumnPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject)
+  : ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

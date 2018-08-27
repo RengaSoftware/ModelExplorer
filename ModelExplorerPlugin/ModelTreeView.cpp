@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "ModelTreeView.h"
-#include "ModelTreeBuilder.h"
+#include "TreeViewModelBuilder.h"
 #include "BoolGuard.h"
 
 #include <QtWidgets/QHeaderView.h>
@@ -42,17 +42,17 @@ ModelTreeView::~ModelTreeView()
 
 void ModelTreeView::onRebuildTree()
 {
-  ModelTreeBuilder builder(m_pApplication);
-  m_pModel.reset(builder.buildModelTree());
+  TreeViewModelBuilder treeViewModelBuilder(m_pApplication);
+  m_pModel.reset(treeViewModelBuilder.build());
   setModel(m_pModel.get());
 
   // set columns width & resize mode
-  QHeaderView* treeHeader  = this->header();
-  treeHeader->setStretchLastSection(false);
-  treeHeader->setSectionResizeMode(treeHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
-  treeHeader->setSectionResizeMode(treeHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
-  treeHeader->resizeSection(1, c_iconColumnSize);
-
+  //QHeaderView* treeHeader  = this->header();
+  //treeHeader->setStretchLastSection(false);
+  //treeHeader->setSectionResizeMode(treeHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
+  //treeHeader->setSectionResizeMode(treeHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
+  //treeHeader->resizeSection(1, c_iconColumnSize);
+  
   // check this
   QItemSelectionModel* pSelectionModel = selectionModel();
   connect(pSelectionModel, 
@@ -63,50 +63,115 @@ void ModelTreeView::onRebuildTree()
   pSelectionModel->select(getModel()->index(0, 0), c_selectRows);
 }
 
-void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected)
+void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselcted)
 {
-  int selectedObjectId(0);
-  if (!selected.empty())
+  if (selected.empty())
+    return;
+
+  QModelIndexList indexList = selected.indexes();
+  if (indexList.empty())
+    return;
+
+  QModelIndex selectedItemIndex = indexList.at(0);
+
+  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+
+  if (!TreeViewModelBuilder::tryGetItemType(m_pModel.get(), selectedItemIndex, itemType))
+    assert(false);
+
+  switch (itemType)
   {
-    QModelIndexList indexList = selected.indexes();
-    if (!indexList.empty())
-    {
-      // get selected object id from tree view
-      QModelIndex selectedObjectIndex = indexList.at(0);
-      QVariant data = getModel()->data(selectedObjectIndex, ModelTreeBuilder::objectIDRole);
-      if (data.type() != QVariant::Invalid)
-      {
-        bool ok = false;
-        unsigned int id = data.toUInt(&ok);
-        if (ok)
-        {
-          selectedObjectId = id;
+  case TreeViewModelBuilder::ItemType_ModelObject:
+    break;
 
-          const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
-          updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
+  case TreeViewModelBuilder::ItemType_MaterialLayer:
+    break;
 
-          if (!m_wasObjectSelectedInModel)
-          {
-            CComSafeArray<int> idsSafeArray(static_cast<ULONG>(1));
-            idsSafeArray.SetAt(0, id);
+  case TreeViewModelBuilder::ItemType_RebarUsage:
+    break;
 
-            auto pSelection = m_pApplication->GetSelection();
-            pSelection->SetSelectedModelObjects(idsSafeArray);
-          }
-        }
-      }
-    }
+  case TreeViewModelBuilder::ItemType_ReinforcementUnitUsage:
+    break;
   }
-  emit modelObjectSelectionChanged(selectedObjectId);
 }
+
+//void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected)
+//{
+//  int selectedObjectId(0);
+//  if (!selected.empty())
+//  {
+//    QModelIndexList indexList = selected.indexes();
+//    if (!indexList.empty())
+//    {
+//      // get selected object id from tree view
+//      QModelIndex selectedObjectIndex = indexList.at(0);
+//
+//      QVariant objectIdData = getModel()->data(selectedObjectIndex, ModelTreeBuilder::objectIDRole);
+//      
+//      if (objectIdData.type() != QVariant::Invalid)
+//      {
+//        bool ok = false;
+//        unsigned int id = objectIdData.toUInt(&ok);
+//        if (ok)
+//        {
+//          selectedObjectId = id;
+//
+//          const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
+//          updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
+//
+//          if (!m_wasObjectSelectedInModel)
+//          {
+//            CComSafeArray<int> idsSafeArray(static_cast<ULONG>(1));
+//            idsSafeArray.SetAt(0, id);
+//
+//            auto pSelection = m_pApplication->GetSelection();
+//            pSelection->SetSelectedObjects(idsSafeArray);
+//          }
+//        }
+//      }
+//    }
+//  }
+//  emit modelObjectSelectionChanged(selectedObjectId);
+//}
+
+//void ModelTreeView::onTreeItemSelected(const QItemSelection& selected, const QItemSelection& deselected)
+//{
+  //if (selected.empty())
+  //  return;
+
+  //auto indexList = selected.indexes();
+
+  //if (indexList.empty())
+  //  return;
+
+  //QModelIndex selectedObjectIndex = indexList.at(0);
+
+  //QVariant objectIdData = getModel()->data(selectedObjectIndex, ModelTreeBuilder::ObjectIdRole);
+  //QVariant layerIndexData = getModel()->data(selectedObjectIndex, ModelTreeBuilder::LayerIndexRole);
+ 
+  //if (objectIdData.type() != QVariant::Invalid)
+  //{
+  //  int objectId = objectIdData.toInt();
+
+  //  if (layerIndexData.type() != QVariant::Invalid)
+  //  {
+  //    int layerIndex = layerIndexData.toInt();
+  //    emit modelObjectLayerSelected(objectId, layerIndex);
+  //  }
+  //  else
+  //  {
+  //    emit modelObjectSelected(objectId);
+  //  }
+  //}
+//}
 
 void ModelTreeView::onRengaObjectSelected(const int& objectId)
 {
   QAbstractItemModel* pModel = model();
   assert(pModel != nullptr);
 
-  QModelIndexList indexList = pModel->match(pModel->index(0,0), 
-    ModelTreeBuilder::objectIDRole, 
+  QModelIndexList indexList = pModel->match(pModel->index(0, 0), 
+    TreeViewModelBuilder::Role_ModelObjectId, 
     objectId, 
     1,
     Qt::MatchRecursive);

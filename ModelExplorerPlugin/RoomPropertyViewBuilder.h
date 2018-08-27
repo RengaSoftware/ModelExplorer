@@ -13,7 +13,10 @@
 class RoomPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  RoomPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  RoomPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 
-  void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) override;
+  void createParametersProperties(PropertyList& propertyList) override;
 };

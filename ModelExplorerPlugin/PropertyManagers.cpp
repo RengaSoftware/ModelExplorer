@@ -47,7 +47,7 @@ void PropertyManagers::addValue(PropertyList& propertyList, const QString& name,
 }
 
 void PropertyManagers::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const {
-  addValue(propertyList, name, pQuantityContainer->GetQuantity(quantityId));
+  addValue(propertyList, name, pQuantityContainer->Get(quantityId));
 }
 
 void PropertyManagers::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const

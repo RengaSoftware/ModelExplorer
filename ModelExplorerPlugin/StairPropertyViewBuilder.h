@@ -13,5 +13,8 @@
 class StairPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  StairPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  StairPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

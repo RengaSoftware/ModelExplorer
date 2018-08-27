@@ -35,7 +35,7 @@ ModelExplorerPlugin::~ModelExplorerPlugin()
 
 bool ModelExplorerPlugin::initialize(const wchar_t* pluginPath)
 {
-#ifdef _DEBUG
+#if 0 // def _DEBUG
   //   NOTE: To debug a plugin you should create a debug QApplication in the plugin, 
   //   put the debug Qt dlls (can be found in separate repository) into the plugin folder (Renga installation folder/Plugins/PluginName), 
   //   put qwindowsd.dll into the "platform" folder in the plugin folder

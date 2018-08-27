@@ -13,5 +13,8 @@
 class WallFoundationPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  WallFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  WallFoundationPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

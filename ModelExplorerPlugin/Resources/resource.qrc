@@ -24,5 +24,8 @@
         <file>styles/mainFormStyle.qss</file>
         <file>icons/Assembly.png</file>
         <file>icons/Element.png</file>
+        <file>icons/Rebar.png</file>
+        <file>icons/Material.png</file>
+        <file>icons/Reinforcement.png</file>
     </qresource>
 </RCC>

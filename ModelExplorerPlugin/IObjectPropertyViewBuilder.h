@@ -17,7 +17,7 @@ class IObjectPropertyViewBuilder
 {
 public:
   virtual ~IObjectPropertyViewBuilder() {}
-  virtual void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
-  virtual void createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) = 0;
-  virtual PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject) = 0;
+  virtual void createParametersProperties(PropertyList& propertyList) = 0;
+  virtual void createQuantitiesProperties(PropertyList& propertyList) = 0;
+  virtual PropertyList createUserAttributesProperties() = 0;
 };

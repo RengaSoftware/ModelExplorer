@@ -106,9 +106,6 @@
     <ClCompile Include="ObjectSelectionHandler.cpp">
       <Filter>ModelExplorerWidget\TreeView</Filter>
     </ClCompile>
-    <ClCompile Include="ModelTreeBuilder.cpp">
-      <Filter>ModelExplorerWidget\TreeView</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectPropertyView.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
@@ -188,6 +185,18 @@
     <ClCompile Include="ElementPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClCompile>
+    <ClCompile Include="TreeViewModelBuilder.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialLayerPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="RebarUsagePropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -201,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="ObjectPropertyViewBuilderFactory.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelTreeBuilder.h">
-      <Filter>ModelExplorerWidget\TreeView</Filter>
     </ClInclude>
     <ClInclude Include="PropertyManagers.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
@@ -271,6 +277,18 @@
     </ClInclude>
     <ClInclude Include="ElementPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeViewModelBuilder.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialLayerPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="RebarUsagePropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="ReinforcementUnitUsagePropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

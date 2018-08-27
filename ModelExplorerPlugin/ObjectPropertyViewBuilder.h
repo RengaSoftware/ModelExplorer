@@ -16,12 +16,15 @@
 class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
 {
 public:
-  ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  ObjectPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 
-  virtual void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject);
-  virtual void createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject);
+  virtual void createParametersProperties(PropertyList& propertyList);
+  virtual void createQuantitiesProperties(PropertyList& propertyList);
 
-  PropertyList createUserAttributesProperties(Renga::IModelObjectPtr pObject);
+  PropertyList createUserAttributesProperties();
 
   QString getMaterialName(const int& materialId);
   QString getLayeredMaterialName(const int& layeredMaterialId);
@@ -32,9 +35,8 @@ public:
   void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const;
   void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
 
-  //void pushValue(PropertyList& propertyList, QtProperty* pProperty);
-
 protected:
   Renga::IApplicationPtr m_pApplication;
   const PropertyManagers* m_pPropertyManagers;
+  Renga::IModelObjectPtr m_pModelObject;
 };

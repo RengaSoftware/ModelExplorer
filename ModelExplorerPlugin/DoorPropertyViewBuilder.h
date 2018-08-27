@@ -13,5 +13,8 @@
 class DoorPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  DoorPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  DoorPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

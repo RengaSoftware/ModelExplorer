@@ -13,48 +13,46 @@
 #include <Renga/QuantityIds.h>
 
 
-ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
+ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
   m_pApplication(pApplication),
-  m_pPropertyManagers(pPropertyManagers)
+  m_pPropertyManagers(pPropertyManagers),
+  m_pModelObject(pModelObject)
 {
 }
 
-void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
+void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
 {
-  addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(pObject->GetName()));
-
+  addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(m_pModelObject->GetName()));
+    
   Renga::ILevelObjectPtr pLevelObject;
-  pObject->QueryInterface(&pLevelObject);
+  m_pModelObject->QueryInterface(&pLevelObject);
   if (pLevelObject)
     addValue(propertyList, QApplication::translate("me_mo", "offset"), pLevelObject->GetOffset());
 
   Renga::IObjectWithMarkPtr pObjectWithMark;
-  pObject->QueryInterface(&pObjectWithMark);
+  m_pModelObject->QueryInterface(&pObjectWithMark);
   if (pObjectWithMark)
     addValue(propertyList, QApplication::translate("me_mo", "mark"), QString::fromWCharArray(pObjectWithMark->GetMark()));
 
   Renga::IObjectWithMaterialPtr pObjectWithMaterial;
-  pObject->QueryInterface(&pObjectWithMaterial);
+  m_pModelObject->QueryInterface(&pObjectWithMaterial);
   if (pObjectWithMaterial)
     addValue(propertyList, QApplication::translate("me_mo", "material"), getMaterialName(pObjectWithMaterial->GetMaterialId()));
 
   Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
-  pObject->QueryInterface(&pObjectWithLayeredMaterial);
+  m_pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
   if (pObjectWithLayeredMaterial)
     addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
-
-  Renga::IObjectWithMaterialListPtr pObjectWithMaterialList;
-  pObject->QueryInterface(&pObjectWithMaterialList);
-  if (pObjectWithMaterialList)
-    for (size_t i = 0; i < pObjectWithMaterialList->GetMaterialCount(); i++)
-      addValue(propertyList, QApplication::translate("me_mo", "material"), getMaterialName(pObjectWithMaterialList->GetMaterialId(i)));
 }
 
-void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject)
+void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;
 
-  auto pQuantities = pObject->GetQuantities();
+  auto pQuantities = m_pModelObject->GetQuantities();
 
   PropertyList result;
 
@@ -100,7 +98,7 @@ void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propert
   addValue(propertyList, QApplication::translate("me_mo", "treadLength"), pQuantities, QuantityIds::TreadLength);
 }
 
-PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IModelObjectPtr pObject)
+PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties()
 {
   PropertyList pResult;
 
@@ -117,39 +115,39 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties(Renga::IM
     auto propertyId = pPropertyManager->GetPropertyId(i);
 
     // check if objectType has attribute
-    if (!pPropertyManager->IsPropertyAssignedToType(propertyId, pObject->GetObjectType()))
+    if (!pPropertyManager->IsPropertyAssignedToType(propertyId, m_pModelObject->GetObjectType()))
       continue;
 
-    auto pProperties = pObject->GetProperties();
-    auto pProperty = pProperties->GetProperty(propertyId);
+    auto pProperties = m_pModelObject->GetProperties();
+    auto pProperty = pProperties->Get(propertyId);
 
     if (!pProperty)
       continue;
 
     auto propertyDescription = pPropertyManager->GetPropertyDescription(propertyId);
-    if (propertyDescription.type == Renga::PropertyType::PropertyType_Undefined)
+    if (propertyDescription.Type == Renga::PropertyType::PropertyType_Undefined)
       continue;
 
-    const auto attributeName = QString::fromWCharArray(propertyDescription.name);
+    const auto attributeName = QString::fromWCharArray(propertyDescription.Name);
     const auto propertyIdString = QString::fromStdString((GuidToString(propertyId)));
 
     QtProperty* pQtProperty(nullptr);
-    switch (propertyDescription.type)
+    switch (propertyDescription.Type)
     {
     case Renga::PropertyType::PropertyType_Double:
       {
         auto pManager = m_pPropertyManagers->m_pDoubleUserAttributeManager;
-        auto pQtProperty = pManager->addProperty(attributeName);
-        pManager->setValue(pQtProperty, pProperty->GetDoubleValue());
-        pQtProperty = pQtProperty;
+        auto pQtPropertyLocal = pManager->addProperty(attributeName);
+        pManager->setValue(pQtPropertyLocal, pProperty->GetDoubleValue());
+        pQtProperty = pQtPropertyLocal;
       }
       break;
     case Renga::PropertyType::PropertyType_String:
       {
         auto pManager = m_pPropertyManagers->m_pStringUserAttributeManager;
-        auto pQtProperty = pManager->addProperty(attributeName);
-        pManager->setValue(pQtProperty, QString::fromWCharArray(pProperty->GetStringValue()));
-        pQtProperty = pQtProperty;
+        auto pQtPropertyLocal = pManager->addProperty(attributeName);
+        pManager->setValue(pQtPropertyLocal, QString::fromWCharArray(pProperty->GetStringValue()));
+        pQtProperty = pQtPropertyLocal;
       }
       break;
     default:
@@ -183,7 +181,7 @@ QString ObjectPropertyViewBuilder::getLayeredMaterialName(const int& layeredMate
 {
   auto pProject = m_pApplication->GetProject();
   auto pLayeredMaterialManager = pProject->GetLayeredMaterialManager();
-  auto pLayeredMaterial = pLayeredMaterialManager->GetLayeredMaterialById(layeredMaterialId);
+  auto pLayeredMaterial = pLayeredMaterialManager->GetLayeredMaterial(layeredMaterialId);
   if (!pLayeredMaterial)
     return QString();
 

@@ -177,6 +177,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="IsolatedFoundationPropertyViewBuilder.cpp" />
     <ClCompile Include="LevelPropertyViewBuilder.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MaterialLayerPropertyViewBuilder.cpp" />
     <ClCompile Include="ModelExplorerButtonHandler.cpp" />
     <ClCompile Include="ModelExplorerWidget.cpp" />
     <ClCompile Include="ModelTreeView.cpp" />
@@ -189,13 +190,15 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="PropertyManagers.cpp" />
     <ClCompile Include="RailingPropertyViewBuilder.cpp" />
     <ClCompile Include="RampPropertyViewBuilder.cpp" />
+    <ClCompile Include="RebarUsagePropertyViewBuilder.cpp" />
+    <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp" />
     <ClCompile Include="RengaEventsHandler.cpp" />
     <ClCompile Include="RoofPropertyViewBuilder.cpp" />
     <ClCompile Include="RoomPropertyViewBuilder.cpp" />
     <ClCompile Include="StairPropertyViewBuilder.cpp" />
-    <ClCompile Include="ModelTreeBuilder.cpp" />
     <ClCompile Include="ModelExplorerPlugin.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TreeViewModelBuilder.cpp" />
     <ClCompile Include="WallFoundationPropertyViewBuilder.cpp" />
     <ClCompile Include="WallPropertyViewBuilder.cpp" />
     <ClCompile Include="WindowPropertyViewBuilder.cpp" />
@@ -232,6 +235,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I.\..\QtPropertyBrowser" "-I." "-I$(renga_com_sdk)\C++\include" "-I$(renga_com_sdk)\tlb" "-fstdafx.h" "-f../../ModelTreeView.h"</Command>
     </CustomBuild>
+    <ClInclude Include="MaterialLayerPropertyViewBuilder.h" />
     <ClInclude Include="MesureUnit.h" />
     <ClInclude Include="ObjectPropertyViewBuilder.h" />
     <ClInclude Include="OpeningPropertyViewBuilder.h" />
@@ -258,11 +262,14 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I.\..\QtPropertyBrowser" "-I." "-I$(renga_com_sdk)\C++\include" "-I$(renga_com_sdk)\tlb" "-fstdafx.h" "-f../../RengaEventsHandler.h"</Command>
     </CustomBuild>
+    <ClInclude Include="RebarUsagePropertyViewBuilder.h" />
+    <ClInclude Include="ReinforcementUnitUsagePropertyViewBuilder.h" />
     <ClInclude Include="RengaObjectVisibility.h" />
     <ClInclude Include="RoofPropertyViewBuilder.h" />
     <ClInclude Include="RoomPropertyViewBuilder.h" />
     <ClInclude Include="StairPropertyViewBuilder.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TreeViewModelBuilder.h" />
     <ClInclude Include="WallFoundationPropertyViewBuilder.h" />
     <ClInclude Include="WallPropertyViewBuilder.h" />
     <ClInclude Include="WindowPropertyViewBuilder.h" />
@@ -298,7 +305,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I.\..\QtPropertyBrowser" "-I." "-I$(renga_com_sdk)\C++\include" "-I$(renga_com_sdk)\tlb" "-fstdafx.h" "-f../../ObjectPropertyView.h"</Command>
     </CustomBuild>
-    <ClInclude Include="ModelTreeBuilder.h" />
     <CustomBuild Include="ModelExplorerPlugin.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ModelExplorerPlugin.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>

@@ -13,7 +13,10 @@
 class LevelPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  LevelPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  LevelPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 
-  void createParametersProperties(PropertyList& propertyList, Renga::IModelObjectPtr pObject) override;
+  void createParametersProperties(PropertyList& propertyList) override;
 };

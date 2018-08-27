@@ -10,7 +10,10 @@
 #include "WallFoundationPropertyViewBuilder.h"
 
 
-WallFoundationPropertyViewBuilder::WallFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication)
+WallFoundationPropertyViewBuilder::WallFoundationPropertyViewBuilder(
+  const PropertyManagers* pPropertyManagers,
+  Renga::IApplicationPtr pApplication,
+  Renga::IModelObjectPtr pModelObject) :
+  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

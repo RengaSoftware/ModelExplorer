@@ -40,11 +40,11 @@ Renga::IActionPtr PluginToolButtons::createModelExplorerButton(const std::wstrin
   m_pModelExplorerButtonHandler.reset(new ModelExplorerButtonHandler(pAction));
 
   QString tooltip = QApplication::translate("ModelExplorerDialog", "Model explorer");
-  pAction->SetToolTip(tooltip.toStdWString().c_str());
+  pAction->ToolTip = tooltip.toStdWString().c_str();
 
   Renga::IImagePtr pIcon = m_pUI->CreateImage();
   if (loadIcon(pluginPath + L"\\ModelExplorerIcon.png", Renga::ImageFormat::ImageFormat_PNG, pIcon))
-    pAction->SetIcon(pIcon);
+    pAction->Icon = pIcon;
 
   connect(m_pModelExplorerButtonHandler.get(), SIGNAL(buttonClicked()), this, SIGNAL(modelExplorerButtonClicked()));
 

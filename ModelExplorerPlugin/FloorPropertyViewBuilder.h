@@ -13,5 +13,8 @@
 class FloorPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  FloorPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  FloorPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

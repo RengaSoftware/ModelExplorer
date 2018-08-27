@@ -13,17 +13,26 @@
 
 #include "ui_ModelExplorer.h"
 
+#include "TreeViewModelBuilder.h"
+#include "BoolGuard.h"
+
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>
-
 
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
 
 ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QWidget(nullptr, Qt::Tool),
-  m_pApplication(pApplication)
+  m_pApplication(pApplication),
+  m_wasObjectSelectedInCode(false)
 {
+  m_pObjectSelectionHandler = std::make_unique<ObjectSelectionHandler>(m_pApplication->GetSelection());
+
+  connect(m_pObjectSelectionHandler.get(),
+    SIGNAL(objectSelected(const int&)),
+    SLOT(onRengaObjectSelected(const int&)));
+
   m_pUi.reset(new Ui::ModelExplorerDialog());
   m_pUi->setupUi(this);
 
@@ -47,11 +56,14 @@ ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   m_pUi->topVerticalLayout->addWidget(pTopToolBar);
 
   // tree view
-  createModelTreeView();
-  connect(pShowButton, SIGNAL(clicked()), m_pModelTreeView, SLOT(showSelectedItem()));
-  connect(pHideButton, SIGNAL(clicked()), m_pModelTreeView, SLOT(hideSelectedItem()));
-  m_pUi->topVerticalLayout->addWidget(m_pModelTreeView);
+  createTreeView();
+  m_pUi->topVerticalLayout->addWidget(m_pTreeView);
 
+  connect(this, SIGNAL(rebuildModelTree()), this, SLOT(buildTreeViewModel()));
+  
+  connect(pShowButton, SIGNAL(clicked()), this, SLOT(showSelectedModelObject()));
+  connect(pHideButton, SIGNAL(clicked()), this, SLOT(hideSelectedModelObject()));
+  
   // view mode buttons
   QPushButton* pCategoryButton = createPushButton(":/icons/Category.png", QApplication::translate("me_propertyView", "category"));
   pCategoryButton->setCheckable(true);
@@ -85,9 +97,156 @@ void ModelExplorerWidget::setPropertyViewMode(int pressedButtonId)
   m_pPropertyView->changeMode(ObjectPropertyView::Mode(pressedButtonId));
 }
 
-void ModelExplorerWidget::onObjectSelectedInTree(const int& id)
+//void ModelExplorerWidget::onObjectSelectedInTree(const int& id)
+//{
+//  m_pPropertyView->setSelectedObjectId(id);
+//}
+
+void ModelExplorerWidget::buildTreeViewModel()
 {
-  m_pPropertyView->setSelectedObjectId(id);
+  TreeViewModelBuilder treeViewModelBuilder(m_pApplication);
+  m_pTreeViewModel.reset(treeViewModelBuilder.build());
+  m_pTreeView->setModel(m_pTreeViewModel.get());
+
+  QItemSelectionModel* pItemSelectionModel = m_pTreeView->selectionModel();
+
+  connect(
+    pItemSelectionModel,
+    SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+    this,
+    SLOT(onTreeViewSelectionChanged(const QItemSelection&, const QItemSelection&)));
+
+  const unsigned int visibilityIconColumnSize = 30;
+
+  QHeaderView* treeViewHeader = m_pTreeView->header();
+  treeViewHeader->setStretchLastSection(false);
+  treeViewHeader->setSectionResizeMode(treeViewHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
+  treeViewHeader->setSectionResizeMode(treeViewHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
+  treeViewHeader->resizeSection(1, visibilityIconColumnSize);
+
+  pItemSelectionModel->select(m_pTreeViewModel->index(0, 0), QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+}
+
+void ModelExplorerWidget::onTreeViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+  QModelIndexList indexList = selected.indexes();
+
+  if (indexList.empty())
+  {
+    clearPropertyView();
+    return;
+  }
+
+  QModelIndex selectedItemIndex = indexList.at(0);
+
+  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+
+  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), selectedItemIndex, itemType))
+    assert(false);
+
+  if (isTreeViewModelObject(selectedItemIndex))
+  {
+    int modelObjectId = getTreeViewModelObjectId(selectedItemIndex);
+    selectModelObject(modelObjectId);
+  }
+  else
+  {
+    selectModelObject(0);
+  }
+
+  switch (itemType)
+  {
+  case TreeViewModelBuilder::ItemType_ModelObject:
+  case TreeViewModelBuilder::ItemType_Level:
+    onModelObjectSelected(selectedItemIndex);
+    break;
+
+  case TreeViewModelBuilder::ItemType_MaterialLayer:
+    onMaterialLayerSelected(selectedItemIndex);
+    break;
+
+  case TreeViewModelBuilder::ItemType_ReinforcementUnitUsage:
+    onReinforcementUnitUsageSelected(selectedItemIndex);
+    break;
+
+  case TreeViewModelBuilder::ItemType_RebarUsage:
+    onRebarUsageSelected(selectedItemIndex);
+    break;
+
+  default:
+    clearPropertyView();
+    break;
+  }
+}
+
+void ModelExplorerWidget::onTreeViewItemClicked(const QModelIndex& index)
+{
+  if (index.column() == 0)
+    return;
+
+  QModelIndex itemIndex = m_pTreeViewModel->index(index.row(), 0, index.parent());
+  
+  QStandardItem* objectItem = m_pTreeViewModel->itemFromIndex(itemIndex);
+  
+  bool isVisible = isTreeViewItemVisible(itemIndex);
+
+  isVisible = !isVisible;
+
+  setTreeViewItemVisible(itemIndex, isVisible);
+}
+
+QModelIndex ModelExplorerWidget::getSelectedTreeViewItemIndex() const
+{
+  auto pSelectionModel = m_pTreeView->selectionModel();
+
+  QModelIndexList indexList = pSelectionModel->selectedIndexes();
+
+  if (indexList.empty())
+    return QModelIndex();
+
+  return indexList.first();
+}
+
+void ModelExplorerWidget::showSelectedModelObject()
+{
+  QModelIndex selectedItemIndex = getSelectedTreeViewItemIndex();
+
+  if (selectedItemIndex.isValid())
+    setTreeViewItemVisible(selectedItemIndex, true);
+}
+
+void ModelExplorerWidget::hideSelectedModelObject()
+{
+  QModelIndex selectedItemIndex = getSelectedTreeViewItemIndex();
+
+  if (selectedItemIndex.isValid())
+    setTreeViewItemVisible(selectedItemIndex, false);
+}
+
+void ModelExplorerWidget::onRengaObjectSelected(const int modelObjectId)
+{
+  if (!m_wasObjectSelectedInCode)
+  {
+    QModelIndexList indexList = m_pTreeViewModel->match(m_pTreeViewModel->index(0, 0),
+      TreeViewModelBuilder::Role_ModelObjectId,
+      modelObjectId,
+      1,
+      Qt::MatchRecursive);
+
+    if (!indexList.empty())
+    {
+      QItemSelectionModel* pItemSelectionModel = m_pTreeView->selectionModel();
+
+      pItemSelectionModel->setCurrentIndex(
+        indexList.first(),
+        QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+      pItemSelectionModel->select(
+        indexList.first(),
+        QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+
+      m_pTreeView->expand(indexList.first());
+    }
+  }
 }
 
 QPushButton* ModelExplorerWidget::createPushButton(const QString& iconPath, const QString& tooltip)
@@ -118,17 +277,27 @@ QToolBar* ModelExplorerWidget::createToolBar(QWidget* parentWidget)
   return pToolBar;
 }
 
-void ModelExplorerWidget::createModelTreeView()
+void ModelExplorerWidget::createTreeView()
 {
-  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget, m_pApplication);
-  m_pModelTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
-  m_pModelTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  m_pModelTreeView->setHeaderHidden(true);
+  m_pTreeView = new QTreeView(m_pUi->layoutWidget);
+  m_pTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
+  m_pTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  m_pTreeView->setHeaderHidden(true);
 
-  connect(this, SIGNAL(rebuildModelTree()), m_pModelTreeView, SLOT(onRebuildTree()));
-  connect(m_pModelTreeView, SIGNAL(modelObjectSelectionChanged(const int&)), 
-    this, SLOT(onObjectSelectedInTree(const int&)));
+  connect(m_pTreeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTreeViewItemClicked(const QModelIndex&)));
 }
+
+//void ModelExplorerWidget::createModelTreeView()
+//{
+//  m_pModelTreeView = new ModelTreeView(m_pUi->layoutWidget, m_pApplication);
+//  m_pModelTreeView->setFocus(Qt::FocusReason::ActiveWindowFocusReason);
+//  m_pModelTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+//  m_pModelTreeView->setHeaderHidden(true);
+//
+//  connect(this, SIGNAL(rebuildModelTree()), m_pModelTreeView, SLOT(onRebuildTree()));
+//  /*connect(m_pModelTreeView, SIGNAL(modelObjectSelectionChanged(const int&)), 
+//    this, SLOT(onObjectSelectedInTree(const int&)));*/
+//}
 
 void ModelExplorerWidget::createPropertyView()
 {
@@ -146,7 +315,7 @@ HWND toWinHandle(int id) {
 
 void ModelExplorerWidget::updatePlacement()
 {
-  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetTopLevelWindow());
+  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetMainWindowHandle());
 
   RECT parentWindowRect;
   GetWindowRect(rengaMainWindowHwnd, &parentWindowRect);
@@ -157,8 +326,425 @@ void ModelExplorerWidget::updatePlacement()
 void ModelExplorerWidget::updateOwner()
 {
   auto pluginWindowHwnd = (HWND)this->winId();
-  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetTopLevelWindow());
+  auto rengaMainWindowHwnd = toWinHandle(m_pApplication->GetMainWindowHandle());
   SetWindowLongPtr(pluginWindowHwnd, GWLP_HWNDPARENT, (LONG_PTR)rengaMainWindowHwnd);
+}
+
+void ModelExplorerWidget::clearPropertyView()
+{
+  m_pPropertyView->clear();
+}
+
+void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
+{
+  int modelObjectId = 0;
+
+  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+    assert(false);
+
+  auto pModelObject = getModelObject(modelObjectId);
+  assert(pModelObject != nullptr);
+
+  m_pPropertyView->showModelObjectProperties(pModelObject);
+}
+
+void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
+{
+  int modelObjectId = 0;
+
+  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+    assert(false);
+
+  auto pModelObject = getModelObject(modelObjectId);
+  assert(pModelObject != nullptr);
+
+  int layerIndex = 0;
+
+  if (!TreeViewModelBuilder::tryGetLayerIndex(m_pTreeViewModel.get(), index, layerIndex))
+    assert(false);
+  
+  auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
+  auto pLayer = getLayer(pModelObject, layerIndex);
+
+  m_pPropertyView->showMaterialLayerProperties(pMaterialLayer, pLayer);
+}
+
+void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
+{
+  int modelObjectId = 0;
+
+  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+    assert(false);
+
+  auto pModelObject = getModelObject(modelObjectId);
+  assert(pModelObject != nullptr);
+
+  int reinforcementUnitStyleId = 0;
+
+  TreeViewModelBuilder::tryGetReinforcementUnitStyleId(m_pTreeViewModel.get(), index, reinforcementUnitStyleId);
+
+  int rebarUsageIndex = 0;
+
+  if (!TreeViewModelBuilder::tryGetRebarUsageIndex(m_pTreeViewModel.get(), index, rebarUsageIndex))
+    assert(false);
+
+  Renga::IRebarUsagePtr pRebarUsage = reinforcementUnitStyleId != 0 ?
+    getRebarUsage(reinforcementUnitStyleId, rebarUsageIndex) :
+    getRebarUsage(pModelObject, rebarUsageIndex);
+  assert(pRebarUsage != nullptr);
+
+  m_pPropertyView->showRebarUsageProperties(pRebarUsage);
+}
+
+void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
+{
+  int modelObjectId = 0;
+
+  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+    assert(false);
+
+  auto pModelObject = getModelObject(modelObjectId);
+  assert(pModelObject != nullptr);
+
+  int reinforcementUnitUsageIndex = 0;
+
+  if (!TreeViewModelBuilder::tryGetReinforcementUnitUsageIndex(m_pTreeViewModel.get(), index, reinforcementUnitUsageIndex))
+    assert(false);
+
+  auto pReinforcementUnitUsage = getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex);
+  assert(pReinforcementUnitUsage != nullptr);
+
+  m_pPropertyView->showReinforcementUnitUsageProperties(pReinforcementUnitUsage);
+}
+
+Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
+{
+  auto pProject = m_pApplication->Project;
+  if (pProject == nullptr)
+    return nullptr;
+
+  auto pModel = pProject->Model;
+  if (pModel == nullptr)
+    return nullptr;
+
+  auto pModelObjectCollection = pModel->GetObjects();
+  if (pModelObjectCollection == nullptr)
+    return nullptr;
+
+  return pModelObjectCollection->GetById(id);
+}
+
+Renga::IMaterialLayerPtr ModelExplorerWidget::getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex)
+{
+  Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
+  
+  pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
+
+  if (pObjectWithLayeredMaterial == nullptr)
+    return nullptr;
+
+  auto pLayeredMaterial = getLayeredMaterial(pObjectWithLayeredMaterial->LayeredMaterialId);
+
+  if (pLayeredMaterial == nullptr)
+    return nullptr;
+
+  return pLayeredMaterial->Layers->Get(layerIndex);
+}
+
+Renga::ILayerPtr ModelExplorerWidget::getLayer(Renga::IModelObjectPtr pModelObject, int layerIndex)
+{
+  Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
+
+  pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
+
+  if (pObjectWithLayeredMaterial == nullptr)
+    return nullptr;
+
+  auto pLayerCollection = pObjectWithLayeredMaterial->GetLayers();
+  if (pLayerCollection == nullptr)
+    return nullptr;
+
+  return pLayerCollection->Get(layerIndex);
+}
+
+Renga::ILayeredMaterialPtr ModelExplorerWidget::getLayeredMaterial(int id)
+{
+  auto pProject = m_pApplication->Project;
+  if (pProject == nullptr)
+    return nullptr;
+
+  return pProject->LayeredMaterialManager->GetLayeredMaterial(id);
+}
+
+Renga::IReinforcementUnitUsagePtr ModelExplorerWidget::getReinforcementUnitUsage(
+  Renga::IModelObjectPtr pModelObject,
+  int reinforcementUnitUsageIndex)
+{
+  Renga::IObjectReinforcementModelPtr pObjectReinforcementModel;
+
+  pModelObject->QueryInterface(&pObjectReinforcementModel);
+
+  if (pObjectReinforcementModel == nullptr)
+    return nullptr;
+
+  auto pReinforcementUnitUsageCollection = pObjectReinforcementModel->GetReinforcementUnitUsages();
+
+  if (reinforcementUnitUsageIndex < 0 || reinforcementUnitUsageIndex >= pReinforcementUnitUsageCollection->Count)
+    return nullptr;
+
+  return pReinforcementUnitUsageCollection->Get(reinforcementUnitUsageIndex);
+}
+
+Renga::IRebarUsagePtr ModelExplorerWidget::getRebarUsage(Renga::IModelObjectPtr pModelObject, int rebarUsageIndex)
+{
+  Renga::IObjectReinforcementModelPtr pObjectReinforcementModel;
+
+  pModelObject->QueryInterface(&pObjectReinforcementModel);
+
+  if (pObjectReinforcementModel == nullptr)
+    return nullptr;
+
+  auto pRebarUsageCollection = pObjectReinforcementModel->GetRebarUsages();
+
+  if (rebarUsageIndex < 0 || rebarUsageIndex >= pRebarUsageCollection->Count)
+    return nullptr;
+
+  return pRebarUsageCollection->Get(rebarUsageIndex);
+}
+
+Renga::IRebarUsagePtr ModelExplorerWidget::getRebarUsage(int reinforcementUnitStyleId, int rebarUsageIndex)
+{
+  auto pProject = m_pApplication->Project;
+  if (pProject == nullptr)
+    return nullptr;
+
+  auto pReinforcementUnitStyle = pProject->ReinforcementUnitStyleManager->GetUnitStyle(reinforcementUnitStyleId);
+  if (pReinforcementUnitStyle == nullptr)
+    return nullptr;
+
+  auto pRebarUsageCollection = pReinforcementUnitStyle->GetRebarUsages();
+
+  if (rebarUsageIndex < 0 || rebarUsageIndex >= pRebarUsageCollection->Count)
+    return nullptr;
+
+  return pRebarUsageCollection->Get(rebarUsageIndex);
+}
+
+void ModelExplorerWidget::selectModelObject(int modelObjectId)
+{
+  BoolGuard guard(m_wasObjectSelectedInCode, true);
+
+  CComSafeArray<int> objectIds(static_cast<ULONG>(1));
+  objectIds.SetAt(0, modelObjectId);
+
+  auto pSelection = m_pApplication->Selection;
+  pSelection->SetSelectedObjects(objectIds);
+
+  /*const QModelIndex selectedIconIndex = getModel()->index(selectedObjectIndex.row(), 1, selectedObjectIndex.parent());
+  updateVisibilityIcon(selectedObjectIndex, selectedIconIndex);
+
+  if (!m_wasObjectSelectedInModel)
+  {
+    CComSafeArray<int> idsSafeArray(static_cast<ULONG>(1));
+    idsSafeArray.SetAt(0, id);
+
+    auto pSelection = m_pApplication->GetSelection();
+    pSelection->SetSelectedObjects(idsSafeArray);
+  }*/
+}
+
+void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIndex, const QModelIndex& visibilityIconIndex)
+{
+  QStandardItem* item = m_pTreeViewModel->itemFromIndex(itemIndex);
+
+  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+
+  bool isVisible = true;
+
+  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+    assert(false);
+
+  if (itemType == TreeViewModelBuilder::ItemType_ModelObject)
+  {
+    int modelObjectId = 0;
+
+    if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), itemIndex, modelObjectId))
+      assert(false);
+
+    isVisible = getRengaObjectVisibility(m_pApplication, modelObjectId);
+  }
+  else if (itemType == TreeViewModelBuilder::ItemType_ObjectGroup)
+  {
+    isVisible = isTreeViewObjectGroupVisible(itemIndex);
+  }
+
+  setTreeViewVisibilityIconState(visibilityIconIndex, isVisible);
+}
+
+void ModelExplorerWidget::updateTreeViewParentVisibility(const QModelIndex& itemIndex)
+{
+  QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(itemIndex);
+
+  QStandardItem* pParentItem = pItem->parent();
+  if (pParentItem == nullptr)
+    return;
+
+  QModelIndex parentIndex = pParentItem->index();
+
+  if (isTreeViewObjectGroup(parentIndex))
+  {
+    bool isVisible = isTreeViewObjectGroupVisible(parentIndex);
+
+    QModelIndex parentVisibilityIconIndex = m_pTreeViewModel->index(parentIndex.row(), 1, parentIndex.parent());
+    setTreeViewVisibilityIconState(parentVisibilityIconIndex, isVisible);
+  }
+}
+
+bool ModelExplorerWidget::isTreeViewItemVisible(const QModelIndex& itemIndex) const
+{
+  if (isTreeViewObjectGroup(itemIndex))
+    return isTreeViewObjectGroupVisible(itemIndex);
+
+  if (isTreeViewModelObject(itemIndex))
+    return isTreeViewModelObjectVisible(itemIndex);
+
+  return true;
+}
+
+void ModelExplorerWidget::setTreeViewVisibilityIconState(const QModelIndex& visibilityIconIndex, bool isVisible)
+{
+  QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(visibilityIconIndex);
+
+  QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
+
+  pItem->setIcon(QIcon(iconPath));
+  pItem->setData(isVisible, TreeViewModelBuilder::Role_IsVisible);
+}
+
+bool ModelExplorerWidget::getTreeViewVisibilityIconState(const QModelIndex& visibilityIconIndex)
+{
+  QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(visibilityIconIndex);
+  assert(pItem != nullptr);
+
+  QVariant data = pItem->data(TreeViewModelBuilder::Role_IsVisible);
+  assert(data.isValid());
+
+  return data.toBool();
+}
+
+void ModelExplorerWidget::setTreeViewItemVisible(const QModelIndex& itemIndex, bool isVisible)
+{
+  if (!isTreeViewObjectGroup(itemIndex) && !isTreeViewModelObject(itemIndex))
+    return;
+
+  QList<QModelIndex> indexList = getTreeViewSubtreeIndexList(itemIndex);
+
+  ObjectIdList objectIdList;
+
+  for (const QModelIndex& index : indexList)
+  {
+    if (isTreeViewModelObject(index))
+    {
+      int modelObjectId = getTreeViewModelObjectId(index);
+      objectIdList.push_back(modelObjectId);
+    }
+
+    if (isTreeViewModelObject(index) || isTreeViewObjectGroup(index))
+    {
+      QModelIndex visibilityIconIndex = m_pTreeViewModel->index(index.row(), 1, index.parent());
+      setTreeViewVisibilityIconState(visibilityIconIndex, isVisible);
+    }
+  }
+
+  setRengaObjectVisibility(m_pApplication, objectIdList, isVisible);
+
+  updateTreeViewParentVisibility(itemIndex);
+}
+
+bool ModelExplorerWidget::isTreeViewObjectGroup(const QModelIndex& itemIndex) const
+{
+  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+
+  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+    return false;
+
+  return itemType == TreeViewModelBuilder::ItemType_ObjectGroup;
+}
+
+bool ModelExplorerWidget::isTreeViewModelObject(const QModelIndex& itemIndex) const
+{
+  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+
+  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+    return false;
+
+  return itemType == TreeViewModelBuilder::ItemType_ModelObject || itemType == TreeViewModelBuilder::ItemType_Level;
+}
+
+int ModelExplorerWidget::getTreeViewModelObjectId(const QModelIndex& itemIndex) const
+{
+  int result = 0;
+
+  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), itemIndex, result))
+    assert(false);
+
+  return result;
+}
+
+bool ModelExplorerWidget::isTreeViewObjectGroupVisible(const QModelIndex& itemIndex) const
+{
+  bool isVisible = false;
+
+  QStandardItem* item = m_pTreeViewModel->itemFromIndex(itemIndex);
+
+  for (int i = 0; i < item->rowCount(); ++i)
+  {
+    QStandardItem* childItem = item->child(i);
+
+    if (isTreeViewModelObject(childItem->index()) && isTreeViewModelObjectVisible(childItem->index()))
+    {
+      isVisible = true;
+      break;
+    }
+  }
+
+  return isVisible;
+}
+
+bool ModelExplorerWidget::isTreeViewModelObjectVisible(const QModelIndex& itemIndex) const
+{
+  assert(isTreeViewModelObject(itemIndex));
+
+  int modelObjectId = getTreeViewModelObjectId(itemIndex);
+
+  return getRengaObjectVisibility(m_pApplication, modelObjectId);
+}
+
+ObjectIdList ModelExplorerWidget::getTreeViewSubtreeObjectList(const QModelIndex& itemIndex) const
+{
+  ObjectIdList result;
+
+  if (isTreeViewModelObject(itemIndex))
+    result.push_back(getTreeViewModelObjectId(itemIndex));
+
+  return result;
+}
+
+QList<QModelIndex> ModelExplorerWidget::getTreeViewSubtreeIndexList(const QModelIndex& rootItemIndex) const
+{
+  QList<QModelIndex> indexList;
+
+  indexList.append(rootItemIndex);
+
+  QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(rootItemIndex);
+
+  for (int i = 0; i < pItem->rowCount(); ++i)
+  {
+    QModelIndex childItemIndex = pItem->child(i)->index();
+    indexList.append(getTreeViewSubtreeIndexList(childItemIndex));
+  }
+
+  return indexList;
 }
 
 void ModelExplorerWidget::readModelAndShow()

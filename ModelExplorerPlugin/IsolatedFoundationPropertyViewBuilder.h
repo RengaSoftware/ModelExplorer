@@ -13,5 +13,8 @@
 class IsolatedFoundationPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
-  IsolatedFoundationPropertyViewBuilder(const PropertyManagers* pPropertyManagers, Renga::IApplicationPtr pApplication);
+  IsolatedFoundationPropertyViewBuilder(
+    const PropertyManagers* pPropertyManagers,
+    Renga::IApplicationPtr pApplication,
+    Renga::IModelObjectPtr pModelObject);
 };

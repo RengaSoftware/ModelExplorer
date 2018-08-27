@@ -23,7 +23,7 @@ public:
   ~ModelTreeView();
 
 signals:
-  void modelObjectSelectionChanged(int objectId);
+  //void modelObjectSelectionChanged(int objectId);
 
 private slots:
   void onRebuildTree();
