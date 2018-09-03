@@ -14,6 +14,6 @@ FloorPropertyViewBuilder::FloorPropertyViewBuilder(
   const PropertyManagers* pPropertyManagers,
   Renga::IApplicationPtr pApplication,
   Renga::IModelObjectPtr pModelObject) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
+  PropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }

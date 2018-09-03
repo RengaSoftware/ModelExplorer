@@ -7,7 +7,7 @@
 //
 
 #pragma once
-#include "ObjectPropertyView.h"
+#include "PropertyView.h"
 
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
@@ -106,7 +106,7 @@ private:
 private:
   Renga::IApplicationPtr m_pApplication;
   std::unique_ptr<Ui::ModelExplorerDialog> m_pUi;
-  ObjectPropertyView* m_pPropertyView;
+  PropertyView* m_pPropertyView;
 
   QTreeView* m_pTreeView;
   std::unique_ptr<QStandardItemModel> m_pTreeViewModel;

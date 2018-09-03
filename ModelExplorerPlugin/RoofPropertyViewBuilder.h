@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ObjectPropertyViewBuilder.h"
+#include "PropertyViewBuilder.h"
 
-class RoofPropertyViewBuilder : public ObjectPropertyViewBuilder
+class RoofPropertyViewBuilder : public PropertyViewBuilder
 {
 public:
   RoofPropertyViewBuilder(

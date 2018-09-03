@@ -13,10 +13,10 @@
 #include <qteditorfactory.h>
 
 
-class ObjectPropertyViewBuilder : public IObjectPropertyViewBuilder
+class PropertyViewBuilder : public IObjectPropertyViewBuilder
 {
 public:
-  ObjectPropertyViewBuilder(
+  PropertyViewBuilder(
     const PropertyManagers* pPropertyManagers,
     Renga::IApplicationPtr pApplication,
     Renga::IModelObjectPtr pModelObject);

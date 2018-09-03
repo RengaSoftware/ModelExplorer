@@ -42,6 +42,9 @@
     <Filter Include="ModelExplorerWidget\PropertyView\ModelObjectBuilders">
       <UniqueIdentifier>{019d140b-17a8-4ff9-95ff-d9ec492debb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ModelExplorerWidget\PropertyView\PropertyViewSourceObjects">
+      <UniqueIdentifier>{7603b7c2-6b78-464b-8b98-38fce7f60dc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerWidget.cpp">
@@ -52,12 +55,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_resource.cpp">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectPropertyViewBuilderFactory.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
     <ClCompile Include="ModelExplorerPlugin.cpp" />
     <ClCompile Include="ModelExplorerWidget.cpp">
@@ -96,15 +93,6 @@
     </ClCompile>
     <ClCompile Include="ObjectSelectionHandler.cpp">
       <Filter>ModelExplorerWidget\TreeView</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectPropertyView.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ObjectPropertyView.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ObjectPropertyView.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="PluginToolButtons.cpp">
       <Filter>PluginButtons</Filter>
@@ -188,18 +176,36 @@
     <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
+    <ClCompile Include="PropertyView.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_PropertyView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_PropertyView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyViewModelObjectSource.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyViewMaterialLayerSource.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyViewReinforcementUnitUsageSource.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyViewRebarUsageSource.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="IObjectPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectPropertyViewBuilderFactory.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
     <ClInclude Include="PropertyManagers.h">
@@ -281,6 +287,24 @@
     <ClInclude Include="ReinforcementUnitUsagePropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
+    <ClInclude Include="PropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="IPropertyViewSourceObject.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyViewModelObjectSource.h">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyViewMaterialLayerSource.h">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyViewRebarUsageSource.h">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyViewReinforcementUnitUsageSource.h">
+      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\ui\ModelExplorer.ui">
@@ -296,9 +320,6 @@
     <CustomBuild Include="ObjectSelectionHandler.h">
       <Filter>ModelExplorerWidget\TreeView</Filter>
     </CustomBuild>
-    <CustomBuild Include="ObjectPropertyView.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </CustomBuild>
     <CustomBuild Include="PluginToolButtons.h">
       <Filter>PluginButtons</Filter>
     </CustomBuild>
@@ -307,6 +328,9 @@
     </CustomBuild>
     <CustomBuild Include="RengaEventsHandler.h">
       <Filter>RengaEvents</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PropertyView.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

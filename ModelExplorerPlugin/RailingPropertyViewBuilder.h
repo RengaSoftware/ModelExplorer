@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ObjectPropertyViewBuilder.h"
+#include "PropertyViewBuilder.h"
 
-class RailingPropertyViewBuilder : public ObjectPropertyViewBuilder
+class RailingPropertyViewBuilder : public PropertyViewBuilder
 {
 public:
   RailingPropertyViewBuilder(

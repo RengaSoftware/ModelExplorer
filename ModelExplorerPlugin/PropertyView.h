@@ -9,17 +9,17 @@
 #pragma once
 #include "PropertyManagers.h"
 #include "IObjectPropertyViewBuilder.h"
-#include "ObjectPropertyViewBuilderFactory.h"
+#include "IPropertyViewSourceObject.h"
 
 #include <qttreepropertybrowser.h>
 
 const uint c_defaultPrecision = 2;
 const uint c_userAttrPrecision = 15;
 
-class ObjectPropertyView : public QtTreePropertyBrowser
+class PropertyView : public QtTreePropertyBrowser
 {
   Q_OBJECT
-
+    
 public:
   enum Mode
   {
@@ -27,14 +27,16 @@ public:
     ListMode = 1,
   };
 
-  ObjectPropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
+  PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
+
+  void showProperties(IPropertyViewSourceObject* pSourceObject);
   
-  void showModelObjectProperties(Renga::IModelObjectPtr pModelObject);
+  /*void showModelObjectProperties(Renga::IModelObjectPtr pModelObject);
   void showMaterialLayerProperties(Renga::IMaterialLayerPtr pMaterialLayer, Renga::ILayerPtr pLayer);
   void showRebarUsageProperties(Renga::IRebarUsagePtr pRebarUsage);
-  void showReinforcementUnitUsageProperties(Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
+  void showReinforcementUnitUsageProperties(Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);*/
 
-  void changeMode(ObjectPropertyView::Mode newMode);
+  void changeMode(PropertyView::Mode newMode);
 
 private slots:
   void userDoubleAttributeChanged(QtProperty* property, const QString& newValue);
@@ -44,7 +46,7 @@ private:
   void initPropertyManagers();
   void clearPropertyManagers();
   
-  bool createPropertiesForModelObject(
+  /*bool createPropertiesForModelObject(
     Renga::IModelObjectPtr pModelObject,
     PropertyList& parameters,
     PropertyList& calculated,
@@ -67,7 +69,7 @@ private:
     Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage,
     PropertyList& parameters,
     PropertyList& calculated,
-    PropertyList& userDefinedProperties);
+    PropertyList& userDefinedProperties);*/
 
   bool createProperties(
     IObjectPropertyViewBuilder* pObjectPropertyViewBuilder,
@@ -79,16 +81,7 @@ private:
   void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
 
-  void buildPropertyView(PropertyList& parameters, PropertyList& calculated, PropertyList& properties);
-
-  void buildPropertyViewForModelObject(Renga::IModelObjectPtr pModelObject);
-  void buildPropertyViewForMaterialLayer(Renga::IMaterialLayerPtr pMaterialLayer, Renga::ILayerPtr pLayer);
-  void buildPropertyViewForRebarUsage(Renga::IRebarUsagePtr pRebarUsage);
-  void buildPropertyViewForReinforcementUnitUsage(Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
-
-  void clearSelectedObjects();
-
-  void rebuildPropertyViewForSelectedObject();
+  void buildPropertyView(IPropertyViewSourceObject* pSourceObject);
 
   Renga::IPropertyPtr getProperty(QtProperty* property);
   Renga::IOperationPtr createOperation();
@@ -99,14 +92,9 @@ private:
 
 private:
   Renga::IApplicationPtr m_pApplication;
-  std::unique_ptr<ObjectPropertyViewBuilderFactory> m_pObjectPropertyViewBuilderFactory;
   QtGroupPropertyManager* m_pGroupManager;
   PropertyManagers m_propertyManagers;
   Mode m_propertyViewMode;
-  
-  Renga::IModelObjectPtr m_pSelectedModelObject;
-  Renga::IMaterialLayerPtr m_pSelectedMaterialLayer;
-  Renga::ILayerPtr m_pSelectedLayer;
-  Renga::IRebarUsagePtr m_pSelectedRebarUsage;
-  Renga::IReinforcementUnitUsagePtr m_pSelectedReinforcementUnitUsage;
+
+  std::unique_ptr<IPropertyViewSourceObject> m_pSourceObject;
 };

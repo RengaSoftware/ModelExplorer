@@ -19,6 +19,11 @@
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>
 
+#include "PropertyViewModelObjectSource.h"
+#include "PropertyViewMaterialLayerSource.h"
+#include "PropertyViewRebarUsageSource.h"
+#include "PropertyViewReinforcementUnitUsageSource.h"
+
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
 
@@ -94,7 +99,7 @@ ModelExplorerWidget::~ModelExplorerWidget()
 
 void ModelExplorerWidget::setPropertyViewMode(int pressedButtonId)
 {
-  m_pPropertyView->changeMode(ObjectPropertyView::Mode(pressedButtonId));
+  m_pPropertyView->changeMode(PropertyView::Mode(pressedButtonId));
 }
 
 void ModelExplorerWidget::buildTreeViewModel()
@@ -284,7 +289,7 @@ void ModelExplorerWidget::createTreeView()
 
 void ModelExplorerWidget::createPropertyView()
 {
-  m_pPropertyView = new ObjectPropertyView(this, m_pApplication);
+  m_pPropertyView = new PropertyView(this, m_pApplication);
   m_pPropertyView->setResizeMode(QtTreePropertyBrowser::Interactive);
   m_pPropertyView->setHeaderVisible(true);
   m_pPropertyView->setAlternatingRowColors(false);
@@ -328,7 +333,9 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   auto pModelObject = getModelObject(modelObjectId);
   assert(pModelObject != nullptr);
 
-  m_pPropertyView->showModelObjectProperties(pModelObject);
+  auto pSourceObject = new PropertyViewModelObjectSource(m_pApplication, pModelObject);
+
+  m_pPropertyView->showProperties(pSourceObject);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -349,7 +356,9 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
   auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
   auto pLayer = getLayer(pModelObject, layerIndex);
 
-  m_pPropertyView->showMaterialLayerProperties(pMaterialLayer, pLayer);
+  auto pSourceObject = new PropertyViewMaterialLayerSource(m_pApplication, pMaterialLayer, pLayer);
+
+  m_pPropertyView->showProperties(pSourceObject);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -376,7 +385,9 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
     getRebarUsage(pModelObject, rebarUsageIndex);
   assert(pRebarUsage != nullptr);
 
-  m_pPropertyView->showRebarUsageProperties(pRebarUsage);
+  auto pSourceObject = new PropertyViewRebarUsageSource(m_pApplication, pRebarUsage);
+
+  m_pPropertyView->showProperties(pSourceObject);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -397,7 +408,9 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
   auto pReinforcementUnitUsage = getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex);
   assert(pReinforcementUnitUsage != nullptr);
 
-  m_pPropertyView->showReinforcementUnitUsageProperties(pReinforcementUnitUsage);
+  auto pSourceObject = new PropertyViewReinforcementUnitUsageSource(m_pApplication, pReinforcementUnitUsage);
+
+  m_pPropertyView->showProperties(pSourceObject);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
@@ -685,7 +698,7 @@ bool ModelExplorerWidget::isTreeViewObjectGroupVisible(const QModelIndex& itemIn
 bool ModelExplorerWidget::isTreeViewModelObjectVisible(const QModelIndex& itemIndex) const
 {
   assert(isTreeViewModelObject(itemIndex));
-
+  
   int modelObjectId = getTreeViewModelObjectId(itemIndex);
 
   return getRengaObjectVisibility(m_pApplication, modelObjectId);

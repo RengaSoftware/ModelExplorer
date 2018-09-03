@@ -7,13 +7,13 @@
 //
 
 #include "stdafx.h"
-#include "ObjectPropertyViewBuilder.h"
+#include "PropertyViewBuilder.h"
 #include "GuidUtils.h"
 
 #include <Renga/QuantityIds.h>
 
 
-ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(
+PropertyViewBuilder::PropertyViewBuilder(
   const PropertyManagers* pPropertyManagers,
   Renga::IApplicationPtr pApplication,
   Renga::IModelObjectPtr pModelObject) :
@@ -23,7 +23,7 @@ ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(
 {
 }
 
-void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
+void PropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
 {
   addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(m_pModelObject->GetName()));
     
@@ -48,7 +48,7 @@ void ObjectPropertyViewBuilder::createParametersProperties(PropertyList& propert
     addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
 }
 
-void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
+void PropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;
 
@@ -98,7 +98,7 @@ void ObjectPropertyViewBuilder::createQuantitiesProperties(PropertyList& propert
   addValue(propertyList, QApplication::translate("me_mo", "treadLength"), pQuantities, QuantityIds::TreadLength);
 }
 
-PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties()
+PropertyList PropertyViewBuilder::createUserAttributesProperties()
 {
   PropertyList pResult;
 
@@ -166,7 +166,7 @@ PropertyList ObjectPropertyViewBuilder::createUserAttributesProperties()
   return pResult;
 }
 
-QString ObjectPropertyViewBuilder::getMaterialName(const int& materialId)
+QString PropertyViewBuilder::getMaterialName(const int& materialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pMaterialManager = pProject->GetMaterialManager();
@@ -177,7 +177,7 @@ QString ObjectPropertyViewBuilder::getMaterialName(const int& materialId)
   return QString::fromWCharArray(pMaterial->GetName());
 }
 
-QString ObjectPropertyViewBuilder::getLayeredMaterialName(const int& layeredMaterialId)
+QString PropertyViewBuilder::getLayeredMaterialName(const int& layeredMaterialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pLayeredMaterialManager = pProject->GetLayeredMaterialManager();
@@ -188,26 +188,26 @@ QString ObjectPropertyViewBuilder::getLayeredMaterialName(const int& layeredMate
   return QString::fromWCharArray(pLayeredMaterial->GetName());
 }
 
-void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const int value) const
+void PropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const int value) const
 {
   m_pPropertyManagers->addValue(propertyList, name, value);
 }
 
-void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const double value) const
+void PropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const double value) const
 {
   m_pPropertyManagers->addValue(propertyList, name, value);
 }
 
-void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const QString& value) const
+void PropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, const QString& value) const
 {
   m_pPropertyManagers->addValue(propertyList, name, value);
 }
 
-void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const {
+void PropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const {
   m_pPropertyManagers->addValue(propertyList, name, pQuantityContainer, quantityId);
 }
 
-void ObjectPropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const
+void PropertyViewBuilder::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const
 {
   m_pPropertyManagers->addValue(propertyList, name, pQuantity);
 }

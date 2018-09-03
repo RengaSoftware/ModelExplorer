@@ -14,13 +14,13 @@ LevelPropertyViewBuilder::LevelPropertyViewBuilder(
   const PropertyManagers* pPropertyManagers,
   Renga::IApplicationPtr pApplication,
   Renga::IModelObjectPtr pModelObject) :
-  ObjectPropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
+  PropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }
 
 void LevelPropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
 {
-  ObjectPropertyViewBuilder::createParametersProperties(propertyList);
+  PropertyViewBuilder::createParametersProperties(propertyList);
 
   Renga::ILevelPtr pLevel;
   m_pModelObject->QueryInterface(&pLevel);

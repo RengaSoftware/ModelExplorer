@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ObjectPropertyViewBuilder.h"
+#include "PropertyViewBuilder.h"
 
-class WindowPropertyViewBuilder : public ObjectPropertyViewBuilder {
+class WindowPropertyViewBuilder : public PropertyViewBuilder {
 public:
   WindowPropertyViewBuilder(
     const PropertyManagers* pPropertyManagers,

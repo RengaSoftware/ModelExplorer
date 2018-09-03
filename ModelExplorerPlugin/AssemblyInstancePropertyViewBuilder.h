@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ObjectPropertyViewBuilder.h"
+#include "PropertyViewBuilder.h"
 
-class AssemblyInstancePropertyViewBuilder : public ObjectPropertyViewBuilder {
+class AssemblyInstancePropertyViewBuilder : public PropertyViewBuilder {
 public:
   AssemblyInstancePropertyViewBuilder(
     const PropertyManagers* pPropertyManagers,
