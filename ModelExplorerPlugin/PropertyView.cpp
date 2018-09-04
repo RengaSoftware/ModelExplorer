@@ -120,7 +120,7 @@ void PropertyView::buildPropertyView(IPropertyViewSourceObject* pSourceObject)
   if (pSourceObject == nullptr)
     return;
 
-  std::unique_ptr<IObjectPropertyViewBuilder> propertyViewBuilder;
+  std::unique_ptr<IPropertyViewBuilder> propertyViewBuilder;
   propertyViewBuilder.reset(pSourceObject->createPropertyViewBuilder(&m_propertyManagers));
 
   PropertyList parameters;
@@ -144,7 +144,7 @@ void PropertyView::buildPropertyViewByCategory(const PropertyList& parameters, c
 }
 
 bool PropertyView::createProperties(
-  IObjectPropertyViewBuilder* pObjectPropertyViewBuilder,
+  IPropertyViewBuilder* pObjectPropertyViewBuilder,
   PropertyList& parameters,
   PropertyList& calculated,
   PropertyList& userDefinedProperties)
@@ -190,7 +190,7 @@ Renga::IPropertyPtr PropertyView::getProperty(QtProperty* userAttributeProperty)
     return nullptr;
 
   const auto propertyId = GuidFromString(userAttributeProperty->data().toStdString());
-
+     
   return m_pSourceObject->getUserDefinedProperty(propertyId);
 }
 

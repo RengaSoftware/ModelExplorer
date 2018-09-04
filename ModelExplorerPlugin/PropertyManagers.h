@@ -11,7 +11,7 @@
 #include <qtpropertymanager.h>
 #include <qtpropertybrowser.h>
 
-#include "IObjectPropertyViewBuilder.h"
+#include "IPropertyViewBuilder.h"
 
 
 class PropertyManagers

@@ -7,13 +7,11 @@
 //
 
 #pragma once
-#include "IObjectPropertyViewBuilder.h"
+
+#include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-#include <qteditorfactory.h>
-
-
-class PropertyViewBuilder : public IObjectPropertyViewBuilder
+class PropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
   PropertyViewBuilder(

@@ -209,6 +209,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="FloorPropertyViewBuilder.h" />
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h" />
     <ClInclude Include="GuidUtils.h" />
+    <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />
     <ClInclude Include="IsolatedFoundationPropertyViewBuilder.h" />
     <ClInclude Include="LevelPropertyViewBuilder.h" />
@@ -284,7 +285,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I.\..\QtPropertyBrowser" "-I." "-I$(renga_com_sdk)\C++\include" "-I$(renga_com_sdk)\tlb" "-fstdafx.h" "-f../../ModelExplorerWidget.h"</Command>
     </CustomBuild>
-    <ClInclude Include="IObjectPropertyViewBuilder.h" />
     <CustomBuild Include="ObjectSelectionHandler.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ObjectSelectionHandler.h...</Message>

@@ -11,7 +11,7 @@ PropertyViewRebarUsageSource::PropertyViewRebarUsageSource(
 {
 }
 
-IObjectPropertyViewBuilder* PropertyViewRebarUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+IPropertyViewBuilder* PropertyViewRebarUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
   return new RebarUsagePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pRebarUsage);
 }

@@ -30,14 +30,14 @@ PropertyViewModelObjectSource::PropertyViewModelObjectSource(
 {
 }
 
-IObjectPropertyViewBuilder* PropertyViewModelObjectSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+IPropertyViewBuilder* PropertyViewModelObjectSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
   if (m_pModelObject == nullptr)
     return nullptr;
 
   const auto objectType = m_pModelObject->GetObjectType();
 
-  IObjectPropertyViewBuilder* pPropertyViewBuilder = nullptr;
+  IPropertyViewBuilder* pPropertyViewBuilder = nullptr;
   
   if (objectType == Renga::ObjectTypes::Level)
     pPropertyViewBuilder = new LevelPropertyViewBuilder(pPropertyManagers, m_pApplication, m_pModelObject);

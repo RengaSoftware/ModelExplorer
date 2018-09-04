@@ -11,7 +11,7 @@ PropertyViewReinforcementUnitUsageSource::PropertyViewReinforcementUnitUsageSour
 {
 }
 
-IObjectPropertyViewBuilder* PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+IPropertyViewBuilder* PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
   return new ReinforcementUnitUsagePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pReinforcementUnitUsage);
 }

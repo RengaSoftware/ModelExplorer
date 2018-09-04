@@ -13,10 +13,10 @@
 
 typedef std::list<QtProperty*> PropertyList;
 
-class IObjectPropertyViewBuilder
+class IPropertyViewBuilder
 {
 public:
-  virtual ~IObjectPropertyViewBuilder() {}
+  virtual ~IPropertyViewBuilder() {}
   virtual void createParametersProperties(PropertyList& propertyList) = 0;
   virtual void createQuantitiesProperties(PropertyList& propertyList) = 0;
   virtual PropertyList createUserAttributesProperties() = 0;

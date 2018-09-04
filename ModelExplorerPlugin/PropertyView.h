@@ -8,7 +8,7 @@
 
 #pragma once
 #include "PropertyManagers.h"
-#include "IObjectPropertyViewBuilder.h"
+#include "IPropertyViewBuilder.h"
 #include "IPropertyViewSourceObject.h"
 
 #include <qttreepropertybrowser.h>
@@ -72,7 +72,7 @@ private:
     PropertyList& userDefinedProperties);*/
 
   bool createProperties(
-    IObjectPropertyViewBuilder* pObjectPropertyViewBuilder,
+    IPropertyViewBuilder* pObjectPropertyViewBuilder,
     PropertyList& parameters,
     PropertyList& calculated,
     PropertyList& userDefinedProperties);

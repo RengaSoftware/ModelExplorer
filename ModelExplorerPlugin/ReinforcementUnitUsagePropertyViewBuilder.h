@@ -1,9 +1,9 @@
 #pragma once
 
-#include "IObjectPropertyViewBuilder.h"
+#include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-class ReinforcementUnitUsagePropertyViewBuilder : public IObjectPropertyViewBuilder
+class ReinforcementUnitUsagePropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
   ReinforcementUnitUsagePropertyViewBuilder(

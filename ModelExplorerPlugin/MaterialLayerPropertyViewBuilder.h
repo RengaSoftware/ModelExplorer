@@ -1,9 +1,9 @@
 #pragma once
 
-#include "IObjectPropertyViewBuilder.h"
+#include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-class MaterialLayerPropertyViewBuilder : public IObjectPropertyViewBuilder
+class MaterialLayerPropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
   MaterialLayerPropertyViewBuilder(

@@ -13,7 +13,7 @@ PropertyViewMaterialLayerSource::PropertyViewMaterialLayerSource(
 {
 }
 
-IObjectPropertyViewBuilder* PropertyViewMaterialLayerSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+IPropertyViewBuilder* PropertyViewMaterialLayerSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
   return new MaterialLayerPropertyViewBuilder(pPropertyManagers, m_pApplication, m_pMaterialLayer, m_pLayer);
 }
