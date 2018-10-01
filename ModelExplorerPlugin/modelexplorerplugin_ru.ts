@@ -698,6 +698,14 @@
         <source>reinforcementUnitCount</source>
         <translation>Количество арматурных изделий</translation>
     </message>
+    <message>
+        <source>nominalLength</source>
+        <translation>Номинальная длина</translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation>Количество</translation>
+    </message>
 </context>
 <context>
     <name>me_room</name>

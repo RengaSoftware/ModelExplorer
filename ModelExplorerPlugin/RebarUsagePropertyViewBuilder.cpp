@@ -28,6 +28,8 @@ void RebarUsagePropertyViewBuilder::createQuantitiesProperties(PropertyList& pro
 
   auto pQuantities = m_pRebarUsage->GetQuantities();
 
+  m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "count"), pQuantities, QuantityIds::Count);
+  m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "nominalLength"), pQuantities, QuantityIds::NominalLength);
   m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities, QuantityIds::TotalRebarLength);
   m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities, QuantityIds::TotalRebarMass);
 }

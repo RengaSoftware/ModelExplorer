@@ -690,6 +690,14 @@
         <source>reinforcementUnitCount</source>
         <translation>Reinforcement unit count</translation>
     </message>
+    <message>
+        <source>nominalLength</source>
+        <translation>Nominal length</translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation>Count</translation>
+    </message>
 </context>
 <context>
     <name>me_room</name>
