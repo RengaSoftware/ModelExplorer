@@ -96,6 +96,9 @@ void PropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
   addValue(propertyList, QApplication::translate("me_mo", "numberOfTreads"), pQuantities, QuantityIds::NumberOfTreads);
   addValue(propertyList, QApplication::translate("me_mo", "riserHeight"), pQuantities, QuantityIds::RiserHeight);
   addValue(propertyList, QApplication::translate("me_mo", "treadLength"), pQuantities, QuantityIds::TreadLength);
+
+  addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities, QuantityIds::TotalRebarLength);
+  addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities, QuantityIds::TotalRebarMass);
 }
 
 PropertyList PropertyViewBuilder::createUserAttributesProperties()
