@@ -376,10 +376,6 @@
 <context>
     <name>me_materialLayer</name>
     <message>
-        <source>thickness</source>
-        <translation>Thickness, mm</translation>
-    </message>
-    <message>
         <source>noMaterial</source>
         <translation>No material</translation>
     </message>

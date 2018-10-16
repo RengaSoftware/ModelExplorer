@@ -18,9 +18,6 @@ MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(
 
 void MaterialLayerPropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
 {
-  double thickness = m_pMaterialLayer->GetThickness();
-  m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_materialLayer", "thickness"), thickness);
-
   auto pMaterial = m_pMaterialLayer->GetMaterial();
   QString materialName = pMaterial != nullptr ? QString::fromWCharArray(pMaterial->Name) : QApplication::translate("me_materialLayer", "noMaterial");
   m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_materialLayer", "material"), materialName);
