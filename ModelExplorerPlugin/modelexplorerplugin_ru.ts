@@ -417,7 +417,7 @@
     </message>
     <message>
         <source>totalSurfaceArea</source>
-        <translation type="unfinished">Общая площадь поверхности, м²</translation>
+        <translation>Общая площадь поверхности, м²</translation>
     </message>
 </context>
 <context>
@@ -503,7 +503,7 @@
     </message>
     <message>
         <source>netVolume</source>
-        <translation>Объем, м³</translation>
+        <translation>Чистый объем, м³</translation>
     </message>
     <message>
         <source>mass</source>
@@ -547,7 +547,7 @@
     </message>
     <message>
         <source>grossVolume</source>
-        <translation>Объем, м³</translation>
+        <translation>Полный объем, м³</translation>
     </message>
     <message>
         <source>grossFloorArea</source>

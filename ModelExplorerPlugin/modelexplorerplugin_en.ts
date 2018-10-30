@@ -491,7 +491,7 @@
     </message>
     <message>
         <source>netVolume</source>
-        <translation>Volume, m³</translation>
+        <translation>Net volume, m³</translation>
     </message>
     <message>
         <source>mass</source>
@@ -535,7 +535,7 @@
     </message>
     <message>
         <source>grossVolume</source>
-        <translation>Volume, m³</translation>
+        <translation>Gross volume, m³</translation>
     </message>
     <message>
         <source>grossFloorArea</source>
