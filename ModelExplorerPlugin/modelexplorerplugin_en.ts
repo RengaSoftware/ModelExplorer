@@ -519,7 +519,7 @@
     </message>
     <message>
         <source>netFloorArea</source>
-        <translation>Footprint area, m²</translation>
+        <translation>Net floor area, m²</translation>
     </message>
     <message>
         <source>netFootprintArea</source>
@@ -539,7 +539,7 @@
     </message>
     <message>
         <source>grossFloorArea</source>
-        <translation>Floor area, m²</translation>
+        <translation>Gross floor area, m²</translation>
     </message>
     <message>
         <source>grossPerimeter</source>

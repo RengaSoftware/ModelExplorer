@@ -531,7 +531,7 @@
     </message>
     <message>
         <source>netFloorArea</source>
-        <translation>Площадь основания, м²</translation>
+        <translation>Чистая площадь пола, м²</translation>
     </message>
     <message>
         <source>netFootprintArea</source>
@@ -551,7 +551,7 @@
     </message>
     <message>
         <source>grossFloorArea</source>
-        <translation>Площадь  основания, м²</translation>
+        <translation>Полная площадь пола, м²</translation>
     </message>
     <message>
         <source>grossPerimeter</source>
