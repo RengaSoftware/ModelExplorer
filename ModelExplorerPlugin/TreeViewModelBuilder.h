@@ -81,6 +81,10 @@ private:
     QStandardItem* pParentItem,
     Renga::IModelObjectPtr pModelObject);
 
+  void addSingleMaterialMaterialSubtree(
+    QStandardItem* pParentItem,
+    Renga::IModelObjectPtr pModelObject);
+
   void addLayersSubtree(
     QStandardItem* pParentItem,
     Renga::IModelObjectPtr pModelObject,

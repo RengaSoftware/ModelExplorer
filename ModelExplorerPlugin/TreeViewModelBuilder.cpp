@@ -203,15 +203,26 @@ void TreeViewModelBuilder::addMaterialsSubtree(
   if (pObjectWithLayeredMaterial != nullptr && pObjectWithLayeredMaterial->HasLayeredMaterial())
   {
     addLayersSubtree(pParentItem, pModelObject, pObjectWithLayeredMaterial->LayeredMaterialId);
+    return;
   }
-  else
+
+  Renga::IObjectWithMaterialPtr pObjectWithMaterial;
+  pModelObject->QueryInterface(&pObjectWithMaterial);
+  
+  if(pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
   {
-    QList<QStandardItem*> materialItemList = createSolidMaterialItem(pModelObject);
-
-    addReinforcementSubtree(materialItemList.first(), pModelObject);
-
-    pParentItem->appendRow(materialItemList);
+    addSingleMaterialMaterialSubtree(pParentItem, pModelObject);
+    return;
   }
+}
+
+void TreeViewModelBuilder::addSingleMaterialMaterialSubtree(
+  QStandardItem* pParentItem,
+  Renga::IModelObjectPtr pModelObject)
+{
+  QList<QStandardItem*> materialItemList = createSolidMaterialItem(pModelObject);
+  addReinforcementSubtree(materialItemList.first(), pModelObject);
+  pParentItem->appendRow(materialItemList);
 }
 
 void TreeViewModelBuilder::addLayersSubtree(
