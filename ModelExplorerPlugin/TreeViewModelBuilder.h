@@ -64,7 +64,14 @@ private:
   static bool tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& modelIndex, int role, int& result);
 
 private:
+  //std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
+  std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
+
   void addObjectType(GUID type, const QString& translationLiteral, QString iconPath);
+
+  /*void addNonLevelObjectsSubtree(
+    QStandardItemModel* pItemModel,
+    const std::list<Renga::IModelObjectPtr>& nonLevelObjects);*/
 
   void addLevelSubtree(
     QStandardItemModel* pItemModel,

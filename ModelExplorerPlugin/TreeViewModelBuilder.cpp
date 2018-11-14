@@ -39,6 +39,8 @@ TreeViewModelBuilder::TreeViewModelBuilder(Renga::IApplicationPtr pApplication) 
   addObjectType(Renga::ObjectTypes::WallFoundation, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation");
   addObjectType(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly");
   addObjectType(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element");
+  addObjectType(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment");
+  addObjectType(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixture"), ":/icons/PlumbingFixture");
 }
 
 static double getLevelElevation(Renga::IModelObjectPtr pModelObject)
@@ -64,24 +66,30 @@ QStandardItemModel* TreeViewModelBuilder::build()
   auto pModel = pProject->GetModel();
   auto pModelObjectCollection = pModel->GetObjects();
 
-  std::list<Renga::IModelObjectPtr> levels;
-
-  for (int i = 0; i < pModelObjectCollection->Count; i++)
-  {
-    auto pModelObject = pModelObjectCollection->GetByIndex(i);
-
-    if (pModelObject->GetObjectType() != Renga::ObjectTypes::Level)
-      continue;
-
-    levels.push_back(pModelObject);
-  }
-
+  auto levels = getLevels(*pModelObjectCollection);
   levels.sort(compareLevelElevations);
-
+  
   for (auto pLevelModelObject : levels)
     addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
 
   return pItemModel;
+}
+
+std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevels(Renga::IModelObjectCollection & objects) const
+{
+  std::list<Renga::IModelObjectPtr> result;
+
+  for (int i = 0; i < objects.Count; i++)
+  {
+    auto pModelObject = objects.GetByIndex(i);
+
+    if (pModelObject->GetObjectType() != Renga::ObjectTypes::Level)
+      continue;
+
+    result.push_back(pModelObject);
+  }
+
+  return result;
 }
 
 bool TreeViewModelBuilder::tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)

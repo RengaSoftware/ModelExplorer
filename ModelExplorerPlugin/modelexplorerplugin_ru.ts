@@ -640,6 +640,14 @@
         <source>Elements</source>
         <translation>Элементы</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Оборудование</translation>
+    </message>
+    <message>
+        <source>PlumbingFixture</source>
+        <translation>Санитарно-техническое оборудование</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

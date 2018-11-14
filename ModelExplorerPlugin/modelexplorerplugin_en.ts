@@ -632,6 +632,14 @@
         <source>Elements</source>
         <translation>Elements</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipment</translation>
+    </message>
+    <message>
+        <source>PlumbingFixture</source>
+        <translation>Plumbing fixture</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

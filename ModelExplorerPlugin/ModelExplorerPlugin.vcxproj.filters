@@ -200,6 +200,12 @@
     <ClCompile Include="PropertyViewRebarUsageSource.cpp">
       <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
     </ClCompile>
+    <ClCompile Include="EquipmentPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
+    </ClCompile>
+    <ClCompile Include="PlumbingFixturePropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -304,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="IPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="PlumbingFixturePropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -21,6 +21,9 @@
 #include "WallFoundationPropertyViewBuilder.h"
 #include "AssemblyInstancePropertyViewBuilder.h"
 #include "ElementPropertyViewBuilder.h"
+#include "EquipmentPropertyViewBuilder.h"
+#include "PlumbingFixturePropertyViewBuilder.h"
+
 
 PropertyViewModelObjectSource::PropertyViewModelObjectSource(
   Renga::IApplicationPtr pApplication,
@@ -73,6 +76,10 @@ IPropertyViewBuilder* PropertyViewModelObjectSource::createPropertyViewBuilder(P
     pPropertyViewBuilder = new AssemblyInstancePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pModelObject);
   else if (objectType == Renga::ObjectTypes::Element)
     pPropertyViewBuilder = new ElementPropertyViewBuilder(pPropertyManagers, m_pApplication, m_pModelObject);
+  else if (objectType == Renga::ObjectTypes::Equipment)
+    pPropertyViewBuilder = new EquipmentPropertyViewBuilder(pPropertyManagers, m_pApplication, m_pModelObject);
+  else if (objectType == Renga::ObjectTypes::PlumbingFixture)
+    pPropertyViewBuilder = new PlumbingFixturePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pModelObject);
 
   return pPropertyViewBuilder;
 }
