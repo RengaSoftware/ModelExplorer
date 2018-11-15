@@ -45,7 +45,8 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly"),
     ObjectTypeData(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element"),
     ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
-    ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixture"), ":/icons/PlumbingFixture")
+    ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
+    ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint")
   };
   return levelObjectTypeData;
 }
@@ -53,9 +54,10 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
 const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::getNonLevelObjectTypeData() const
 {
   static std::list<ObjectTypeData> nonlevelObjectTypeData{
-    ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessory"), ":/icons/PipeAccessory"),
-    ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFitting"), ":/icons/PipeFitting"),
-    ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipe"), ":/icons/Pipe")
+    ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
+    ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFittings"), ":/icons/PipeFitting"),
+    ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipes"), ":/icons/Pipe"),
+    ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route")
   };
   return nonlevelObjectTypeData;
 }
@@ -89,6 +91,8 @@ QStandardItemModel* TreeViewModelBuilder::build()
   for (auto pLevelModelObject : levels)
     addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
 
+  addNonLevelSubtree(pItemModel, pModelObjectCollection);
+
   return pItemModel;
 }
 
@@ -117,7 +121,8 @@ std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getNonLevelObjectsWithTy
 {
   return getObjectGroup(objectCollection, [=](Renga::IModelObject& object)
   {
-    if (object.ObjectType != objectType)
+    auto currentObjectType = object.ObjectType;
+    if (currentObjectType != objectType)
       return false;
 
     Renga::ILevelObjectPtr pLevelObject;
@@ -195,6 +200,19 @@ bool TreeViewModelBuilder::tryGetIntegerData(QStandardItemModel* pItemModel, con
     result = value;
 
   return ok;
+}
+
+void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, Renga::IModelObjectCollectionPtr pModelObjectCollection)
+{
+  auto pItem = createOtherGroupItem();
+
+  for (const auto& objectTypeData : getNonLevelObjectTypeData())
+  {
+    auto objectGroup = getNonLevelObjectsWithType(pModelObjectCollection, objectTypeData.m_type);
+    addObjectGroupSubtree(pItem.at(0), objectGroup, objectTypeData);
+  }
+
+  pItemModel->appendRow(pItem);
 }
 
 void TreeViewModelBuilder::addLevelSubtree(
@@ -416,6 +434,15 @@ Renga::IReinforcementUnitStylePtr TreeViewModelBuilder::getReinforcementUnitStyl
     return nullptr;
 
   return pReinforcementUnitStyleManager->GetUnitStyle(reinforcementStyleId);
+}
+
+QList<QStandardItem*> TreeViewModelBuilder::createOtherGroupItem() const
+{
+  return createItem(QApplication::translate("me_modelObjects", "OtherObjectGroup"), 
+    ":/icons/Folder", 
+    ItemType_ObjectGroup, 
+    true, 
+    true);
 }
 
 QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const

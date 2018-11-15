@@ -637,8 +637,32 @@
         <translation>Equipment</translation>
     </message>
     <message>
-        <source>PlumbingFixture</source>
-        <translation>Plumbing fixture</translation>
+        <source>PlumbingFixtures</source>
+        <translation>Plumbing fixtures</translation>
+    </message>
+    <message>
+        <source>PipeAccessories</source>
+        <translation>Pipe accessories</translation>
+    </message>
+    <message>
+        <source>PipeFittings</source>
+        <translation>Pipe fittings</translation>
+    </message>
+    <message>
+        <source>Pipes</source>
+        <translation>Pipes</translation>
+    </message>
+    <message>
+        <source>OtherObjectGroup</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Routes</source>
+        <translation>Routes</translation>
+    </message>
+    <message>
+        <source>RoutePoints</source>
+        <translation>Route points</translation>
     </message>
 </context>
 <context>

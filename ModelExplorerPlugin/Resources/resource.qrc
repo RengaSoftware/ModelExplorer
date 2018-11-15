@@ -27,5 +27,12 @@
         <file>icons/Rebar.png</file>
         <file>icons/Material.png</file>
         <file>icons/Reinforcement.png</file>
+        <file>icons/Equipment.png</file>
+        <file>icons/Pipe.png</file>
+        <file>icons/PipeAccessory.png</file>
+        <file>icons/PipeFitting.png</file>
+        <file>icons/PlumbingFixture.png</file>
+        <file>icons/Route.png</file>
+        <file>icons/RoutePoint.png</file>
     </qresource>
 </RCC>

@@ -82,6 +82,10 @@ private:
   const std::list<ObjectTypeData>& getLevelObjectTypeData() const;
   const std::list<ObjectTypeData>& getNonLevelObjectTypeData() const;
 
+  void addNonLevelSubtree(
+    QStandardItemModel* pItemModel,
+    Renga::IModelObjectCollectionPtr pModelObjectCollection);
+
   void addLevelSubtree(
     QStandardItemModel* pItemModel,
     Renga::IModelObjectPtr pLevelModelObject,
@@ -127,6 +131,7 @@ private:
   Renga::IReinforcementUnitStylePtr getReinforcementUnitStyle(int reinforcementUnitStyleId) const;
 
   QList<QStandardItem*> createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const;
+  QList<QStandardItem*> createOtherGroupItem() const;
   QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject, const ObjectTypeData& objectTypeData) const;
   QList<QStandardItem*> createMaterialLayerItem(
     Renga::IModelObjectPtr pModelObject,

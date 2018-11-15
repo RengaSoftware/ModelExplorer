@@ -645,8 +645,32 @@
         <translation>Оборудование</translation>
     </message>
     <message>
-        <source>PlumbingFixture</source>
+        <source>PlumbingFixtures</source>
         <translation>Санитарно-техническое оборудование</translation>
+    </message>
+    <message>
+        <source>PipeAccessories</source>
+        <translation>Аксессуары трубопровода</translation>
+    </message>
+    <message>
+        <source>PipeFittings</source>
+        <translation>Детали трубопровода</translation>
+    </message>
+    <message>
+        <source>Pipes</source>
+        <translation>Трубы</translation>
+    </message>
+    <message>
+        <source>OtherObjectGroup</source>
+        <translation>Прочие</translation>
+    </message>
+    <message>
+        <source>Routes</source>
+        <translation>Трассы</translation>
+    </message>
+    <message>
+        <source>RoutePoints</source>
+        <translation>Точки трассировки</translation>
     </message>
 </context>
 <context>
