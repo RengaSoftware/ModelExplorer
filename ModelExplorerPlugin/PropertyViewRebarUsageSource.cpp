@@ -11,9 +11,9 @@ PropertyViewRebarUsageSource::PropertyViewRebarUsageSource(
 {
 }
 
-IPropertyViewBuilder* PropertyViewRebarUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewRebarUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
-  return new RebarUsagePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pRebarUsage);
+  return std::make_unique<RebarUsagePropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pRebarUsage);
 }
 
 Renga::IPropertyPtr PropertyViewRebarUsageSource::getUserDefinedProperty(GUID propertyId)

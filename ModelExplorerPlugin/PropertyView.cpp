@@ -120,8 +120,7 @@ void PropertyView::buildPropertyView(IPropertyViewSourceObject* pSourceObject)
   if (pSourceObject == nullptr)
     return;
 
-  std::unique_ptr<IPropertyViewBuilder> propertyViewBuilder;
-  propertyViewBuilder.reset(pSourceObject->createPropertyViewBuilder(&m_propertyManagers));
+  auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
 
   PropertyList parameters;
   PropertyList calculated;

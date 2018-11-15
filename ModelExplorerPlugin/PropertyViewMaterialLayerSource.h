@@ -10,7 +10,7 @@ public:
     Renga::IMaterialLayerPtr pMaterialLayer,
     Renga::ILayerPtr pLayer);
 
-  IPropertyViewBuilder* createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
 
   Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) override;
 

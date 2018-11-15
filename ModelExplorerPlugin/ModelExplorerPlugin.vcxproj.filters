@@ -110,59 +110,14 @@
     <ClCompile Include="PropertyManagers.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
-    <ClCompile Include="BeamPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="ColumnPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="DoorPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="IsolatedFoundationPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
     <ClCompile Include="LevelPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="OpeningPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="RailingPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="RampPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="RoofPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClCompile>
     <ClCompile Include="RoomPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClCompile>
-    <ClCompile Include="StairPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="WallFoundationPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="WallPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
     <ClCompile Include="GuidUtils.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="AssemblyInstancePropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="ElementPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClCompile>
     <ClCompile Include="TreeViewModelBuilder.cpp">
       <Filter>ModelExplorerWidget\TreeView</Filter>
@@ -200,12 +155,6 @@
     <ClCompile Include="PropertyViewRebarUsageSource.cpp">
       <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
     </ClCompile>
-    <ClCompile Include="EquipmentPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="PlumbingFixturePropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -224,59 +173,14 @@
     <ClInclude Include="MesureUnit.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="BeamPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="ColumnPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="DoorPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="IsolatedFoundationPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
     <ClInclude Include="LevelPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="OpeningPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="RailingPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="RampPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="RoofPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
     <ClInclude Include="RoomPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
-    <ClInclude Include="StairPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="WallFoundationPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="WallPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
     <ClInclude Include="GuidUtils.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="AssemblyInstancePropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="ElementPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
     <ClInclude Include="TreeViewModelBuilder.h">
       <Filter>ModelExplorerWidget\TreeView</Filter>
@@ -310,12 +214,6 @@
     </ClInclude>
     <ClInclude Include="IPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="EquipmentPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="PlumbingFixturePropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ class IPropertyViewSourceObject
 public:
   virtual ~IPropertyViewSourceObject() {}
 
-  virtual IPropertyViewBuilder* createPropertyViewBuilder(PropertyManagers* pPropertyManagers) = 0;
+  virtual std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) = 0;
 
   virtual Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) = 0;
 };

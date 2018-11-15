@@ -7,7 +7,7 @@ public:
     Renga::IApplicationPtr pApplication,
     Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
 
-  IPropertyViewBuilder* createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
 
   Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) override;
 

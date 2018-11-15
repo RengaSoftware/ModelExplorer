@@ -13,9 +13,9 @@ PropertyViewMaterialLayerSource::PropertyViewMaterialLayerSource(
 {
 }
 
-IPropertyViewBuilder* PropertyViewMaterialLayerSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewMaterialLayerSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
-  return new MaterialLayerPropertyViewBuilder(pPropertyManagers, m_pApplication, m_pMaterialLayer, m_pLayer);
+  return std::make_unique<MaterialLayerPropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pMaterialLayer, m_pLayer);
 }
 
 Renga::IPropertyPtr PropertyViewMaterialLayerSource::getUserDefinedProperty(GUID propertyId)

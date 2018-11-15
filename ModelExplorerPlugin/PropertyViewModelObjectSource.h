@@ -9,7 +9,7 @@ public:
     Renga::IApplicationPtr pApplication,
     Renga::IModelObjectPtr pModelObject);
 
-  IPropertyViewBuilder* createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
 
   Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) override;
 

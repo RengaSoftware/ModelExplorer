@@ -11,9 +11,10 @@ PropertyViewReinforcementUnitUsageSource::PropertyViewReinforcementUnitUsageSour
 {
 }
 
-IPropertyViewBuilder* PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
 {
-  return new ReinforcementUnitUsagePropertyViewBuilder(pPropertyManagers, m_pApplication, m_pReinforcementUnitUsage);
+  return std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(
+    pPropertyManagers, m_pApplication, m_pReinforcementUnitUsage);
 }
 
 Renga::IPropertyPtr PropertyViewReinforcementUnitUsageSource::getUserDefinedProperty(GUID propertyId)
