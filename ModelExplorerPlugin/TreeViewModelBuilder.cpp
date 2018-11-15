@@ -23,24 +23,41 @@ TreeViewModelBuilder::ObjectTypeData::ObjectTypeData(GUID type, QString translat
 TreeViewModelBuilder::TreeViewModelBuilder(Renga::IApplicationPtr pApplication) :
   m_pApplication(pApplication)
 {
-  addObjectType(Renga::ObjectTypes::Wall, QApplication::translate("me_modelObjects", "Walls"), ":/icons/Wall");
-  addObjectType(Renga::ObjectTypes::Column, QApplication::translate("me_modelObjects", "Columns"), ":/icons/Column");
-  addObjectType(Renga::ObjectTypes::Floor, QApplication::translate("me_modelObjects", "Floors"), ":/icons/Floor");
-  addObjectType(Renga::ObjectTypes::Opening, QApplication::translate("me_modelObjects", "Openings"), ":/icons/Opening");
-  addObjectType(Renga::ObjectTypes::Roof, QApplication::translate("me_modelObjects", "Roofs"), ":/icons/Roof");
-  addObjectType(Renga::ObjectTypes::Beam, QApplication::translate("me_modelObjects", "Beams"), ":/icons/Beam");
-  addObjectType(Renga::ObjectTypes::Stair, QApplication::translate("me_modelObjects", "Stairs"), ":/icons/Stair");
-  addObjectType(Renga::ObjectTypes::Ramp, QApplication::translate("me_modelObjects", "Ramps"), ":/icons/Ramp");
-  addObjectType(Renga::ObjectTypes::Window, QApplication::translate("me_modelObjects", "Windows"), ":/icons/Window");
-  addObjectType(Renga::ObjectTypes::Door, QApplication::translate("me_modelObjects", "Doors"), ":/icons/Door");
-  addObjectType(Renga::ObjectTypes::Railing, QApplication::translate("me_modelObjects", "Railings"), ":/icons/Railing");
-  addObjectType(Renga::ObjectTypes::Room, QApplication::translate("me_modelObjects", "Rooms"), ":/icons/Room");
-  addObjectType(Renga::ObjectTypes::IsolatedFoundation, QApplication::translate("me_modelObjects", "Isolated foundations"), ":/icons/Isolated_foundation");
-  addObjectType(Renga::ObjectTypes::WallFoundation, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation");
-  addObjectType(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly");
-  addObjectType(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element");
-  addObjectType(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment");
-  addObjectType(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixture"), ":/icons/PlumbingFixture");
+}
+
+const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::getLevelObjectTypeData() const
+{
+  static std::list<ObjectTypeData> levelObjectTypeData{
+    ObjectTypeData(Renga::ObjectTypes::Wall, QApplication::translate("me_modelObjects", "Walls"), ":/icons/Wall"),
+    ObjectTypeData(Renga::ObjectTypes::Column, QApplication::translate("me_modelObjects", "Columns"), ":/icons/Column"),
+    ObjectTypeData(Renga::ObjectTypes::Floor, QApplication::translate("me_modelObjects", "Floors"), ":/icons/Floor"),
+    ObjectTypeData(Renga::ObjectTypes::Opening, QApplication::translate("me_modelObjects", "Openings"), ":/icons/Opening"),
+    ObjectTypeData(Renga::ObjectTypes::Roof, QApplication::translate("me_modelObjects", "Roofs"), ":/icons/Roof"),
+    ObjectTypeData(Renga::ObjectTypes::Beam, QApplication::translate("me_modelObjects", "Beams"), ":/icons/Beam"),
+    ObjectTypeData(Renga::ObjectTypes::Stair, QApplication::translate("me_modelObjects", "Stairs"), ":/icons/Stair"),
+    ObjectTypeData(Renga::ObjectTypes::Ramp, QApplication::translate("me_modelObjects", "Ramps"), ":/icons/Ramp"),
+    ObjectTypeData(Renga::ObjectTypes::Window, QApplication::translate("me_modelObjects", "Windows"), ":/icons/Window"),
+    ObjectTypeData(Renga::ObjectTypes::Door, QApplication::translate("me_modelObjects", "Doors"), ":/icons/Door"),
+    ObjectTypeData(Renga::ObjectTypes::Railing, QApplication::translate("me_modelObjects", "Railings"), ":/icons/Railing"),
+    ObjectTypeData(Renga::ObjectTypes::Room, QApplication::translate("me_modelObjects", "Rooms"), ":/icons/Room"),
+    ObjectTypeData(Renga::ObjectTypes::IsolatedFoundation, QApplication::translate("me_modelObjects", "Isolated foundations"), ":/icons/Isolated_foundation"),
+    ObjectTypeData(Renga::ObjectTypes::WallFoundation, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation"),
+    ObjectTypeData(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly"),
+    ObjectTypeData(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element"),
+    ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
+    ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixture"), ":/icons/PlumbingFixture")
+  };
+  return levelObjectTypeData;
+}
+
+const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::getNonLevelObjectTypeData() const
+{
+  static std::list<ObjectTypeData> nonlevelObjectTypeData{
+    ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessory"), ":/icons/PipeAccessory"),
+    ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFitting"), ":/icons/PipeFitting"),
+    ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipe"), ":/icons/Pipe")
+  };
+  return nonlevelObjectTypeData;
 }
 
 static double getLevelElevation(Renga::IModelObjectPtr pModelObject)
@@ -75,21 +92,64 @@ QStandardItemModel* TreeViewModelBuilder::build()
   return pItemModel;
 }
 
-std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevels(Renga::IModelObjectCollection & objects) const
+std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getObjectGroup(
+  Renga::IModelObjectCollection& objectCollection,
+  std::function<bool(Renga::IModelObject&)> groupFilter) const
 {
   std::list<Renga::IModelObjectPtr> result;
 
-  for (int i = 0; i < objects.Count; i++)
+  for (int i = 0; i < objectCollection.Count; i++)
   {
-    auto pModelObject = objects.GetByIndex(i);
+    Renga::IModelObjectPtr pModelObject = objectCollection.GetByIndex(i);
 
-    if (pModelObject->GetObjectType() != Renga::ObjectTypes::Level)
+    if (groupFilter(*pModelObject) == false)
       continue;
 
     result.push_back(pModelObject);
   }
 
   return result;
+}
+
+std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getNonLevelObjectsWithType(
+  Renga::IModelObjectCollection & objectCollection,
+  GUID objectType) const
+{
+  return getObjectGroup(objectCollection, [=](Renga::IModelObject& object)
+  {
+    if (object.ObjectType != objectType)
+      return false;
+
+    Renga::ILevelObjectPtr pLevelObject;
+    object.QueryInterface(&pLevelObject);
+
+    return pLevelObject == nullptr;
+  });
+}
+
+std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevels(Renga::IModelObjectCollection & objectCollection) const
+{
+  return getObjectGroup(objectCollection, [](Renga::IModelObject& object)
+  {
+    return object.GetObjectType() == Renga::ObjectTypes::Level;
+  });
+}
+
+std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevelObjectsWithType(
+  Renga::IModelObjectCollection & objectCollection, 
+  int levelId, 
+  GUID objectType) const
+{
+  return getObjectGroup(objectCollection, [=](Renga::IModelObject& object)
+  {
+    if (object.ObjectType != objectType)
+      return false;
+
+    Renga::ILevelObjectPtr pLevelObject;
+    object.QueryInterface(&pLevelObject);
+
+    return pLevelObject != nullptr && pLevelObject->LevelId == levelId;
+  });
 }
 
 bool TreeViewModelBuilder::tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
@@ -137,11 +197,6 @@ bool TreeViewModelBuilder::tryGetIntegerData(QStandardItemModel* pItemModel, con
   return ok;
 }
 
-void TreeViewModelBuilder::addObjectType(GUID type, const QString& translationLiteral, QString iconPath)
-{
-  m_objectTypeDataArray.push_back(ObjectTypeData(type, translationLiteral, iconPath));
-}
-
 void TreeViewModelBuilder::addLevelSubtree(
   QStandardItemModel* pItemModel,
   Renga::IModelObjectPtr pLevelModelObject,
@@ -151,54 +206,35 @@ void TreeViewModelBuilder::addLevelSubtree(
 
   auto pItem = createLevelItem(pLevelModelObject);
 
-  for (const auto& objectTypeData : m_objectTypeDataArray)
-    addObjectGroupSubtree(pItem.at(0), pModelObjectCollection, objectTypeData, pLevelModelObject->Id);
+  for (const auto& objectTypeData : getLevelObjectTypeData())
+  {
+    auto objectGroup = getLevelObjectsWithType(pModelObjectCollection, pLevelModelObject->Id, objectTypeData.m_type);
+    addObjectGroupSubtree(pItem.at(0), objectGroup, objectTypeData);
+  }
 
   pItemModel->appendRow(pItem);
 }
 
 void TreeViewModelBuilder::addObjectGroupSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectCollectionPtr pModelObjectCollection,
-  const TreeViewModelBuilder::ObjectTypeData& objectTypeData,
-  int levelId)
+  const std::list<Renga::IModelObjectPtr>& objectGroup,
+  const ObjectTypeData& objectTypeData)
 {
   QList<QStandardItem*> objectGroupItemList =
     createItem(objectTypeData.m_typeNodeName, ":/icons/Folder", ItemType_ObjectGroup, true, true);
 
-  bool isObjectGroupVisible = false;
+  if (objectGroup.empty())
+    return;
 
-  int itemCount = 0;
-
-  for (int i = 0; i < pModelObjectCollection->Count; i++)
+  for (auto pObject : objectGroup)
   {
-    Renga::IModelObjectPtr pModelObject = pModelObjectCollection->GetByIndex(i);
-
-    if (pModelObject->GetObjectType() != objectTypeData.m_type)
-      continue;
-
-    Renga::ILevelObjectPtr pLevelObject;
-    pModelObject->QueryInterface(&pLevelObject);
-
-    if (pLevelObject == nullptr || pLevelObject->LevelId != levelId)
-      continue;
-
-    QList<QStandardItem*> itemList = createModelObjectItem(pModelObject, objectTypeData);
-    
-    addMaterialsSubtree(itemList.at(0), pModelObject);
-
+    QList<QStandardItem*> itemList = createModelObjectItem(pObject, objectTypeData);
+    addMaterialsSubtree(itemList.at(0), pObject);
     objectGroupItemList.at(0)->appendRow(itemList);
-
-    if (getRengaObjectVisibility(m_pApplication, pModelObject->Id))
-      isObjectGroupVisible = true;
-
-    itemCount++;
   }
-
-  setItemVisibilityState(objectGroupItemList, isObjectGroupVisible);
-
-  if (itemCount > 0)
-    pParentItem->appendRow(objectGroupItemList);
+  
+  setItemVisibilityState(objectGroupItemList, objectGroupHasVisibleObject(objectGroup));
+  pParentItem->appendRow(objectGroupItemList);
 }
 
 void TreeViewModelBuilder::addMaterialsSubtree(
@@ -522,4 +558,12 @@ void TreeViewModelBuilder::setItemVisibilityState(QList<QStandardItem*>& itemLis
 
   pVisibilityItem->setIcon(QIcon(iconPath));
   pVisibilityItem->setData(isVisible, Role_IsVisible);
+}
+
+bool TreeViewModelBuilder::objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const
+{
+  for (auto pObject : objectsGroup)
+    if (getRengaObjectVisibility(m_pApplication, pObject->Id))
+      return true;
+  return false;
 }

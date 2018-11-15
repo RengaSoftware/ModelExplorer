@@ -64,14 +64,23 @@ private:
   static bool tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& modelIndex, int role, int& result);
 
 private:
-  //std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
+  std::list<Renga::IModelObjectPtr> getObjectGroup(
+    Renga::IModelObjectCollection& objectCollection,
+    std::function<bool(Renga::IModelObject&)> groupFilter) const;
+  
+  std::list<Renga::IModelObjectPtr> getNonLevelObjectsWithType(
+    Renga::IModelObjectCollection& objectCollection, 
+    GUID objectType) const;
+  
   std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
+  
+  std::list<Renga::IModelObjectPtr> getLevelObjectsWithType(
+    Renga::IModelObjectCollection& objectCollection,
+    int levelId,
+    GUID objectType) const;
 
-  void addObjectType(GUID type, const QString& translationLiteral, QString iconPath);
-
-  /*void addNonLevelObjectsSubtree(
-    QStandardItemModel* pItemModel,
-    const std::list<Renga::IModelObjectPtr>& nonLevelObjects);*/
+  const std::list<ObjectTypeData>& getLevelObjectTypeData() const;
+  const std::list<ObjectTypeData>& getNonLevelObjectTypeData() const;
 
   void addLevelSubtree(
     QStandardItemModel* pItemModel,
@@ -80,9 +89,8 @@ private:
 
   void addObjectGroupSubtree(
     QStandardItem* pParentItem,
-    Renga::IModelObjectCollectionPtr pModelObjectCollection,
-    const ObjectTypeData& objectTypeData,
-    int levelId);
+    const std::list<Renga::IModelObjectPtr>& objectGroup,
+    const ObjectTypeData& objectTypeData);
 
   void addMaterialsSubtree(
     QStandardItem* pParentItem,
@@ -144,8 +152,8 @@ private:
     bool isVisible = true) const;
 
   void setItemVisibilityState(QList<QStandardItem*>& itemList, bool isVisible) const;
+  bool objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const;
 
 private:
   Renga::IApplicationPtr m_pApplication;
-  std::list<ObjectTypeData> m_objectTypeDataArray;
 };
