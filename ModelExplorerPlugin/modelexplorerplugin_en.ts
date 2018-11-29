@@ -664,6 +664,22 @@
         <source>RoutePoints</source>
         <translation>Route points</translation>
     </message>
+    <message>
+        <source>Plates</source>
+        <translation>Plates</translation>
+    </message>
+    <message>
+        <source>Axes</source>
+        <translation>Axes</translation>
+    </message>
+    <message>
+        <source>Elevations</source>
+        <translation>Elevations</translation>
+    </message>
+    <message>
+        <source>Sections</source>
+        <translation>Sections</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

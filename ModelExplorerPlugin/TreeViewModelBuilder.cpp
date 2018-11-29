@@ -46,7 +46,8 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element"),
     ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
     ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
-    ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint")
+    ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint"),
+    ObjectTypeData(Renga::ObjectTypes::Plate, QApplication::translate("me_modelObjects", "Plates"), ":/icons/RoutePoint")
   };
   return levelObjectTypeData;
 }
@@ -57,7 +58,10 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
     ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFittings"), ":/icons/PipeFitting"),
     ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipes"), ":/icons/Pipe"),
-    ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route")
+    ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route"),
+    ObjectTypeData(Renga::ObjectTypes::Axis, QApplication::translate("me_modelObjects", "Axes"), ":/icons/Axis"),
+    ObjectTypeData(Renga::ObjectTypes::Elevation, QApplication::translate("me_modelObjects", "Elevations"), ":/icons/Elevation"),
+    ObjectTypeData(Renga::ObjectTypes::Section, QApplication::translate("me_modelObjects", "Sections"), ":/icons/Section")
   };
   return nonlevelObjectTypeData;
 }
@@ -462,9 +466,9 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(
   const TreeViewModelBuilder::ObjectTypeData& objectTypeData) const
 {
   bool isModelObjectVisible = getRengaObjectVisibility(m_pApplication, pModelObject->Id);
-
+  auto name = pModelObject->Name;
   QList<QStandardItem*> itemList = createItem(
-    QString::fromWCharArray(pModelObject->Name), objectTypeData.m_iconPath, ItemType_ModelObject, true, isModelObjectVisible);
+    QString::fromWCharArray(name), objectTypeData.m_iconPath, ItemType_ModelObject, true, isModelObjectVisible);
 
   itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
 

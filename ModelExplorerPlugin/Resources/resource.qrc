@@ -34,5 +34,8 @@
         <file>icons/PlumbingFixture.png</file>
         <file>icons/Route.png</file>
         <file>icons/RoutePoint.png</file>
+        <file>icons/Axis.png</file>
+        <file>icons/Elevation.png</file>
+        <file>icons/Section.png</file>
     </qresource>
 </RCC>

@@ -672,6 +672,22 @@
         <source>RoutePoints</source>
         <translation>Точки трассировки</translation>
     </message>
+    <message>
+        <source>Plates</source>
+        <translation>Пластины</translation>
+    </message>
+    <message>
+        <source>Axes</source>
+        <translation>Оси</translation>
+    </message>
+    <message>
+        <source>Elevations</source>
+        <translation>Фасады</translation>
+    </message>
+    <message>
+        <source>Sections</source>
+        <translation>Разрезы</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>
