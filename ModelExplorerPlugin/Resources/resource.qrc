@@ -37,5 +37,6 @@
         <file>icons/Axis.png</file>
         <file>icons/Elevation.png</file>
         <file>icons/Section.png</file>
+        <file>icons/Plate.png</file>
     </qresource>
 </RCC>

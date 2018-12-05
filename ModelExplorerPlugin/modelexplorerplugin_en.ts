@@ -565,6 +565,10 @@
         <source>material</source>
         <translation>Material</translation>
     </message>
+    <message>
+        <source>overallLength</source>
+        <translation>Length, mm</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>

@@ -582,6 +582,8 @@ void ModelExplorerWidget::updateTreeViewParentVisibility(const QModelIndex& item
     QModelIndex parentVisibilityIconIndex = m_pTreeViewModel->index(parentIndex.row(), 1, parentIndex.parent());
     setTreeViewVisibilityIconState(parentVisibilityIconIndex, isVisible);
   }
+
+  updateTreeViewParentVisibility(pParentItem->index());
 }
 
 bool ModelExplorerWidget::isTreeViewItemVisible(const QModelIndex& itemIndex) const
@@ -683,9 +685,14 @@ bool ModelExplorerWidget::isTreeViewObjectGroupVisible(const QModelIndex& itemIn
 
   for (int i = 0; i < item->rowCount(); ++i)
   {
-    QStandardItem* childItem = item->child(i);
-
-    if (isTreeViewModelObject(childItem->index()) && isTreeViewModelObjectVisible(childItem->index()))
+    auto childIndex = item->child(i)->index();
+    
+    if (isTreeViewModelObject(childIndex) && isTreeViewModelObjectVisible(childIndex))
+    {
+      isVisible = true;
+      break;
+    }
+    else if (isTreeViewObjectGroup(childIndex) && isTreeViewObjectGroupVisible(childIndex))
     {
       isVisible = true;
       break;

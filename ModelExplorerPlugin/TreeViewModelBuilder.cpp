@@ -47,7 +47,7 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
     ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
     ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint"),
-    ObjectTypeData(Renga::ObjectTypes::Plate, QApplication::translate("me_modelObjects", "Plates"), ":/icons/RoutePoint")
+    ObjectTypeData(Renga::ObjectTypes::Plate, QApplication::translate("me_modelObjects", "Plates"), ":/icons/Plate")
   };
   return levelObjectTypeData;
 }

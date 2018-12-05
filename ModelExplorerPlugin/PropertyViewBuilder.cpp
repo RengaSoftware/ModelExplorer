@@ -58,6 +58,7 @@ void PropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 
   addValue(propertyList, QApplication::translate("me_mo", "overallWidth"), pQuantities, QuantityIds::OverallWidth);
   addValue(propertyList, QApplication::translate("me_mo", "overallHeight"), pQuantities, QuantityIds::OverallHeight);
+  addValue(propertyList, QApplication::translate("me_mo", "overallLength"), pQuantities, QuantityIds::OverallLength);
 
   addValue(propertyList, QApplication::translate("me_mo", "thickness"), pQuantities, QuantityIds::NominalThickness);
   addValue(propertyList, QApplication::translate("me_mo", "length"), pQuantities, QuantityIds::NominalLength);

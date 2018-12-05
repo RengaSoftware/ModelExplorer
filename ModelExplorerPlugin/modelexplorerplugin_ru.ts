@@ -573,6 +573,10 @@
         <source>treadLength</source>
         <translation>Ширина проступи, мм</translation>
     </message>
+    <message>
+        <source>overallLength</source>
+        <translation>Длина, мм</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>
