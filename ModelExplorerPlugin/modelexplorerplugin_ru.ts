@@ -692,6 +692,10 @@
         <source>Sections</source>
         <translation>Разрезы</translation>
     </message>
+    <message>
+        <source>AirDucts</source>
+        <translation>Воздуховоды</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

@@ -684,6 +684,10 @@
         <source>Sections</source>
         <translation>Sections</translation>
     </message>
+    <message>
+        <source>AirDucts</source>
+        <translation>Air ducts</translation>
+    </message>
 </context>
 <context>
     <name>me_propertyView</name>

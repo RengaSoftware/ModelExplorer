@@ -22,7 +22,7 @@ How to build the plugin
 
 To build the plugin you need RengaSDK and Qt 5.8.1.
 You can download the latest version of RengaSDK from "http://rengacad.com/ru/support/sdk/".
-There are two environment variables (renga_sdk, qt5_path) used in plugin.
+There are two environment variables (renga_com_sdk, qt5_path) used in plugin.
 You should add these variables to the system, and specify paths to RengaSDK folder and Qt folder accordingly.
 Alternatively you can set required paths in Visual Studio.
 

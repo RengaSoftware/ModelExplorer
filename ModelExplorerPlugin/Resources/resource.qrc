@@ -38,5 +38,6 @@
         <file>icons/Elevation.png</file>
         <file>icons/Section.png</file>
         <file>icons/Plate.png</file>
+        <file>icons/AirDuct.png</file>
     </qresource>
 </RCC>
