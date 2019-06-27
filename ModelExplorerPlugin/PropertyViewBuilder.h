@@ -20,6 +20,8 @@ public:
     Renga::IModelObjectPtr pModelObject);
 
   virtual void createParametersProperties(PropertyList& propertyList);
+  virtual void createParametersPropertiesEx(PropertyList& propertyList);
+
   virtual void createQuantitiesProperties(PropertyList& propertyList);
 
   PropertyList createUserAttributesProperties();

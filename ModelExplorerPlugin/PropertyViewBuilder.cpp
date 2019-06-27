@@ -48,6 +48,47 @@ void PropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
     addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
 }
 
+void PropertyViewBuilder::createParametersPropertiesEx(PropertyList& propertyList)
+{
+  auto pParameters = m_pModelObject->GetParameters();
+  auto pIds = pParameters->GetIds();
+  for (int i = 0; i < pIds->Count; ++i)
+  {
+    auto pParameter = pParameters->Get(pIds->Get(i));
+    auto pDefinition = pParameter->Definition;
+
+    QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
+
+
+    switch (pDefinition->GetParameterType())
+    {
+    case Renga::ParameterType::ParameterType_Angle:
+      name += ", " + QApplication::translate("me_mo", "angle_dimension");
+      break;
+    case Renga::ParameterType::ParameterType_Length:
+      name += ", " + QApplication::translate("me_mo", "length_dimension");
+      break;
+    }
+
+
+    switch (pParameter->GetValueType())
+    {
+    case Renga::ParameterValueType::ParameterValueType_Bool:
+      addValue(propertyList, name, pParameter->GetBoolValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Int:
+      addValue(propertyList, name, pParameter->GetIntValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Double:
+      addValue(propertyList, name, pParameter->GetDoubleValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_String:
+      addValue(propertyList, name, QString::fromStdWString(pParameter->GetStringValue().operator const wchar_t *()));
+      break;
+    }
+  }
+}
+
 void PropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;

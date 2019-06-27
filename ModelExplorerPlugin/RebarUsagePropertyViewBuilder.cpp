@@ -22,6 +22,10 @@ void RebarUsagePropertyViewBuilder::createParametersProperties(PropertyList& pro
     m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pRebarStyle->Name));
 }
 
+void RebarUsagePropertyViewBuilder::createParametersPropertiesEx(PropertyList& propertyList)
+{
+}
+
 void RebarUsagePropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;

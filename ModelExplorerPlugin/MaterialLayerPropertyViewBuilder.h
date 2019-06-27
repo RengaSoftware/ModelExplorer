@@ -13,6 +13,7 @@ public:
     Renga::ILayerPtr pLayer);
 
   void createParametersProperties(PropertyList& propertyList) override;
+  void createParametersPropertiesEx(PropertyList& propertyList) override;
   void createQuantitiesProperties(PropertyList& propertyList) override;
   PropertyList createUserAttributesProperties() override;
 

@@ -22,6 +22,10 @@ void ReinforcementUnitUsagePropertyViewBuilder::createParametersProperties(Prope
     m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pReinforcementUnitStyle->Name));
 }
 
+void ReinforcementUnitUsagePropertyViewBuilder::createParametersPropertiesEx(PropertyList& propertyList)
+{
+}
+
 void ReinforcementUnitUsagePropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;

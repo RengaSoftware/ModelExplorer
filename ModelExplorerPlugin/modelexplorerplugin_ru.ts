@@ -577,6 +577,14 @@
         <source>overallLength</source>
         <translation>Длина, мм</translation>
     </message>
+    <message>
+        <source>angle_dimension</source>
+        <translation>рад</translation>
+    </message>
+    <message>
+        <source>length_dimension</source>
+        <translation>мм</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>
@@ -730,6 +738,10 @@
     <message>
         <source>list</source>
         <translation>В алфавитном порядке</translation>
+    </message>
+    <message>
+        <source>Object parameters ex</source>
+        <translation>Параметры объекта [общие]</translation>
     </message>
 </context>
 <context>

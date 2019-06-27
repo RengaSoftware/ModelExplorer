@@ -569,6 +569,14 @@
         <source>overallLength</source>
         <translation>Length, mm</translation>
     </message>
+    <message>
+        <source>angle_dimension</source>
+        <translation>rad</translation>
+    </message>
+    <message>
+        <source>length_dimension</source>
+        <translation>mm</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>
@@ -722,6 +730,10 @@
     <message>
         <source>list</source>
         <translation>In alphabet order</translation>
+    </message>
+    <message>
+        <source>Object parameters ex</source>
+        <translation>Object parameters [Common]</translation>
     </message>
 </context>
 <context>

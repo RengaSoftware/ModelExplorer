@@ -23,6 +23,10 @@ void MaterialLayerPropertyViewBuilder::createParametersProperties(PropertyList& 
   m_pPropertyManagers->addValue(propertyList, QApplication::translate("me_materialLayer", "material"), materialName);
 }
 
+void MaterialLayerPropertyViewBuilder::createParametersPropertiesEx(PropertyList& propertyList)
+{
+}
+
 void MaterialLayerPropertyViewBuilder::createQuantitiesProperties(PropertyList& propertyList)
 {
   using namespace Renga;

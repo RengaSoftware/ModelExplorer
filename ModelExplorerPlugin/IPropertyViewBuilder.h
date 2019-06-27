@@ -18,6 +18,7 @@ class IPropertyViewBuilder
 public:
   virtual ~IPropertyViewBuilder() {}
   virtual void createParametersProperties(PropertyList& propertyList) = 0;
+  virtual void createParametersPropertiesEx(PropertyList& propertyList) = 0;
   virtual void createQuantitiesProperties(PropertyList& propertyList) = 0;
   virtual PropertyList createUserAttributesProperties() = 0;
 };

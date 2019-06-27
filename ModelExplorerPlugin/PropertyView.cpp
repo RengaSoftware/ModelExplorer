@@ -76,11 +76,12 @@ void PropertyView::clearPropertyManagers()
   m_pGroupManager->clear();
 }
 
-void PropertyView::buildPropertyViewAsList(PropertyList& parameters, PropertyList& calculated, PropertyList& userDefinedProperties)
+void PropertyView::buildPropertyViewAsList(PropertyList& parameters, PropertyList& parametersEx, PropertyList& calculated, PropertyList& userDefinedProperties)
 {
   // show in list mode
   PropertyList allProperties;
   allProperties.splice(allProperties.end(), parameters);
+  allProperties.splice(allProperties.end(), parametersEx);
   allProperties.splice(allProperties.end(), calculated);
   allProperties.splice(allProperties.end(), userDefinedProperties);
 
@@ -123,21 +124,23 @@ void PropertyView::buildPropertyView(IPropertyViewSourceObject* pSourceObject)
   auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
 
   PropertyList parameters;
+  PropertyList parametersEx;
   PropertyList calculated;
   PropertyList userDefinedProperties;
 
-  if (!createProperties(propertyViewBuilder.get(), parameters, calculated, userDefinedProperties))
+  if (!createProperties(propertyViewBuilder.get(), parameters, parametersEx, calculated, userDefinedProperties))
     return;
 
   if (m_propertyViewMode == Mode::ListMode)
-    buildPropertyViewAsList(parameters, calculated, userDefinedProperties);
+    buildPropertyViewAsList(parameters, parametersEx, calculated, userDefinedProperties);
   else
-    buildPropertyViewByCategory(parameters, calculated, userDefinedProperties);
+    buildPropertyViewByCategory(parameters, parametersEx, calculated, userDefinedProperties);
 }
 
-void PropertyView::buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& userDefinedProperties)
+void PropertyView::buildPropertyViewByCategory(const PropertyList& parameters, PropertyList& parametersEx, const PropertyList& calculated, const PropertyList& userDefinedProperties)
 {
   buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters"), parameters);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters ex"), parametersEx);
   buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Calculated characteristics"), calculated);
   buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object properties"), userDefinedProperties);
 }
@@ -145,6 +148,7 @@ void PropertyView::buildPropertyViewByCategory(const PropertyList& parameters, c
 bool PropertyView::createProperties(
   IPropertyViewBuilder* pObjectPropertyViewBuilder,
   PropertyList& parameters,
+  PropertyList& parametersEx,
   PropertyList& calculated,
   PropertyList& userDefinedProperties)
 {
@@ -155,6 +159,7 @@ bool PropertyView::createProperties(
   calculated.clear();
 
   pObjectPropertyViewBuilder->createParametersProperties(parameters);
+  pObjectPropertyViewBuilder->createParametersPropertiesEx(parametersEx);
   pObjectPropertyViewBuilder->createQuantitiesProperties(calculated);
 
   userDefinedProperties = pObjectPropertyViewBuilder->createUserAttributesProperties();

@@ -74,11 +74,12 @@ private:
   bool createProperties(
     IPropertyViewBuilder* pObjectPropertyViewBuilder,
     PropertyList& parameters,
+    PropertyList& parametersEx,
     PropertyList& calculated,
     PropertyList& userDefinedProperties);
 
-  void buildPropertyViewAsList(PropertyList& parameters, PropertyList& calculated, PropertyList& properties);
-  void buildPropertyViewByCategory(const PropertyList& parameters, const PropertyList& calculated, const PropertyList& properties);
+  void buildPropertyViewAsList(PropertyList& parameters, PropertyList& parametersEx, PropertyList& calculated, PropertyList& properties);
+  void buildPropertyViewByCategory(const PropertyList& parameters, PropertyList& parametersEx, const PropertyList& calculated, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
 
   void buildPropertyView(IPropertyViewSourceObject* pSourceObject);
