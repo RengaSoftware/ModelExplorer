@@ -3,18 +3,15 @@
 #include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-class ReinforcementUnitUsagePropertyViewBuilder : public IPropertyViewBuilder
+class ReinforcementUnitUsagePropertyViewBuilder : public CPropertyViewBuilder
 {
 public:
-  ReinforcementUnitUsagePropertyViewBuilder(
-    const PropertyManagers* pPropertyManagers,
-    Renga::IApplicationPtr pApplication,
-    Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
+  ReinforcementUnitUsagePropertyViewBuilder(PropertyManagers* pPropertyManagers,
+                                            Renga::IApplicationPtr pApplication,
+                                            Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
 
-  void createParametersProperties(PropertyList& propertyList) override;
-  void createParametersPropertiesEx(PropertyList& propertyList) override;
-  void createQuantitiesProperties(PropertyList& propertyList) override;
-  PropertyList createUserAttributesProperties() override;
+  void createIntegratedParameters(PropertyList& propertyList) override;
+  void createQuantities(PropertyList& propertyList) override;
 
 private:
   Renga::IReinforcementUnitStylePtr getReinforcementUnitStyle(int styleId) const;

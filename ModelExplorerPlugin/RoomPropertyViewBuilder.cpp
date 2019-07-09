@@ -10,21 +10,21 @@
 #include "RoomPropertyViewBuilder.h"
 
 
-RoomPropertyViewBuilder::RoomPropertyViewBuilder(
-  const PropertyManagers* pPropertyManagers,
-  Renga::IApplicationPtr pApplication,
-  Renga::IModelObjectPtr pModelObject) :
+RoomPropertyViewBuilder::RoomPropertyViewBuilder(PropertyManagers* pPropertyManagers,
+                                                 Renga::IApplicationPtr pApplication,
+                                                 Renga::IModelObjectPtr pModelObject) :
   PropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
 {
 }
 
-void RoomPropertyViewBuilder::createParametersProperties(PropertyList& propertyList)
+void RoomPropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
 {
-  PropertyViewBuilder::createParametersProperties(propertyList);
+  PropertyViewBuilder::createIntegratedParameters(propertyList);
 
   Renga::IRoomPtr pRoom;
   m_pModelObject->QueryInterface(&pRoom);
 
-  addValue(propertyList, QApplication::translate("me_room", "name"), QString::fromWCharArray(pRoom->GetRoomName()));
-  addValue(propertyList, QApplication::translate("me_room", "roomNumber"), QString::fromWCharArray(pRoom->GetRoomNumber()));
+  auto& mngr = m_pPropertyManagers->m_default;
+  mngr.addValue(propertyList, QApplication::translate("me_room", "name"), QString::fromWCharArray(pRoom->GetRoomName()));
+  mngr.addValue(propertyList, QApplication::translate("me_room", "roomNumber"), QString::fromWCharArray(pRoom->GetRoomNumber()));
 }

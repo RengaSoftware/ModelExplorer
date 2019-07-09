@@ -14,29 +14,22 @@
 class PropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
-  PropertyViewBuilder(
-    const PropertyManagers* pPropertyManagers,
-    Renga::IApplicationPtr pApplication,
-    Renga::IModelObjectPtr pModelObject);
+  PropertyViewBuilder(PropertyManagers* pPropertyManagers,
+                      Renga::IApplicationPtr pApplication,
+                      Renga::IModelObjectPtr pModelObject);
 
-  virtual void createParametersProperties(PropertyList& propertyList);
-  virtual void createParametersPropertiesEx(PropertyList& propertyList);
-
-  virtual void createQuantitiesProperties(PropertyList& propertyList);
-
-  PropertyList createUserAttributesProperties();
+  // IPropertyViewBuilder
+  void createIntegratedParameters(PropertyList& propertyList) override;
+  void createParameters(PropertyList& propertyList) override;
+  void createQuantities(PropertyList& propertyList) override;
+  PropertyList createProperties() override;
 
   QString getMaterialName(const int& materialId);
   QString getLayeredMaterialName(const int& layeredMaterialId);
 
-  void addValue(PropertyList& propertyList, const QString& name, const int value) const;
-  void addValue(PropertyList& propertyList, const QString& name, const double value) const;
-  void addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
-  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const;
-  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
-
 protected:
+  PropertyManagers* m_pPropertyManagers;
+
   Renga::IApplicationPtr m_pApplication;
-  const PropertyManagers* m_pPropertyManagers;
   Renga::IModelObjectPtr m_pModelObject;
 };

@@ -2,16 +2,13 @@
 
 #include "IPropertyViewSourceObject.h"
 
-class PropertyViewRebarUsageSource : public IPropertyViewSourceObject
+class PropertyViewRebarUsageSource : public CPropertyViewSourceObject
 {
 public:
-  PropertyViewRebarUsageSource(
-    Renga::IApplicationPtr pApplication,
-    Renga::IRebarUsagePtr pRebarUsage);
+  PropertyViewRebarUsageSource(Renga::IApplicationPtr pApplication,
+                               Renga::IRebarUsagePtr pRebarUsage);
 
   std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
-
-  Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) override;
 
 private:
   Renga::IApplicationPtr m_pApplication;

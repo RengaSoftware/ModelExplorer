@@ -34,6 +34,11 @@ std::unique_ptr<IPropertyViewBuilder> PropertyViewModelObjectSource::createPrope
     return std::make_unique<PropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pModelObject);
 }
 
+Renga::IParameterPtr PropertyViewModelObjectSource::getParameter(GUID parameterId)
+{
+  return m_pModelObject->GetParameters()->Get(parameterId);
+}
+
 Renga::IPropertyPtr PropertyViewModelObjectSource::getUserDefinedProperty(GUID propertyId)
 {
   if (m_pModelObject == nullptr)

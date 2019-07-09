@@ -39,40 +39,29 @@ void PropertyView::changeMode(PropertyView::Mode newMode)
 
 void PropertyView::initPropertyManagers()
 {
-  m_propertyManagers.m_pIntManager = new QtIntPropertyManager(this);
-  m_propertyManagers.m_pDoubleManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType, c_defaultPrecision, false);
-  m_propertyManagers.m_pDoubleUserAttributeManager = new QtStringPropertyManager(this, QtStringPropertyManager::valueTupe::doubleType, c_userAttrPrecision, true);
-  m_propertyManagers.m_pStringManager = new QtStringPropertyManager(this);
-  m_propertyManagers.m_pStringUserAttributeManager = new QtStringPropertyManager(this);
-
-  auto pIntReadOnlyPropertyFactory = new QtSpinBoxFactory(this, true);
-  auto pDoublePropertyFactory = new QtLineEditFactory(this, false);
-  auto pDoubleReadOnlyPropertyFactory = new QtLineEditFactory(this, true);
-  auto pStringPropertyFactory = new QtLineEditFactory(this, false);
-  auto pStringReadOnlyPropertyFactory = new QtLineEditFactory(this, true);
-
-  setFactoryForManager(m_propertyManagers.m_pIntManager, pIntReadOnlyPropertyFactory);
-  setFactoryForManager(m_propertyManagers.m_pDoubleManager, pDoubleReadOnlyPropertyFactory);
-  setFactoryForManager(m_propertyManagers.m_pDoubleUserAttributeManager, pDoublePropertyFactory);
-  setFactoryForManager(m_propertyManagers.m_pStringManager, pStringReadOnlyPropertyFactory);
-  setFactoryForManager(m_propertyManagers.m_pStringUserAttributeManager, pStringPropertyFactory);
+  m_propertyManagers.init(this);
 
    // handle user attributes changes
+
+  {
+    auto& mngr = m_propertyManagers.m_parameters;
+    QObject::connect(mngr.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterBoolChanged(QtProperty*, const QString&)));
+    QObject::connect(mngr.m_pIntManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterIntChanged(QtProperty*, const QString&)));
+    QObject::connect(mngr.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterDoubleChanged(QtProperty*, const QString&)));
+    QObject::connect(mngr.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterStringChanged(QtProperty*, const QString&)));
+  }
+
    QObject::connect(
-     m_propertyManagers.m_pDoubleUserAttributeManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
+     m_propertyManagers.m_properties.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userDoubleAttributeChanged(QtProperty*, const QString&)));
    QObject::connect(
-     m_propertyManagers.m_pStringUserAttributeManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
+     m_propertyManagers.m_properties.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
 }
 
 void PropertyView::clearPropertyManagers()
 {
-  m_propertyManagers.m_pIntManager->clear();
-  m_propertyManagers.m_pDoubleManager->clear();
-  m_propertyManagers.m_pDoubleUserAttributeManager->clear();
-  m_propertyManagers.m_pStringManager->clear();
-  m_propertyManagers.m_pStringUserAttributeManager->clear();
+  m_propertyManagers.clear();
   m_pGroupManager->clear();
 }
 
@@ -123,48 +112,152 @@ void PropertyView::buildPropertyView(IPropertyViewSourceObject* pSourceObject)
 
   auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
 
-  PropertyList parameters;
-  PropertyList parametersEx;
-  PropertyList calculated;
-  PropertyList userDefinedProperties;
+  PropertyList integratedParameters;
 
-  if (!createProperties(propertyViewBuilder.get(), parameters, parametersEx, calculated, userDefinedProperties))
+  PropertyList parameters;
+  PropertyList quantities;
+  PropertyList properties;
+
+  if (!createProperties(propertyViewBuilder.get(), integratedParameters, parameters, quantities, properties))
     return;
 
   if (m_propertyViewMode == Mode::ListMode)
-    buildPropertyViewAsList(parameters, parametersEx, calculated, userDefinedProperties);
+    buildPropertyViewAsList(integratedParameters, parameters, quantities, properties);
   else
-    buildPropertyViewByCategory(parameters, parametersEx, calculated, userDefinedProperties);
+    buildPropertyViewByCategory(integratedParameters, parameters, quantities, properties);
 }
 
-void PropertyView::buildPropertyViewByCategory(const PropertyList& parameters, PropertyList& parametersEx, const PropertyList& calculated, const PropertyList& userDefinedProperties)
+void PropertyView::buildPropertyViewByCategory(const PropertyList& integratedParameters, PropertyList& parameters, const PropertyList& quantities, const PropertyList& properties)
 {
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters"), parameters);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters ex"), parametersEx);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Calculated characteristics"), calculated);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object properties"), userDefinedProperties);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters"), integratedParameters);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters ex"), parameters);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Calculated characteristics"), quantities);
+  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object properties"), properties);
 }
 
 bool PropertyView::createProperties(
   IPropertyViewBuilder* pObjectPropertyViewBuilder,
+  PropertyList& integratedParameters,
   PropertyList& parameters,
-  PropertyList& parametersEx,
-  PropertyList& calculated,
-  PropertyList& userDefinedProperties)
+  PropertyList& quantities,
+  PropertyList& properties)
 {
   if (pObjectPropertyViewBuilder == nullptr)
     return false;
 
+  integratedParameters.clear();
+
   parameters.clear();
-  calculated.clear();
+  quantities.clear();
 
-  pObjectPropertyViewBuilder->createParametersProperties(parameters);
-  pObjectPropertyViewBuilder->createParametersPropertiesEx(parametersEx);
-  pObjectPropertyViewBuilder->createQuantitiesProperties(calculated);
+  pObjectPropertyViewBuilder->createIntegratedParameters(integratedParameters);
 
-  userDefinedProperties = pObjectPropertyViewBuilder->createUserAttributesProperties();
+  pObjectPropertyViewBuilder->createParameters(parameters);
+  pObjectPropertyViewBuilder->createQuantities(quantities);
+
+  properties = pObjectPropertyViewBuilder->createProperties();
 
   return true;
+}
+
+void PropertyView::parameterBoolChanged(QtProperty* pProperty, const QString& newValue)
+{
+  //if (!newValue.isEmpty())
+  //{
+  //  bool ok = false;
+  //  double newDoubleValue = QLocale::system().toBool(newValue, &ok);
+  //  if (ok)
+  //  {
+  //    const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+  //    auto pParameter = m_pSourceObject->getParameter(parameterId);
+  //    if (!pParameter)
+  //      return;
+
+  //    if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
+  //      return;
+
+  //    if (auto pOperation = createOperation())
+  //    {
+  //      pOperation->Start();
+  //      pParameter->SetDoubleValue(newDoubleValue);
+  //      pOperation->Apply();
+  //    }
+  //  }
+  //}
+}
+
+void PropertyView::parameterIntChanged(QtProperty* pProperty, const QString& newValue)
+{
+  if (!newValue.isEmpty())
+  {
+    bool ok = false;
+    double newDoubleValue = QLocale::system().toInt(newValue, &ok);
+    if (ok)
+    {
+      const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+      auto pParameter = m_pSourceObject->getParameter(parameterId);
+      if (!pParameter)
+        return;
+
+      if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Int)
+        return;
+
+      if (auto pOperation = createOperation())
+      {
+        pOperation->Start();
+        pParameter->SetDoubleValue(newDoubleValue);
+        pOperation->Apply();
+      }
+    }
+  }
+}
+
+void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& newValue)
+{
+  if (!newValue.isEmpty())
+  {
+    bool ok = false;
+    double newDoubleValue = QLocale::system().toDouble(newValue, &ok);
+    if (ok)
+    {
+      const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+      auto pParameter = m_pSourceObject->getParameter(parameterId);
+      if (!pParameter)
+        return;
+
+      if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Double)
+        return;
+
+      if (auto pOperation = createOperation())
+      {
+        pOperation->Start();
+        pParameter->SetDoubleValue(newDoubleValue);
+        pOperation->Apply();
+      }
+    }
+  }
+}
+
+void PropertyView::parameterStringChanged(QtProperty* pProperty, const QString& newValue)
+{
+  const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  if (!pParameter)
+    return;
+
+  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_String)
+    return;
+
+  if (auto pOperation = createOperation())
+  {
+    pOperation->Start();
+    pParameter->SetStringValue(newValue.toStdWString().c_str());
+    pOperation->Apply();
+  }
 }
 
 void PropertyView::userDoubleAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)

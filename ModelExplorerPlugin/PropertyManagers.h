@@ -14,24 +14,49 @@
 #include "IPropertyViewBuilder.h"
 
 
+class PropertyView;
+
+class PropertyManager
+{
+public:
+  PropertyManager();
+
+  void init(PropertyView* pParent, bool readOnly);
+  void clear();
+
+  void blockSignals(bool b) const;
+
+  QtProperty* addValue(PropertyList& propertyList, const QString& name, const bool value) const;
+  QtProperty* addValue(PropertyList& propertyList, const QString& name, const int value) const;
+  QtProperty* addValue(PropertyList& propertyList, const QString& name, const double value) const;
+  QtProperty* addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
+  
+  QtProperty* addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
+
+private:
+  QtProperty* addValue(const QString& name, const bool value) const;
+  QtProperty* addValue(const QString& name, const int value) const;
+  QtProperty* addValue(const QString& name, const double value) const;
+  QtProperty* addValue(const QString& name, const QString& value) const;
+
+public:
+  
+  QtBoolPropertyManager* m_pBoolManager;
+  QtIntPropertyManager* m_pIntManager;
+  QtStringPropertyManager* m_pDoubleManager;
+  QtStringPropertyManager* m_pStringManager;
+};
+
 class PropertyManagers
 {
 public:
   PropertyManagers();
 
-  QtProperty* addValue(const QString& name, const double value) const;
-  QtProperty* addValue(const QString& name, const QString& value) const;
-
-  void addValue(PropertyList& propertyList, const QString& name, const int value) const;
-  void addValue(PropertyList& propertyList, const QString& name, const double value) const;
-  void addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
-  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityContainerPtr pQuantityContainer, const GUID quantityId) const;
-  void addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
+  void init(PropertyView* pParent);
+  void clear();
 
 public:
-  QtIntPropertyManager* m_pIntManager;
-  QtStringPropertyManager* m_pDoubleManager;
-  QtStringPropertyManager* m_pStringManager;
-  QtStringPropertyManager* m_pDoubleUserAttributeManager;
-  QtStringPropertyManager* m_pStringUserAttributeManager;
+  PropertyManager m_default;
+  PropertyManager m_parameters;
+  PropertyManager m_properties;
 };

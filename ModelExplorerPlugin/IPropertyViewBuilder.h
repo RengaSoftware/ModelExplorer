@@ -17,8 +17,16 @@ class IPropertyViewBuilder
 {
 public:
   virtual ~IPropertyViewBuilder() {}
-  virtual void createParametersProperties(PropertyList& propertyList) = 0;
-  virtual void createParametersPropertiesEx(PropertyList& propertyList) = 0;
-  virtual void createQuantitiesProperties(PropertyList& propertyList) = 0;
-  virtual PropertyList createUserAttributesProperties() = 0;
+
+  virtual void createIntegratedParameters(PropertyList& propertyList) = 0;
+  virtual void createParameters(PropertyList& propertyList) = 0;
+  virtual void createQuantities(PropertyList& propertyList) = 0;
+  virtual PropertyList createProperties() = 0;
+};
+
+class CPropertyViewBuilder : public IPropertyViewBuilder
+{
+public:
+  void createParameters(PropertyList& propertyList) override {}
+  PropertyList createProperties() override { return PropertyList(); }
 };

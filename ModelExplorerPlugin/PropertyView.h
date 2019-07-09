@@ -13,8 +13,6 @@
 
 #include <qttreepropertybrowser.h>
 
-const uint c_defaultPrecision = 2;
-const uint c_userAttrPrecision = 15;
 
 class PropertyView : public QtTreePropertyBrowser
 {
@@ -30,11 +28,6 @@ public:
   PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
 
   void showProperties(IPropertyViewSourceObject* pSourceObject);
-  
-  /*void showModelObjectProperties(Renga::IModelObjectPtr pModelObject);
-  void showMaterialLayerProperties(Renga::IMaterialLayerPtr pMaterialLayer, Renga::ILayerPtr pLayer);
-  void showRebarUsageProperties(Renga::IRebarUsagePtr pRebarUsage);
-  void showReinforcementUnitUsageProperties(Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);*/
 
   void changeMode(PropertyView::Mode newMode);
 
@@ -42,44 +35,24 @@ private slots:
   void userDoubleAttributeChanged(QtProperty* property, const QString& newValue);
   void userStringAttributeChanged(QtProperty* property, const QString& newValue);
 
+  void parameterBoolChanged(QtProperty* pProperty, const QString& newValue);
+  void parameterIntChanged(QtProperty* pProperty, const QString& newValue);
+  void parameterDoubleChanged(QtProperty* pProperty, const QString& newValue);
+  void parameterStringChanged(QtProperty* pProperty, const QString& newValue);
+
 private:
   void initPropertyManagers();
   void clearPropertyManagers();
-  
-  /*bool createPropertiesForModelObject(
-    Renga::IModelObjectPtr pModelObject,
-    PropertyList& parameters,
-    PropertyList& calculated,
-    PropertyList& userDefinedProperties);
-
-  bool createPropertiesForMaterialLayer(
-    Renga::IMaterialLayerPtr pMaterialLayer,
-    Renga::ILayerPtr pLayer,
-    PropertyList& parameters,
-    PropertyList& calculated,
-    PropertyList& userDefinedProperties);
-
-  bool createPropertiesForRebarUsage(
-    Renga::IRebarUsagePtr pRebarUsage,
-    PropertyList& parameters,
-    PropertyList& calculated,
-    PropertyList& userDefinedProperties);
-  
-  bool createPropertiesForReinforcementUnitUsage(
-    Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage,
-    PropertyList& parameters,
-    PropertyList& calculated,
-    PropertyList& userDefinedProperties);*/
 
   bool createProperties(
     IPropertyViewBuilder* pObjectPropertyViewBuilder,
+    PropertyList& integratedParameters,
     PropertyList& parameters,
-    PropertyList& parametersEx,
-    PropertyList& calculated,
-    PropertyList& userDefinedProperties);
+    PropertyList& quantities,
+    PropertyList& properties);
 
-  void buildPropertyViewAsList(PropertyList& parameters, PropertyList& parametersEx, PropertyList& calculated, PropertyList& properties);
-  void buildPropertyViewByCategory(const PropertyList& parameters, PropertyList& parametersEx, const PropertyList& calculated, const PropertyList& properties);
+  void buildPropertyViewAsList(PropertyList& integratedParameters, PropertyList& parameters, PropertyList& quantities, PropertyList& properties);
+  void buildPropertyViewByCategory(const PropertyList& integratedParameters, PropertyList& parameters, const PropertyList& quantities, const PropertyList& properties);
   void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
 
   void buildPropertyView(IPropertyViewSourceObject* pSourceObject);

@@ -5,12 +5,12 @@
 class PropertyViewModelObjectSource : public IPropertyViewSourceObject
 {
 public:
-  PropertyViewModelObjectSource(
-    Renga::IApplicationPtr pApplication,
-    Renga::IModelObjectPtr pModelObject);
+  PropertyViewModelObjectSource(Renga::IApplicationPtr pApplication,
+                                Renga::IModelObjectPtr pModelObject);
 
   std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
 
+  Renga::IParameterPtr getParameter(GUID parameterId) override;
   Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) override;
 
 private:

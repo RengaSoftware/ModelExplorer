@@ -3,24 +3,21 @@
 #include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-class RebarUsagePropertyViewBuilder : public IPropertyViewBuilder
+class RebarUsagePropertyViewBuilder : public CPropertyViewBuilder
 {
 public:
-  RebarUsagePropertyViewBuilder(
-    const PropertyManagers* pPropertyManagers,
-    Renga::IApplicationPtr pApplication,
-    Renga::IRebarUsagePtr pRebarUsage);
+  RebarUsagePropertyViewBuilder(PropertyManagers* pPropertyManagers,
+                                Renga::IApplicationPtr pApplication,
+                                Renga::IRebarUsagePtr pRebarUsage);
 
-  void createParametersProperties(PropertyList& propertyList) override;
-  void createParametersPropertiesEx(PropertyList& propertyList) override;
-  void createQuantitiesProperties(PropertyList& propertyList) override;
-  PropertyList createUserAttributesProperties() override;
+  void createIntegratedParameters(PropertyList& propertyList) override;
+  void createQuantities(PropertyList& propertyList) override;
 
 private:
   Renga::IRebarStylePtr getRebarStyle(int styleId) const;
 
 private:
-  const PropertyManagers* m_pPropertyManagers;
+  PropertyManagers* m_pPropertyManagers;
   Renga::IApplicationPtr m_pApplication;
   Renga::IRebarUsagePtr m_pRebarUsage;
 };
