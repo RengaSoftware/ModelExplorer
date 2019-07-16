@@ -202,7 +202,7 @@ PropertyList PropertyViewBuilder::createProperties()
       pQtProperty = mngr.addValue(pResult, attributeName, pProperty->GetDoubleValue());
       break;
     case Renga::PropertyType::PropertyType_String:
-      pQtProperty = mngr.addValue(pResult, attributeName, QString(pProperty->GetStringValue()));
+      pQtProperty = mngr.addValue(pResult, attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
       break;
     default:
       assert(false);
