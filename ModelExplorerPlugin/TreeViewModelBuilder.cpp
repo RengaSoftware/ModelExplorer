@@ -58,10 +58,7 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
     ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFittings"), ":/icons/PipeFitting"),
     ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipes"), ":/icons/Pipe"),
-
-    //TODO: [asv] uncomment later, when Renga::ObjectTypes::AirDuct will be on default
-    //ObjectTypeData(Renga::ObjectTypes::AirDuct, QApplication::translate("me_modelObjects", "AirDucts"), ":/icons/AirDuct"),
-
+    ObjectTypeData(Renga::ObjectTypes::AirDuct, QApplication::translate("me_modelObjects", "AirDucts"), ":/icons/AirDuct"),
     ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route"),
     ObjectTypeData(Renga::ObjectTypes::Axis, QApplication::translate("me_modelObjects", "Axes"), ":/icons/Axis"),
     ObjectTypeData(Renga::ObjectTypes::Elevation, QApplication::translate("me_modelObjects", "Elevations"), ":/icons/Elevation"),
