@@ -694,7 +694,15 @@
     </message>
     <message>
         <source>AirDucts</source>
-        <translation>Air ducts</translation>
+        <translation type="vanished">Air ducts</translation>
+    </message>
+    <message>
+        <source>Lines3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebars</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

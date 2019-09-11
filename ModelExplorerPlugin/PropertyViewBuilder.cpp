@@ -90,7 +90,7 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
       pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
       break;
     case Renga::ParameterValueType::ParameterValueType_String:
-      pQtProperty = mngr.addValue(propertyList, name, QString::fromStdWString(pParameter->GetStringValue().operator const wchar_t *()));
+      pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
       break;
     }
 

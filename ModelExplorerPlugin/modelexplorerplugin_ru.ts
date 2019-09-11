@@ -702,7 +702,15 @@
     </message>
     <message>
         <source>AirDucts</source>
-        <translation>Воздуховоды</translation>
+        <translation type="vanished">Воздуховоды</translation>
+    </message>
+    <message>
+        <source>Lines3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebars</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
