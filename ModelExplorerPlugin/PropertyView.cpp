@@ -162,29 +162,26 @@ bool PropertyView::createProperties(
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, const QString& newValue)
 {
-  //if (!newValue.isEmpty())
-  //{
-  //  bool ok = false;
-  //  double newDoubleValue = QLocale::system().toBool(newValue, &ok);
-  //  if (ok)
-  //  {
-  //    const auto parameterId = GuidFromString(pProperty->data().toStdString());
+  if (!newValue.isEmpty())
+  {
+    bool newBoolValue = (newValue != "false") && (newValue != "False");
 
-  //    auto pParameter = m_pSourceObject->getParameter(parameterId);
-  //    if (!pParameter)
-  //      return;
+    const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
-  //    if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
-  //      return;
+    auto pParameter = m_pSourceObject->getParameter(parameterId);
+    if (!pParameter)
+      return;
 
-  //    if (auto pOperation = createOperation())
-  //    {
-  //      pOperation->Start();
-  //      pParameter->SetDoubleValue(newDoubleValue);
-  //      pOperation->Apply();
-  //    }
-  //  }
-  //}
+    if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
+      return;
+
+    if (auto pOperation = createOperation())
+    {
+      pOperation->Start();
+      pParameter->SetBoolValue(newBoolValue);
+      pOperation->Apply();
+    }
+  }
 }
 
 void PropertyView::parameterIntChanged(QtProperty* pProperty, const QString& newValue)
@@ -192,7 +189,7 @@ void PropertyView::parameterIntChanged(QtProperty* pProperty, const QString& new
   if (!newValue.isEmpty())
   {
     bool ok = false;
-    double newDoubleValue = QLocale::system().toInt(newValue, &ok);
+    int newIntValue = QLocale::system().toInt(newValue, &ok);
     if (ok)
     {
       const auto parameterId = GuidFromString(pProperty->data().toStdString());
@@ -207,7 +204,7 @@ void PropertyView::parameterIntChanged(QtProperty* pProperty, const QString& new
       if (auto pOperation = createOperation())
       {
         pOperation->Start();
-        pParameter->SetDoubleValue(newDoubleValue);
+        pParameter->SetIntValue(newIntValue);
         pOperation->Apply();
       }
     }
