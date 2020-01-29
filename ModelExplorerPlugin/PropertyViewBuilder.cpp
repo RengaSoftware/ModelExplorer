@@ -66,7 +66,6 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
 
     QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
 
-
     switch (pDefinition->GetParameterType())
     {
     case Renga::ParameterType::ParameterType_Angle:
@@ -78,21 +77,30 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
     }
 
     QtProperty* pQtProperty(nullptr);
-    switch (pParameter->GetValueType())
+    if (pParameter->HasValue())
     {
-    case Renga::ParameterValueType::ParameterValueType_Bool:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetBoolValue());
-      break;
-    case Renga::ParameterValueType::ParameterValueType_Int:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());
-      break;
-    case Renga::ParameterValueType::ParameterValueType_Double:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
-      break;
-    case Renga::ParameterValueType::ParameterValueType_String:
-      pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
-      break;
+      switch (pParameter->GetValueType())
+      {
+      case Renga::ParameterValueType::ParameterValueType_Bool:
+        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetBoolValue());
+        break;
+      case Renga::ParameterValueType::ParameterValueType_Int:
+        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());
+        break;
+      case Renga::ParameterValueType::ParameterValueType_Double:
+        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
+        break;
+      case Renga::ParameterValueType::ParameterValueType_String:
+        pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
+        break;
+      }
     }
+    else
+    {
+      pQtProperty = mngr.addValue(propertyList, name, "");
+      pQtProperty->setEnabled(false);
+    }
+
 
     if (pQtProperty)
     {
