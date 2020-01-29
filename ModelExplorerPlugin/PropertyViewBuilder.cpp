@@ -77,33 +77,27 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
     }
 
     QtProperty* pQtProperty(nullptr);
-    if (pParameter->HasValue())
+    switch (pParameter->GetValueType())
     {
-      switch (pParameter->GetValueType())
-      {
-      case Renga::ParameterValueType::ParameterValueType_Bool:
-        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetBoolValue());
-        break;
-      case Renga::ParameterValueType::ParameterValueType_Int:
-        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());
-        break;
-      case Renga::ParameterValueType::ParameterValueType_Double:
-        pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
-        break;
-      case Renga::ParameterValueType::ParameterValueType_String:
-        pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
-        break;
-      }
+    case Renga::ParameterValueType::ParameterValueType_Bool:
+      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetBoolValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Int:
+      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Double:
+      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_String:
+      pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
+      break;
     }
-    else
-    {
-      pQtProperty = mngr.addValue(propertyList, name, "");
-      pQtProperty->setEnabled(false);
-    }
-
 
     if (pQtProperty)
     {
+      if (!pParameter->HasValue())
+        pQtProperty->setEnabled(false);
+
       pQtProperty->setModified(true);
 
       const auto parameterIdString = QString::fromStdString((GuidToString(id)));
