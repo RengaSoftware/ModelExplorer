@@ -80,7 +80,7 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
     switch (pParameter->GetValueType())
     {
     case Renga::ParameterValueType::ParameterValueType_Bool:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetBoolValue());
+      pQtProperty = mngr.addValue(propertyList, name, static_cast<bool>(pParameter->GetBoolValue()));
       break;
     case Renga::ParameterValueType::ParameterValueType_Int:
       pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());

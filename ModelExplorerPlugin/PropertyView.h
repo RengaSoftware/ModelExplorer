@@ -35,8 +35,8 @@ private slots:
   void userDoubleAttributeChanged(QtProperty* property, const QString& newValue);
   void userStringAttributeChanged(QtProperty* property, const QString& newValue);
 
-  void parameterBoolChanged(QtProperty* pProperty, const QString& newValue);
-  void parameterIntChanged(QtProperty* pProperty, const QString& newValue);
+  void parameterBoolChanged(QtProperty* pProperty, bool val);
+  void parameterIntChanged(QtProperty* pProperty, int val);
   void parameterDoubleChanged(QtProperty* pProperty, const QString& newValue);
   void parameterStringChanged(QtProperty* pProperty, const QString& newValue);
 

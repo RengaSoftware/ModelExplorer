@@ -13,6 +13,8 @@
 #include <qteditorfactory.h>
 #include "PropertyViewModelObjectSource.h"
 
+#include <Windows.h>
+
 PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication) :
   QtTreePropertyBrowser(pParent),
   m_pApplication(pApplication),
@@ -45,8 +47,8 @@ void PropertyView::initPropertyManagers()
 
   {
     auto& mngr = m_propertyManagers.m_parameters;
-    QObject::connect(mngr.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterBoolChanged(QtProperty*, const QString&)));
-    QObject::connect(mngr.m_pIntManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterIntChanged(QtProperty*, const QString&)));
+    QObject::connect(mngr.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, bool)), this, SLOT(parameterBoolChanged(QtProperty*, bool)));
+    QObject::connect(mngr.m_pIntManager, SIGNAL(valueChanged(QtProperty*, int)), this, SLOT(parameterIntChanged(QtProperty*, int)));
     QObject::connect(mngr.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterDoubleChanged(QtProperty*, const QString&)));
     QObject::connect(mngr.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterStringChanged(QtProperty*, const QString&)));
   }
@@ -54,6 +56,7 @@ void PropertyView::initPropertyManagers()
    QObject::connect(
      m_propertyManagers.m_properties.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userDoubleAttributeChanged(QtProperty*, const QString&)));
+
    QObject::connect(
      m_propertyManagers.m_properties.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
@@ -160,54 +163,41 @@ bool PropertyView::createProperties(
   return true;
 }
 
-void PropertyView::parameterBoolChanged(QtProperty* pProperty, const QString& newValue)
+void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
 {
-  if (!newValue.isEmpty())
+  const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  if (!pParameter)
+    return;
+
+  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
+    return;
+
+  if (auto pOperation = createOperation())
   {
-    bool newBoolValue = (newValue != "false") && (newValue != "False");
-
-    const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-    auto pParameter = m_pSourceObject->getParameter(parameterId);
-    if (!pParameter)
-      return;
-
-    if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
-      return;
-
-    if (auto pOperation = createOperation())
-    {
-      pOperation->Start();
-      pParameter->SetBoolValue(newBoolValue);
-      pOperation->Apply();
-    }
+    pOperation->Start();
+    pParameter->SetBoolValue(val);
+    pOperation->Apply();
   }
 }
 
-void PropertyView::parameterIntChanged(QtProperty* pProperty, const QString& newValue)
+void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
 {
-  if (!newValue.isEmpty())
+  const auto parameterId = GuidFromString(pProperty->data().toStdString());
+
+  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  if (!pParameter)
+    return;
+
+  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Int)
+    return;
+
+  if (auto pOperation = createOperation())
   {
-    bool ok = false;
-    int newIntValue = QLocale::system().toInt(newValue, &ok);
-    if (ok)
-    {
-      const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-      auto pParameter = m_pSourceObject->getParameter(parameterId);
-      if (!pParameter)
-        return;
-
-      if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Int)
-        return;
-
-      if (auto pOperation = createOperation())
-      {
-        pOperation->Start();
-        pParameter->SetIntValue(newIntValue);
-        pOperation->Apply();
-      }
-    }
+    pOperation->Start();
+    pParameter->SetIntValue(val);
+    pOperation->Apply();
   }
 }
 

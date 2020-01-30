@@ -31,6 +31,7 @@ void PropertyManager::init(PropertyView* pParent, bool readOnly)
   auto pDoublePropertyFactory = new QtLineEditFactory(pParent, readOnly);
   auto pStringPropertyFactory = new QtLineEditFactory(pParent, readOnly);
 
+  pParent->setFactoryForManager(m_pBoolManager, new QtCheckBoxFactory(pParent));
   pParent->setFactoryForManager(m_pIntManager, pIntPropertyFactory);
   pParent->setFactoryForManager(m_pDoubleManager, pDoublePropertyFactory);
   pParent->setFactoryForManager(m_pStringManager, pStringPropertyFactory);
