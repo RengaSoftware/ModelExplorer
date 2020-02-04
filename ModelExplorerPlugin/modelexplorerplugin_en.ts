@@ -694,15 +694,55 @@
     </message>
     <message>
         <source>AirDucts</source>
-        <translation type="vanished">Air ducts</translation>
+        <translation>Air ducts</translation>
     </message>
     <message>
         <source>Lines3D</source>
-        <translation type="unfinished"></translation>
+        <translation>Lines</translation>
     </message>
     <message>
         <source>Rebars</source>
-        <translation type="unfinished"></translation>
+        <translation>Rebars</translation>
+    </message>
+    <message>
+        <source>Hatches</source>
+        <translation>Hatches</translation>
+    </message>
+    <message>
+        <source>TextShapes</source>
+        <translation>Text shapes</translation>
+    </message>
+    <message>
+        <source>Dimensions</source>
+        <translation>Dimensions</translation>
+    </message>
+    <message>
+        <source>AirAccessories</source>
+        <translation>Air accessories</translation>
+    </message>
+    <message>
+        <source>AirFittings</source>
+        <translation>Air fittings</translation>
+    </message>
+    <message>
+        <source>LineElectricalCircuits</source>
+        <translation>Line electrical circuits</translation>
+    </message>
+    <message>
+        <source>AirEquipment</source>
+        <translation>Air equipment</translation>
+    </message>
+    <message>
+        <source>LightFixtures</source>
+        <translation>Light fixtures</translation>
+    </message>
+    <message>
+        <source>DistributionBoards</source>
+        <translation>Distribution boards</translation>
+    </message>
+    <message>
+        <source>WiringAccessories</source>
+        <translation>Wiring accessories</translation>
     </message>
 </context>
 <context>

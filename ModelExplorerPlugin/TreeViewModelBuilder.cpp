@@ -44,12 +44,17 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::WallFoundation, QApplication::translate("me_modelObjects", "Wall foundations"), ":/icons/Wall_foundation"),
     ObjectTypeData(Renga::ObjectTypes::AssemblyInstance, QApplication::translate("me_modelObjects", "Assembly instances"), ":/icons/Assembly"),
     ObjectTypeData(Renga::ObjectTypes::Element, QApplication::translate("me_modelObjects", "Elements"), ":/icons/Element"),
-    ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
-    ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
-    ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint"),
     ObjectTypeData(Renga::ObjectTypes::Plate, QApplication::translate("me_modelObjects", "Plates"), ":/icons/Plate"),
 
-    ObjectTypeData(Renga::ObjectTypes::Line3D, QApplication::translate("me_modelObjects", "Lines3D"), ":/icons/Plate"),
+    ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint"),
+    ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
+    ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
+    ObjectTypeData(Renga::ObjectTypes::AirEquipment, QApplication::translate("me_modelObjects", "AirEquipment"), ":/icons/AirEquipment"),
+
+    ObjectTypeData(Renga::ObjectTypes::Line3D, QApplication::translate("me_modelObjects", "Lines3D"), ":/icons/Line"),
+    ObjectTypeData(Renga::ObjectTypes::Hatch, QApplication::translate("me_modelObjects", "Hatches"), ":/icons/Hatch"),
+    ObjectTypeData(Renga::ObjectTypes::TextShape, QApplication::translate("me_modelObjects", "TextShapes"), ":/icons/Text"),
+
     ObjectTypeData(Renga::ObjectTypes::Rebar, QApplication::translate("me_modelObjects", "Rebars"), ":/icons/Plate"),
   };
   return levelObjectTypeData;
@@ -61,11 +66,23 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
     ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFittings"), ":/icons/PipeFitting"),
     ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipes"), ":/icons/Pipe"),
+
     ObjectTypeData(Renga::ObjectTypes::AirDuct, QApplication::translate("me_modelObjects", "AirDucts"), ":/icons/AirDuct"),
+    ObjectTypeData(Renga::ObjectTypes::AirAccessory, QApplication::translate("me_modelObjects", "AirAccessories"), ":/icons/AirAccessory"),
+    ObjectTypeData(Renga::ObjectTypes::AirFitting, QApplication::translate("me_modelObjects", "AirFittings"), ":/icons/AirComponent"),
+
+    ObjectTypeData(Renga::ObjectTypes::LineElectricalCircuit, QApplication::translate("me_modelObjects", "LineElectricalCircuits"), ":/icons/LineElectricalCircuit"),
+    ObjectTypeData(Renga::ObjectTypes::LightFixture, QApplication::translate("me_modelObjects", "LightFixtures"), ":/icons/LightFixture"),
+    ObjectTypeData(Renga::ObjectTypes::DistributionBoard, QApplication::translate("me_modelObjects", "DistributionBoards"), ":/icons/DistributionBoard"),
+    ObjectTypeData(Renga::ObjectTypes::WiringAccessory, QApplication::translate("me_modelObjects", "WiringAccessories"), ":/icons/WiringAccessory"),
+
     ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route"),
+
     ObjectTypeData(Renga::ObjectTypes::Axis, QApplication::translate("me_modelObjects", "Axes"), ":/icons/Axis"),
     ObjectTypeData(Renga::ObjectTypes::Elevation, QApplication::translate("me_modelObjects", "Elevations"), ":/icons/Elevation"),
-    ObjectTypeData(Renga::ObjectTypes::Section, QApplication::translate("me_modelObjects", "Sections"), ":/icons/Section")
+    ObjectTypeData(Renga::ObjectTypes::Section, QApplication::translate("me_modelObjects", "Sections"), ":/icons/Section"),
+
+    ObjectTypeData(Renga::ObjectTypes::Dimension, QApplication::translate("me_modelObjects", "Dimensions"), ":/icons/Dimension"),
   };
   return nonlevelObjectTypeData;
 }

@@ -39,5 +39,16 @@
         <file>icons/Section.png</file>
         <file>icons/Plate.png</file>
         <file>icons/AirDuct.png</file>
+        <file>icons/AirAccessory.png</file>
+        <file>icons/AirEquipment.png</file>
+        <file>icons/AirComponent.png</file>       
+        <file>icons/Line.png</file>
+        <file>icons/LightFixture.png</file>
+        <file>icons/Text.png</file>
+        <file>icons/Hatch.png</file>
+        <file>icons/Dimension.png</file>
+        <file>icons/LineElectricalCircuit.png</file>
+        <file>icons/DistributionBoard.png</file>
+        <file>icons/WiringAccessory.png</file>
     </qresource>
 </RCC>

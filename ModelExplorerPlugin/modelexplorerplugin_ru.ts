@@ -702,15 +702,55 @@
     </message>
     <message>
         <source>AirDucts</source>
-        <translation type="vanished">Воздуховоды</translation>
+        <translation>Воздуховоды</translation>
     </message>
     <message>
         <source>Lines3D</source>
-        <translation type="unfinished"></translation>
+        <translation>Линии</translation>
     </message>
     <message>
         <source>Rebars</source>
-        <translation type="unfinished"></translation>
+        <translation>Арматурные стержни</translation>
+    </message>
+    <message>
+        <source>Hatches</source>
+        <translation>Штриховка</translation>
+    </message>
+    <message>
+        <source>TextShapes</source>
+        <translation>Текст</translation>
+    </message>
+    <message>
+        <source>Dimensions</source>
+        <translation>Размеры</translation>
+    </message>
+    <message>
+        <source>AirAccessories</source>
+        <translation>Аксессуары воздуховода</translation>
+    </message>
+    <message>
+        <source>AirFittings</source>
+        <translation>Детали воздуховода</translation>
+    </message>
+    <message>
+        <source>LineElectricalCircuits</source>
+        <translation>Электрические линии</translation>
+    </message>
+    <message>
+        <source>AirEquipment</source>
+        <translation>Вентиляционное оборудование</translation>
+    </message>
+    <message>
+        <source>LightFixtures</source>
+        <translation>Осветитетльные приборы</translation>
+    </message>
+    <message>
+        <source>DistributionBoards</source>
+        <translation>Электрические распределительные шиты</translation>
+    </message>
+    <message>
+        <source>WiringAccessories</source>
+        <translation>Электроустановочные изделия</translation>
     </message>
 </context>
 <context>
