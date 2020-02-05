@@ -41,6 +41,8 @@ private slots:
   void parameterStringChanged(QtProperty* pProperty, const QString& newValue);
 
 private:
+  void updateParameters();
+
   void initPropertyManagers();
   void clearPropertyManagers();
 

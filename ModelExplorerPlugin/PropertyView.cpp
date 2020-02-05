@@ -35,7 +35,7 @@ void PropertyView::showProperties(IPropertyViewSourceObject* pSourceObject)
 void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
-  
+
   buildPropertyView(m_pSourceObject.get());
 }
 
@@ -163,6 +163,10 @@ bool PropertyView::createProperties(
   return true;
 }
 
+void PropertyView::updateParameters() {
+  buildPropertyView(m_pSourceObject.get());
+}
+
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
 {
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
@@ -179,6 +183,8 @@ void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
     pOperation->Start();
     pParameter->SetBoolValue(val);
     pOperation->Apply();
+
+    updateParameters();
   }
 }
 
@@ -198,6 +204,8 @@ void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
     pOperation->Start();
     pParameter->SetIntValue(val);
     pOperation->Apply();
+
+    updateParameters();
   }
 }
 
@@ -223,6 +231,8 @@ void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& 
         pOperation->Start();
         pParameter->SetDoubleValue(newDoubleValue);
         pOperation->Apply();
+
+        updateParameters();
       }
     }
   }
@@ -244,6 +254,8 @@ void PropertyView::parameterStringChanged(QtProperty* pProperty, const QString& 
     pOperation->Start();
     pParameter->SetStringValue(newValue.toStdWString().c_str());
     pOperation->Apply();
+
+    updateParameters();
   }
 }
 
