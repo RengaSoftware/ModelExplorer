@@ -114,4 +114,5 @@ private:
   std::unique_ptr<ObjectSelectionHandler> m_pObjectSelectionHandler;
 
   bool m_wasObjectSelectedInCode;
+  bool m_wasObjectSelectedInRenga;
 };

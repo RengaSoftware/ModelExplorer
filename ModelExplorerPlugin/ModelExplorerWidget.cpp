@@ -30,7 +30,8 @@ static const unsigned int c_displacementFromParentLeft = 5;
 ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QWidget(nullptr, Qt::Tool),
   m_pApplication(pApplication),
-  m_wasObjectSelectedInCode(false)
+  m_wasObjectSelectedInCode(false),
+  m_wasObjectSelectedInRenga(false)
 {
   m_pObjectSelectionHandler = std::make_unique<ObjectSelectionHandler>(m_pApplication->GetSelection());
 
@@ -225,6 +226,7 @@ void ModelExplorerWidget::hideSelectedModelObject()
 
 void ModelExplorerWidget::onRengaObjectSelected(const int modelObjectId)
 {
+  BoolGuard guard(m_wasObjectSelectedInRenga, true);
   if (!m_wasObjectSelectedInCode)
   {
     QModelIndexList indexList = m_pTreeViewModel->match(m_pTreeViewModel->index(0, 0),
@@ -528,6 +530,8 @@ Renga::IRebarUsagePtr ModelExplorerWidget::getRebarUsage(int reinforcementUnitSt
 
 void ModelExplorerWidget::selectModelObject(int modelObjectId)
 {
+  if (m_wasObjectSelectedInRenga)
+    return;
   BoolGuard guard(m_wasObjectSelectedInCode, true);
 
   CComSafeArray<int> objectIds(static_cast<ULONG>(1));
