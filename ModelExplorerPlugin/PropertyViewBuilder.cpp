@@ -31,7 +31,12 @@ void PropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
   Renga::ILevelObjectPtr pLevelObject;
   m_pModelObject->QueryInterface(&pLevelObject);
   if (pLevelObject)
-    mngr.addValue(propertyList, QApplication::translate("me_mo", "offset"), pLevelObject->GetOffset());
+  {
+    mngr.addValue(propertyList, QApplication::translate("me_mo", "offset"), pLevelObject->GetVerticalOffset());
+    //add
+    //pLevelObject->GetPlacementElevation();
+    //pLevelObject->GetElevationAboveLevel();
+  }
 
   Renga::IObjectWithMarkPtr pObjectWithMark;
   m_pModelObject->QueryInterface(&pObjectWithMark);

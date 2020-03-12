@@ -35,7 +35,10 @@ PluginToolButtons::PluginToolButtons(Renga::IUIPtr pUI, const std::wstring& plug
 
 Renga::IActionPtr PluginToolButtons::createModelExplorerButton(const std::wstring& pluginPath)
 {
-  auto pAction = m_pUI->CreateAction();
+  // {A101FD63-9E61-48FA-B6DA-2B5612D695AC}
+  const GUID actionId = { 0xa101fd63, 0x9e61, 0x48fa,{ 0xb6, 0xda, 0x2b, 0x56, 0x12, 0xd6, 0x95, 0xac } };
+
+  auto pAction = m_pUI->CreateActionWithId(actionId);
 
   m_pModelExplorerButtonHandler.reset(new ModelExplorerButtonHandler(pAction));
 
