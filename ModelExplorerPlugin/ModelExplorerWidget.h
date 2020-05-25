@@ -47,6 +47,7 @@ private slots:
   QModelIndex getSelectedTreeViewItemIndex() const;
 
   void showSelectedModelObject();
+  void unhideSelectedModelObject();
   void hideSelectedModelObject();
 
   void onRengaObjectSelected(const int modelObjectId);

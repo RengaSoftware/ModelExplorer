@@ -51,13 +51,15 @@ ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", QApplication::translate("me_propertyView", "refresh"));
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
-  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "visible"));
+  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "show"));
+  QPushButton* pUnhideButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "visible"));
   QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", QApplication::translate("me_propertyView", "hidden"));
 
   // top toolbar
   QToolBar* pTopToolBar = createToolBar(m_pUi->layoutWidget);
   pTopToolBar->addWidget(pRefreshButton);
   pTopToolBar->addWidget(pShowButton);
+  pTopToolBar->addWidget(pUnhideButton);
   pTopToolBar->addWidget(pHideButton);
   m_pUi->topVerticalLayout->addWidget(pTopToolBar);
 
@@ -66,8 +68,9 @@ ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   m_pUi->topVerticalLayout->addWidget(m_pTreeView);
 
   connect(this, SIGNAL(rebuildModelTree()), this, SLOT(buildTreeViewModel()));
-  
+
   connect(pShowButton, SIGNAL(clicked()), this, SLOT(showSelectedModelObject()));
+  connect(pUnhideButton, SIGNAL(clicked()), this, SLOT(unhideSelectedModelObject()));
   connect(pHideButton, SIGNAL(clicked()), this, SLOT(hideSelectedModelObject()));
   
   // view mode buttons
@@ -210,7 +213,36 @@ QModelIndex ModelExplorerWidget::getSelectedTreeViewItemIndex() const
 
 void ModelExplorerWidget::showSelectedModelObject()
 {
-  QModelIndex selectedItemIndex = getSelectedTreeViewItemIndex();
+  auto selectedItemIndex = getSelectedTreeViewItemIndex();
+  if (!selectedItemIndex.isValid())
+    return;
+
+  if (!isTreeViewObjectGroup(selectedItemIndex) && !isTreeViewModelObject(selectedItemIndex))
+    return;
+
+  QList<QModelIndex> indexList = getTreeViewSubtreeIndexList(selectedItemIndex);
+
+  ObjectIdList objectIdList;
+
+  for (const QModelIndex& index : indexList)
+  {
+    if (isTreeViewModelObject(index))
+    {
+      int modelObjectId = getTreeViewModelObjectId(index);
+      objectIdList.push_back(modelObjectId);
+    }
+  }
+
+  showRengaObjects(m_pApplication, objectIdList);
+
+  updateTreeViewParentVisibility(selectedItemIndex);
+
+  //TODO: [asv] change visibility icons on expanded tree elements for all objects
+}
+
+void ModelExplorerWidget::unhideSelectedModelObject()
+{
+  auto selectedItemIndex = getSelectedTreeViewItemIndex();
 
   if (selectedItemIndex.isValid())
     setTreeViewItemVisible(selectedItemIndex, true);
@@ -218,7 +250,7 @@ void ModelExplorerWidget::showSelectedModelObject()
 
 void ModelExplorerWidget::hideSelectedModelObject()
 {
-  QModelIndex selectedItemIndex = getSelectedTreeViewItemIndex();
+  auto selectedItemIndex = getSelectedTreeViewItemIndex();
 
   if (selectedItemIndex.isValid())
     setTreeViewItemVisible(selectedItemIndex, false);

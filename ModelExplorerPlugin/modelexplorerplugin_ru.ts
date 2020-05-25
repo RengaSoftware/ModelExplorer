@@ -773,7 +773,7 @@
     </message>
     <message>
         <source>visible</source>
-        <translation>Показать объект</translation>
+        <translation>Сделать объект видимым</translation>
     </message>
     <message>
         <source>hidden</source>
@@ -790,6 +790,10 @@
     <message>
         <source>Object parameters ex</source>
         <translation>Параметры объекта [общие]</translation>
+    </message>
+    <message>
+        <source>show</source>
+        <translation>Показать объект</translation>
     </message>
 </context>
 <context>

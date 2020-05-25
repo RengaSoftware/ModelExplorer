@@ -765,7 +765,7 @@
     </message>
     <message>
         <source>visible</source>
-        <translation>Show object</translation>
+        <translation>Unhide object</translation>
     </message>
     <message>
         <source>hidden</source>
@@ -782,6 +782,10 @@
     <message>
         <source>Object parameters ex</source>
         <translation>Object parameters [Common]</translation>
+    </message>
+    <message>
+        <source>show</source>
+        <translation>Show object</translation>
     </message>
 </context>
 <context>

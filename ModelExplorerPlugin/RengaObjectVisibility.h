@@ -41,5 +41,23 @@ static void setRengaObjectVisibility(Renga::IApplicationPtr pApplication, const 
   for (auto id : objectIdList)
     idsSafeArray.SetAt(i++, id);
 
-  pModelView->SetObjectsVisibility(idsSafeArray,visible);
+  pModelView->SetObjectsVisibility(idsSafeArray, visible);
+}
+
+static void showRengaObjects(Renga::IApplicationPtr pApplication, const ObjectIdList& objectIdList)
+{
+  auto pView = pApplication->GetActiveView();
+
+  Renga::IModelViewPtr pModelView;
+  pView->QueryInterface(&pModelView);
+
+  if (!pModelView)
+    return;
+
+  CComSafeArray<int> idsSafeArray(static_cast<ULONG>(objectIdList.size()));
+  LONG i(0);
+  for (auto id : objectIdList)
+    idsSafeArray.SetAt(i++, id);
+
+  pModelView->ShowObjects(idsSafeArray);
 }
