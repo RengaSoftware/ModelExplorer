@@ -212,7 +212,7 @@ PropertyList PropertyViewBuilder::createProperties()
       pQtProperty = mngr.addValue(pResult, attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
       break;
     default:
-      assert(false);
+      continue;
     }
     pQtProperty->setModified(true);
     pQtProperty->setData(propertyIdString);
