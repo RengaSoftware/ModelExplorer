@@ -1,8 +1,8 @@
 //
-// Copyright ìRenga Softwareî LLC, 2016. All rights reserved.
+// Copyright ‚ÄúRenga Software‚Äù LLC, 2016. All rights reserved.
 //
-// ìRenga Softwareî LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
-// ìRenga Softwareî LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// ‚ÄúRenga Software‚Äù LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// ‚ÄúRenga Software‚Äù LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 //
 
@@ -13,6 +13,33 @@
 #include <comdef.h>
 #include <comdef.h>
 #include <comdef.h>
+
+struct GuidComparator
+{
+  bool operator () (const GUID& left, const GUID& right) const
+  {
+    return memcmp(&left, &right, sizeof(GUID)) < 0;
+  }
+};
+
+struct LevelObjectGroup
+{
+  int levelId;
+  GUID objectType;
+
+  LevelObjectGroup(int levelId, GUID objectType)
+    : levelId(levelId), objectType(objectType)
+  {
+  }
+
+  bool operator < (const LevelObjectGroup& other) const
+  {
+    if (levelId != other.levelId)
+      return levelId < other.levelId;
+
+    return GuidComparator()(objectType, other.objectType);
+  }
+};
 
 class TreeViewModelBuilder
 {
@@ -64,21 +91,10 @@ private:
   static bool tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& modelIndex, int role, int& result);
 
 private:
-  std::list<Renga::IModelObjectPtr> getObjectGroup(
-    Renga::IModelObjectCollection& objectCollection,
-    std::function<bool(Renga::IModelObject&)> groupFilter) const;
-  
-  std::list<Renga::IModelObjectPtr> getNonLevelObjectsWithType(
-    Renga::IModelObjectCollection& objectCollection, 
-    GUID objectType) const;
-  
-  std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
-  
-  std::list<Renga::IModelObjectPtr> getLevelObjectsWithType(
-    Renga::IModelObjectCollection& objectCollection,
-    int levelId,
-    GUID objectType) const;
-
+  void processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection);
+  void processLevelObject(Renga::IModelObjectPtr pModelObject);
+  void processNonLevelObject(Renga::IModelObjectPtr pModelObject);
+    
   const std::list<ObjectTypeData>& getLevelObjectTypeData() const;
   const std::list<ObjectTypeData>& getNonLevelObjectTypeData() const;
 
@@ -161,4 +177,8 @@ private:
 
 private:
   Renga::IApplicationPtr m_pApplication;
+
+  std::list<Renga::IModelObjectPtr> m_levels;
+  std::map<LevelObjectGroup, std::list<Renga::IModelObjectPtr>> m_levelObjects;
+  std::map<GUID, std::list<Renga::IModelObjectPtr>, GuidComparator> m_nonLevelObjects;
 };
