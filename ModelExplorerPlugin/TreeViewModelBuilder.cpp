@@ -110,15 +110,59 @@ QStandardItemModel* TreeViewModelBuilder::build()
   auto pModel = pProject->GetModel();
   auto pModelObjectCollection = pModel->GetObjects();
 
-  auto levels = getLevels(*pModelObjectCollection);
-  levels.sort(compareLevelElevations);
+  processModelObjectCollection(pModelObjectCollection);
+
+  m_levels.sort(compareLevelElevations);
   
-  for (auto pLevelModelObject : levels)
+  for (auto pLevelModelObject : m_levels)
     addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
 
   addNonLevelSubtree(pItemModel, pModelObjectCollection);
 
   return pItemModel;
+}
+
+void TreeViewModelBuilder::processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection)
+{
+  m_levels.clear();
+  m_levelObjects.clear();
+  m_nonLevelObjects.clear();
+
+  for (int i = 0; i < pModelObjectCollection->Count; i++)
+  {
+    auto pModelObject = pModelObjectCollection->GetByIndex(i);
+
+    if (pModelObject->GetObjectType() == Renga::ObjectTypes::Level)
+    {
+      m_levels.push_back(pModelObject);
+    }
+    else
+    {
+      Renga::ILevelObjectPtr pLevelObject;
+      pModelObject->QueryInterface(&pLevelObject);
+
+      if (pLevelObject)
+        processLevelObject(pModelObject);
+      else
+        processNonLevelObject(pModelObject);
+    }
+  }
+}
+
+void TreeViewModelBuilder::processLevelObject(Renga::IModelObjectPtr pModelObject)
+{
+  Renga::ILevelObjectPtr pLevelObject;
+  pModelObject->QueryInterface(&pLevelObject);
+  assert(pLevelObject != nullptr);
+
+  LevelObjectGroup group(pLevelObject->GetLevelId(), pModelObject->GetObjectType());
+
+  m_levelObjects[group].push_back(pModelObject);
+}
+
+void TreeViewModelBuilder::processNonLevelObject(Renga::IModelObjectPtr pNonLevelObject)
+{
+  m_nonLevelObjects[pNonLevelObject->GetObjectType()].push_back(pNonLevelObject);
 }
 
 std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getObjectGroup(
@@ -233,8 +277,7 @@ void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, R
 
   for (const auto& objectTypeData : getNonLevelObjectTypeData())
   {
-    auto objectGroup = getNonLevelObjectsWithType(pModelObjectCollection, objectTypeData.m_type);
-    addObjectGroupSubtree(pItem.at(0), objectGroup, objectTypeData);
+    addObjectGroupSubtree(pItem.at(0), m_nonLevelObjects[objectTypeData.m_type], objectTypeData);
   }
 
   pItemModel->appendRow(pItem);
@@ -251,8 +294,8 @@ void TreeViewModelBuilder::addLevelSubtree(
 
   for (const auto& objectTypeData : getLevelObjectTypeData())
   {
-    auto objectGroup = getLevelObjectsWithType(pModelObjectCollection, pLevelModelObject->Id, objectTypeData.m_type);
-    addObjectGroupSubtree(pItem.at(0), objectGroup, objectTypeData);
+    LevelObjectGroup group(pLevelModelObject->GetId(), objectTypeData.m_type);
+    addObjectGroupSubtree(pItem.at(0), m_levelObjects[group], objectTypeData);
   }
 
   pItemModel->appendRow(pItem);

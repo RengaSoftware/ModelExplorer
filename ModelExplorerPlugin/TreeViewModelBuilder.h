@@ -1,8 +1,8 @@
 //
-// Copyright “Renga Software” LLC, 2016. All rights reserved.
+// Copyright ï¿½Renga Softwareï¿½ LLC, 2016. All rights reserved.
 //
-// “Renga Software” LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
-// “Renga Software” LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// ï¿½Renga Softwareï¿½ LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// ï¿½Renga Softwareï¿½ LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 //
 
@@ -13,6 +13,33 @@
 #include <comdef.h>
 #include <comdef.h>
 #include <comdef.h>
+
+struct GuidComparator
+{
+  bool operator () (const GUID& left, const GUID& right) const
+  {
+    return memcmp(&left, &right, sizeof(GUID)) < 0;
+  }
+};
+
+struct LevelObjectGroup
+{
+  int levelId;
+  GUID objectType;
+
+  LevelObjectGroup(int levelId, GUID objectType)
+    : levelId(levelId), objectType(objectType)
+  {
+  }
+
+  bool operator < (const LevelObjectGroup& other) const
+  {
+    if (levelId != other.levelId)
+      return levelId < other.levelId;
+
+    return GuidComparator()(objectType, other.objectType);
+  }
+};
 
 class TreeViewModelBuilder
 {
@@ -64,6 +91,10 @@ private:
   static bool tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& modelIndex, int role, int& result);
 
 private:
+  void processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection);
+  void processLevelObject(Renga::IModelObjectPtr pModelObject);
+  void processNonLevelObject(Renga::IModelObjectPtr pModelObject);
+
   std::list<Renga::IModelObjectPtr> getObjectGroup(
     Renga::IModelObjectCollection& objectCollection,
     std::function<bool(Renga::IModelObject&)> groupFilter) const;
@@ -161,4 +192,8 @@ private:
 
 private:
   Renga::IApplicationPtr m_pApplication;
+
+  std::list<Renga::IModelObjectPtr> m_levels;
+  std::map<LevelObjectGroup, std::list<Renga::IModelObjectPtr>> m_levelObjects;
+  std::map<GUID, std::list<Renga::IModelObjectPtr>, GuidComparator> m_nonLevelObjects;
 };
