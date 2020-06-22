@@ -1,8 +1,8 @@
 //
-// Copyright �Renga Software� LLC, 2016. All rights reserved.
+// Copyright “Renga Software” LLC, 2016. All rights reserved.
 //
-// �Renga Software� LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
-// �Renga Software� LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// “Renga Software” LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// “Renga Software” LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 //
 
@@ -94,22 +94,7 @@ private:
   void processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection);
   void processLevelObject(Renga::IModelObjectPtr pModelObject);
   void processNonLevelObject(Renga::IModelObjectPtr pModelObject);
-
-  std::list<Renga::IModelObjectPtr> getObjectGroup(
-    Renga::IModelObjectCollection& objectCollection,
-    std::function<bool(Renga::IModelObject&)> groupFilter) const;
-  
-  std::list<Renga::IModelObjectPtr> getNonLevelObjectsWithType(
-    Renga::IModelObjectCollection& objectCollection, 
-    GUID objectType) const;
-  
-  std::list<Renga::IModelObjectPtr> getLevels(Renga::IModelObjectCollection& objects) const;
-  
-  std::list<Renga::IModelObjectPtr> getLevelObjectsWithType(
-    Renga::IModelObjectCollection& objectCollection,
-    int levelId,
-    GUID objectType) const;
-
+    
   const std::list<ObjectTypeData>& getLevelObjectTypeData() const;
   const std::list<ObjectTypeData>& getNonLevelObjectTypeData() const;
 

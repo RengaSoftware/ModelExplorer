@@ -165,67 +165,6 @@ void TreeViewModelBuilder::processNonLevelObject(Renga::IModelObjectPtr pNonLeve
   m_nonLevelObjects[pNonLevelObject->GetObjectType()].push_back(pNonLevelObject);
 }
 
-std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getObjectGroup(
-  Renga::IModelObjectCollection& objectCollection,
-  std::function<bool(Renga::IModelObject&)> groupFilter) const
-{
-  std::list<Renga::IModelObjectPtr> result;
-
-  for (int i = 0; i < objectCollection.Count; i++)
-  {
-    Renga::IModelObjectPtr pModelObject = objectCollection.GetByIndex(i);
-
-    if (groupFilter(*pModelObject) == false)
-      continue;
-
-    result.push_back(pModelObject);
-  }
-
-  return result;
-}
-
-std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getNonLevelObjectsWithType(
-  Renga::IModelObjectCollection & objectCollection,
-  GUID objectType) const
-{
-  return getObjectGroup(objectCollection, [=](Renga::IModelObject& object)
-  {
-    auto currentObjectType = object.ObjectType;
-    if (currentObjectType != objectType)
-      return false;
-
-    Renga::ILevelObjectPtr pLevelObject;
-    object.QueryInterface(&pLevelObject);
-
-    return pLevelObject == nullptr;
-  });
-}
-
-std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevels(Renga::IModelObjectCollection & objectCollection) const
-{
-  return getObjectGroup(objectCollection, [](Renga::IModelObject& object)
-  {
-    return object.GetObjectType() == Renga::ObjectTypes::Level;
-  });
-}
-
-std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getLevelObjectsWithType(
-  Renga::IModelObjectCollection & objectCollection, 
-  int levelId, 
-  GUID objectType) const
-{
-  return getObjectGroup(objectCollection, [=](Renga::IModelObject& object)
-  {
-    if (object.ObjectType != objectType)
-      return false;
-
-    Renga::ILevelObjectPtr pLevelObject;
-    object.QueryInterface(&pLevelObject);
-
-    return pLevelObject != nullptr && pLevelObject->LevelId == levelId;
-  });
-}
-
 bool TreeViewModelBuilder::tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
   return tryGetIntegerData(pItemModel, index, Role_ItemType, result);
