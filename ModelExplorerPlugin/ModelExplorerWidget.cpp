@@ -51,7 +51,7 @@ ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QPushButton* pRefreshButton = createPushButton(":/icons/Refresh.png", QApplication::translate("me_propertyView", "refresh"));
   connect(pRefreshButton, SIGNAL(clicked()), this, SIGNAL(rebuildModelTree()));
 
-  QPushButton* pShowButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "show"));
+  QPushButton* pShowButton = createPushButton(":/icons/FindAndSelect.png", QApplication::translate("me_propertyView", "show"));
   QPushButton* pUnhideButton = createPushButton(":/icons/Visible.png", QApplication::translate("me_propertyView", "visible"));
   QPushButton* pHideButton = createPushButton(":/icons/Hidden.png", QApplication::translate("me_propertyView", "hidden"));
 

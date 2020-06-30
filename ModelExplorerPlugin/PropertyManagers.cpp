@@ -153,7 +153,8 @@ PropertyManagers::PropertyManagers()
 void PropertyManagers::init(PropertyView* pParent)
 {
   m_default.init(pParent, true);
-  m_parameters.init(pParent, false);
+  //TODO: [asv] to enable parameters update
+  m_parameters.init(pParent, true);
   m_properties.init(pParent, false);
 }
 

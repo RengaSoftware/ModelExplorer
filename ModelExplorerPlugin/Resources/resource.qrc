@@ -50,5 +50,6 @@
         <file>icons/LineElectricalCircuit.png</file>
         <file>icons/DistributionBoard.png</file>
         <file>icons/WiringAccessory.png</file>
+        <file>icons/FindAndSelect.png</file>
     </qresource>
 </RCC>

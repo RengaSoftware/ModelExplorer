@@ -103,7 +103,8 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
       if (!pParameter->HasValue())
         pQtProperty->setEnabled(false);
 
-      pQtProperty->setModified(true);
+      //TODO: [asv] to enable parameters update
+      pQtProperty->setModified(false);
 
       const auto parameterIdString = QString::fromStdString((GuidToString(id)));
       pQtProperty->setData(parameterIdString);
