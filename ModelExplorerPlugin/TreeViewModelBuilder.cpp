@@ -49,7 +49,7 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
     ObjectTypeData(Renga::ObjectTypes::RoutePoint, QApplication::translate("me_modelObjects", "RoutePoints"), ":/icons/RoutePoint"),
     ObjectTypeData(Renga::ObjectTypes::Equipment, QApplication::translate("me_modelObjects", "Equipment"), ":/icons/Equipment"),
     ObjectTypeData(Renga::ObjectTypes::PlumbingFixture, QApplication::translate("me_modelObjects", "PlumbingFixtures"), ":/icons/PlumbingFixture"),
-    ObjectTypeData(Renga::ObjectTypes::AirEquipment, QApplication::translate("me_modelObjects", "AirEquipment"), ":/icons/AirEquipment"),
+    ObjectTypeData(Renga::ObjectTypes::MechanicalEquipment, QApplication::translate("me_modelObjects", "AirEquipment"), ":/icons/AirEquipment"),
 
     ObjectTypeData(Renga::ObjectTypes::Line3D, QApplication::translate("me_modelObjects", "Lines3D"), ":/icons/Line"),
     ObjectTypeData(Renga::ObjectTypes::Hatch, QApplication::translate("me_modelObjects", "Hatches"), ":/icons/Hatch"),
@@ -63,17 +63,17 @@ const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::get
 const std::list<TreeViewModelBuilder::ObjectTypeData>& TreeViewModelBuilder::getNonLevelObjectTypeData() const
 {
   static std::list<ObjectTypeData> nonlevelObjectTypeData{
-    ObjectTypeData(Renga::ObjectTypes::PipelineAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
+    ObjectTypeData(Renga::ObjectTypes::PipeAccessory, QApplication::translate("me_modelObjects", "PipeAccessories"), ":/icons/PipeAccessory"),
     ObjectTypeData(Renga::ObjectTypes::PipeFitting, QApplication::translate("me_modelObjects", "PipeFittings"), ":/icons/PipeFitting"),
     ObjectTypeData(Renga::ObjectTypes::Pipe, QApplication::translate("me_modelObjects", "Pipes"), ":/icons/Pipe"),
 
-    ObjectTypeData(Renga::ObjectTypes::AirDuct, QApplication::translate("me_modelObjects", "AirDucts"), ":/icons/AirDuct"),
-    ObjectTypeData(Renga::ObjectTypes::AirAccessory, QApplication::translate("me_modelObjects", "AirAccessories"), ":/icons/AirAccessory"),
-    ObjectTypeData(Renga::ObjectTypes::AirFitting, QApplication::translate("me_modelObjects", "AirFittings"), ":/icons/AirComponent"),
+    ObjectTypeData(Renga::ObjectTypes::Duct, QApplication::translate("me_modelObjects", "AirDucts"), ":/icons/AirDuct"),
+    ObjectTypeData(Renga::ObjectTypes::DuctAccessory, QApplication::translate("me_modelObjects", "AirAccessories"), ":/icons/AirAccessory"),
+    ObjectTypeData(Renga::ObjectTypes::DuctFitting, QApplication::translate("me_modelObjects", "AirFittings"), ":/icons/AirComponent"),
 
     ObjectTypeData(Renga::ObjectTypes::LineElectricalCircuit, QApplication::translate("me_modelObjects", "LineElectricalCircuits"), ":/icons/LineElectricalCircuit"),
     ObjectTypeData(Renga::ObjectTypes::LightFixture, QApplication::translate("me_modelObjects", "LightFixtures"), ":/icons/LightFixture"),
-    ObjectTypeData(Renga::ObjectTypes::DistributionBoard, QApplication::translate("me_modelObjects", "DistributionBoards"), ":/icons/DistributionBoard"),
+    ObjectTypeData(Renga::ObjectTypes::ElectricDistributionBoard, QApplication::translate("me_modelObjects", "DistributionBoards"), ":/icons/DistributionBoard"),
     ObjectTypeData(Renga::ObjectTypes::WiringAccessory, QApplication::translate("me_modelObjects", "WiringAccessories"), ":/icons/WiringAccessory"),
 
     ObjectTypeData(Renga::ObjectTypes::Route, QApplication::translate("me_modelObjects", "Routes"), ":/icons/Route"),
