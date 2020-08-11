@@ -577,6 +577,10 @@
         <source>length_dimension</source>
         <translation>mm</translation>
     </message>
+    <message>
+        <source>nominalArea</source>
+        <translation>Nominal area</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>

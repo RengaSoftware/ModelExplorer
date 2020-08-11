@@ -585,6 +585,10 @@
         <source>length_dimension</source>
         <translation>мм</translation>
     </message>
+    <message>
+        <source>nominalArea</source>
+        <translation>Номинальная площадь</translation>
+    </message>
 </context>
 <context>
     <name>me_modelObjects</name>

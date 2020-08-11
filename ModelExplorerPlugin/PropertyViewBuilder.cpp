@@ -151,6 +151,7 @@ void PropertyViewBuilder::createQuantities(PropertyList& propertyList)
   mngr.addValue(propertyList, QApplication::translate("me_mo", "outerSurfaceArea"), pQuantities->Get(QuantityIds::OuterSurfaceArea));
 
   mngr.addValue(propertyList, QApplication::translate("me_mo", "area"), pQuantities->Get(QuantityIds::Area));
+  mngr.addValue(propertyList, QApplication::translate("me_mo", "nominalArea"), pQuantities->Get(QuantityIds::NominalArea));
   mngr.addValue(propertyList, QApplication::translate("me_mo", "netArea"), pQuantities->Get(QuantityIds::NetArea));
   mngr.addValue(propertyList, QApplication::translate("me_mo", "netFloorArea"), pQuantities->Get(QuantityIds::NetFloorArea));
   mngr.addValue(propertyList, QApplication::translate("me_mo", "netFootprintArea"), pQuantities->Get(QuantityIds::NetFootprintArea));
