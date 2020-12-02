@@ -12,6 +12,9 @@
 #include <memory>
 #include <assert.h>
 
+// sdk import
+#import <RengaCOMAPI.tlb>
+
 // qt includes
 #include <QtWidgets/QApplication>
 

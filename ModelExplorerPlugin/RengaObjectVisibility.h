@@ -6,8 +6,6 @@
 // UNINTERRUPTED OR ERROR FREE.
 //
 
-#include "stdafx.h"
-
 #include <atlsafe.h>
 
 
