@@ -14,6 +14,7 @@
 #include "ui_ModelExplorer.h"
 
 #include "TreeViewItemRole.h"
+#include "TreeViewItemType.h"
 #include "TreeViewModelBuilder.h"
 #include "BoolGuard.h"
 
@@ -144,7 +145,7 @@ void ModelExplorerWidget::onTreeViewSelectionChanged(const QItemSelection& selec
 
   QModelIndex selectedItemIndex = indexList.at(0);
 
-  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+  int itemType = eTreeViewItemType::Undefined;
 
   if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), selectedItemIndex, itemType))
     assert(false);
@@ -161,20 +162,20 @@ void ModelExplorerWidget::onTreeViewSelectionChanged(const QItemSelection& selec
 
   switch (itemType)
   {
-  case TreeViewModelBuilder::ItemType_ModelObject:
-  case TreeViewModelBuilder::ItemType_Level:
+  case eTreeViewItemType::ModelObject:
+  case eTreeViewItemType::Level:
     onModelObjectSelected(selectedItemIndex);
     break;
 
-  case TreeViewModelBuilder::ItemType_MaterialLayer:
+  case eTreeViewItemType::MaterialLayer:
     onMaterialLayerSelected(selectedItemIndex);
     break;
 
-  case TreeViewModelBuilder::ItemType_ReinforcementUnitUsage:
+  case eTreeViewItemType::ReinforcementUnitUsage:
     onReinforcementUnitUsageSelected(selectedItemIndex);
     break;
 
-  case TreeViewModelBuilder::ItemType_RebarUsage:
+  case eTreeViewItemType::RebarUsage:
     onRebarUsageSelected(selectedItemIndex);
     break;
 
@@ -578,14 +579,14 @@ void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIn
 {
   QStandardItem* item = m_pTreeViewModel->itemFromIndex(itemIndex);
 
-  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+  int itemType = eTreeViewItemType::Undefined;
 
   bool isVisible = true;
 
   if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
     assert(false);
 
-  if (itemType == TreeViewModelBuilder::ItemType_ModelObject)
+  if (itemType == eTreeViewItemType::ModelObject)
   {
     int modelObjectId = 0;
 
@@ -594,7 +595,7 @@ void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIn
 
     isVisible = getRengaObjectVisibility(m_pApplication, modelObjectId);
   }
-  else if (itemType == TreeViewModelBuilder::ItemType_ObjectGroup)
+  else if (itemType == eTreeViewItemType::ObjectGroup)
   {
     isVisible = isTreeViewObjectGroupVisible(itemIndex);
   }
@@ -686,22 +687,22 @@ void ModelExplorerWidget::setTreeViewItemVisible(const QModelIndex& itemIndex, b
 
 bool ModelExplorerWidget::isTreeViewObjectGroup(const QModelIndex& itemIndex) const
 {
-  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+  int itemType = eTreeViewItemType::Undefined;
 
   if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
     return false;
 
-  return itemType == TreeViewModelBuilder::ItemType_ObjectGroup;
+  return itemType == eTreeViewItemType::ObjectGroup;
 }
 
 bool ModelExplorerWidget::isTreeViewModelObject(const QModelIndex& itemIndex) const
 {
-  int itemType = TreeViewModelBuilder::ItemType_Undefined;
+  int itemType = eTreeViewItemType::Undefined;
 
   if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
     return false;
 
-  return itemType == TreeViewModelBuilder::ItemType_ModelObject || itemType == TreeViewModelBuilder::ItemType_Level;
+  return itemType == eTreeViewItemType::ModelObject || itemType == eTreeViewItemType::Level;
 }
 
 int ModelExplorerWidget::getTreeViewModelObjectId(const QModelIndex& itemIndex) const

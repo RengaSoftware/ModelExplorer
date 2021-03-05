@@ -43,18 +43,6 @@ struct LevelObjectGroup
 class TreeViewModelBuilder
 {
 public:
-  enum ItemType
-  {
-    ItemType_Level = 0,
-    ItemType_ModelObject,
-    ItemType_ObjectGroup,
-    ItemType_MaterialLayer,
-    ItemType_ReinforcementUnitUsage,
-    ItemType_RebarUsage,
-
-    ItemType_Undefined = 255
-  };
-
   TreeViewModelBuilder(Renga::IApplicationPtr pApplication);
 
   QStandardItemModel* build();
