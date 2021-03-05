@@ -205,7 +205,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DMODELEXPLORERPLUGIN_LIB -D_WINDLL  "-I.\GeneratedFiles" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I.\..\QtPropertyBrowser" "-I." "-I$(renga_com_sdk)\C++\include" "-I$(renga_com_sdk)\tlb" "-fstdafx.h" "-f../../ModelExplorerButtonHandler.h"</Command>
     </CustomBuild>
     <ClInclude Include="MaterialLayerPropertyViewBuilder.h" />
-    <ClInclude Include="MesureUnit.h" />
     <CustomBuild Include="PluginToolButtons.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing PluginToolButtons.h...</Message>

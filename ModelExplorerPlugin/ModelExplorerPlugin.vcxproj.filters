@@ -170,9 +170,6 @@
     <ClInclude Include="BoolGuard.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="MesureUnit.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
     <ClInclude Include="LevelPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
