@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "TreeViewItemRole.h"
+#include "TreeViewItemType.h"
 #include "TreeViewModelBuilder.h"
 #include "RengaObjectVisibility.h"
 
@@ -247,7 +248,7 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
   const ObjectTypeData& objectTypeData)
 {
   QList<QStandardItem*> objectGroupItemList =
-    createItem(objectTypeData.m_typeNodeName, ":/icons/Folder", ItemType_ObjectGroup, true, true);
+    createItem(objectTypeData.m_typeNodeName, ":/icons/Folder", eTreeViewItemType::ObjectGroup, true, true);
 
   if (objectGroup.empty())
     return;
@@ -448,7 +449,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createOtherGroupItem() const
 {
   return createItem(QApplication::translate("me_modelObjects", "OtherObjectGroup"), 
     ":/icons/Folder", 
-    ItemType_ObjectGroup, 
+    eTreeViewItemType::ObjectGroup, 
     true, 
     true);
 }
@@ -458,7 +459,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(Renga::IModelObjectP
   bool isLevelVisible = getRengaObjectVisibility(m_pApplication, pLevelModelObject->Id);
 
   QList<QStandardItem*> itemList = createItem(
-    QString::fromWCharArray(pLevelModelObject->Name), ":/icons/Level", ItemType_Level, true, isLevelVisible);
+    QString::fromWCharArray(pLevelModelObject->Name), ":/icons/Level", eTreeViewItemType::Level, true, isLevelVisible);
 
   itemList.first()->setData(pLevelModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
@@ -472,7 +473,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(
   bool isModelObjectVisible = getRengaObjectVisibility(m_pApplication, pModelObject->Id);
   auto name = pModelObject->Name;
   QList<QStandardItem*> itemList = createItem(
-    QString::fromWCharArray(name), objectTypeData.m_iconPath, ItemType_ModelObject, true, isModelObjectVisible);
+    QString::fromWCharArray(name), objectTypeData.m_iconPath, eTreeViewItemType::ModelObject, true, isModelObjectVisible);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
@@ -490,7 +491,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
     QString::fromWCharArray(pMaterial->Name) :
     QApplication::translate("me_materials", "No material");
 
-  QList<QStandardItem*> itemList = createItem(materialName, ":/icons/Material", ItemType_MaterialLayer);
+  QList<QStandardItem*> itemList = createItem(materialName, ":/icons/Material", eTreeViewItemType::MaterialLayer);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
   itemList.first()->setData(layerIndex, eTreeViewItemRole::LayerIndex);
@@ -511,7 +512,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(Renga::IMode
     QString::fromWCharArray(pMaterial->Name) :
     QApplication::translate("me_materials", "No material");
 
-  QList<QStandardItem*> itemList = createItem(materialItemName, ":/icons/Material", ItemType_Undefined);
+  QList<QStandardItem*> itemList = createItem(materialItemName, ":/icons/Material", eTreeViewItemType::Undefined);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
@@ -527,7 +528,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createRebarUsageItem(
   Renga::IRebarStylePtr pRebarStyle = getRebarStyle(pRebarUsage->StyleId);
   assert(pRebarStyle != nullptr);
 
-  QList<QStandardItem*> itemList = createItem(QString::fromWCharArray(pRebarStyle->Name), ":/icons/Rebar", ItemType_RebarUsage);
+  QList<QStandardItem*> itemList = createItem(QString::fromWCharArray(pRebarStyle->Name), ":/icons/Rebar", eTreeViewItemType::RebarUsage);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
@@ -547,7 +548,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createReinforcementUnitUsageItem(
 
   QList<QStandardItem*> itemList = createItem(
     QString::fromWCharArray(pReinforcementUnitStyle->Name),
-    ":/icons/Reinforcement", ItemType_ReinforcementUnitUsage);
+    ":/icons/Reinforcement", eTreeViewItemType::ReinforcementUnitUsage);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
   itemList.first()->setData(reinforcementUnitUsageIndex, eTreeViewItemRole::ReinforcementUnitUsageIndex);
