@@ -9,10 +9,9 @@
 #pragma once
 
 #include <QtGui/QStandardItemModel>
+
 #include <comdef.h>
-#include <comdef.h>
-#include <comdef.h>
-#include <comdef.h>
+
 
 struct GuidComparator
 {
@@ -44,17 +43,6 @@ struct LevelObjectGroup
 class TreeViewModelBuilder
 {
 public:
-  enum Role
-  {
-    Role_ItemType = Qt::UserRole + 1,
-    Role_ModelObjectId,
-    Role_LayerIndex,
-    Role_IsVisible,
-    Role_RebarUsageIndex,
-    Role_ReinforcementUnitUsageIndex,
-    Role_ReinforcementUnitStyleId
-  };
-
   enum ItemType
   {
     ItemType_Level = 0,

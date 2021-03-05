@@ -7,6 +7,7 @@
 //
 
 #include "stdafx.h"
+#include "TreeViewItemRole.h"
 #include "TreeViewModelBuilder.h"
 #include "RengaObjectVisibility.h"
 
@@ -167,32 +168,32 @@ void TreeViewModelBuilder::processNonLevelObject(Renga::IModelObjectPtr pNonLeve
 
 bool TreeViewModelBuilder::tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_ItemType, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ItemType, result);
 }
 
 bool TreeViewModelBuilder::tryGetModelObjectId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_ModelObjectId, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ModelObjectId, result);
 }
 
 bool TreeViewModelBuilder::tryGetLayerIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_LayerIndex, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::LayerIndex, result);
 }
 
 bool TreeViewModelBuilder::tryGetRebarUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_RebarUsageIndex, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::RebarUsageIndex, result);
 }
 
 bool TreeViewModelBuilder::tryGetReinforcementUnitUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_ReinforcementUnitUsageIndex, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ReinforcementUnitUsageIndex, result);
 }
 
 bool TreeViewModelBuilder::tryGetReinforcementUnitStyleId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
 {
-  return tryGetIntegerData(pItemModel, index, Role_ReinforcementUnitStyleId, result);
+  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ReinforcementUnitStyleId, result);
 }
 
 bool TreeViewModelBuilder::tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& index, int role, int& result)
@@ -459,7 +460,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(Renga::IModelObjectP
   QList<QStandardItem*> itemList = createItem(
     QString::fromWCharArray(pLevelModelObject->Name), ":/icons/Level", ItemType_Level, true, isLevelVisible);
 
-  itemList.first()->setData(pLevelModelObject->Id, Role_ModelObjectId);
+  itemList.first()->setData(pLevelModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
   return itemList;
 }
@@ -473,7 +474,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(
   QList<QStandardItem*> itemList = createItem(
     QString::fromWCharArray(name), objectTypeData.m_iconPath, ItemType_ModelObject, true, isModelObjectVisible);
 
-  itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
   return itemList;
 }
@@ -491,8 +492,8 @@ QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
 
   QList<QStandardItem*> itemList = createItem(materialName, ":/icons/Material", ItemType_MaterialLayer);
 
-  itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
-  itemList.first()->setData(layerIndex, Role_LayerIndex);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(layerIndex, eTreeViewItemRole::LayerIndex);
 
   return itemList;
 }
@@ -512,7 +513,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(Renga::IMode
 
   QList<QStandardItem*> itemList = createItem(materialItemName, ":/icons/Material", ItemType_Undefined);
 
-  itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
   return itemList;
 }
@@ -528,10 +529,10 @@ QList<QStandardItem*> TreeViewModelBuilder::createRebarUsageItem(
 
   QList<QStandardItem*> itemList = createItem(QString::fromWCharArray(pRebarStyle->Name), ":/icons/Rebar", ItemType_RebarUsage);
 
-  itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
-  itemList.first()->setData(rebarUsageIndex, Role_RebarUsageIndex);
-  itemList.first()->setData(reinforcementUnitStyleId, Role_ReinforcementUnitStyleId);
+  itemList.first()->setData(rebarUsageIndex, eTreeViewItemRole::RebarUsageIndex);
+  itemList.first()->setData(reinforcementUnitStyleId, eTreeViewItemRole::ReinforcementUnitStyleId);
 
   return itemList;
 }
@@ -548,8 +549,8 @@ QList<QStandardItem*> TreeViewModelBuilder::createReinforcementUnitUsageItem(
     QString::fromWCharArray(pReinforcementUnitStyle->Name),
     ":/icons/Reinforcement", ItemType_ReinforcementUnitUsage);
 
-  itemList.first()->setData(pModelObject->Id, Role_ModelObjectId);
-  itemList.first()->setData(reinforcementUnitUsageIndex, Role_ReinforcementUnitUsageIndex);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(reinforcementUnitUsageIndex, eTreeViewItemRole::ReinforcementUnitUsageIndex);
 
   return itemList;
 }
@@ -566,7 +567,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createItem(
   auto pItem = new QStandardItem(name);
 
   pItem->setIcon(QIcon(iconPath));
-  pItem->setData(itemType, Role_ItemType);
+  pItem->setData(itemType, eTreeViewItemRole::ItemType);
 
   itemList.append(pItem);
 
@@ -591,7 +592,7 @@ void TreeViewModelBuilder::setItemVisibilityState(QList<QStandardItem*>& itemLis
   QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
 
   pVisibilityItem->setIcon(QIcon(iconPath));
-  pVisibilityItem->setData(isVisible, Role_IsVisible);
+  pVisibilityItem->setData(isVisible, eTreeViewItemRole::IsVisible);
 }
 
 bool TreeViewModelBuilder::objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const
