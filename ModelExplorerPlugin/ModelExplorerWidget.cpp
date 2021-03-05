@@ -13,6 +13,7 @@
 
 #include "ui_ModelExplorer.h"
 
+#include "TreeViewItemRole.h"
 #include "TreeViewModelBuilder.h"
 #include "BoolGuard.h"
 
@@ -262,7 +263,7 @@ void ModelExplorerWidget::onRengaObjectSelected(const int modelObjectId)
   if (!m_wasObjectSelectedInCode)
   {
     QModelIndexList indexList = m_pTreeViewModel->match(m_pTreeViewModel->index(0, 0),
-      TreeViewModelBuilder::Role_ModelObjectId,
+      eTreeViewItemRole::ModelObjectId,
       modelObjectId,
       1,
       Qt::MatchRecursive);
@@ -640,7 +641,7 @@ void ModelExplorerWidget::setTreeViewVisibilityIconState(const QModelIndex& visi
   QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
 
   pItem->setIcon(QIcon(iconPath));
-  pItem->setData(isVisible, TreeViewModelBuilder::Role_IsVisible);
+  pItem->setData(isVisible, eTreeViewItemRole::IsVisible);
 }
 
 bool ModelExplorerWidget::getTreeViewVisibilityIconState(const QModelIndex& visibilityIconIndex)
@@ -648,7 +649,7 @@ bool ModelExplorerWidget::getTreeViewVisibilityIconState(const QModelIndex& visi
   QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(visibilityIconIndex);
   assert(pItem != nullptr);
 
-  QVariant data = pItem->data(TreeViewModelBuilder::Role_IsVisible);
+  QVariant data = pItem->data(eTreeViewItemRole::IsVisible);
   assert(data.isValid());
 
   return data.toBool();

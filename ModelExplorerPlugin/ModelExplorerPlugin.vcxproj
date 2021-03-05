@@ -246,6 +246,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="RengaObjectVisibility.h" />
     <ClInclude Include="RoomPropertyViewBuilder.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TreeViewItemRole.h" />
     <ClInclude Include="TreeViewModelBuilder.h" />
     <CustomBuild Include="ModelExplorerWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

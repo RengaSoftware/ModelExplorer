@@ -212,6 +212,9 @@
     <ClInclude Include="IPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
+    <ClInclude Include="TreeViewItemRole.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\ui\ModelExplorer.ui">
