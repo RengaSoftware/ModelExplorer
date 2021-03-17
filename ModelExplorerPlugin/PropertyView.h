@@ -44,8 +44,8 @@ private slots:
 
 private:
   void updateParameters();
-
   void initPropertyManagers();
+  void clearPropertyManagers();
   
   Renga::IPropertyPtr getProperty(QtProperty* property);
   Renga::IOperationPtr createOperation();
