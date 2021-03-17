@@ -186,6 +186,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TreeViewModelBuilder.cpp" />
+    <ClCompile Include="TreeViewUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolGuard.h" />
@@ -194,6 +195,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />
     <ClInclude Include="LevelPropertyViewBuilder.h" />
+    <ClInclude Include="TreeViewUtils.h" />
     <CustomBuild Include="ModelExplorerButtonHandler.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ModelExplorerButtonHandler.h...</Message>

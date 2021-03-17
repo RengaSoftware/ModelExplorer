@@ -47,13 +47,6 @@ public:
 
   QStandardItemModel* build();
 
-  static bool tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-  static bool tryGetModelObjectId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-  static bool tryGetLayerIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-  static bool tryGetRebarUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-  static bool tryGetReinforcementUnitUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-  static bool tryGetReinforcementUnitStyleId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result);
-
 private:
   struct ObjectTypeData
   {

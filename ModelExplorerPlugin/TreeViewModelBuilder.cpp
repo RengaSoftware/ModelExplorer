@@ -167,51 +167,6 @@ void TreeViewModelBuilder::processNonLevelObject(Renga::IModelObjectPtr pNonLeve
   m_nonLevelObjects[pNonLevelObject->GetObjectType()].push_back(pNonLevelObject);
 }
 
-bool TreeViewModelBuilder::tryGetItemType(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ItemType, result);
-}
-
-bool TreeViewModelBuilder::tryGetModelObjectId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ModelObjectId, result);
-}
-
-bool TreeViewModelBuilder::tryGetLayerIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::LayerIndex, result);
-}
-
-bool TreeViewModelBuilder::tryGetRebarUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::RebarUsageIndex, result);
-}
-
-bool TreeViewModelBuilder::tryGetReinforcementUnitUsageIndex(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ReinforcementUnitUsageIndex, result);
-}
-
-bool TreeViewModelBuilder::tryGetReinforcementUnitStyleId(QStandardItemModel* pItemModel, const QModelIndex& index, int& result)
-{
-  return tryGetIntegerData(pItemModel, index, eTreeViewItemRole::ReinforcementUnitStyleId, result);
-}
-
-bool TreeViewModelBuilder::tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& index, int role, int& result)
-{
-  QVariant data = pItemModel->data(index, role);
-  if (!data.isValid())
-    return false;
-
-  bool ok = false;
-  int value = data.toInt(&ok);
-  
-  if (ok)
-    result = value;
-
-  return ok;
-}
-
 void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, Renga::IModelObjectCollectionPtr pModelObjectCollection)
 {
   auto pItem = createOtherGroupItem();
