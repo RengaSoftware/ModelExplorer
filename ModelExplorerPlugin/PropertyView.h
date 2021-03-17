@@ -46,21 +46,7 @@ private:
   void updateParameters();
 
   void initPropertyManagers();
-  void clearPropertyManagers();
-
-  bool createProperties(
-    IPropertyViewBuilder* pObjectPropertyViewBuilder,
-    PropertyList& integratedParameters,
-    PropertyList& parameters,
-    PropertyList& quantities,
-    PropertyList& properties);
-
-  void buildPropertyViewAsList(PropertyList& integratedParameters, PropertyList& parameters, PropertyList& quantities, PropertyList& properties);
-  void buildPropertyViewByCategory(const PropertyList& integratedParameters, PropertyList& parameters, const PropertyList& quantities, const PropertyList& properties);
-  void buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties);
-
-  void buildPropertyView(IPropertyViewSourceObject* pSourceObject);
-
+  
   Renga::IPropertyPtr getProperty(QtProperty* property);
   Renga::IOperationPtr createOperation();
 
