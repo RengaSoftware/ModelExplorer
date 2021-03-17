@@ -8,7 +8,7 @@ public:
   PropertyViewModelObjectSource(Renga::IApplicationPtr pApplication,
                                 Renga::IModelObjectPtr pModelObject);
 
-  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder() override;
 
 private:
   Renga::IApplicationPtr m_pApplication;

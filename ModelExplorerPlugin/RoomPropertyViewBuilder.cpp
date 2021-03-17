@@ -10,21 +10,19 @@
 #include "RoomPropertyViewBuilder.h"
 
 
-RoomPropertyViewBuilder::RoomPropertyViewBuilder(PropertyManagers* pPropertyManagers,
-                                                 Renga::IApplicationPtr pApplication,
+RoomPropertyViewBuilder::RoomPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                  Renga::IModelObjectPtr pModelObject) :
-  PropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
+  PropertyViewBuilder(pApplication, pModelObject)
 {
 }
 
-void RoomPropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
+void RoomPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  PropertyViewBuilder::createIntegratedParameters(propertyList);
+  PropertyViewBuilder::createIntegratedParameters(mngr, propertyList);
 
   Renga::IRoomPtr pRoom;
   m_pModelObject->QueryInterface(&pRoom);
 
-  auto& mngr = m_pPropertyManagers->m_default;
   mngr.addValue(propertyList, QApplication::translate("me_room", "name"), QString::fromWCharArray(pRoom->GetRoomName()));
   mngr.addValue(propertyList, QApplication::translate("me_room", "roomNumber"), QString::fromWCharArray(pRoom->GetRoomNumber()));
 }

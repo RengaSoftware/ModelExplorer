@@ -11,25 +11,23 @@
 #include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
+
 class PropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
-  PropertyViewBuilder(PropertyManagers* pPropertyManagers,
-                      Renga::IApplicationPtr pApplication,
+  PropertyViewBuilder(Renga::IApplicationPtr pApplication,
                       Renga::IModelObjectPtr pModelObject);
 
   // IPropertyViewBuilder
-  void createIntegratedParameters(PropertyList& propertyList) override;
-  void createParameters(PropertyList& propertyList) override;
-  void createQuantities(PropertyList& propertyList) override;
-  PropertyList createProperties() override;
+  void createIntegratedParameters(PropertyManager& mng, PropertyList& propertyList) override;
+  void createParameters(PropertyManager& mng, PropertyList& propertyList) override;
+  void createQuantities(PropertyManager& mng, PropertyList& propertyList) override;
+  PropertyList createProperties(PropertyManager& mng) override;
 
   QString getMaterialName(const int& materialId);
   QString getLayeredMaterialName(const int& layeredMaterialId);
 
 protected:
-  PropertyManagers* m_pPropertyManagers;
-
   Renga::IApplicationPtr m_pApplication;
   Renga::IModelObjectPtr m_pModelObject;
 };

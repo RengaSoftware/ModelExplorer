@@ -10,8 +10,7 @@ PropertyViewReinforcementUnitUsageSource::PropertyViewReinforcementUnitUsageSour
 {
 }
 
-std::unique_ptr<IPropertyViewBuilder> PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewReinforcementUnitUsageSource::createPropertyViewBuilder()
 {
-  return std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(
-    pPropertyManagers, m_pApplication, m_pReinforcementUnitUsage);
+  return std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, m_pReinforcementUnitUsage);
 }

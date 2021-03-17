@@ -9,5 +9,5 @@ class IPropertyViewSourceObject
 public:
   virtual ~IPropertyViewSourceObject() {}
 
-  virtual std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) = 0;
+  virtual std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder() = 0;
 };

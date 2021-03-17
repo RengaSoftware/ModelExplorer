@@ -10,21 +10,19 @@
 #include "LevelPropertyViewBuilder.h"
 
 
-LevelPropertyViewBuilder::LevelPropertyViewBuilder(PropertyManagers* pPropertyManagers,
-                                                   Renga::IApplicationPtr pApplication,
+LevelPropertyViewBuilder::LevelPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                    Renga::IModelObjectPtr pModelObject) :
-  PropertyViewBuilder(pPropertyManagers, pApplication, pModelObject)
+  PropertyViewBuilder(pApplication, pModelObject)
 {
 }
 
-void LevelPropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
+void LevelPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  PropertyViewBuilder::createIntegratedParameters(propertyList);
+  PropertyViewBuilder::createIntegratedParameters(mngr, propertyList);
 
   Renga::ILevelPtr pLevel;
   m_pModelObject->QueryInterface(&pLevel);
 
-  auto& mngr = m_pPropertyManagers->m_default;
   mngr.addValue(propertyList, QApplication::translate("me_level", "name"), QString::fromWCharArray(pLevel->GetLevelName()));
   mngr.addValue(propertyList, QApplication::translate("me_level", "elevation"), pLevel->GetElevation());
 }

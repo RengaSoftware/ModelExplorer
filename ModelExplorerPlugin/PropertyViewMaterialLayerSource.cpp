@@ -12,7 +12,7 @@ PropertyViewMaterialLayerSource::PropertyViewMaterialLayerSource(Renga::IApplica
 {
 }
 
-std::unique_ptr<IPropertyViewBuilder> PropertyViewMaterialLayerSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewMaterialLayerSource::createPropertyViewBuilder()
 {
-  return std::make_unique<MaterialLayerPropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pMaterialLayer, m_pLayer);
+  return std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, m_pMaterialLayer, m_pLayer);
 }

@@ -16,7 +16,7 @@ PropertyViewModelObjectSource::PropertyViewModelObjectSource(
 {
 }
 
-std::unique_ptr<IPropertyViewBuilder> PropertyViewModelObjectSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewModelObjectSource::createPropertyViewBuilder()
 {
   if (m_pModelObject == nullptr)
     return nullptr;
@@ -27,9 +27,9 @@ std::unique_ptr<IPropertyViewBuilder> PropertyViewModelObjectSource::createPrope
     return nullptr;
 
   if (objectType == Renga::ObjectTypes::Level)
-    return std::make_unique<LevelPropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pModelObject);
+    return std::make_unique<LevelPropertyViewBuilder>(m_pApplication, m_pModelObject);
   else if (objectType == Renga::ObjectTypes::Room)
-    return std::make_unique<RoomPropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pModelObject);
+    return std::make_unique<RoomPropertyViewBuilder>(m_pApplication, m_pModelObject);
   else
-    return std::make_unique<PropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pModelObject);
+    return std::make_unique<PropertyViewBuilder>(m_pApplication, m_pModelObject);
 }

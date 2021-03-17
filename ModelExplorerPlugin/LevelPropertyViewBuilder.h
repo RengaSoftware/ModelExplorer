@@ -13,9 +13,8 @@
 class LevelPropertyViewBuilder : public PropertyViewBuilder
 {
 public:
-  LevelPropertyViewBuilder(PropertyManagers* pPropertyManagers,
-                           Renga::IApplicationPtr pApplication,
+  LevelPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                            Renga::IModelObjectPtr pModelObject);
 
-  void createIntegratedParameters(PropertyList& propertyList) override;
+  void createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList) override;
 };
