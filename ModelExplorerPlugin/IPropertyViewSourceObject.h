@@ -15,7 +15,7 @@ public:
   virtual Renga::IPropertyPtr getUserDefinedProperty(GUID propertyId) = 0;
 };
 
-class CPropertyViewSourceObject : public IPropertyViewSourceObject
+class PropertyViewSourceObject : public IPropertyViewSourceObject
 {
 public:
   Renga::IParameterPtr getParameter(GUID parameterId) override { return nullptr; }

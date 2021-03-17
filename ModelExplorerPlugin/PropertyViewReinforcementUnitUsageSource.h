@@ -1,6 +1,6 @@
 #include "IPropertyViewSourceObject.h"
 
-class PropertyViewReinforcementUnitUsageSource : public CPropertyViewSourceObject
+class PropertyViewReinforcementUnitUsageSource : public PropertyViewSourceObject
 {
 public:
   PropertyViewReinforcementUnitUsageSource(Renga::IApplicationPtr pApplication,

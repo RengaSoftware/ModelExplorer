@@ -2,7 +2,7 @@
 
 #include "IPropertyViewSourceObject.h"
 
-class PropertyViewRebarUsageSource : public CPropertyViewSourceObject
+class PropertyViewRebarUsageSource : public PropertyViewSourceObject
 {
 public:
   PropertyViewRebarUsageSource(Renga::IApplicationPtr pApplication,
