@@ -2,7 +2,7 @@
 
 #include "IPropertyViewSourceObject.h"
 
-class PropertyViewMaterialLayerSource : public CPropertyViewSourceObject
+class PropertyViewMaterialLayerSource : public PropertyViewSourceObject
 {
 public:
   PropertyViewMaterialLayerSource(Renga::IApplicationPtr pApplication,
