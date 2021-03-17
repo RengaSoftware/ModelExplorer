@@ -224,6 +224,9 @@
     <ClInclude Include="TreeViewUtils.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="PropertyList.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\ui\ModelExplorer.ui">

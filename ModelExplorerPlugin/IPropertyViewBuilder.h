@@ -8,10 +8,8 @@
 
 #pragma once
 
-#include <qttreepropertybrowser.h>
+#include "PropertyList.h"
 
-
-typedef std::list<QtProperty*> PropertyList;
 
 class IPropertyViewBuilder
 {

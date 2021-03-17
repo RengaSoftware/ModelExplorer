@@ -8,10 +8,10 @@
 
 #pragma once
 
+#include "PropertyList.h"
+
 #include <qtpropertymanager.h>
 #include <qtpropertybrowser.h>
-
-#include "IPropertyViewBuilder.h"
 
 
 class PropertyView;
@@ -30,7 +30,6 @@ public:
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const int value) const;
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const double value) const;
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
-  
   QtProperty* addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
 
 private:
