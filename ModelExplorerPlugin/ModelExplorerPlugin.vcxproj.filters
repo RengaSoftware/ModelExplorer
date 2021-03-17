@@ -155,6 +155,9 @@
     <ClCompile Include="PropertyViewRebarUsageSource.cpp">
       <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
     </ClCompile>
+    <ClCompile Include="TreeViewUtils.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -216,6 +219,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="TreeViewItemType.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeViewUtils.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

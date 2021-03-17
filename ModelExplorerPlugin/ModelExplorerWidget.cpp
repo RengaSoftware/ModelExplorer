@@ -16,6 +16,7 @@
 #include "TreeViewItemRole.h"
 #include "TreeViewItemType.h"
 #include "TreeViewModelBuilder.h"
+#include "TreeViewUtils.h"
 #include "BoolGuard.h"
 
 #include <QtCore/QFile.h>
@@ -147,7 +148,7 @@ void ModelExplorerWidget::onTreeViewSelectionChanged(const QItemSelection& selec
 
   int itemType = eTreeViewItemType::Undefined;
 
-  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), selectedItemIndex, itemType))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), selectedItemIndex, eTreeViewItemRole::ItemType, itemType))
     assert(false);
 
   if (isTreeViewModelObject(selectedItemIndex))
@@ -363,7 +364,7 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -378,7 +379,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -386,7 +387,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 
   int layerIndex = 0;
 
-  if (!TreeViewModelBuilder::tryGetLayerIndex(m_pTreeViewModel.get(), index, layerIndex))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, layerIndex))
     assert(false);
   
   auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
@@ -401,7 +402,7 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -409,11 +410,11 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 
   int reinforcementUnitStyleId = 0;
 
-  TreeViewModelBuilder::tryGetReinforcementUnitStyleId(m_pTreeViewModel.get(), index, reinforcementUnitStyleId);
+  tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitStyleId, reinforcementUnitStyleId);
 
   int rebarUsageIndex = 0;
 
-  if (!TreeViewModelBuilder::tryGetRebarUsageIndex(m_pTreeViewModel.get(), index, rebarUsageIndex))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::RebarUsageIndex, rebarUsageIndex))
     assert(false);
 
   Renga::IRebarUsagePtr pRebarUsage = reinforcementUnitStyleId != 0 ?
@@ -430,7 +431,7 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 {
   int modelObjectId = 0;
 
-  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), index, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -438,7 +439,7 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 
   int reinforcementUnitUsageIndex = 0;
 
-  if (!TreeViewModelBuilder::tryGetReinforcementUnitUsageIndex(m_pTreeViewModel.get(), index, reinforcementUnitUsageIndex))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitUsageIndex, reinforcementUnitUsageIndex))
     assert(false);
 
   auto pReinforcementUnitUsage = getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex);
@@ -583,14 +584,14 @@ void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIn
 
   bool isVisible = true;
 
-  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::ItemType, itemType))
     assert(false);
 
   if (itemType == eTreeViewItemType::ModelObject)
   {
     int modelObjectId = 0;
 
-    if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), itemIndex, modelObjectId))
+    if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::ModelObjectId, modelObjectId))
       assert(false);
 
     isVisible = getRengaObjectVisibility(m_pApplication, modelObjectId);
@@ -689,7 +690,7 @@ bool ModelExplorerWidget::isTreeViewObjectGroup(const QModelIndex& itemIndex) co
 {
   int itemType = eTreeViewItemType::Undefined;
 
-  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::ItemType, itemType))
     return false;
 
   return itemType == eTreeViewItemType::ObjectGroup;
@@ -699,7 +700,7 @@ bool ModelExplorerWidget::isTreeViewModelObject(const QModelIndex& itemIndex) co
 {
   int itemType = eTreeViewItemType::Undefined;
 
-  if (!TreeViewModelBuilder::tryGetItemType(m_pTreeViewModel.get(), itemIndex, itemType))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::ItemType, itemType))
     return false;
 
   return itemType == eTreeViewItemType::ModelObject || itemType == eTreeViewItemType::Level;
@@ -709,7 +710,7 @@ int ModelExplorerWidget::getTreeViewModelObjectId(const QModelIndex& itemIndex) 
 {
   int result = 0;
 
-  if (!TreeViewModelBuilder::tryGetModelObjectId(m_pTreeViewModel.get(), itemIndex, result))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex,eTreeViewItemRole::ModelObjectId , result))
     assert(false);
 
   return result;
