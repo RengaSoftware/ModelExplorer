@@ -9,11 +9,129 @@
 #include "stdafx.h"
 #include "PropertyView.h"
 #include "GuidUtils.h"
-
-#include <qteditorfactory.h>
 #include "PropertyViewModelObjectSource.h"
 
+#include <qteditorfactory.h>
+
 #include <Windows.h>
+
+namespace
+{
+  bool createProperties(
+    IPropertyViewBuilder* pObjectPropertyViewBuilder,
+    PropertyList& integratedParameters,
+    PropertyList& parameters,
+    PropertyList& quantities,
+    PropertyList& properties)
+  {
+    if (pObjectPropertyViewBuilder == nullptr)
+      return false;
+
+    integratedParameters.clear();
+
+    parameters.clear();
+    quantities.clear();
+
+    pObjectPropertyViewBuilder->createIntegratedParameters(integratedParameters);
+
+    pObjectPropertyViewBuilder->createParameters(parameters);
+    pObjectPropertyViewBuilder->createQuantities(quantities);
+
+    properties = pObjectPropertyViewBuilder->createProperties();
+
+    return true;
+  }
+
+  void buildPropertyViewAsList(
+    QtTreePropertyBrowser& propertyBrowser,
+    PropertyList &parameters, 
+    PropertyList &parametersEx,
+    PropertyList &calculated, 
+    PropertyList &userDefinedProperties) 
+  {
+    // show in list mode
+    PropertyList allProperties;
+    allProperties.splice(allProperties.end(), parameters);
+    allProperties.splice(allProperties.end(), parametersEx);
+    allProperties.splice(allProperties.end(), calculated);
+    allProperties.splice(allProperties.end(), userDefinedProperties);
+
+    allProperties.sort([](QtProperty* left, QtProperty* right) -> bool
+    {
+      return left->propertyName() < right->propertyName();
+    });
+
+    for (auto it = allProperties.begin(); it != allProperties.end(); ++it)
+      propertyBrowser.addProperty(*it);
+  }
+
+  void buildPropertyViewSingleCategory(
+    QtTreePropertyBrowser& propertyBrowser, 
+    QtGroupPropertyManager &groupManager,
+    const QString& categoryName, 
+    const PropertyList& categoryProperties)
+  {
+    if (categoryProperties.empty())
+      return;
+
+    QtProperty* pCategoryProperty = groupManager.addProperty(categoryName);
+    pCategoryProperty->setBold(true);
+
+    PropertyList singleCategoryProperties(categoryProperties);
+    singleCategoryProperties.sort([](QtProperty* left, QtProperty* right) -> bool
+    {
+      return left->propertyName() < right->propertyName();
+    });
+
+    for (auto it = singleCategoryProperties.begin(); it != singleCategoryProperties.end(); ++it)
+      pCategoryProperty->addSubProperty(*it);
+
+    propertyBrowser.addProperty(pCategoryProperty);
+  }
+
+  void buildPropertyViewByCategory(
+    QtTreePropertyBrowser& propertyBrowser, 
+    QtGroupPropertyManager &groupManager,
+    const PropertyList& integratedParameters, 
+    PropertyList& parameters, 
+    const PropertyList& quantities, 
+    const PropertyList& properties)
+  {
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object parameters"), integratedParameters);
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object parameters ex"), parameters);
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Calculated characteristics"), quantities);
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object properties"), properties);
+  }
+
+  void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
+                         IPropertyViewSourceObject *pSourceObject,
+                         PropertyManagers &propertyManagers,
+                         QtGroupPropertyManager &groupManager,
+                         PropertyView::Mode propertyViewMode)
+  {
+    propertyManagers.clear();
+    groupManager.clear();
+
+    if (pSourceObject == nullptr)
+      return;
+
+    auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&propertyManagers);
+
+    PropertyList integratedParameters;
+
+    PropertyList parameters;
+    PropertyList quantities;
+    PropertyList properties;
+
+    if (!createProperties(propertyViewBuilder.get(), integratedParameters, parameters, quantities, properties))
+      return;
+
+    if (propertyViewMode == PropertyView::Mode::ListMode)
+      buildPropertyViewAsList(propertyBrowser, integratedParameters, parameters, quantities, properties);
+    else
+      buildPropertyViewByCategory(propertyBrowser, groupManager, integratedParameters, parameters, quantities, properties);
+  }
+}
 
 PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication) :
   QtTreePropertyBrowser(pParent),
@@ -32,14 +150,13 @@ void PropertyView::showProperties(Renga::IParameterContainerPtr parameters,
   m_properties = properties;
   m_pSourceObject.reset(pSourceObject);
 
-  buildPropertyView(pSourceObject);
+  buildPropertyView(*this, pSourceObject, m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
-
-  buildPropertyView(m_pSourceObject.get());
+  buildPropertyView(*this, m_pSourceObject.get(), m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::initPropertyManagers()
@@ -65,109 +182,9 @@ void PropertyView::initPropertyManagers()
      this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
 }
 
-void PropertyView::clearPropertyManagers()
+void PropertyView::updateParameters() 
 {
-  m_propertyManagers.clear();
-  m_pGroupManager->clear();
-}
-
-void PropertyView::buildPropertyViewAsList(PropertyList& parameters, PropertyList& parametersEx, PropertyList& calculated, PropertyList& userDefinedProperties)
-{
-  // show in list mode
-  PropertyList allProperties;
-  allProperties.splice(allProperties.end(), parameters);
-  allProperties.splice(allProperties.end(), parametersEx);
-  allProperties.splice(allProperties.end(), calculated);
-  allProperties.splice(allProperties.end(), userDefinedProperties);
-
-  allProperties.sort([](QtProperty* left, QtProperty* right) -> bool
-                    {
-                    return left->propertyName() < right->propertyName();
-                    });
-
-  for (auto it = allProperties.begin(); it != allProperties.end(); ++it)
-    addProperty(*it);
-}
-
-void PropertyView::buildPropertyViewSingleCategory(const QString& categoryName, const PropertyList& categoryProperties)
-{
-  if(categoryProperties.empty())
-    return;
-
-  QtProperty* pCategoryProperty = m_pGroupManager->addProperty(categoryName);
-  pCategoryProperty->setBold(true);
-  
-  PropertyList singleCategoryProperties(categoryProperties);
-  singleCategoryProperties.sort([](QtProperty* left, QtProperty* right) -> bool
-                               {
-                                 return left->propertyName() < right->propertyName();
-                               });
-
-  for (auto it = singleCategoryProperties.begin(); it != singleCategoryProperties.end(); ++it)
-    pCategoryProperty->addSubProperty(*it);
-
-  addProperty(pCategoryProperty);
-}
-
-void PropertyView::buildPropertyView(IPropertyViewSourceObject* pSourceObject)
-{
-  clearPropertyManagers();
-
-  if (pSourceObject == nullptr)
-    return;
-
-  auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
-
-  PropertyList integratedParameters;
-
-  PropertyList parameters;
-  PropertyList quantities;
-  PropertyList properties;
-
-  if (!createProperties(propertyViewBuilder.get(), integratedParameters, parameters, quantities, properties))
-    return;
-
-  if (m_propertyViewMode == Mode::ListMode)
-    buildPropertyViewAsList(integratedParameters, parameters, quantities, properties);
-  else
-    buildPropertyViewByCategory(integratedParameters, parameters, quantities, properties);
-}
-
-void PropertyView::buildPropertyViewByCategory(const PropertyList& integratedParameters, PropertyList& parameters, const PropertyList& quantities, const PropertyList& properties)
-{
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters"), integratedParameters);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object parameters ex"), parameters);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Calculated characteristics"), quantities);
-  buildPropertyViewSingleCategory(QApplication::translate("me_propertyView", "Object properties"), properties);
-}
-
-bool PropertyView::createProperties(
-  IPropertyViewBuilder* pObjectPropertyViewBuilder,
-  PropertyList& integratedParameters,
-  PropertyList& parameters,
-  PropertyList& quantities,
-  PropertyList& properties)
-{
-  if (pObjectPropertyViewBuilder == nullptr)
-    return false;
-
-  integratedParameters.clear();
-
-  parameters.clear();
-  quantities.clear();
-
-  pObjectPropertyViewBuilder->createIntegratedParameters(integratedParameters);
-
-  pObjectPropertyViewBuilder->createParameters(parameters);
-  pObjectPropertyViewBuilder->createQuantities(quantities);
-
-  properties = pObjectPropertyViewBuilder->createProperties();
-
-  return true;
-}
-
-void PropertyView::updateParameters() {
-  buildPropertyView(m_pSourceObject.get());
+  buildPropertyView(*this, m_pSourceObject.get(), m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
