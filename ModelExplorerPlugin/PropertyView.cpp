@@ -104,26 +104,17 @@ namespace
   }
 
   void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
-                         IPropertyViewSourceObject *pSourceObject,
-                         PropertyManagers &propertyManagers,
+                         IPropertyViewBuilder& propertyViewBuilder,
                          QtGroupPropertyManager &groupManager,
                          PropertyView::Mode propertyViewMode)
   {
-    propertyManagers.clear();
-    groupManager.clear();
-
-    if (pSourceObject == nullptr)
-      return;
-
-    auto propertyViewBuilder = pSourceObject->createPropertyViewBuilder(&propertyManagers);
-
     PropertyList integratedParameters;
 
     PropertyList parameters;
     PropertyList quantities;
     PropertyList properties;
 
-    if (!createProperties(propertyViewBuilder.get(), integratedParameters, parameters, quantities, properties))
+    if (!createProperties(&propertyViewBuilder, integratedParameters, parameters, quantities, properties))
       return;
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
@@ -150,13 +141,20 @@ void PropertyView::showProperties(Renga::IParameterContainerPtr parameters,
   m_properties = properties;
   m_pSourceObject.reset(pSourceObject);
 
-  buildPropertyView(*this, pSourceObject, m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
+  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+
+  clearPropertyManagers();
+  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
-  buildPropertyView(*this, m_pSourceObject.get(), m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
+
+  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+
+  clearPropertyManagers();
+  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::initPropertyManagers()
@@ -182,9 +180,18 @@ void PropertyView::initPropertyManagers()
      this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
 }
 
+void PropertyView::clearPropertyManagers()
+{
+  m_pGroupManager->clear();
+  m_propertyManagers.clear();
+}
+
 void PropertyView::updateParameters() 
 {
-  buildPropertyView(*this, m_pSourceObject.get(), m_propertyManagers, *m_pGroupManager, m_propertyViewMode);
+  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+
+  clearPropertyManagers();
+  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
