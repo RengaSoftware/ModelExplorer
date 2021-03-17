@@ -38,13 +38,3 @@ Renga::IParameterPtr PropertyViewModelObjectSource::getParameter(GUID parameterI
 {
   return m_pModelObject->GetParameters()->Get(parameterId);
 }
-
-Renga::IPropertyPtr PropertyViewModelObjectSource::getUserDefinedProperty(GUID propertyId)
-{
-  if (m_pModelObject == nullptr)
-    return nullptr;
-
-  auto propertyContainer = m_pModelObject->GetProperties();
-
-  return propertyContainer->Get(propertyId);
-}

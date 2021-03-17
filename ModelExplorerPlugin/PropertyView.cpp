@@ -25,8 +25,9 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication
   initPropertyManagers();
 }
 
-void PropertyView::showProperties(IPropertyViewSourceObject* pSourceObject)
+void PropertyView::showProperties(Renga::IPropertyContainerPtr properties, IPropertyViewSourceObject* pSourceObject)
 {
+  m_properties = properties;
   m_pSourceObject.reset(pSourceObject);
 
   buildPropertyView(pSourceObject);
@@ -282,12 +283,11 @@ void PropertyView::userStringAttributeChanged(QtProperty* userAttributeProperty,
 
 Renga::IPropertyPtr PropertyView::getProperty(QtProperty* userAttributeProperty)
 {
-  if (m_pSourceObject == nullptr)
+  if (m_properties == nullptr)
     return nullptr;
 
   const auto propertyId = GuidFromString(userAttributeProperty->data().toStdString());
-     
-  return m_pSourceObject->getUserDefinedProperty(propertyId);
+  return m_properties->Get(propertyId);
 }
 
 Renga::IOperationPtr PropertyView::createOperation()

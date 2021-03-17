@@ -2,7 +2,7 @@
 
 #include "IPropertyViewSourceObject.h"
 
-class PropertyViewMaterialLayerSource : public PropertyViewSourceObject
+class PropertyViewMaterialLayerSource : public IPropertyViewSourceObject
 {
 public:
   PropertyViewMaterialLayerSource(Renga::IApplicationPtr pApplication,
@@ -10,6 +10,7 @@ public:
                                   Renga::ILayerPtr pLayer);
 
   std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  Renga::IParameterPtr getParameter(GUID parameterId) override { return nullptr; }
 
 private:
   Renga::IApplicationPtr m_pApplication;

@@ -27,7 +27,7 @@ public:
 
   PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
 
-  void showProperties(IPropertyViewSourceObject* pSourceObject);
+  void showProperties(Renga::IPropertyContainerPtr properties, IPropertyViewSourceObject* pSourceObject);
 
   void changeMode(PropertyView::Mode newMode);
 
@@ -73,4 +73,5 @@ private:
   Mode m_propertyViewMode;
 
   std::unique_ptr<IPropertyViewSourceObject> m_pSourceObject;
+  Renga::IPropertyContainerPtr m_properties;
 };
