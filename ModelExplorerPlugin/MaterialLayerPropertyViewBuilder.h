@@ -3,19 +3,17 @@
 #include "IPropertyViewBuilder.h"
 #include "PropertyManagers.h"
 
-class MaterialLayerPropertyViewBuilder : public CPropertyViewBuilder
+class MaterialLayerPropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
-  MaterialLayerPropertyViewBuilder(const PropertyManagers* pPropertyManagers,
-                                   Renga::IApplicationPtr pApplication,
+  MaterialLayerPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                    Renga::IMaterialLayerPtr pMaterialLayer,
                                    Renga::ILayerPtr pLayer);
 
-  void createIntegratedParameters(PropertyList& propertyList) override;
-  void createQuantities(PropertyList& propertyList) override;
+  void createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList) override;
+  void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
 
 private:
-  const PropertyManagers* m_pPropertyManagers;
   Renga::IApplicationPtr m_pApplication;
   Renga::IMaterialLayerPtr m_pMaterialLayer;
   Renga::ILayerPtr m_pLayer;

@@ -10,7 +10,7 @@ PropertyViewRebarUsageSource::PropertyViewRebarUsageSource(Renga::IApplicationPt
 {
 }
 
-std::unique_ptr<IPropertyViewBuilder> PropertyViewRebarUsageSource::createPropertyViewBuilder(PropertyManagers* pPropertyManagers)
+std::unique_ptr<IPropertyViewBuilder> PropertyViewRebarUsageSource::createPropertyViewBuilder()
 {
-  return std::make_unique<RebarUsagePropertyViewBuilder>(pPropertyManagers, m_pApplication, m_pRebarUsage);
+  return std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, m_pRebarUsage);
 }

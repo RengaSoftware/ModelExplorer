@@ -13,19 +13,15 @@
 #include <Renga/QuantityIds.h>
 
 
-PropertyViewBuilder::PropertyViewBuilder(PropertyManagers* pPropertyManagers,
-                                         Renga::IApplicationPtr pApplication,
+PropertyViewBuilder::PropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                          Renga::IModelObjectPtr pModelObject) :
   m_pApplication(pApplication),
-  m_pPropertyManagers(pPropertyManagers),
   m_pModelObject(pModelObject)
 {
 }
 
-void PropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
+void PropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  auto& mngr = m_pPropertyManagers->m_default;
-
   mngr.addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(m_pModelObject->GetName()));
 
   Renga::ILevelObjectPtr pLevelObject;
@@ -54,10 +50,9 @@ void PropertyViewBuilder::createIntegratedParameters(PropertyList& propertyList)
     mngr.addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
 }
 
-void PropertyViewBuilder::createParameters(PropertyList& propertyList)
+void PropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   // block signals before filling properties
-  auto& mngr = m_pPropertyManagers->m_parameters;
   mngr.blockSignals(true);
 
   auto pParameters = m_pModelObject->GetParameters();
@@ -115,15 +110,13 @@ void PropertyViewBuilder::createParameters(PropertyList& propertyList)
   mngr.blockSignals(false);
 }
 
-void PropertyViewBuilder::createQuantities(PropertyList& propertyList)
+void PropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
   using namespace Renga;
 
   auto pQuantities = m_pModelObject->GetQuantities();
 
   PropertyList result;
-
-  auto& mngr = m_pPropertyManagers->m_default;
 
   mngr.addValue(propertyList, QApplication::translate("me_mo", "overallWidth"), pQuantities->Get(QuantityIds::OverallWidth));
   mngr.addValue(propertyList, QApplication::translate("me_mo", "overallHeight"), pQuantities->Get(QuantityIds::OverallHeight));
@@ -171,7 +164,7 @@ void PropertyViewBuilder::createQuantities(PropertyList& propertyList)
   mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
 }
 
-PropertyList PropertyViewBuilder::createProperties()
+PropertyList PropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
   PropertyList pResult;
 
@@ -179,7 +172,6 @@ PropertyList PropertyViewBuilder::createProperties()
   auto pPropertyManager = pProject->GetPropertyManager();
 
   // block signals before filling properties
-  auto& mngr = m_pPropertyManagers->m_properties;
   mngr.blockSignals(true);
 
   // check all attributes

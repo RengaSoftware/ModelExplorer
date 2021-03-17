@@ -19,6 +19,7 @@ namespace
 {
   bool createProperties(
     IPropertyViewBuilder* pObjectPropertyViewBuilder,
+    PropertyManagers& propertyManagers,
     PropertyList& integratedParameters,
     PropertyList& parameters,
     PropertyList& quantities,
@@ -28,16 +29,13 @@ namespace
       return false;
 
     integratedParameters.clear();
-
     parameters.clear();
     quantities.clear();
 
-    pObjectPropertyViewBuilder->createIntegratedParameters(integratedParameters);
-
-    pObjectPropertyViewBuilder->createParameters(parameters);
-    pObjectPropertyViewBuilder->createQuantities(quantities);
-
-    properties = pObjectPropertyViewBuilder->createProperties();
+    pObjectPropertyViewBuilder->createIntegratedParameters(propertyManagers.m_default, integratedParameters);
+    pObjectPropertyViewBuilder->createParameters(propertyManagers.m_parameters, parameters);
+    pObjectPropertyViewBuilder->createQuantities(propertyManagers.m_default /*Why?!*/ , quantities);
+    properties = pObjectPropertyViewBuilder->createProperties(propertyManagers.m_properties);
 
     return true;
   }
@@ -104,6 +102,7 @@ namespace
   }
 
   void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
+                         PropertyManagers& propertyManagers,
                          IPropertyViewBuilder& propertyViewBuilder,
                          QtGroupPropertyManager &groupManager,
                          PropertyView::Mode propertyViewMode)
@@ -114,7 +113,7 @@ namespace
     PropertyList quantities;
     PropertyList properties;
 
-    if (!createProperties(&propertyViewBuilder, integratedParameters, parameters, quantities, properties))
+    if (!createProperties(&propertyViewBuilder, propertyManagers, integratedParameters, parameters, quantities, properties))
       return;
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
@@ -141,20 +140,20 @@ void PropertyView::showProperties(Renga::IParameterContainerPtr parameters,
   m_properties = properties;
   m_pSourceObject.reset(pSourceObject);
 
-  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+  auto builder = m_pSourceObject->createPropertyViewBuilder();
 
   clearPropertyManagers();
-  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
 
-  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+  auto builder = m_pSourceObject->createPropertyViewBuilder();
 
   clearPropertyManagers();
-  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::initPropertyManagers()
@@ -188,10 +187,10 @@ void PropertyView::clearPropertyManagers()
 
 void PropertyView::updateParameters() 
 {
-  auto builder = m_pSourceObject->createPropertyViewBuilder(&m_propertyManagers);
+  auto builder = m_pSourceObject->createPropertyViewBuilder();
 
   clearPropertyManagers();
-  buildPropertyView(*this, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)

@@ -8,7 +8,7 @@ public:
   PropertyViewRebarUsageSource(Renga::IApplicationPtr pApplication,
                                Renga::IRebarUsagePtr pRebarUsage);
 
-  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder(PropertyManagers* pPropertyManagers) override;
+  std::unique_ptr<IPropertyViewBuilder> createPropertyViewBuilder() override;
 
 private:
   Renga::IApplicationPtr m_pApplication;
