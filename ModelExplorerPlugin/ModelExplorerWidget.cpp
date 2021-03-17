@@ -372,7 +372,9 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 
   auto pSourceObject = new PropertyViewModelObjectSource(m_pApplication, pModelObject);
 
-  m_pPropertyView->showProperties(pModelObject->GetProperties(), pSourceObject);
+  m_pPropertyView->showProperties(pModelObject->GetParameters(),
+                                  pModelObject->GetProperties(), 
+                                  pSourceObject);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -395,7 +397,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 
   auto pSourceObject = new PropertyViewMaterialLayerSource(m_pApplication, pMaterialLayer, pLayer);
 
-  m_pPropertyView->showProperties(nullptr, pSourceObject);
+  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -424,7 +426,7 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 
   auto pSourceObject = new PropertyViewRebarUsageSource(m_pApplication, pRebarUsage);
 
-  m_pPropertyView->showProperties(nullptr, pSourceObject);
+  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -447,7 +449,7 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 
   auto pSourceObject = new PropertyViewReinforcementUnitUsageSource(m_pApplication, pReinforcementUnitUsage);
 
-  m_pPropertyView->showProperties(nullptr, pSourceObject);
+  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
