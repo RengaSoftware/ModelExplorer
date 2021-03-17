@@ -25,8 +25,10 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication
   initPropertyManagers();
 }
 
-void PropertyView::showProperties(Renga::IPropertyContainerPtr properties, IPropertyViewSourceObject* pSourceObject)
-{
+void PropertyView::showProperties(Renga::IParameterContainerPtr parameters,
+                                  Renga::IPropertyContainerPtr properties,
+                                  IPropertyViewSourceObject *pSourceObject) {
+  m_parameters = parameters,
   m_properties = properties;
   m_pSourceObject.reset(pSourceObject);
 
@@ -172,7 +174,7 @@ void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
 {
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
-  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  auto pParameter = m_parameters->Get(parameterId);
   if (!pParameter)
     return;
 
@@ -193,7 +195,7 @@ void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
 {
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
-  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  auto pParameter = m_parameters->Get(parameterId);
   if (!pParameter)
     return;
 
@@ -220,7 +222,7 @@ void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& 
     {
       const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
-      auto pParameter = m_pSourceObject->getParameter(parameterId);
+      auto pParameter = m_parameters->Get(parameterId);
       if (!pParameter)
         return;
 
@@ -243,7 +245,7 @@ void PropertyView::parameterStringChanged(QtProperty* pProperty, const QString& 
 {
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
-  auto pParameter = m_pSourceObject->getParameter(parameterId);
+  auto pParameter = m_parameters->Get(parameterId);
   if (!pParameter)
     return;
 
