@@ -198,9 +198,9 @@ void TreeViewModelBuilder::addLevelSubtree(
 }
 
 void TreeViewModelBuilder::addObjectGroupSubtree(
-  QStandardItem* pParentItem,
-  const std::list<Renga::IModelObjectPtr>& objectGroup,
-  const ObjectTypeData& objectTypeData)
+    QStandardItem* pParentItem,
+    const std::list<Renga::IModelObjectPtr>& objectGroup,
+    const ObjectTypeData& objectTypeData)
 {
   QList<QStandardItem*> objectGroupItemList =
     createItem(objectTypeData.m_typeNodeName, ":/icons/Folder", eTreeViewItemType::ObjectGroup, true, true);
@@ -209,14 +209,20 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
     return;
 
   for (auto pObject : objectGroup)
-  {
-    QList<QStandardItem*> itemList = createModelObjectItem(pObject, objectTypeData);
-    addMaterialsSubtree(itemList.at(0), pObject);
-    objectGroupItemList.at(0)->appendRow(itemList);
-  }
+    addObjectSubtree(objectGroupItemList.at(0), pObject, objectTypeData);
   
   setItemVisibilityState(objectGroupItemList, objectGroupHasVisibleObject(objectGroup));
   pParentItem->appendRow(objectGroupItemList);
+}
+
+void TreeViewModelBuilder::addObjectSubtree(
+    QStandardItem* pParentItem,
+    Renga::IModelObjectPtr pObject,
+    const ObjectTypeData& objectTypeData)
+{
+  QList<QStandardItem*> itemList = createModelObjectItem(pObject, objectTypeData);
+  addMaterialsSubtree(itemList.at(0), pObject);
+  pParentItem->appendRow(itemList);
 }
 
 void TreeViewModelBuilder::addMaterialsSubtree(
