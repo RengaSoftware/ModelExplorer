@@ -8,10 +8,10 @@
 
 #pragma once
 
-#include "PropertyViewBuilder.h"
+#include "ObjectPropertyViewBuilder.h"
 
 
-class LevelPropertyViewBuilder : public PropertyViewBuilder
+class LevelPropertyViewBuilder : public ObjectPropertyViewBuilder
 {
 public:
   LevelPropertyViewBuilder(Renga::IApplicationPtr pApplication,
