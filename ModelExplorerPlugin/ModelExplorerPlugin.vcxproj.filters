@@ -137,13 +137,13 @@
     <ClCompile Include="GeneratedFiles\Release\moc_PropertyView.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="PropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
     <ClCompile Include="TreeViewUtils.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyManager.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,9 +179,6 @@
     <ClInclude Include="ReinforcementUnitUsagePropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
     <ClInclude Include="IPropertyViewSourceObject.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
@@ -201,6 +198,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertyManager.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
   </ItemGroup>

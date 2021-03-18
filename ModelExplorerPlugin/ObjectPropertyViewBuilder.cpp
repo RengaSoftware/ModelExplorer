@@ -7,21 +7,21 @@
 //
 
 #include "stdafx.h"
-#include "PropertyViewBuilder.h"
+#include "ObjectPropertyViewBuilder.h"
 #include "PropertyManager.h"
 #include "GuidUtils.h"
 
 #include <Renga/QuantityIds.h>
 
 
-PropertyViewBuilder::PropertyViewBuilder(Renga::IApplicationPtr pApplication,
+ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                          Renga::IModelObjectPtr pModelObject) :
   m_pApplication(pApplication),
   m_pModelObject(pModelObject)
 {
 }
 
-void PropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
+void ObjectPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   mngr.addValue(propertyList, QApplication::translate("me_mo", "name"), QString::fromWCharArray(m_pModelObject->GetName()));
 
@@ -51,7 +51,7 @@ void PropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, Prop
     mngr.addValue(propertyList, QApplication::translate("me_mo", "material"), getLayeredMaterialName(pObjectWithLayeredMaterial->GetLayeredMaterialId()));
 }
 
-void PropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
+void ObjectPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   // block signals before filling properties
   mngr.blockSignals(true);
@@ -111,7 +111,7 @@ void PropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& 
   mngr.blockSignals(false);
 }
 
-void PropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
+void ObjectPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
   using namespace Renga;
 
@@ -165,7 +165,7 @@ void PropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& 
   mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
 }
 
-PropertyList PropertyViewBuilder::createProperties(PropertyManager& mngr)
+PropertyList ObjectPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
   PropertyList pResult;
 
@@ -219,7 +219,7 @@ PropertyList PropertyViewBuilder::createProperties(PropertyManager& mngr)
   return pResult;
 }
 
-QString PropertyViewBuilder::getMaterialName(const int& materialId)
+QString ObjectPropertyViewBuilder::getMaterialName(const int& materialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pMaterialManager = pProject->GetMaterialManager();
@@ -230,7 +230,7 @@ QString PropertyViewBuilder::getMaterialName(const int& materialId)
   return QString::fromWCharArray(pMaterial->GetName());
 }
 
-QString PropertyViewBuilder::getLayeredMaterialName(const int& layeredMaterialId)
+QString ObjectPropertyViewBuilder::getLayeredMaterialName(const int& layeredMaterialId)
 {
   auto pProject = m_pApplication->GetProject();
   auto pLayeredMaterialManager = pProject->GetLayeredMaterialManager();

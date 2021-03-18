@@ -13,13 +13,13 @@
 
 RoomPropertyViewBuilder::RoomPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                  Renga::IModelObjectPtr pModelObject) :
-  PropertyViewBuilder(pApplication, pModelObject)
+  ObjectPropertyViewBuilder(pApplication, pModelObject)
 {
 }
 
 void RoomPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  PropertyViewBuilder::createIntegratedParameters(mngr, propertyList);
+  ObjectPropertyViewBuilder::createIntegratedParameters(mngr, propertyList);
 
   Renga::IRoomPtr pRoom;
   m_pModelObject->QueryInterface(&pRoom);

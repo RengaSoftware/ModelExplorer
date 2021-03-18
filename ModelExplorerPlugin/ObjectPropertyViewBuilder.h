@@ -11,10 +11,10 @@
 #include "IPropertyViewBuilder.h"
 
 
-class PropertyViewBuilder : public IPropertyViewBuilder
+class ObjectPropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
-  PropertyViewBuilder(Renga::IApplicationPtr pApplication,
+  ObjectPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                       Renga::IModelObjectPtr pModelObject);
 
   // IPropertyViewBuilder

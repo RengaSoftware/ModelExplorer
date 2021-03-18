@@ -47,7 +47,7 @@ namespace
     else if (objectType == Renga::ObjectTypes::Room)
       return std::make_unique<RoomPropertyViewBuilder>(pApplication, pModelObject);
     else
-      return std::make_unique<PropertyViewBuilder>(pApplication, pModelObject);
+      return std::make_unique<ObjectPropertyViewBuilder>(pApplication, pModelObject);
   }
 }
 
