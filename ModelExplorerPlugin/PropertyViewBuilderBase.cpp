@@ -7,6 +7,70 @@
 #include <Renga/QuantityIds.h>
 
 
+PropertyList PropertyViewBuilderBase::createParametersInternal(
+    PropertyManager& mngr,
+    Renga::IParameterContainer& container)
+{
+  PropertyList result;
+  // block signals before filling properties
+  mngr.blockSignals(true);
+
+  auto pIds = container.GetIds();
+  for (int i = 0; i < pIds->Count; ++i)
+  {
+    const auto id = pIds->Get(i);
+
+    auto pParameter = container.Get(id);
+    auto pDefinition = pParameter->Definition;
+
+    QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
+
+    switch (pDefinition->GetParameterType())
+    {
+    case Renga::ParameterType::ParameterType_Angle:
+      name += ", " + QApplication::translate("me_mo", "angle_dimension");
+      break;
+    case Renga::ParameterType::ParameterType_Length:
+      name += ", " + QApplication::translate("me_mo", "length_dimension");
+      break;
+    }
+
+    QtProperty* pQtProperty(nullptr);
+    switch (pParameter->GetValueType())
+    {
+    case Renga::ParameterValueType::ParameterValueType_Bool:
+      pQtProperty = mngr.addValue(result, name, static_cast<bool>(pParameter->GetBoolValue()));
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Int:
+      pQtProperty = mngr.addValue(result, name, pParameter->GetIntValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_Double:
+      pQtProperty = mngr.addValue(result, name, pParameter->GetDoubleValue());
+      break;
+    case Renga::ParameterValueType::ParameterValueType_String:
+      pQtProperty = mngr.addValue(result, name, QString::fromWCharArray(pParameter->GetStringValue()));
+      break;
+    }
+
+    if (pQtProperty)
+    {
+      if (!pParameter->HasValue())
+        pQtProperty->setEnabled(false);
+
+      //TODO: [asv] to enable parameters update
+      pQtProperty->setModified(false);
+
+      const auto parameterIdString = QString::fromStdString((GuidToString(id)));
+      pQtProperty->setData(parameterIdString);
+    }
+  }
+
+  // unblock signals
+  mngr.blockSignals(false);
+
+  return result;
+}
+
 PropertyList PropertyViewBuilderBase::createPropertiesInternal(
     PropertyManager& mngr,
     Renga::IPropertyContainer& container)

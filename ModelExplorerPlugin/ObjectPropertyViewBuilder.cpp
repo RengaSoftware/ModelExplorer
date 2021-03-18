@@ -28,12 +28,7 @@ void ObjectPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr
   Renga::ILevelObjectPtr pLevelObject;
   m_pModelObject->QueryInterface(&pLevelObject);
   if (pLevelObject)
-  {
     mngr.addValue(propertyList, QApplication::translate("me_mo", "offset"), pLevelObject->GetVerticalOffset());
-    //add
-    //pLevelObject->GetPlacementElevation();
-    //pLevelObject->GetElevationAboveLevel();
-  }
 
   Renga::IObjectWithMarkPtr pObjectWithMark;
   m_pModelObject->QueryInterface(&pObjectWithMark);
@@ -53,62 +48,9 @@ void ObjectPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr
 
 void ObjectPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  // block signals before filling properties
-  mngr.blockSignals(true);
-
   auto pParameters = m_pModelObject->GetParameters();
-  auto pIds = pParameters->GetIds();
-  for (int i = 0; i < pIds->Count; ++i)
-  {
-    const auto id = pIds->Get(i);
-
-    auto pParameter = pParameters->Get(id);
-    auto pDefinition = pParameter->Definition;
-
-    QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
-
-    switch (pDefinition->GetParameterType())
-    {
-    case Renga::ParameterType::ParameterType_Angle:
-      name += ", " + QApplication::translate("me_mo", "angle_dimension");
-      break;
-    case Renga::ParameterType::ParameterType_Length:
-      name += ", " + QApplication::translate("me_mo", "length_dimension");
-      break;
-    }
-
-    QtProperty* pQtProperty(nullptr);
-    switch (pParameter->GetValueType())
-    {
-    case Renga::ParameterValueType::ParameterValueType_Bool:
-      pQtProperty = mngr.addValue(propertyList, name, static_cast<bool>(pParameter->GetBoolValue()));
-      break;
-    case Renga::ParameterValueType::ParameterValueType_Int:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetIntValue());
-      break;
-    case Renga::ParameterValueType::ParameterValueType_Double:
-      pQtProperty = mngr.addValue(propertyList, name, pParameter->GetDoubleValue());
-      break;
-    case Renga::ParameterValueType::ParameterValueType_String:
-      pQtProperty = mngr.addValue(propertyList, name, QString::fromWCharArray(pParameter->GetStringValue()));
-      break;
-    }
-
-    if (pQtProperty)
-    {
-      if (!pParameter->HasValue())
-        pQtProperty->setEnabled(false);
-
-      //TODO: [asv] to enable parameters update
-      pQtProperty->setModified(false);
-
-      const auto parameterIdString = QString::fromStdString((GuidToString(id)));
-      pQtProperty->setData(parameterIdString);
-    }
-  }
-
-  // unblock signals
-  mngr.blockSignals(false);
+  auto properties = createParametersInternal(mngr, *pParameters);
+  propertyList.splice(propertyList.end(), properties);
 }
 
 void ObjectPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
