@@ -145,22 +145,3 @@ QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString&
   }
   return addValue(propertyList, name, value);
 }
-
-PropertyManagers::PropertyManagers()
-{
-}
-
-void PropertyManagers::init(PropertyView* pParent)
-{
-  m_default.init(pParent, true);
-  //TODO: [asv] to enable parameters update
-  m_parameters.init(pParent, true);
-  m_properties.init(pParent, false);
-}
-
-void PropertyManagers::clear()
-{
-  m_default.clear();
-  m_parameters.clear();
-  m_properties.clear();
-}

@@ -19,7 +19,9 @@ namespace
 {
   bool createProperties(
     IPropertyViewBuilder* pObjectPropertyViewBuilder,
-    PropertyManagers& propertyManagers,
+    PropertyManager& commonAttributesMng,
+    PropertyManager& parametersMng,
+    PropertyManager& propertiesMng,
     PropertyList& integratedParameters,
     PropertyList& parameters,
     PropertyList& quantities,
@@ -32,10 +34,10 @@ namespace
     parameters.clear();
     quantities.clear();
 
-    pObjectPropertyViewBuilder->createIntegratedParameters(propertyManagers.m_default, integratedParameters);
-    pObjectPropertyViewBuilder->createParameters(propertyManagers.m_parameters, parameters);
-    pObjectPropertyViewBuilder->createQuantities(propertyManagers.m_default /*Why?!*/ , quantities);
-    properties = pObjectPropertyViewBuilder->createProperties(propertyManagers.m_properties);
+    pObjectPropertyViewBuilder->createIntegratedParameters(commonAttributesMng, integratedParameters);
+    pObjectPropertyViewBuilder->createParameters(parametersMng, parameters);
+    pObjectPropertyViewBuilder->createQuantities(commonAttributesMng /*Why?!*/ , quantities);
+    properties = pObjectPropertyViewBuilder->createProperties(propertiesMng);
 
     return true;
   }
@@ -102,7 +104,9 @@ namespace
   }
 
   void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
-                         PropertyManagers& propertyManagers,
+                         PropertyManager& commonAttributesMng,
+                         PropertyManager& parametersMng,
+                         PropertyManager& propertiesMng,
                          IPropertyViewBuilder& propertyViewBuilder,
                          QtGroupPropertyManager &groupManager,
                          PropertyView::Mode propertyViewMode)
@@ -113,7 +117,15 @@ namespace
     PropertyList quantities;
     PropertyList properties;
 
-    if (!createProperties(&propertyViewBuilder, propertyManagers, integratedParameters, parameters, quantities, properties))
+    if (!createProperties(
+      &propertyViewBuilder, 
+      commonAttributesMng, 
+      parametersMng, 
+      propertiesMng, 
+      integratedParameters, 
+      parameters, 
+      quantities, 
+      properties))
       return;
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
@@ -142,7 +154,14 @@ void PropertyView::showProperties(std::unique_ptr<IPropertyViewBuilder> builder,
   m_properties = properties;
 
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(
+      *this,
+      m_commonAttributesMng,
+      m_parametersMng,
+      m_propertiesMng,
+      *m_builder,
+      *m_pGroupManager,
+      m_propertyViewMode);
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
@@ -150,42 +169,59 @@ void PropertyView::changeMode(PropertyView::Mode newMode)
   m_propertyViewMode = newMode;
 
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(
+      *this,
+      m_commonAttributesMng,
+      m_parametersMng,
+      m_propertiesMng,
+      *m_builder,
+      *m_pGroupManager,
+      m_propertyViewMode);
 }
 
 void PropertyView::initPropertyManagers()
 {
-  m_propertyManagers.init(this);
+  m_commonAttributesMng.init(this, true);
+  m_parametersMng.init(this, true);
+  m_propertiesMng.init(this, false);
 
    // handle user attributes changes
 
   {
-    auto& mngr = m_propertyManagers.m_parameters;
-    QObject::connect(mngr.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, bool)), this, SLOT(parameterBoolChanged(QtProperty*, bool)));
-    QObject::connect(mngr.m_pIntManager, SIGNAL(valueChanged(QtProperty*, int)), this, SLOT(parameterIntChanged(QtProperty*, int)));
-    QObject::connect(mngr.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterDoubleChanged(QtProperty*, const QString&)));
-    QObject::connect(mngr.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterStringChanged(QtProperty*, const QString&)));
+    QObject::connect(m_parametersMng.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, bool)), this, SLOT(parameterBoolChanged(QtProperty*, bool)));
+    QObject::connect(m_parametersMng.m_pIntManager, SIGNAL(valueChanged(QtProperty*, int)), this, SLOT(parameterIntChanged(QtProperty*, int)));
+    QObject::connect(m_parametersMng.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterDoubleChanged(QtProperty*, const QString&)));
+    QObject::connect(m_parametersMng.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterStringChanged(QtProperty*, const QString&)));
   }
 
    QObject::connect(
-     m_propertyManagers.m_properties.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
+     m_propertiesMng.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userDoubleAttributeChanged(QtProperty*, const QString&)));
 
    QObject::connect(
-     m_propertyManagers.m_properties.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
+     m_propertiesMng.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
      this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
 }
 
 void PropertyView::clearPropertyManagers()
 {
   m_pGroupManager->clear();
-  m_propertyManagers.clear();
+  m_commonAttributesMng.clear();
+  m_parametersMng.clear();
+  m_propertiesMng.clear();
 }
 
 void PropertyView::updateParameters() 
 {
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(
+      *this,
+      m_commonAttributesMng,
+      m_parametersMng,
+      m_propertiesMng,
+      *m_builder,
+      *m_pGroupManager,
+      m_propertyViewMode);
 }
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
