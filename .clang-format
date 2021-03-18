@@ -1,0 +1,84 @@
+# RengaCodeStyle-2019:
+
+Standard: c++14
+
+# Whitespace:
+
+BreakBeforeBraces: Allman
+ColumnLimit: 120
+MaxEmptyLinesToKeep: 2
+ReflowComments: false
+UseTab: Never
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# Preprocessor:
+
+#IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"stdafx\.h"'
+    Priority: -1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '^<.*'
+    Priority: 3
+IndentPPDirectives: AfterHash
+
+# Namespaces:
+
+FixNamespaceComments: false
+NamespaceIndentation: All
+SortUsingDeclarations: true
+
+# Expressions:
+
+AlignConsecutiveAssignments: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: true
+PointerAlignment: Left
+
+# Statements:
+
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+
+# Functions:
+
+AlignAfterOpenBracket: AlwaysBreak
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortLambdasOnASingleLine: All
+BinPackArguments: false
+BinPackParameters: false
+
+# Constructors:
+
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowAllConstructorInitializersOnNextLine: false
+ConstructorInitializerIndentWidth: 2
+
+# Templates:
+
+AlwaysBreakTemplateDeclarations: true
+
+# Classes:
+
+BreakInheritanceList: AfterColon
+
+# Fine tuning:
+
+# The defaults are:
+#
+#PenaltyBreakAssignment: 2
+#PenaltyBreakBeforeFirstCallParameter: 19
+#PenaltyBreakComment: 300
+#PenaltyBreakFirstLessLess: 120
+#PenaltyBreakString: 1000
+#PenaltyBreakTemplateDeclaration: 10
+#PenaltyExcessCharacter: 1000000
+#PenaltyReturnTypeOnItsOwnLine: 60
+
+PenaltyReturnTypeOnItsOwnLine: 500 # Penalty for breaking function parameters into lines is somewhat like 94 + 41 * parameter count.
+
