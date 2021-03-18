@@ -9,8 +9,6 @@
 #include "stdafx.h"
 #include "ModelExplorerWidget.h"
 
-#include <windows.h>
-
 #include "ui_ModelExplorer.h"
 
 #include "TreeViewItemRole.h"
@@ -19,16 +17,39 @@
 #include "TreeViewUtils.h"
 #include "BoolGuard.h"
 
+#include "LevelPropertyViewBuilder.h"
+#include "RoomPropertyViewBuilder.h"
+#include "MaterialLayerPropertyViewBuilder.h"
+#include "RebarUsagePropertyViewBuilder.h"
+#include "ReinforcementUnitUsagePropertyViewBuilder.h"
+
+#include <Renga/ObjectTypes.h>
+
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>
 
-#include "PropertyViewModelObjectSource.h"
-#include "PropertyViewMaterialLayerSource.h"
-#include "PropertyViewRebarUsageSource.h"
-#include "PropertyViewReinforcementUnitUsageSource.h"
+#include <windows.h>
+
 
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
+
+namespace
+{
+  std::unique_ptr<IPropertyViewBuilder> createObjectPropertyViewBuilder(
+    Renga::IApplicationPtr pApplication, 
+    Renga::IModelObjectPtr pModelObject)
+  {
+    const auto objectType = pModelObject->GetObjectType();
+
+    if (objectType == Renga::ObjectTypes::Level)
+      return std::make_unique<LevelPropertyViewBuilder>(pApplication, pModelObject);
+    else if (objectType == Renga::ObjectTypes::Room)
+      return std::make_unique<RoomPropertyViewBuilder>(pApplication, pModelObject);
+    else
+      return std::make_unique<PropertyViewBuilder>(pApplication, pModelObject);
+  }
+}
 
 ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QWidget(nullptr, Qt::Tool),
@@ -370,11 +391,10 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   auto pModelObject = getModelObject(modelObjectId);
   assert(pModelObject != nullptr);
 
-  auto pSourceObject = new PropertyViewModelObjectSource(m_pApplication, pModelObject);
-
-  m_pPropertyView->showProperties(pModelObject->GetParameters(),
-                                  pModelObject->GetProperties(), 
-                                  pSourceObject);
+  auto builder = createObjectPropertyViewBuilder(m_pApplication, pModelObject);
+  m_pPropertyView->showProperties(std::move(builder),
+                                  pModelObject->GetParameters(),
+                                  pModelObject->GetProperties());
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -395,9 +415,9 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
   auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
   auto pLayer = getLayer(pModelObject, layerIndex);
 
-  auto pSourceObject = new PropertyViewMaterialLayerSource(m_pApplication, pMaterialLayer, pLayer);
+  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, pMaterialLayer, pLayer);;
 
-  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -424,9 +444,9 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
     getRebarUsage(pModelObject, rebarUsageIndex);
   assert(pRebarUsage != nullptr);
 
-  auto pSourceObject = new PropertyViewRebarUsageSource(m_pApplication, pRebarUsage);
+  auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, pRebarUsage);
 
-  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -447,9 +467,9 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
   auto pReinforcementUnitUsage = getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex);
   assert(pReinforcementUnitUsage != nullptr);
 
-  auto pSourceObject = new PropertyViewReinforcementUnitUsageSource(m_pApplication, pReinforcementUnitUsage);
+  auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, pReinforcementUnitUsage);
 
-  m_pPropertyView->showProperties(nullptr, nullptr, pSourceObject);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)

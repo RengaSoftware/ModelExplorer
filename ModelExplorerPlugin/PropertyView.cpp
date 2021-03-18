@@ -9,11 +9,11 @@
 #include "stdafx.h"
 #include "PropertyView.h"
 #include "GuidUtils.h"
-#include "PropertyViewModelObjectSource.h"
 
 #include <qteditorfactory.h>
 
 #include <Windows.h>
+
 
 namespace
 {
@@ -133,27 +133,24 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication
   initPropertyManagers();
 }
 
-void PropertyView::showProperties(Renga::IParameterContainerPtr parameters,
-                                  Renga::IPropertyContainerPtr properties,
-                                  IPropertyViewSourceObject *pSourceObject) {
+void PropertyView::showProperties(std::unique_ptr<IPropertyViewBuilder> builder,
+                                  Renga::IParameterContainerPtr parameters,
+                                  Renga::IPropertyContainerPtr properties) 
+{
+  m_builder.swap(builder);
   m_parameters = parameters,
   m_properties = properties;
-  m_pSourceObject.reset(pSourceObject);
-
-  auto builder = m_pSourceObject->createPropertyViewBuilder();
 
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
 
-  auto builder = m_pSourceObject->createPropertyViewBuilder();
-
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::initPropertyManagers()
@@ -187,10 +184,8 @@ void PropertyView::clearPropertyManagers()
 
 void PropertyView::updateParameters() 
 {
-  auto builder = m_pSourceObject->createPropertyViewBuilder();
-
   clearPropertyManagers();
-  buildPropertyView(*this, m_propertyManagers, *builder, *m_pGroupManager, m_propertyViewMode);
+  buildPropertyView(*this, m_propertyManagers, *m_builder, *m_pGroupManager, m_propertyViewMode);
 }
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
