@@ -9,7 +9,6 @@
 #pragma once
 
 #include "IPropertyViewBuilder.h"
-#include "PropertyManagers.h"
 
 
 class PropertyViewBuilder : public IPropertyViewBuilder

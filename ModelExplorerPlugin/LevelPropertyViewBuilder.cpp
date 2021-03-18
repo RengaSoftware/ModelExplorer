@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "LevelPropertyViewBuilder.h"
+#include "PropertyManager.h"
 
 
 LevelPropertyViewBuilder::LevelPropertyViewBuilder(Renga::IApplicationPtr pApplication,

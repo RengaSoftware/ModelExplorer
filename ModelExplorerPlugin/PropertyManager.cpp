@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "PropertyManagers.h"
+#include "PropertyManager.h"
 #include "PropertyView.h"
 
 #include <qteditorfactory.h>
