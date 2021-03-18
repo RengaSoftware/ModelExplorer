@@ -1,8 +1,10 @@
 #include "stdafx.h"
 
 #include "RebarUsagePropertyViewBuilder.h"
+#include "PropertyManager.h"
 
 #include <Renga/QuantityIds.h>
+
 
 RebarUsagePropertyViewBuilder::RebarUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                              Renga::IRebarUsagePtr pRebarUsage) :

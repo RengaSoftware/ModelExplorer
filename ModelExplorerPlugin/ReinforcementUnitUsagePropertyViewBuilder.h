@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IPropertyViewBuilder.h"
-#include "PropertyManagers.h"
+
 
 class ReinforcementUnitUsagePropertyViewBuilder : public IPropertyViewBuilder
 {

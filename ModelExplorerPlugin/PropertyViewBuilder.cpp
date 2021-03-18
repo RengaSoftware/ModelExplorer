@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "PropertyViewBuilder.h"
+#include "PropertyManager.h"
 #include "GuidUtils.h"
 
 #include <Renga/QuantityIds.h>

@@ -29,7 +29,7 @@ namespace
   {
     if (pObjectPropertyViewBuilder == nullptr)
       return false;
-
+    
     integratedParameters.clear();
     parameters.clear();
     quantities.clear();

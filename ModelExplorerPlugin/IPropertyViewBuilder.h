@@ -8,11 +8,10 @@
 
 #pragma once
 
-// TODO: rename header
-#include "PropertyManagers.h"
+#include "PropertyList.h"
 
-#include <qttreepropertybrowser.h>
 
+class PropertyManager;
 
 class IPropertyViewBuilder
 {

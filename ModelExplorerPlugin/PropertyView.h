@@ -7,7 +7,7 @@
 //
 
 #pragma once
-#include "PropertyManagers.h"
+#include "PropertyManager.h"
 #include "IPropertyViewBuilder.h"
 #include "IPropertyViewSourceObject.h"
 

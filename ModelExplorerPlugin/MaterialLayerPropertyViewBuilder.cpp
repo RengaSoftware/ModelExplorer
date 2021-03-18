@@ -1,8 +1,10 @@
 #include "stdafx.h"
 
 #include "MaterialLayerPropertyViewBuilder.h"
+#include "PropertyManager.h"
 
 #include <Renga/QuantityIds.h>
+
 
 MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                                    Renga::IMaterialLayerPtr pMaterialLayer,

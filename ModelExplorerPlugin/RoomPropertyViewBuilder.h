@@ -10,6 +10,7 @@
 
 #include "PropertyViewBuilder.h"
 
+
 class RoomPropertyViewBuilder : public PropertyViewBuilder
 {
 public:

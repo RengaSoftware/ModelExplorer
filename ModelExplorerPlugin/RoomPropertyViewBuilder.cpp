@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "RoomPropertyViewBuilder.h"
+#include "PropertyManager.h"
 
 
 RoomPropertyViewBuilder::RoomPropertyViewBuilder(Renga::IApplicationPtr pApplication,

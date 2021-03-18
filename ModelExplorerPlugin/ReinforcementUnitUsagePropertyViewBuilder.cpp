@@ -1,8 +1,10 @@
 #include "stdafx.h"
 
 #include "ReinforcementUnitUsagePropertyViewBuilder.h"
+#include "PropertyManager.h"
 
 #include <Renga/QuantityIds.h>
+
 
 ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                                                                      Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage) :

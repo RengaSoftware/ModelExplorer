@@ -107,9 +107,6 @@
     <ClCompile Include="BoolGuard.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="PropertyManagers.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
     <ClCompile Include="LevelPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClCompile>
@@ -146,13 +143,13 @@
     <ClCompile Include="TreeViewUtils.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="PropertyManager.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyManagers.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="RengaObjectVisibility.h">
@@ -202,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="PropertyList.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyManager.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
