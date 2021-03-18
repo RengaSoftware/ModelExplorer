@@ -57,8 +57,6 @@ private:
     QString m_iconPath;
   };
 
-  static bool tryGetIntegerData(QStandardItemModel* pItemModel, const QModelIndex& modelIndex, int role, int& result);
-
 private:
   void processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection);
   void processLevelObject(Renga::IModelObjectPtr pModelObject);
