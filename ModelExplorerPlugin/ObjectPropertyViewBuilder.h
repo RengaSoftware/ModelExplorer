@@ -8,10 +8,10 @@
 
 #pragma once
 
-#include "IPropertyViewBuilder.h"
+#include "PropertyViewBuilderBase.h"
 
 
-class ObjectPropertyViewBuilder : public IPropertyViewBuilder
+class ObjectPropertyViewBuilder : public PropertyViewBuilderBase
 {
 public:
   ObjectPropertyViewBuilder(Renga::IApplicationPtr pApplication,
@@ -23,10 +23,10 @@ public:
   void createQuantities(PropertyManager& mng, PropertyList& propertyList) override;
   PropertyList createProperties(PropertyManager& mng) override;
 
+protected:
   QString getMaterialName(const int& materialId);
   QString getLayeredMaterialName(const int& layeredMaterialId);
 
-protected:
   Renga::IApplicationPtr m_pApplication;
   Renga::IModelObjectPtr m_pModelObject;
 };

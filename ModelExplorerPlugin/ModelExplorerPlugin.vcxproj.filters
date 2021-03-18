@@ -146,6 +146,9 @@
     <ClCompile Include="ObjectPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
+    <ClCompile Include="PropertyViewBuilderBase.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="ObjectPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyViewBuilderBase.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
