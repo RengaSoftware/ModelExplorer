@@ -113,56 +113,9 @@ void ObjectPropertyViewBuilder::createParameters(PropertyManager& mngr, Property
 
 void ObjectPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
-  using namespace Renga;
-
   auto pQuantities = m_pModelObject->GetQuantities();
-
-  PropertyList result;
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "overallWidth"), pQuantities->Get(QuantityIds::OverallWidth));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "overallHeight"), pQuantities->Get(QuantityIds::OverallHeight));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "overallLength"), pQuantities->Get(QuantityIds::OverallLength));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "thickness"), pQuantities->Get(QuantityIds::NominalThickness));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "length"), pQuantities->Get(QuantityIds::NominalLength));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "width"), pQuantities->Get(QuantityIds::NominalWidth));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "height"), pQuantities->Get(QuantityIds::NominalHeight));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "perimeter"), pQuantities->Get(QuantityIds::Perimeter));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "volume"), pQuantities->Get(QuantityIds::Volume));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "netVolume"), pQuantities->Get(QuantityIds::NetVolume));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "mass"), pQuantities->Get(QuantityIds::NetMass));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "crossSectionOverallWidth"), pQuantities->Get(QuantityIds::CrossSectionOverallWidth));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "crossSectionOverallHeight"), pQuantities->Get(QuantityIds::CrossSectionOverallHeight));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "crossSectionArea"), pQuantities->Get(QuantityIds::CrossSectionArea));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceArea"), pQuantities->Get(QuantityIds::InnerSurfaceArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceInternalArea"), pQuantities->Get(QuantityIds::InnerSurfaceInternalArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "innerSurfaceExternalArea"), pQuantities->Get(QuantityIds::InnerSurfaceExternalArea));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "outerSurfaceArea"), pQuantities->Get(QuantityIds::OuterSurfaceArea));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "area"), pQuantities->Get(QuantityIds::Area));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "nominalArea"), pQuantities->Get(QuantityIds::NominalArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "netArea"), pQuantities->Get(QuantityIds::NetArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "netFloorArea"), pQuantities->Get(QuantityIds::NetFloorArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "netFootprintArea"), pQuantities->Get(QuantityIds::NetFootprintArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "netSideArea"), pQuantities->Get(QuantityIds::NetSideArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "totalSurfaceArea"), pQuantities->Get(QuantityIds::TotalSurfaceArea));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "grossVolume"), pQuantities->Get(Renga::QuantityIds::GrossVolume));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "grossFloorArea"), pQuantities->Get(Renga::QuantityIds::GrossFloorArea));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "grossPerimeter"), pQuantities->Get(Renga::QuantityIds::GrossPerimeter));
-
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "numberOfRiser"), pQuantities->Get(QuantityIds::NumberOfRiser));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "numberOfTreads"), pQuantities->Get(QuantityIds::NumberOfTreads));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "riserHeight"), pQuantities->Get(QuantityIds::RiserHeight));
-  mngr.addValue(propertyList, QApplication::translate("me_mo", "treadLength"), pQuantities->Get(QuantityIds::TreadLength));
-
-  mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities->Get(QuantityIds::TotalRebarLength));
-  mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
+  auto properties = createQuantitiesInternal(mngr, *pQuantities);
+  propertyList.splice(propertyList.end(), properties);
 }
 
 PropertyList ObjectPropertyViewBuilder::createProperties(PropertyManager& mngr)

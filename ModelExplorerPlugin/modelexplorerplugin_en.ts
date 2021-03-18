@@ -383,42 +383,6 @@
         <source>material</source>
         <translation>Material</translation>
     </message>
-    <message>
-        <source>nominalThickness</source>
-        <translation>Nominal thickness, mm</translation>
-    </message>
-    <message>
-        <source>nominalLength</source>
-        <translation>Nominal length</translation>
-    </message>
-    <message>
-        <source>nominalHeight</source>
-        <translation>Nominal height</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Net volume, m³</translation>
-    </message>
-    <message>
-        <source>netMass</source>
-        <translation>Net mass, kg</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Net area, m²</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Net footprint area, m²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Net side area, m²</translation>
-    </message>
-    <message>
-        <source>totalSurfaceArea</source>
-        <translation>Total surface area, m²</translation>
-    </message>
 </context>
 <context>
     <name>me_materials</name>
@@ -496,10 +460,6 @@
     <message>
         <source>mass</source>
         <translation>Mass, kg</translation>
-    </message>
-    <message>
-        <source>crossSectionOverallWidth</source>
-        <translation></translation>
     </message>
     <message>
         <source>crossSectionOverallHeight</source>
@@ -580,6 +540,10 @@
     <message>
         <source>nominalArea</source>
         <translation>Nominal area</translation>
+    </message>
+    <message>
+        <source>crossSectionOverallWidth</source>
+        <translation>Cross section overall width, mm</translation>
     </message>
 </context>
 <context>

@@ -383,42 +383,6 @@
         <source>material</source>
         <translation>Материал</translation>
     </message>
-    <message>
-        <source>nominalThickness</source>
-        <translation>Номинальная толщина, мм</translation>
-    </message>
-    <message>
-        <source>nominalLength</source>
-        <translation>Номинальная длина</translation>
-    </message>
-    <message>
-        <source>nominalHeight</source>
-        <translation>Номинальная высота, мм</translation>
-    </message>
-    <message>
-        <source>netVolume</source>
-        <translation>Чистый объем, м³</translation>
-    </message>
-    <message>
-        <source>netMass</source>
-        <translation>Чистая масса, кг</translation>
-    </message>
-    <message>
-        <source>netArea</source>
-        <translation>Чистая площадь, м²</translation>
-    </message>
-    <message>
-        <source>netFootprintArea</source>
-        <translation>Чистая площадь основания, м²</translation>
-    </message>
-    <message>
-        <source>netSideArea</source>
-        <translation>Чистая площадь продольного сечения, м²</translation>
-    </message>
-    <message>
-        <source>totalSurfaceArea</source>
-        <translation>Общая площадь поверхности, м²</translation>
-    </message>
 </context>
 <context>
     <name>me_materials</name>
