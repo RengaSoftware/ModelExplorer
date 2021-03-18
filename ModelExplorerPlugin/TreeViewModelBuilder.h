@@ -79,6 +79,11 @@ private:
     const std::list<Renga::IModelObjectPtr>& objectGroup,
     const ObjectTypeData& objectTypeData);
 
+  void addObjectSubtree(
+    QStandardItem* pParentItem,
+    Renga::IModelObjectPtr pObject,
+    const ObjectTypeData& objectTypeData);
+
   void addMaterialsSubtree(
     QStandardItem* pParentItem,
     Renga::IModelObjectPtr pModelObject);
