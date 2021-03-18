@@ -409,7 +409,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 
   int layerIndex = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, layerIndex))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::LayerIndex, layerIndex))
     assert(false);
   
   auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
