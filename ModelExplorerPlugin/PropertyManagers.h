@@ -45,17 +45,3 @@ public:
   QtStringPropertyManager* m_pDoubleManager;
   QtStringPropertyManager* m_pStringManager;
 };
-
-class PropertyManagers
-{
-public:
-  PropertyManagers();
-
-  void init(PropertyView* pParent);
-  void clear();
-
-public:
-  PropertyManager m_default;
-  PropertyManager m_parameters;
-  PropertyManager m_properties;
-};

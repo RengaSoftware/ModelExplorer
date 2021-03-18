@@ -57,7 +57,9 @@ private:
 private:
   Renga::IApplicationPtr m_pApplication;
   QtGroupPropertyManager* m_pGroupManager;
-  PropertyManagers m_propertyManagers;
+  PropertyManager m_commonAttributesMng;
+  PropertyManager m_parametersMng;
+  PropertyManager m_propertiesMng;
   Mode m_propertyViewMode;
 
   std::unique_ptr<IPropertyViewBuilder> m_builder;
