@@ -120,56 +120,7 @@ void ObjectPropertyViewBuilder::createQuantities(PropertyManager& mngr, Property
 
 PropertyList ObjectPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
-  PropertyList pResult;
-
-  auto pProject = m_pApplication->GetProject();
-  auto pPropertyManager = pProject->GetPropertyManager();
-
-  // block signals before filling properties
-  mngr.blockSignals(true);
-
-  // check all attributes
-  for (int i = 0; i < pPropertyManager->GetPropertyCount(); ++i)
-  {
-    auto propertyId = pPropertyManager->GetPropertyId(i);
-
-    // check if objectType has attribute
-    if (!pPropertyManager->IsPropertyAssignedToType(propertyId, m_pModelObject->GetObjectType()))
-      continue;
-
-    auto pProperties = m_pModelObject->GetProperties();
-    auto pProperty = pProperties->Get(propertyId);
-
-    if (!pProperty)
-      continue;
-
-    auto propertyDescription = pPropertyManager->GetPropertyDescription(propertyId);
-    if (propertyDescription.Type == Renga::PropertyType::PropertyType_Undefined)
-      continue;
-
-    const auto attributeName = QString::fromWCharArray(propertyDescription.Name);
-    const auto propertyIdString = QString::fromStdString((GuidToString(propertyId)));
-
-    QtProperty* pQtProperty(nullptr);
-    switch (propertyDescription.Type)
-    {
-    case Renga::PropertyType::PropertyType_Double:
-      pQtProperty = mngr.addValue(pResult, attributeName, pProperty->GetDoubleValue());
-      break;
-    case Renga::PropertyType::PropertyType_String:
-      pQtProperty = mngr.addValue(pResult, attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
-      break;
-    default:
-      continue;
-    }
-    pQtProperty->setModified(true);
-    pQtProperty->setData(propertyIdString);
-  }
-
-  // unblock signals
-  mngr.blockSignals(false);
-
-  return pResult;
+  return createPropertiesInternal(mngr, m_pModelObject->GetProperties());
 }
 
 QString ObjectPropertyViewBuilder::getMaterialName(const int& materialId)

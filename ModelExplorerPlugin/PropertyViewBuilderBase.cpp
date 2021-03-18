@@ -2,9 +2,55 @@
 
 #include "PropertyViewBuilderBase.h"
 #include "PropertyManager.h"
+#include "GuidUtils.h"
 
 #include <Renga/QuantityIds.h>
 
+
+PropertyList PropertyViewBuilderBase::createPropertiesInternal(
+    PropertyManager& mngr,
+    Renga::IPropertyContainer& container)
+{
+  PropertyList result;
+  // block signals before filling properties
+  mngr.blockSignals(true);
+
+  auto ids = container.GetIds();
+
+  for (int i = 0; i < ids->Count; ++i)
+  {
+    auto id = ids->Get(i);
+    auto pProperty = container.Get(id);
+
+    if (!pProperty)
+      continue;
+
+    const auto attributeName = QString::fromWCharArray(pProperty->Name);
+    const auto propertyIdString = QString::fromStdString((GuidToString(id)));
+
+
+    // TODO: add support for all property types
+    QtProperty* pQtProperty(nullptr);
+    switch (pProperty->Type)
+    {
+    case Renga::PropertyType::PropertyType_Double:
+      pQtProperty = mngr.addValue(result, attributeName, pProperty->GetDoubleValue());
+      break;
+    case Renga::PropertyType::PropertyType_String:
+      pQtProperty = mngr.addValue(result, attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
+      break;
+    default:
+      continue;
+    }
+    pQtProperty->setModified(true);
+    pQtProperty->setData(propertyIdString);
+  }
+
+  // unblock signals
+  mngr.blockSignals(false);
+
+  return result;
+}
 
 PropertyList PropertyViewBuilderBase::createQuantitiesInternal(
     PropertyManager& mngr,
