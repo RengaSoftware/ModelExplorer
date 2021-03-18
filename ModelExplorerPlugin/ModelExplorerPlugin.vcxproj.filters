@@ -143,18 +143,6 @@
     <ClCompile Include="PropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
-    <ClCompile Include="PropertyViewModelObjectSource.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="PropertyViewMaterialLayerSource.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="PropertyViewReinforcementUnitUsageSource.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="PropertyViewRebarUsageSource.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClCompile>
     <ClCompile Include="TreeViewUtils.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -199,18 +187,6 @@
     </ClInclude>
     <ClInclude Include="IPropertyViewSourceObject.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyViewModelObjectSource.h">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyViewMaterialLayerSource.h">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyViewRebarUsageSource.h">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyViewReinforcementUnitUsageSource.h">
-      <Filter>ModelExplorerWidget\PropertyView\PropertyViewSourceObjects</Filter>
     </ClInclude>
     <ClInclude Include="IPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
