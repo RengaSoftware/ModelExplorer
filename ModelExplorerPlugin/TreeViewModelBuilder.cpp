@@ -13,7 +13,11 @@
 #include "RengaObjectVisibility.h"
 
 #include <Renga/ObjectTypes.h>
+#include <Renga/ParameterIds.h>
+#include <Renga/StyleTypeIds.h>
+
 #include <comdef.h>
+
 
 TreeViewModelBuilder::ObjectTypeData::ObjectTypeData(GUID type, QString translationLiteral, QString iconPath) :
   m_type(type),
@@ -215,36 +219,69 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
   pParentItem->appendRow(objectGroupItemList);
 }
 
+bool operator<(const GUID& lhs, const GUID& rhs)
+{
+  return memcmp(&lhs, &rhs, sizeof(GUID)) < 0;
+}
+
+const std::map<GUID, GUID>& TreeViewModelBuilder::parameterIdToEntityTypeDict() const
+{
+  using namespace Renga;
+  //static auto less = [](GUID lhs, GUID rhs) { return true; };
+  static const std::map <GUID, GUID> dict = {
+      {ParameterIds::MaterialStyleId, StyleTypeIds::Material},
+      {ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial}
+  };
+
+  return dict;
+}
+
 void TreeViewModelBuilder::addObjectSubtree(
     QStandardItem* pParentItem,
     Renga::IModelObjectPtr pObject,
     const ObjectTypeData& objectTypeData)
 {
   QList<QStandardItem*> itemList = createModelObjectItem(pObject, objectTypeData);
-  addMaterialsSubtree(itemList.at(0), pObject);
+
+  auto pObjectParameters = pObject->GetParameters();
+  auto pIds = pObjectParameters->GetIds();
+  for (int i = 0; i < pIds->Count; ++i)
+  {
+    auto id = pIds->Get(i);
+    auto pParameter = pObjectParameters->Get(id);
+    if (pParameter->Definition->_ParameterType != Renga::ParameterType::ParameterType_IntID)
+      continue;
+
+    auto entityTypeIt = parameterIdToEntityTypeDict().find(id);
+    if(entityTypeIt != parameterIdToEntityTypeDict().cend())
+      addStyleSubtree(itemList.at(0), pObject, entityTypeIt->second, pParameter->GetIntValue(), objectTypeData);
+  }
+
   pParentItem->appendRow(itemList);
 }
 
-void TreeViewModelBuilder::addMaterialsSubtree(
-  QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject)
+void TreeViewModelBuilder::addStyleSubtree(
+    QStandardItem* pParentItem,
+    Renga::IModelObjectPtr pModelObject,
+    GUID styleType,
+    int id,
+    const ObjectTypeData& objectTypeData)
 {
-  Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
-  pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
-
-  if (pObjectWithLayeredMaterial != nullptr && pObjectWithLayeredMaterial->HasLayeredMaterial())
+  if (styleType == Renga::StyleTypeIds::LayeredMaterial)
   {
-    addLayersSubtree(pParentItem, pModelObject, pObjectWithLayeredMaterial->LayeredMaterialId);
-    return;
+    Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
+    pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
+
+    if (pObjectWithLayeredMaterial != nullptr && pObjectWithLayeredMaterial->HasLayeredMaterial())
+      addLayersSubtree(pParentItem, pModelObject, pObjectWithLayeredMaterial->LayeredMaterialId);
   }
-
-  Renga::IObjectWithMaterialPtr pObjectWithMaterial;
-  pModelObject->QueryInterface(&pObjectWithMaterial);
-  
-  if(pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
+  else if (styleType == Renga::StyleTypeIds::Material)
   {
-    addSingleMaterialMaterialSubtree(pParentItem, pModelObject);
-    return;
+    Renga::IObjectWithMaterialPtr pObjectWithMaterial;
+    pModelObject->QueryInterface(&pObjectWithMaterial);
+
+    if (pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
+      addSingleMaterialMaterialSubtree(pParentItem, pModelObject);
   }
 }
 
