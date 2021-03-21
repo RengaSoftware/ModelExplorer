@@ -44,26 +44,12 @@ class TreeViewModelBuilder
 {
 public:
   TreeViewModelBuilder(Renga::IApplicationPtr pApplication);
-
   QStandardItemModel* build();
-
-private:
-  struct ObjectTypeData
-  {
-    ObjectTypeData(GUID type, QString translationLiteral, QString iconPath);
-
-    GUID m_type;
-    QString m_typeNodeName;
-    QString m_iconPath;
-  };
 
 private:
   void processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection);
   void processLevelObject(Renga::IModelObjectPtr pModelObject);
   void processNonLevelObject(Renga::IModelObjectPtr pModelObject);
-    
-  const std::list<ObjectTypeData>& getLevelObjectTypeData() const;
-  const std::list<ObjectTypeData>& getNonLevelObjectTypeData() const;
 
   void addNonLevelSubtree(
     QStandardItemModel* pItemModel,
@@ -77,19 +63,15 @@ private:
   void addObjectGroupSubtree(
     QStandardItem* pParentItem,
     const std::list<Renga::IModelObjectPtr>& objectGroup,
-    const ObjectTypeData& objectTypeData);
+    const QString groupName);
 
-  void addObjectSubtree(
-    QStandardItem* pParentItem,
-    Renga::IModelObjectPtr pObject,
-    const ObjectTypeData& objectTypeData);
+  void addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject);
 
   void addStyleSubtree(
       QStandardItem* pParentItem,
       Renga::IModelObjectPtr pModelObject,
       GUID styleType, // Replace with Renga schema
-      int id, // TODO: should be Renga::IEntity in future
-      const ObjectTypeData& objectTypeData);
+      int id /*TODO: should be Renga::IEntity in future*/);
   
   void addSingleMaterialMaterialSubtree(
     QStandardItem* pParentItem,
@@ -123,7 +105,7 @@ private:
 
   QList<QStandardItem*> createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const;
   QList<QStandardItem*> createOtherGroupItem() const;
-  QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject, const ObjectTypeData& objectTypeData) const;
+  QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject) const;
   QList<QStandardItem*> createMaterialLayerItem(
     Renga::IModelObjectPtr pModelObject,
     Renga::IMaterialLayerPtr pMaterialLayer,
@@ -154,6 +136,7 @@ private:
 private:
   Renga::IApplicationPtr m_pApplication;
 
+  // TODO: remove these members
   std::list<Renga::IModelObjectPtr> m_levels;
   std::map<LevelObjectGroup, std::list<Renga::IModelObjectPtr>> m_levelObjects;
   std::map<GUID, std::list<Renga::IModelObjectPtr>, GuidComparator> m_nonLevelObjects;
