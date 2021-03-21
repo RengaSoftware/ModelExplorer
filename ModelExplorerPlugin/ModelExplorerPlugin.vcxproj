@@ -175,6 +175,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="PropertyViewBuilderBase.cpp" />
     <ClCompile Include="RebarUsagePropertyViewBuilder.cpp" />
     <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp" />
+    <ClCompile Include="RengaEntityUIData.cpp" />
     <ClCompile Include="RengaEventsHandler.cpp" />
     <ClCompile Include="RoomPropertyViewBuilder.cpp" />
     <ClCompile Include="ModelExplorerPlugin.cpp" />
@@ -194,6 +195,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="LevelPropertyViewBuilder.h" />
     <ClInclude Include="PropertyList.h" />
     <ClInclude Include="PropertyViewBuilderBase.h" />
+    <ClInclude Include="RengaEntityUIData.h" />
     <ClInclude Include="TreeViewUtils.h" />
     <CustomBuild Include="ModelExplorerButtonHandler.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

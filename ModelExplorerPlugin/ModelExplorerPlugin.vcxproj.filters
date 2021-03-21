@@ -149,6 +149,9 @@
     <ClCompile Include="PropertyViewBuilderBase.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="RengaEntityUIData.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -207,6 +210,9 @@
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
     <ClInclude Include="PropertyViewBuilderBase.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RengaEntityUIData.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
