@@ -10,7 +10,7 @@ public:
                                    Renga::IMaterialLayerPtr pMaterialLayer,
                                    Renga::ILayerPtr pLayer);
 
-  void createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList) override;
+  void createParameters(PropertyManager& mngr, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
 
 private:

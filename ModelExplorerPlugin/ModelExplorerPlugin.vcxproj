@@ -162,7 +162,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GuidUtils.cpp" />
-    <ClCompile Include="LevelPropertyViewBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialLayerPropertyViewBuilder.cpp" />
     <ClCompile Include="ModelExplorerButtonHandler.cpp" />
@@ -177,7 +176,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp" />
     <ClCompile Include="RengaEntityUIData.cpp" />
     <ClCompile Include="RengaEventsHandler.cpp" />
-    <ClCompile Include="RoomPropertyViewBuilder.cpp" />
     <ClCompile Include="ModelExplorerPlugin.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -192,7 +190,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="GuidUtils.h" />
     <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />
-    <ClInclude Include="LevelPropertyViewBuilder.h" />
     <ClInclude Include="PropertyList.h" />
     <ClInclude Include="PropertyViewBuilderBase.h" />
     <ClInclude Include="RengaEntityUIData.h" />
@@ -243,7 +240,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="RebarUsagePropertyViewBuilder.h" />
     <ClInclude Include="ReinforcementUnitUsagePropertyViewBuilder.h" />
     <ClInclude Include="RengaObjectVisibility.h" />
-    <ClInclude Include="RoomPropertyViewBuilder.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TreeViewItemRole.h" />
     <ClInclude Include="TreeViewItemType.h" />

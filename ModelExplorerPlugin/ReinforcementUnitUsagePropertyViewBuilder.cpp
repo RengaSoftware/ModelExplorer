@@ -13,7 +13,7 @@ ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBui
 {
 }
 
-void ReinforcementUnitUsagePropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
+void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   auto pReinforcementUnitStyle = getReinforcementUnitStyle(m_pReinforcementUnitUsage->StyleId);
 

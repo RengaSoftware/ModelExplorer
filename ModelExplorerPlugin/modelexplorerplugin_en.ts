@@ -363,17 +363,6 @@
     </message>
 </context>
 <context>
-    <name>me_level</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>elevation</source>
-        <translation>Elevation, m</translation>
-    </message>
-</context>
-<context>
     <name>me_materialLayer</name>
     <message>
         <source>noMaterial</source>
@@ -393,18 +382,6 @@
 </context>
 <context>
     <name>me_mo</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Offset, mm</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Mark</translation>
-    </message>
     <message>
         <source>overallHeight</source>
         <translation>Height, mm</translation>
@@ -520,10 +497,6 @@
     <message>
         <source>treadLength</source>
         <translation>Tread length, mm</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Material</translation>
     </message>
     <message>
         <source>overallLength</source>
@@ -716,16 +689,8 @@
 <context>
     <name>me_propertyView</name>
     <message>
-        <source>Object parameters</source>
-        <translation>Object parameters</translation>
-    </message>
-    <message>
         <source>Calculated characteristics</source>
         <translation>Calculated characteristics</translation>
-    </message>
-    <message>
-        <source>Object properties</source>
-        <translation>Object properties</translation>
     </message>
     <message>
         <source>refresh</source>
@@ -748,12 +713,16 @@
         <translation>In alphabet order</translation>
     </message>
     <message>
-        <source>Object parameters ex</source>
-        <translation>Object parameters [Common]</translation>
-    </message>
-    <message>
         <source>show</source>
         <translation>Show object</translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation>Parameters</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Properties</translation>
     </message>
 </context>
 <context>
@@ -781,17 +750,6 @@
     <message>
         <source>count</source>
         <translation>Count</translation>
-    </message>
-</context>
-<context>
-    <name>me_room</name>
-    <message>
-        <source>name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>roomNumber</source>
-        <translation>Room number</translation>
     </message>
 </context>
 </TS>

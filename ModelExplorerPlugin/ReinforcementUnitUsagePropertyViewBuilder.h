@@ -9,7 +9,7 @@ public:
   ReinforcementUnitUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                             Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
 
-  void createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList) override;
+  void createParameters(PropertyManager& mngr, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
 
 private:

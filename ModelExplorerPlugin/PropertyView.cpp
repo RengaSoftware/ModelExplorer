@@ -19,10 +19,9 @@ namespace
 {
   bool createProperties(
     IPropertyViewBuilder* pObjectPropertyViewBuilder,
-    PropertyManager& commonAttributesMng,
+    PropertyManager& quantitiesMng,
     PropertyManager& parametersMng,
     PropertyManager& propertiesMng,
-    PropertyList& integratedParameters,
     PropertyList& parameters,
     PropertyList& quantities,
     PropertyList& properties)
@@ -30,13 +29,11 @@ namespace
     if (pObjectPropertyViewBuilder == nullptr)
       return false;
     
-    integratedParameters.clear();
     parameters.clear();
     quantities.clear();
 
-    pObjectPropertyViewBuilder->createIntegratedParameters(commonAttributesMng, integratedParameters);
     pObjectPropertyViewBuilder->createParameters(parametersMng, parameters);
-    pObjectPropertyViewBuilder->createQuantities(commonAttributesMng /*Why?!*/ , quantities);
+    pObjectPropertyViewBuilder->createQuantities(quantitiesMng /*Why?!*/ , quantities);
     properties = pObjectPropertyViewBuilder->createProperties(propertiesMng);
 
     return true;
@@ -44,15 +41,13 @@ namespace
 
   void buildPropertyViewAsList(
     QtTreePropertyBrowser& propertyBrowser,
-    PropertyList &parameters, 
-    PropertyList &parametersEx,
+    PropertyList &parameters,
     PropertyList &calculated, 
     PropertyList &userDefinedProperties) 
   {
     // show in list mode
     PropertyList allProperties;
     allProperties.splice(allProperties.end(), parameters);
-    allProperties.splice(allProperties.end(), parametersEx);
     allProperties.splice(allProperties.end(), calculated);
     allProperties.splice(allProperties.end(), userDefinedProperties);
 
@@ -92,19 +87,17 @@ namespace
   void buildPropertyViewByCategory(
     QtTreePropertyBrowser& propertyBrowser, 
     QtGroupPropertyManager &groupManager,
-    const PropertyList& integratedParameters, 
     PropertyList& parameters, 
     const PropertyList& quantities, 
     const PropertyList& properties)
   {
-    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object parameters"), integratedParameters);
-    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object parameters ex"), parameters);
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Parameters"), parameters);
     buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Calculated characteristics"), quantities);
-    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Object properties"), properties);
+    buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Properties"), properties);
   }
 
   void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
-                         PropertyManager& commonAttributesMng,
+                         PropertyManager& quantitiesMng,
                          PropertyManager& parametersMng,
                          PropertyManager& propertiesMng,
                          IPropertyViewBuilder& propertyViewBuilder,
@@ -119,19 +112,18 @@ namespace
 
     if (!createProperties(
       &propertyViewBuilder, 
-      commonAttributesMng, 
+      quantitiesMng, 
       parametersMng, 
       propertiesMng, 
-      integratedParameters, 
       parameters, 
       quantities, 
       properties))
       return;
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
-      buildPropertyViewAsList(propertyBrowser, integratedParameters, parameters, quantities, properties);
+      buildPropertyViewAsList(propertyBrowser, parameters, quantities, properties);
     else
-      buildPropertyViewByCategory(propertyBrowser, groupManager, integratedParameters, parameters, quantities, properties);
+      buildPropertyViewByCategory(propertyBrowser, groupManager, parameters, quantities, properties);
   }
 }
 
@@ -156,7 +148,7 @@ void PropertyView::showProperties(std::unique_ptr<IPropertyViewBuilder> builder,
   clearPropertyManagers();
   buildPropertyView(
       *this,
-      m_commonAttributesMng,
+      m_quantitiesMng,
       m_parametersMng,
       m_propertiesMng,
       *m_builder,
@@ -171,7 +163,7 @@ void PropertyView::changeMode(PropertyView::Mode newMode)
   clearPropertyManagers();
   buildPropertyView(
       *this,
-      m_commonAttributesMng,
+      m_quantitiesMng,
       m_parametersMng,
       m_propertiesMng,
       *m_builder,
@@ -181,12 +173,11 @@ void PropertyView::changeMode(PropertyView::Mode newMode)
 
 void PropertyView::initPropertyManagers()
 {
-  m_commonAttributesMng.init(this, true);
+  m_quantitiesMng.init(this, true);
   m_parametersMng.init(this, true);
   m_propertiesMng.init(this, false);
 
-   // handle user attributes changes
-
+  // TODO: connect after property view was built
   {
     QObject::connect(m_parametersMng.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, bool)), this, SLOT(parameterBoolChanged(QtProperty*, bool)));
     QObject::connect(m_parametersMng.m_pIntManager, SIGNAL(valueChanged(QtProperty*, int)), this, SLOT(parameterIntChanged(QtProperty*, int)));
@@ -206,7 +197,7 @@ void PropertyView::initPropertyManagers()
 void PropertyView::clearPropertyManagers()
 {
   m_pGroupManager->clear();
-  m_commonAttributesMng.clear();
+  m_quantitiesMng.clear();
   m_parametersMng.clear();
   m_propertiesMng.clear();
 }
@@ -216,7 +207,7 @@ void PropertyView::updateParameters()
   clearPropertyManagers();
   buildPropertyView(
       *this,
-      m_commonAttributesMng,
+      m_quantitiesMng,
       m_parametersMng,
       m_propertiesMng,
       *m_builder,
@@ -226,6 +217,9 @@ void PropertyView::updateParameters()
 
 void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
 {
+  if (m_parameters == nullptr)
+    return;
+
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
   auto pParameter = m_parameters->Get(parameterId);
@@ -247,6 +241,9 @@ void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
 
 void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
 {
+  if (m_parameters == nullptr)
+    return;
+
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
   auto pParameter = m_parameters->Get(parameterId);
@@ -268,6 +265,9 @@ void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
 
 void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& newValue)
 {
+  if (m_parameters == nullptr)
+    return;
+
   if (!newValue.isEmpty())
   {
     bool ok = false;
@@ -297,6 +297,9 @@ void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& 
 
 void PropertyView::parameterStringChanged(QtProperty* pProperty, const QString& newValue)
 {
+  if (m_parameters == nullptr)
+    return;
+
   const auto parameterId = GuidFromString(pProperty->data().toStdString());
 
   auto pParameter = m_parameters->Get(parameterId);

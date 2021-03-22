@@ -15,7 +15,7 @@ MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(Renga::IAppli
 {
 }
 
-void MaterialLayerPropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
+void MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   auto pMaterial = m_pMaterialLayer->GetMaterial();
   QString materialName = pMaterial != nullptr ? QString::fromWCharArray(pMaterial->Name) : QApplication::translate("me_materialLayer", "noMaterial");
