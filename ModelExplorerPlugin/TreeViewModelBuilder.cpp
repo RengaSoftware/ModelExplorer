@@ -12,6 +12,8 @@
 #include "TreeViewModelBuilder.h"
 #include "RengaObjectVisibility.h"
 #include "RengaEntityUIData.h"
+#include "RengaModelUtils.h"
+#include "GuidUtils.h"
 
 #include <Renga/ObjectTypes.h>
 #include <Renga/ParameterIds.h>
@@ -266,44 +268,24 @@ void TreeViewModelBuilder::addStyleSubtree(
     if (pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
       addSingleMaterialMaterialSubtree(pParentItem, pModelObject);
   }
-  // TODO: replace with universal IProject method
-  else if (styleType == StyleTypeIds::PlumbingFixtureStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->PlumbingFixtureStyles->GetById(id));
-  else if (styleType == StyleTypeIds::EquipmentStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->EquipmentStyles->GetById(id));
-  else if (styleType == StyleTypeIds::PipeStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->PipeStyles->GetById(id));
-  else if (styleType == StyleTypeIds::PipeAccessoryStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->PipeAccessoryStyles->GetById(id));
-  else if (styleType == StyleTypeIds::PipeFittingStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->PipeFittingStyles->GetById(id));
-  else if (styleType == StyleTypeIds::MechanicalEquipmentStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->MechanicalEquipmentStyles->GetById(id));
-  else if (styleType == StyleTypeIds::DuctStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->DuctStyles->GetById(id));
-  else if (styleType == StyleTypeIds::DuctFittingStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->DuctFittingStyles->GetById(id));
-  else if (styleType == StyleTypeIds::DuctAccessoryStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->DuctAccessoryStyles->GetById(id));
-  else if (styleType == StyleTypeIds::WiringAccessoryStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->WiringAccessoryStyles->GetById(id));
-  else if (styleType == StyleTypeIds::LightFixtureStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->LightFixtureStyles->GetById(id));
-  else if (styleType == StyleTypeIds::ElectricDistributionBoardStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricDistributionBoardStyles->GetById(id));
-  else if (styleType == StyleTypeIds::ElectricalConductorStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalConductorStyles->GetById(id));
-  else if (styleType == StyleTypeIds::ElectricCircuitLineStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalCircuitLineStyles->GetById(id));
-  else if (styleType == StyleTypeIds::SystemStyle)
-    addEntitySubtree(pParentItem, m_pApplication->Project->SystemStyles->GetById(id));
+  else
+  {
+    auto pEntityCollection = getProjectEntityCollection(m_pApplication->Project, styleType);
+    auto pEntity = pEntityCollection->GetById(id);
+    if (pEntity)
+      addEntitySubtree(pParentItem, pEntity);
+  }
 }
 
 void TreeViewModelBuilder::addEntitySubtree(QStandardItem * pParentItem, Renga::IEntityPtr entity)
 {
   auto name = QString::fromWCharArray(entity->Name);
   auto iconPath = getRengaEntityUIData(entity->TypeId).icon16Path;
-  auto itemList = createItem(name, iconPath, eTreeViewItemType::Undefined);
+  auto itemList = createItem(name, iconPath, eTreeViewItemType::Style);
+
+  itemList.first()->setData(entity->Id, eTreeViewItemRole::EntityId);
+  itemList.first()->setData(GuidToString(entity->TypeId).c_str(), eTreeViewItemRole::EntityType);
+
   pParentItem->appendRow(itemList);
 }
 

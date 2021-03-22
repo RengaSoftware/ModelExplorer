@@ -20,7 +20,8 @@
 #include "MaterialLayerPropertyViewBuilder.h"
 #include "RebarUsagePropertyViewBuilder.h"
 #include "ReinforcementUnitUsagePropertyViewBuilder.h"
-#include "ObjectPropertyViewBuilder.h"
+#include "EntityPropertyViewBuilder.h"
+#include "RengaModelUtils.h"
 
 #include <Renga/ObjectTypes.h>
 
@@ -181,6 +182,10 @@ void ModelExplorerWidget::onTreeViewSelectionChanged(const QItemSelection& selec
 
   case eTreeViewItemType::RebarUsage:
     onRebarUsageSelected(selectedItemIndex);
+    break;
+
+  case eTreeViewItemType::Style:
+    onStyleSelected(selectedItemIndex);
     break;
 
   default:
@@ -373,7 +378,7 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   auto pModelObject = getModelObject(modelObjectId);
   assert(pModelObject != nullptr);
 
-  auto builder = std::make_unique<ObjectPropertyViewBuilder>(
+  auto builder = std::make_unique<EntityPropertyViewBuilder>(
       pModelObject->GetParameters(),
       pModelObject->GetProperties(),
       pModelObject->GetQuantities());
@@ -455,6 +460,36 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
   auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, pReinforcementUnitUsage);
 
   m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
+}
+
+void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
+{
+  int entityId = 0;
+  GUID entityType;
+
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, entityId) || 
+      !tryGetGUID(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityType, entityType))
+    assert(false);
+
+  auto pEntityCollection = getProjectEntityCollection(m_pApplication->Project, entityType);
+  assert(pEntityCollection != nullptr);
+
+  auto pEntity = pEntityCollection->GetById(entityId);
+  assert(pEntity != nullptr);
+
+  Renga::IPropertyContainerPtr parameters;
+  pEntity->QueryInterface(&parameters);
+
+  Renga::IPropertyContainerPtr properties;
+  pEntity->QueryInterface(&properties);
+
+  auto builder = std::make_unique<EntityPropertyViewBuilder>(
+    parameters,
+    properties,
+    nullptr);
+  m_pPropertyView->showProperties(std::move(builder),
+                                  parameters,
+                                  properties);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)

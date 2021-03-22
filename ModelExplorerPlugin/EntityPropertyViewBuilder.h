@@ -11,10 +11,10 @@
 #include "PropertyViewBuilderBase.h"
 
 
-class ObjectPropertyViewBuilder : public PropertyViewBuilderBase
+class EntityPropertyViewBuilder : public PropertyViewBuilderBase
 {
 public:
-  ObjectPropertyViewBuilder(
+  EntityPropertyViewBuilder(
       Renga::IParameterContainerPtr pParameters,
       Renga::IPropertyContainerPtr pProperties,
       Renga::IQuantityContainerPtr pQuantities);

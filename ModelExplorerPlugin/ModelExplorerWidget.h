@@ -67,6 +67,7 @@ private:
   void onMaterialLayerSelected(const QModelIndex& index);
   void onRebarUsageSelected(const QModelIndex& index);
   void onReinforcementUnitUsageSelected(const QModelIndex& index);
+  void onStyleSelected(const QModelIndex& index);
 
   Renga::IModelObjectPtr getModelObject(int id);
   Renga::IMaterialLayerPtr getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex);

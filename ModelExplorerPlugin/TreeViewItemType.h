@@ -8,6 +8,7 @@ enum eTreeViewItemType
   MaterialLayer,
   ReinforcementUnitUsage,
   RebarUsage,
+  Style,
 
   Undefined = 255
 };

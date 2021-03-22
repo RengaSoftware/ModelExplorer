@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "TreeViewUtils.h"
+#include "GuidUtils.h"
 
 
 bool tryGetIntegerData(
@@ -19,4 +20,15 @@ bool tryGetIntegerData(
     result = value;
 
   return ok;
+}
+
+bool tryGetGUID(QStandardItemModel * pItemModel, const QModelIndex & index, eTreeViewItemRole role, GUID & result)
+{
+  QVariant data = pItemModel->data(index, role);
+  if (!data.isValid())
+    return false;
+
+  auto value = data.toString();
+  result = GuidFromString(value.toStdString());
+  return true;
 }
