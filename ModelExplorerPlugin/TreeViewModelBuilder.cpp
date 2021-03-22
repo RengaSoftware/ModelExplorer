@@ -20,50 +20,52 @@
 #include <comdef.h>
 
 
+using namespace Renga;
+
 namespace
 {
   const std::list<GUID> c_levelTreeTypes =
   {
-    Renga::ObjectTypes::Wall,    Renga::ObjectTypes::Column,    Renga::ObjectTypes::Floor,    Renga::ObjectTypes::Opening,    Renga::ObjectTypes::Roof,    Renga::ObjectTypes::Beam,    Renga::ObjectTypes::Stair,    Renga::ObjectTypes::Ramp,    Renga::ObjectTypes::Window,    Renga::ObjectTypes::Door,    Renga::ObjectTypes::Railing,    Renga::ObjectTypes::Room,    Renga::ObjectTypes::IsolatedFoundation,    Renga::ObjectTypes::WallFoundation,    Renga::ObjectTypes::AssemblyInstance,    Renga::ObjectTypes::Element,    Renga::ObjectTypes::Plate,
-    Renga::ObjectTypes::RoutePoint,    Renga::ObjectTypes::Equipment,    Renga::ObjectTypes::PlumbingFixture,    Renga::ObjectTypes::MechanicalEquipment,
-    Renga::ObjectTypes::Line3D,    Renga::ObjectTypes::Hatch,    Renga::ObjectTypes::TextShape,
-    Renga::ObjectTypes::Rebar  };
+    ObjectTypes::Wall,    ObjectTypes::Column,    ObjectTypes::Floor,    ObjectTypes::Opening,    ObjectTypes::Roof,    ObjectTypes::Beam,    ObjectTypes::Stair,    ObjectTypes::Ramp,    ObjectTypes::Window,    ObjectTypes::Door,    ObjectTypes::Railing,    ObjectTypes::Room,    ObjectTypes::IsolatedFoundation,    ObjectTypes::WallFoundation,    ObjectTypes::AssemblyInstance,    ObjectTypes::Element,    ObjectTypes::Plate,
+    ObjectTypes::RoutePoint,    ObjectTypes::Equipment,    ObjectTypes::PlumbingFixture,    ObjectTypes::MechanicalEquipment,
+    ObjectTypes::Line3D,    ObjectTypes::Hatch,    ObjectTypes::TextShape,
+    ObjectTypes::Rebar  };
 
   const std::list<GUID> c_nonLevelTreeTypes
   {
-    Renga::ObjectTypes::PipeAccessory,
-    Renga::ObjectTypes::PipeFitting,
-    Renga::ObjectTypes::Pipe,
-    Renga::ObjectTypes::Duct,
-    Renga::ObjectTypes::DuctAccessory,
-    Renga::ObjectTypes::DuctFitting,
-    Renga::ObjectTypes::LineElectricalCircuit,
-    Renga::ObjectTypes::LightFixture,
-    Renga::ObjectTypes::ElectricDistributionBoard,
-    Renga::ObjectTypes::WiringAccessory,
-    Renga::ObjectTypes::Route,
-    Renga::ObjectTypes::Axis,
-    Renga::ObjectTypes::Elevation,
-    Renga::ObjectTypes::Section,
-    Renga::ObjectTypes::Dimension,
+    ObjectTypes::PipeAccessory,
+    ObjectTypes::PipeFitting,
+    ObjectTypes::Pipe,
+    ObjectTypes::Duct,
+    ObjectTypes::DuctAccessory,
+    ObjectTypes::DuctFitting,
+    ObjectTypes::LineElectricalCircuit,
+    ObjectTypes::LightFixture,
+    ObjectTypes::ElectricDistributionBoard,
+    ObjectTypes::WiringAccessory,
+    ObjectTypes::Route,
+    ObjectTypes::Axis,
+    ObjectTypes::Elevation,
+    ObjectTypes::Section,
+    ObjectTypes::Dimension,
   };
 
   const std::map <GUID, GUID> c_parameterToIdDict = 
   {
-    { Renga::ParameterIds::MaterialStyleId, Renga::StyleTypeIds::Material },
-    { Renga::ParameterIds::LayeredMaterialStyleId, Renga::StyleTypeIds::LayeredMaterial }
+    { ParameterIds::MaterialStyleId, StyleTypeIds::Material },
+    { ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial }
   };
 }
 
 
-TreeViewModelBuilder::TreeViewModelBuilder(Renga::IApplicationPtr pApplication) :
+TreeViewModelBuilder::TreeViewModelBuilder(IApplicationPtr pApplication) :
   m_pApplication(pApplication)
 {
 }
 
-static double getLevelElevation(Renga::IModelObjectPtr pModelObject)
+static double getLevelElevation(IModelObjectPtr pModelObject)
 {
-  Renga::ILevelPtr pLevel;
+  ILevelPtr pLevel;
 
   pModelObject->QueryInterface(&pLevel);
   assert(pLevel != nullptr);
@@ -71,7 +73,7 @@ static double getLevelElevation(Renga::IModelObjectPtr pModelObject)
   return pLevel->GetElevation();
 }
 
-static bool compareLevelElevations(Renga::IModelObjectPtr pLeftModelObject, Renga::IModelObjectPtr pRightModelObject)
+static bool compareLevelElevations(IModelObjectPtr pLeftModelObject, IModelObjectPtr pRightModelObject)
 {
   return getLevelElevation(pLeftModelObject) < getLevelElevation(pRightModelObject);
 }
@@ -96,7 +98,7 @@ QStandardItemModel* TreeViewModelBuilder::build()
   return pItemModel;
 }
 
-void TreeViewModelBuilder::processModelObjectCollection(Renga::IModelObjectCollectionPtr pModelObjectCollection)
+void TreeViewModelBuilder::processModelObjectCollection(IModelObjectCollectionPtr pModelObjectCollection)
 {
   m_levels.clear();
   m_levelObjects.clear();
@@ -106,13 +108,13 @@ void TreeViewModelBuilder::processModelObjectCollection(Renga::IModelObjectColle
   {
     auto pModelObject = pModelObjectCollection->GetByIndex(i);
 
-    if (pModelObject->GetObjectType() == Renga::ObjectTypes::Level)
+    if (pModelObject->GetObjectType() == ObjectTypes::Level)
     {
       m_levels.push_back(pModelObject);
     }
     else
     {
-      Renga::ILevelObjectPtr pLevelObject;
+      ILevelObjectPtr pLevelObject;
       pModelObject->QueryInterface(&pLevelObject);
 
       if (pLevelObject)
@@ -123,9 +125,9 @@ void TreeViewModelBuilder::processModelObjectCollection(Renga::IModelObjectColle
   }
 }
 
-void TreeViewModelBuilder::processLevelObject(Renga::IModelObjectPtr pModelObject)
+void TreeViewModelBuilder::processLevelObject(IModelObjectPtr pModelObject)
 {
-  Renga::ILevelObjectPtr pLevelObject;
+  ILevelObjectPtr pLevelObject;
   pModelObject->QueryInterface(&pLevelObject);
   assert(pLevelObject != nullptr);
 
@@ -134,12 +136,12 @@ void TreeViewModelBuilder::processLevelObject(Renga::IModelObjectPtr pModelObjec
   m_levelObjects[group].push_back(pModelObject);
 }
 
-void TreeViewModelBuilder::processNonLevelObject(Renga::IModelObjectPtr pNonLevelObject)
+void TreeViewModelBuilder::processNonLevelObject(IModelObjectPtr pNonLevelObject)
 {
   m_nonLevelObjects[pNonLevelObject->GetObjectType()].push_back(pNonLevelObject);
 }
 
-void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, Renga::IModelObjectCollectionPtr pModelObjectCollection)
+void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, IModelObjectCollectionPtr pModelObjectCollection)
 {
   auto pItem = createOtherGroupItem();
 
@@ -151,10 +153,10 @@ void TreeViewModelBuilder::addNonLevelSubtree(QStandardItemModel * pItemModel, R
 
 void TreeViewModelBuilder::addLevelSubtree(
   QStandardItemModel* pItemModel,
-  Renga::IModelObjectPtr pLevelModelObject,
-  Renga::IModelObjectCollectionPtr pModelObjectCollection)
+  IModelObjectPtr pLevelModelObject,
+  IModelObjectCollectionPtr pModelObjectCollection)
 {
-  assert(pLevelModelObject->GetObjectType() == Renga::ObjectTypes::Level);
+  assert(pLevelModelObject->GetObjectType() == ObjectTypes::Level);
 
   auto pItem = createLevelItem(pLevelModelObject);
 
@@ -169,7 +171,7 @@ void TreeViewModelBuilder::addLevelSubtree(
 
 void TreeViewModelBuilder::addObjectGroupSubtree(
     QStandardItem* pParentItem,
-    const std::list<Renga::IModelObjectPtr>& objectGroup,
+    const std::list<IModelObjectPtr>& objectGroup,
   const QString groupName)
 {
   QList<QStandardItem*> objectGroupItemList =
@@ -185,7 +187,7 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
   pParentItem->appendRow(objectGroupItemList);
 }
 
-void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject)
+void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, IModelObjectPtr pObject)
 {
   QList<QStandardItem*> itemList = createModelObjectItem(pObject);
 
@@ -195,7 +197,7 @@ void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, Renga::I
   {
     auto id = pIds->Get(i);
     auto pParameter = pObjectParameters->Get(id);
-    if (pParameter->Definition->_ParameterType != Renga::ParameterType::ParameterType_IntID)
+    if (pParameter->Definition->_ParameterType != ParameterType::ParameterType_IntID)
       continue;
 
     auto entityTypeIt = c_parameterToIdDict.find(id);
@@ -208,21 +210,21 @@ void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, Renga::I
 
 void TreeViewModelBuilder::addStyleSubtree(
     QStandardItem* pParentItem,
-    Renga::IModelObjectPtr pModelObject,
+    IModelObjectPtr pModelObject,
     GUID styleType,
     int id)
 {
-  if (styleType == Renga::StyleTypeIds::LayeredMaterial)
+  if (styleType == StyleTypeIds::LayeredMaterial)
   {
-    Renga::IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
+    IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
     pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
 
     if (pObjectWithLayeredMaterial != nullptr && pObjectWithLayeredMaterial->HasLayeredMaterial())
       addLayersSubtree(pParentItem, pModelObject, pObjectWithLayeredMaterial->LayeredMaterialId);
   }
-  else if (styleType == Renga::StyleTypeIds::Material)
+  else if (styleType == StyleTypeIds::Material)
   {
-    Renga::IObjectWithMaterialPtr pObjectWithMaterial;
+    IObjectWithMaterialPtr pObjectWithMaterial;
     pModelObject->QueryInterface(&pObjectWithMaterial);
 
     if (pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
@@ -232,7 +234,7 @@ void TreeViewModelBuilder::addStyleSubtree(
 
 void TreeViewModelBuilder::addSingleMaterialMaterialSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject)
+  IModelObjectPtr pModelObject)
 {
   QList<QStandardItem*> materialItemList = createSolidMaterialItem(pModelObject);
   addReinforcementSubtree(materialItemList.first(), pModelObject);
@@ -241,10 +243,10 @@ void TreeViewModelBuilder::addSingleMaterialMaterialSubtree(
 
 void TreeViewModelBuilder::addLayersSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject,
+  IModelObjectPtr pModelObject,
   int layeredMaterialId)
 {
-  Renga::ILayeredMaterialPtr pLayeredMaterial = getLayeredMaterial(layeredMaterialId);
+  ILayeredMaterialPtr pLayeredMaterial = getLayeredMaterial(layeredMaterialId);
   if (pLayeredMaterial == nullptr)
     return;
 
@@ -271,9 +273,9 @@ void TreeViewModelBuilder::addLayersSubtree(
 
 void TreeViewModelBuilder::addReinforcementSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject)
+  IModelObjectPtr pModelObject)
 {
-  Renga::IObjectReinforcementModelPtr pObjectReinforcementModel;
+  IObjectReinforcementModelPtr pObjectReinforcementModel;
 
   pModelObject->QueryInterface(&pObjectReinforcementModel);
 
@@ -299,8 +301,8 @@ void TreeViewModelBuilder::addReinforcementSubtree(
 
 void TreeViewModelBuilder::addRebarUsageSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject,
-  Renga::IRebarUsagePtr pRebarUsage,
+  IModelObjectPtr pModelObject,
+  IRebarUsagePtr pRebarUsage,
   int rebarUsageIndex,
   int reinforcementUnitStyleId)
 {
@@ -316,8 +318,8 @@ void TreeViewModelBuilder::addRebarUsageSubtree(
 
 void TreeViewModelBuilder::addReinforcementUnitUsageSubtree(
   QStandardItem* pParentItem,
-  Renga::IModelObjectPtr pModelObject,
-  Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage,
+  IModelObjectPtr pModelObject,
+  IReinforcementUnitUsagePtr pReinforcementUnitUsage,
   int reinforcementUnitUsageIndex)
 {
   QList<QStandardItem*> reinforcementUnitUsageItemList =
@@ -336,7 +338,7 @@ void TreeViewModelBuilder::addReinforcementUnitUsageSubtree(
   pParentItem->appendRow(reinforcementUnitUsageItemList);
 }
 
-Renga::IMaterialPtr TreeViewModelBuilder::getMaterial(int materialId) const
+IMaterialPtr TreeViewModelBuilder::getMaterial(int materialId) const
 {
   auto pProject = m_pApplication->Project;
   if (pProject == nullptr)
@@ -349,7 +351,7 @@ Renga::IMaterialPtr TreeViewModelBuilder::getMaterial(int materialId) const
   return pMaterialManager->GetMaterial(materialId);
 }
 
-Renga::ILayeredMaterialPtr TreeViewModelBuilder::getLayeredMaterial(int layeredMaterialId) const
+ILayeredMaterialPtr TreeViewModelBuilder::getLayeredMaterial(int layeredMaterialId) const
 {
   auto pProject = m_pApplication->Project;
   if (pProject == nullptr)
@@ -362,7 +364,7 @@ Renga::ILayeredMaterialPtr TreeViewModelBuilder::getLayeredMaterial(int layeredM
   return pLayeredMaterialManager->GetLayeredMaterial(layeredMaterialId);
 }
 
-Renga::IRebarStylePtr TreeViewModelBuilder::getRebarStyle(int rebarStyleId) const
+IRebarStylePtr TreeViewModelBuilder::getRebarStyle(int rebarStyleId) const
 {
   auto pProject = m_pApplication->Project;
   if (pProject == nullptr)
@@ -375,7 +377,7 @@ Renga::IRebarStylePtr TreeViewModelBuilder::getRebarStyle(int rebarStyleId) cons
   return pReinforcementUnitStyleManager->GetRebarStyle(rebarStyleId);
 }
 
-Renga::IReinforcementUnitStylePtr TreeViewModelBuilder::getReinforcementUnitStyle(int reinforcementStyleId) const
+IReinforcementUnitStylePtr TreeViewModelBuilder::getReinforcementUnitStyle(int reinforcementStyleId) const
 {
   auto pProject = m_pApplication->Project;
   if (pProject == nullptr)
@@ -397,7 +399,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createOtherGroupItem() const
     true);
 }
 
-QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const
+QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(IModelObjectPtr pLevelModelObject) const
 {
   bool isLevelVisible = getRengaObjectVisibility(m_pApplication, pLevelModelObject->Id);
 
@@ -409,7 +411,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(Renga::IModelObjectP
   return itemList;
 }
 
-QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(Renga::IModelObjectPtr pModelObject) const
+QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(IModelObjectPtr pModelObject) const
 {
   bool isModelObjectVisible = getRengaObjectVisibility(m_pApplication, pModelObject->Id);
   auto name = QString::fromWCharArray(pModelObject->Name);
@@ -423,8 +425,8 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(Renga::IModelO
 }
 
 QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
-  Renga::IModelObjectPtr pModelObject,
-  Renga::IMaterialLayerPtr pMaterialLayer,
+  IModelObjectPtr pModelObject,
+  IMaterialLayerPtr pMaterialLayer,
   int layerIndex) const
 {
   auto pMaterial = pMaterialLayer->GetMaterial();
@@ -441,14 +443,14 @@ QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
   return itemList;
 }
 
-QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(Renga::IModelObjectPtr pModelObject) const
+QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(IModelObjectPtr pModelObject) const
 {
-  Renga::IObjectWithMaterialPtr pObjectWithMaterial;
+  IObjectWithMaterialPtr pObjectWithMaterial;
   pModelObject->QueryInterface(&pObjectWithMaterial);
 
   bool hasMaterial = pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial();
 
-  Renga::IMaterialPtr pMaterial = hasMaterial ? getMaterial(pObjectWithMaterial->MaterialId) : nullptr;
+  IMaterialPtr pMaterial = hasMaterial ? getMaterial(pObjectWithMaterial->MaterialId) : nullptr;
 
   QString materialItemName = pMaterial != nullptr ?
     QString::fromWCharArray(pMaterial->Name) :
@@ -462,12 +464,12 @@ QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(Renga::IMode
 }
 
 QList<QStandardItem*> TreeViewModelBuilder::createRebarUsageItem(
-  Renga::IModelObjectPtr pModelObject,
-  Renga::IRebarUsagePtr pRebarUsage,
+  IModelObjectPtr pModelObject,
+  IRebarUsagePtr pRebarUsage,
   int rebarUsageIndex,
   int reinforcementUnitStyleId)
 {
-  Renga::IRebarStylePtr pRebarStyle = getRebarStyle(pRebarUsage->StyleId);
+  IRebarStylePtr pRebarStyle = getRebarStyle(pRebarUsage->StyleId);
   assert(pRebarStyle != nullptr);
 
   QList<QStandardItem*> itemList = createItem(QString::fromWCharArray(pRebarStyle->Name), ":/icons/Rebar", eTreeViewItemType::RebarUsage);
@@ -481,8 +483,8 @@ QList<QStandardItem*> TreeViewModelBuilder::createRebarUsageItem(
 }
 
 QList<QStandardItem*> TreeViewModelBuilder::createReinforcementUnitUsageItem(
-  Renga::IModelObjectPtr pModelObject,
-  Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage,
+  IModelObjectPtr pModelObject,
+  IReinforcementUnitUsagePtr pReinforcementUnitUsage,
   int reinforcementUnitUsageIndex)
 {
   auto pReinforcementUnitStyle = getReinforcementUnitStyle(pReinforcementUnitUsage->StyleId);
@@ -538,7 +540,7 @@ void TreeViewModelBuilder::setItemVisibilityState(QList<QStandardItem*>& itemLis
   pVisibilityItem->setData(isVisible, eTreeViewItemRole::IsVisible);
 }
 
-bool TreeViewModelBuilder::objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const
+bool TreeViewModelBuilder::objectGroupHasVisibleObject(const std::list<IModelObjectPtr>& objectsGroup) const
 {
   for (auto pObject : objectsGroup)
     if (getRengaObjectVisibility(m_pApplication, pObject->Id))
