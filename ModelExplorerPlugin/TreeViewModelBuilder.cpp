@@ -90,6 +90,7 @@ namespace
     { ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle },
     { ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle },
     { ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle },
+    { ParameterIds::MepSystemStyleId, StyleTypeIds::SystemStyle },
   };
 }
 
@@ -274,6 +275,8 @@ void TreeViewModelBuilder::addStyleSubtree(
     addEntitySubtree(pParentItem, m_pApplication->Project->PipeStyles->GetById(id));
   else if (styleType == StyleTypeIds::PipeAccessoryStyle)
     addEntitySubtree(pParentItem, m_pApplication->Project->PipeAccessoryStyles->GetById(id));
+  else if (styleType == StyleTypeIds::PipeFittingStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->PipeFittingStyles->GetById(id));
   else if (styleType == StyleTypeIds::MechanicalEquipmentStyle)
     addEntitySubtree(pParentItem, m_pApplication->Project->MechanicalEquipmentStyles->GetById(id));
   else if (styleType == StyleTypeIds::DuctStyle)
@@ -292,6 +295,8 @@ void TreeViewModelBuilder::addStyleSubtree(
     addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalConductorStyles->GetById(id));
   else if (styleType == StyleTypeIds::ElectricCircuitLineStyle)
     addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalCircuitLineStyles->GetById(id));
+  else if (styleType == StyleTypeIds::SystemStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->SystemStyles->GetById(id));
 }
 
 void TreeViewModelBuilder::addEntitySubtree(QStandardItem * pParentItem, Renga::IEntityPtr entity)
