@@ -14,19 +14,18 @@
 class ObjectPropertyViewBuilder : public PropertyViewBuilderBase
 {
 public:
-  ObjectPropertyViewBuilder(Renga::IApplicationPtr pApplication,
-                      Renga::IModelObjectPtr pModelObject);
+  ObjectPropertyViewBuilder(
+      Renga::IParameterContainerPtr pParameters,
+      Renga::IPropertyContainerPtr pProperties,
+      Renga::IQuantityContainerPtr pQuantities);
 
   // IPropertyViewBuilder
-  void createIntegratedParameters(PropertyManager& mng, PropertyList& propertyList) override;
   void createParameters(PropertyManager& mng, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mng, PropertyList& propertyList) override;
   PropertyList createProperties(PropertyManager& mng) override;
 
 protected:
-  QString getMaterialName(const int& materialId);
-  QString getLayeredMaterialName(const int& layeredMaterialId);
-
-  Renga::IApplicationPtr m_pApplication;
-  Renga::IModelObjectPtr m_pModelObject;
+  Renga::IParameterContainerPtr m_pParameters;
+  Renga::IPropertyContainerPtr m_pProperties;
+  Renga::IQuantityContainerPtr m_pQuantities;
 };

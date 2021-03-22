@@ -107,12 +107,6 @@
     <ClCompile Include="BoolGuard.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="LevelPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClCompile>
     <ClCompile Include="GuidUtils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -152,6 +146,9 @@
     <ClCompile Include="RengaEntityUIData.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="RengaModelUtils.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -163,12 +160,6 @@
     </ClInclude>
     <ClInclude Include="BoolGuard.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView\ModelObjectBuilders</Filter>
     </ClInclude>
     <ClInclude Include="GuidUtils.h">
       <Filter>Common</Filter>
@@ -213,6 +204,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="RengaEntityUIData.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RengaModelUtils.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

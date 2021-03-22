@@ -9,7 +9,7 @@ public:
   RebarUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                 Renga::IRebarUsagePtr pRebarUsage);
 
-  void createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList) override;
+  void createParameters(PropertyManager& mngr, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
 
 private:

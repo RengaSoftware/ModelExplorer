@@ -13,7 +13,7 @@ RebarUsagePropertyViewBuilder::RebarUsagePropertyViewBuilder(Renga::IApplication
 {
 }
 
-void RebarUsagePropertyViewBuilder::createIntegratedParameters(PropertyManager& mngr, PropertyList& propertyList)
+void RebarUsagePropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   auto pRebarStyle = getRebarStyle(m_pRebarUsage->StyleId);
 

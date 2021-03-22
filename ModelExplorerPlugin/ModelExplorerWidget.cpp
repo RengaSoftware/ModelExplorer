@@ -17,11 +17,10 @@
 #include "TreeViewUtils.h"
 #include "BoolGuard.h"
 
-#include "LevelPropertyViewBuilder.h"
-#include "RoomPropertyViewBuilder.h"
 #include "MaterialLayerPropertyViewBuilder.h"
 #include "RebarUsagePropertyViewBuilder.h"
 #include "ReinforcementUnitUsagePropertyViewBuilder.h"
+#include "ObjectPropertyViewBuilder.h"
 
 #include <Renga/ObjectTypes.h>
 
@@ -33,23 +32,6 @@
 
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
-
-namespace
-{
-  std::unique_ptr<IPropertyViewBuilder> createObjectPropertyViewBuilder(
-    Renga::IApplicationPtr pApplication, 
-    Renga::IModelObjectPtr pModelObject)
-  {
-    const auto objectType = pModelObject->GetObjectType();
-
-    if (objectType == Renga::ObjectTypes::Level)
-      return std::make_unique<LevelPropertyViewBuilder>(pApplication, pModelObject);
-    else if (objectType == Renga::ObjectTypes::Room)
-      return std::make_unique<RoomPropertyViewBuilder>(pApplication, pModelObject);
-    else
-      return std::make_unique<ObjectPropertyViewBuilder>(pApplication, pModelObject);
-  }
-}
 
 ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QWidget(nullptr, Qt::Tool),
@@ -391,7 +373,10 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   auto pModelObject = getModelObject(modelObjectId);
   assert(pModelObject != nullptr);
 
-  auto builder = createObjectPropertyViewBuilder(m_pApplication, pModelObject);
+  auto builder = std::make_unique<ObjectPropertyViewBuilder>(
+      pModelObject->GetParameters(),
+      pModelObject->GetProperties(),
+      pModelObject->GetQuantities());
   m_pPropertyView->showProperties(std::move(builder),
                                   pModelObject->GetParameters(),
                                   pModelObject->GetProperties());

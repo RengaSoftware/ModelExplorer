@@ -363,17 +363,6 @@
     </message>
 </context>
 <context>
-    <name>me_level</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>elevation</source>
-        <translation>Высотная отметка, м</translation>
-    </message>
-</context>
-<context>
     <name>me_materialLayer</name>
     <message>
         <source>noMaterial</source>
@@ -387,36 +376,12 @@
 <context>
     <name>me_materials</name>
     <message>
-        <source>Material</source>
-        <translation type="vanished">Материал</translation>
-    </message>
-    <message>
-        <source>Material layer</source>
-        <translation type="vanished">Слой</translation>
-    </message>
-    <message>
         <source>No material</source>
         <translation>Без материала</translation>
     </message>
 </context>
 <context>
     <name>me_mo</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation>Смещение от уровня, мм</translation>
-    </message>
-    <message>
-        <source>mark</source>
-        <translation>Марка</translation>
-    </message>
-    <message>
-        <source>material</source>
-        <translation>Материал</translation>
-    </message>
     <message>
         <source>overallHeight</source>
         <translation>Высота, мм</translation>
@@ -724,16 +689,8 @@
 <context>
     <name>me_propertyView</name>
     <message>
-        <source>Object parameters</source>
-        <translation>Параметры объекта</translation>
-    </message>
-    <message>
         <source>Calculated characteristics</source>
         <translation>Расчетные характеристики</translation>
-    </message>
-    <message>
-        <source>Object properties</source>
-        <translation>Свойства объекта</translation>
     </message>
     <message>
         <source>refresh</source>
@@ -756,12 +713,16 @@
         <translation>В алфавитном порядке</translation>
     </message>
     <message>
-        <source>Object parameters ex</source>
-        <translation>Параметры объекта [общие]</translation>
-    </message>
-    <message>
         <source>show</source>
         <translation>Показать объект</translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation>Параметры</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Свойства</translation>
     </message>
 </context>
 <context>
@@ -789,17 +750,6 @@
     <message>
         <source>count</source>
         <translation>Количество</translation>
-    </message>
-</context>
-<context>
-    <name>me_room</name>
-    <message>
-        <source>name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>roomNumber</source>
-        <translation>Номер помещения</translation>
     </message>
 </context>
 </TS>
