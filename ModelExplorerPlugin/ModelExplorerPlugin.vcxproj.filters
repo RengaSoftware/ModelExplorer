@@ -137,9 +137,6 @@
     <ClCompile Include="PropertyManager.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectPropertyViewBuilder.cpp">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
     <ClCompile Include="PropertyViewBuilderBase.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -148,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="RengaModelUtils.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityPropertyViewBuilder.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +197,6 @@
     <ClInclude Include="PropertyManager.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectPropertyViewBuilder.h">
-      <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
     <ClInclude Include="PropertyViewBuilderBase.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -208,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="RengaModelUtils.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPropertyViewBuilder.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

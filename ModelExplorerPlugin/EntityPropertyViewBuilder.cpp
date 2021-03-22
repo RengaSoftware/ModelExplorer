@@ -8,10 +8,10 @@
 
 #include "stdafx.h"
 
-#include "ObjectPropertyViewBuilder.h"
+#include "EntityPropertyViewBuilder.h"
 
 
-ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(
+EntityPropertyViewBuilder::EntityPropertyViewBuilder(
     Renga::IParameterContainerPtr pParameters,
     Renga::IPropertyContainerPtr pProperties,
     Renga::IQuantityContainerPtr pQuantities)
@@ -21,19 +21,27 @@ ObjectPropertyViewBuilder::ObjectPropertyViewBuilder(
 {
 }
 
-void ObjectPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
+void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
+  // TODO: remove this condition, devide class free functions
+  if (m_pParameters == nullptr)
+    return;
+
   auto properties = createParametersInternal(mngr, *m_pParameters);
   propertyList.splice(propertyList.end(), properties);
 }
 
-void ObjectPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
+void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
+  // TODO: remove this condition, devide class free functions
+  if (m_pQuantities == nullptr)
+    return;
+
   auto properties = createQuantitiesInternal(mngr, *m_pQuantities);
   propertyList.splice(propertyList.end(), properties);
 }
 
-PropertyList ObjectPropertyViewBuilder::createProperties(PropertyManager& mngr)
+PropertyList EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
   return createPropertiesInternal(mngr, m_pProperties);
 }
