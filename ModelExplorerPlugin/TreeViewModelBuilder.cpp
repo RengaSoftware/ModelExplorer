@@ -26,10 +26,32 @@ namespace
 {
   const std::list<GUID> c_levelTreeTypes =
   {
-    ObjectTypes::Wall,    ObjectTypes::Column,    ObjectTypes::Floor,    ObjectTypes::Opening,    ObjectTypes::Roof,    ObjectTypes::Beam,    ObjectTypes::Stair,    ObjectTypes::Ramp,    ObjectTypes::Window,    ObjectTypes::Door,    ObjectTypes::Railing,    ObjectTypes::Room,    ObjectTypes::IsolatedFoundation,    ObjectTypes::WallFoundation,    ObjectTypes::AssemblyInstance,    ObjectTypes::Element,    ObjectTypes::Plate,
-    ObjectTypes::RoutePoint,    ObjectTypes::Equipment,    ObjectTypes::PlumbingFixture,    ObjectTypes::MechanicalEquipment,
-    ObjectTypes::Line3D,    ObjectTypes::Hatch,    ObjectTypes::TextShape,
-    ObjectTypes::Rebar  };
+    ObjectTypes::Wall,
+    ObjectTypes::Column,
+    ObjectTypes::Floor,
+    ObjectTypes::Opening,
+    ObjectTypes::Roof,
+    ObjectTypes::Beam,
+    ObjectTypes::Stair,
+    ObjectTypes::Ramp,
+    ObjectTypes::Window,
+    ObjectTypes::Door,
+    ObjectTypes::Railing,
+    ObjectTypes::Room,
+    ObjectTypes::IsolatedFoundation,
+    ObjectTypes::WallFoundation,
+    ObjectTypes::AssemblyInstance,
+    ObjectTypes::Element,
+    ObjectTypes::Plate,
+    ObjectTypes::RoutePoint,
+    ObjectTypes::Equipment,
+    ObjectTypes::PlumbingFixture,
+    ObjectTypes::MechanicalEquipment,
+    ObjectTypes::Line3D,
+    ObjectTypes::Hatch,
+    ObjectTypes::TextShape,
+    ObjectTypes::Rebar
+  };
 
   const std::list<GUID> c_nonLevelTreeTypes
   {
