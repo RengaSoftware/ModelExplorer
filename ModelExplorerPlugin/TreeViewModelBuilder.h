@@ -72,6 +72,8 @@ private:
       Renga::IModelObjectPtr pModelObject,
       GUID styleType, // Replace with Renga schema
       int id /*TODO: should be Renga::IEntity in future*/);
+
+  void addEntitySubtree(QStandardItem* pParentItem, Renga::IEntityPtr entity);
   
   void addSingleMaterialMaterialSubtree(
     QStandardItem* pParentItem,
