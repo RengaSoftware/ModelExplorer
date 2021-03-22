@@ -72,13 +72,26 @@ namespace
     ObjectTypes::Dimension,
   };
 
-  const std::map <GUID, GUID> c_parameterToIdDict = 
+  const std::map <GUID, GUID> c_parameterToIdDict =
   {
     { ParameterIds::MaterialStyleId, StyleTypeIds::Material },
-    { ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial }
+    { ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial },
+    { ParameterIds::PlumbingFixtureStyleId, StyleTypeIds::PlumbingFixtureStyle },
+    { ParameterIds::MepEquipmentStyleId, StyleTypeIds::EquipmentStyle },
+    { ParameterIds::MepPipeStyleId, StyleTypeIds::PipeStyle },
+    { ParameterIds::PipeComponentStyleId, StyleTypeIds::PipeFittingStyle },
+    { ParameterIds::PipeAccessoryStyleId, StyleTypeIds::PipeAccessoryStyle },
+    { ParameterIds::AirEquipmentStyleId, StyleTypeIds::MechanicalEquipmentStyle },
+    { ParameterIds::AirDuctStyleId, StyleTypeIds::DuctStyle },
+    { ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle },
+    { ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle },
+    { ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle },
+    { ParameterIds::LightFixtureStyleId, StyleTypeIds::LightFixtureStyle },
+    { ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle },
+    { ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle },
+    { ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle },
   };
 }
-
 
 TreeViewModelBuilder::TreeViewModelBuilder(IApplicationPtr pApplication) :
   m_pApplication(pApplication)
@@ -111,7 +124,7 @@ QStandardItemModel* TreeViewModelBuilder::build()
   processModelObjectCollection(pModelObjectCollection);
 
   m_levels.sort(compareLevelElevations);
-  
+
   for (auto pLevelModelObject : m_levels)
     addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
 
@@ -192,8 +205,8 @@ void TreeViewModelBuilder::addLevelSubtree(
 }
 
 void TreeViewModelBuilder::addObjectGroupSubtree(
-    QStandardItem* pParentItem,
-    const std::list<IModelObjectPtr>& objectGroup,
+  QStandardItem* pParentItem,
+  const std::list<IModelObjectPtr>& objectGroup,
   const QString groupName)
 {
   QList<QStandardItem*> objectGroupItemList =
@@ -204,7 +217,7 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
 
   for (auto pObject : objectGroup)
     addObjectSubtree(objectGroupItemList.at(0), pObject);
-  
+
   setItemVisibilityState(objectGroupItemList, objectGroupHasVisibleObject(objectGroup));
   pParentItem->appendRow(objectGroupItemList);
 }
@@ -223,7 +236,7 @@ void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, IModelOb
       continue;
 
     auto entityTypeIt = c_parameterToIdDict.find(id);
-    if(entityTypeIt != c_parameterToIdDict.cend())
+    if (entityTypeIt != c_parameterToIdDict.cend())
       addStyleSubtree(itemList.at(0), pObject, entityTypeIt->second, pParameter->GetIntValue());
   }
 
@@ -231,10 +244,10 @@ void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, IModelOb
 }
 
 void TreeViewModelBuilder::addStyleSubtree(
-    QStandardItem* pParentItem,
-    IModelObjectPtr pModelObject,
-    GUID styleType,
-    int id)
+  QStandardItem* pParentItem,
+  IModelObjectPtr pModelObject,
+  GUID styleType,
+  int id)
 {
   if (styleType == StyleTypeIds::LayeredMaterial)
   {
@@ -252,6 +265,41 @@ void TreeViewModelBuilder::addStyleSubtree(
     if (pObjectWithMaterial != nullptr && pObjectWithMaterial->HasMaterial())
       addSingleMaterialMaterialSubtree(pParentItem, pModelObject);
   }
+  // TODO: replace with universal IProject method
+  else if (styleType == StyleTypeIds::PlumbingFixtureStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->PlumbingFixtureStyles->GetById(id));
+  else if (styleType == StyleTypeIds::EquipmentStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->EquipmentStyles->GetById(id));
+  else if (styleType == StyleTypeIds::PipeStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->PipeStyles->GetById(id));
+  else if (styleType == StyleTypeIds::PipeAccessoryStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->PipeAccessoryStyles->GetById(id));
+  else if (styleType == StyleTypeIds::MechanicalEquipmentStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->MechanicalEquipmentStyles->GetById(id));
+  else if (styleType == StyleTypeIds::DuctStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->DuctStyles->GetById(id));
+  else if (styleType == StyleTypeIds::DuctFittingStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->DuctFittingStyles->GetById(id));
+  else if (styleType == StyleTypeIds::DuctAccessoryStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->DuctAccessoryStyles->GetById(id));
+  else if (styleType == StyleTypeIds::WiringAccessoryStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->WiringAccessoryStyles->GetById(id));
+  else if (styleType == StyleTypeIds::LightFixtureStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->LightFixtureStyles->GetById(id));
+  else if (styleType == StyleTypeIds::ElectricDistributionBoardStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricDistributionBoardStyles->GetById(id));
+  else if (styleType == StyleTypeIds::ElectricalConductorStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalConductorStyles->GetById(id));
+  else if (styleType == StyleTypeIds::ElectricCircuitLineStyle)
+    addEntitySubtree(pParentItem, m_pApplication->Project->ElectricalCircuitLineStyles->GetById(id));
+}
+
+void TreeViewModelBuilder::addEntitySubtree(QStandardItem * pParentItem, Renga::IEntityPtr entity)
+{
+  auto name = QString::fromWCharArray(entity->Name);
+  auto iconPath = getRengaEntityUIData(entity->TypeId).icon16Path;
+  auto itemList = createItem(name, iconPath, eTreeViewItemType::Undefined);
+  pParentItem->appendRow(itemList);
 }
 
 void TreeViewModelBuilder::addSingleMaterialMaterialSubtree(
@@ -277,13 +325,13 @@ void TreeViewModelBuilder::addLayersSubtree(
     return;
 
   int baseLayerIndex = pLayeredMaterial->BaseLayerIndex;
-  
+
   int layerCount = pMaterialLayerCollection->Count;
 
   for (int i = 0; i < layerCount; i++)
   {
     auto pMaterialLayer = pMaterialLayerCollection->Get(i);
-    
+
     QList<QStandardItem*> layerItemList = createMaterialLayerItem(pModelObject, pMaterialLayer, i);
 
     if (i == baseLayerIndex)
@@ -348,7 +396,7 @@ void TreeViewModelBuilder::addReinforcementUnitUsageSubtree(
     createReinforcementUnitUsageItem(pModelObject, pReinforcementUnitUsage, reinforcementUnitUsageIndex);
 
   auto pReinforcementUnitStyle = getReinforcementUnitStyle(pReinforcementUnitUsage->StyleId);
-  
+
   auto pRebarUsageCollection = pReinforcementUnitStyle->GetRebarUsages();
 
   for (int i = 0; i < pRebarUsageCollection->Count; i++)
@@ -414,11 +462,11 @@ IReinforcementUnitStylePtr TreeViewModelBuilder::getReinforcementUnitStyle(int r
 
 QList<QStandardItem*> TreeViewModelBuilder::createOtherGroupItem() const
 {
-  return createItem(QApplication::translate("me_modelObjects", "OtherObjectGroup"), 
-    ":/icons/Folder", 
-    eTreeViewItemType::ObjectGroup, 
-    true, 
-    true);
+  return createItem(QApplication::translate("me_modelObjects", "OtherObjectGroup"),
+                    ":/icons/Folder",
+                    eTreeViewItemType::ObjectGroup,
+                    true,
+                    true);
 }
 
 QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(IModelObjectPtr pLevelModelObject) const
@@ -439,7 +487,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(IModelObjectPt
   auto name = QString::fromWCharArray(pModelObject->Name);
   auto iconPath = getRengaEntityUIData(pModelObject->ObjectType).icon16Path;
   QList<QStandardItem*> itemList =
-      createItem(name, iconPath, eTreeViewItemType::ModelObject, true, isModelObjectVisible);
+    createItem(name, iconPath, eTreeViewItemType::ModelObject, true, isModelObjectVisible);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
 
@@ -452,7 +500,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
   int layerIndex) const
 {
   auto pMaterial = pMaterialLayer->GetMaterial();
-  
+
   QString materialName = pMaterial != nullptr ?
     QString::fromWCharArray(pMaterial->Name) :
     QApplication::translate("me_materials", "No material");
