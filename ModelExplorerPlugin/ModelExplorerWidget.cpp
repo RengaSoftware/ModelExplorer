@@ -286,7 +286,7 @@ void ModelExplorerWidget::onRengaObjectSelected(const int modelObjectId)
   if (!m_wasObjectSelectedInCode)
   {
     QModelIndexList indexList = m_pTreeViewModel->match(m_pTreeViewModel->index(0, 0),
-      eTreeViewItemRole::ModelObjectId,
+      eTreeViewItemRole::EntityId,
       modelObjectId,
       1,
       Qt::MatchRecursive);
@@ -385,7 +385,7 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -401,7 +401,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -424,7 +424,7 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -453,7 +453,7 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 {
   int modelObjectId = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ModelObjectId, modelObjectId))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
@@ -613,7 +613,7 @@ void ModelExplorerWidget::updateTreeViewItemVisibility(const QModelIndex& itemIn
   {
     int modelObjectId = 0;
 
-    if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::ModelObjectId, modelObjectId))
+    if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex, eTreeViewItemRole::EntityId, modelObjectId))
       assert(false);
 
     isVisible = getRengaObjectVisibility(m_pApplication, modelObjectId);
@@ -732,7 +732,7 @@ int ModelExplorerWidget::getTreeViewModelObjectId(const QModelIndex& itemIndex) 
 {
   int result = 0;
 
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex,eTreeViewItemRole::ModelObjectId , result))
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), itemIndex,eTreeViewItemRole::EntityId , result))
     assert(false);
 
   return result;
