@@ -481,7 +481,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(IModelObjectPtr pLev
   QList<QStandardItem*> itemList = createItem(
     QString::fromWCharArray(pLevelModelObject->Name), ":/icons/Level", eTreeViewItemType::Level, true, isLevelVisible);
 
-  itemList.first()->setData(pLevelModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pLevelModelObject->Id, eTreeViewItemRole::EntityId);
 
   return itemList;
 }
@@ -494,7 +494,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(IModelObjectPt
   QList<QStandardItem*> itemList =
     createItem(name, iconPath, eTreeViewItemType::ModelObject, true, isModelObjectVisible);
 
-  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
 
   return itemList;
 }
@@ -512,7 +512,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createMaterialLayerItem(
 
   QList<QStandardItem*> itemList = createItem(materialName, ":/icons/Material", eTreeViewItemType::MaterialLayer);
 
-  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
   itemList.first()->setData(layerIndex, eTreeViewItemRole::LayerIndex);
 
   return itemList;
@@ -533,7 +533,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createSolidMaterialItem(IModelObject
 
   QList<QStandardItem*> itemList = createItem(materialItemName, ":/icons/Material", eTreeViewItemType::Undefined);
 
-  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
 
   return itemList;
 }
@@ -549,7 +549,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createRebarUsageItem(
 
   QList<QStandardItem*> itemList = createItem(QString::fromWCharArray(pRebarStyle->Name), ":/icons/Rebar", eTreeViewItemType::RebarUsage);
 
-  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
 
   itemList.first()->setData(rebarUsageIndex, eTreeViewItemRole::RebarUsageIndex);
   itemList.first()->setData(reinforcementUnitStyleId, eTreeViewItemRole::ReinforcementUnitStyleId);
@@ -569,7 +569,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createReinforcementUnitUsageItem(
     QString::fromWCharArray(pReinforcementUnitStyle->Name),
     ":/icons/Reinforcement", eTreeViewItemType::ReinforcementUnitUsage);
 
-  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::ModelObjectId);
+  itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
   itemList.first()->setData(reinforcementUnitUsageIndex, eTreeViewItemRole::ReinforcementUnitUsageIndex);
 
   return itemList;

@@ -6,7 +6,7 @@
 enum eTreeViewItemRole
 {
   ItemType = Qt::UserRole + 1,
-  ModelObjectId,
+  EntityId,
   LayerIndex,
   IsVisible,
   RebarUsageIndex,
