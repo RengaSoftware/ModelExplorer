@@ -51,7 +51,24 @@ const RengaEntityUIData getRengaEntityUIData(GUID entityType)
     { Renga::ObjectTypes::Axis, { QApplication::translate("me_modelObjects", "Axes"), ":/icons/Axis" } },
     { Renga::ObjectTypes::Elevation, { QApplication::translate("me_modelObjects", "Elevations"), ":/icons/Elevation" } },
     { Renga::ObjectTypes::Section, { QApplication::translate("me_modelObjects", "Sections"), ":/icons/Section" } },
-    { Renga::ObjectTypes::Dimension, { QApplication::translate("me_modelObjects", "Dimensions"), ":/icons/Dimension" } }
+    { Renga::ObjectTypes::Dimension, { QApplication::translate("me_modelObjects", "Dimensions"), ":/icons/Dimension" } },
+    { Renga::StyleTypeIds::Material ,{ "", ":/icons/Material" } },
+    { Renga::StyleTypeIds::LayeredMaterial ,{ "", ":/icons/Material" } },
+    { Renga::StyleTypeIds::PlumbingFixtureStyle , { "", ":/icons/i16_plumbing_fixture_style" } },
+    { Renga::StyleTypeIds::EquipmentStyle ,{ "", ":/icons/i16_mep_equipment_style_editor" } },
+    { Renga::StyleTypeIds::PipeStyle ,{ "", ":/icons/i16_mep_pipe_style_editor" } },
+    { Renga::StyleTypeIds::PipeFittingStyle ,{ "", ":/icons/i16_pipe_component_style_editor" } },
+    { Renga::StyleTypeIds::PipeAccessoryStyle ,{ "", ":/icons/i16_mep_pipe_accessory_style_editor" } },
+    { Renga::StyleTypeIds::MechanicalEquipmentStyle ,{ "", ":/icons/i16_air_equipment_style_editor" } },
+    { Renga::StyleTypeIds::DuctStyle ,{ "", ":/icons/i16_airduct_style_editor" } },
+    { Renga::StyleTypeIds::DuctFittingStyle ,{ "", ":/icons/i16_air_component_style_editor" } },
+    { Renga::StyleTypeIds::DuctAccessoryStyle ,{ "", ":/icons/i16_mep_air_accessory_style_editor" } },
+    { Renga::StyleTypeIds::WiringAccessoryStyle ,{ "", ":/icons/i16_wiring_accessory_style_editor" } },
+    { Renga::StyleTypeIds::LightFixtureStyle ,{ "", ":/icons/i16_light_fixture_style_editor" } },
+    { Renga::StyleTypeIds::ElectricDistributionBoardStyle ,{ "", ":/icons/i16_electrical_distribution_board_style_editor" } },
+    { Renga::StyleTypeIds::ElectricalConductorStyle ,{ "", ":/icons/i16_conductors_style_editor" } },
+    { Renga::StyleTypeIds::ElectricCircuitLineStyle ,{ "", ":/icons/i16_line_electrical_circuit_style_editor" } },
+    { Renga::StyleTypeIds::SystemStyle, { "", ":/icons/i16_mep_system_style_editor" } },
   };
   auto dataIt = dict.find(entityType);
   return (dataIt != dict.end()) ? dataIt->second : RengaEntityUIData();

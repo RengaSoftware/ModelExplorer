@@ -51,5 +51,20 @@
         <file>icons/DistributionBoard.png</file>
         <file>icons/WiringAccessory.png</file>
         <file>icons/FindAndSelect.png</file>
+		<file>icons/i16_plumbing_fixture_style.png</file>
+		<file>icons/i16_mep_equipment_style_editor.png</file>
+		<file>icons/i16_mep_pipe_style_editor.png</file>
+		<file>icons/i16_pipe_component_style_editor.png</file>
+		<file>icons/i16_mep_pipe_accessory_style_editor.png</file>
+		<file>icons/i16_air_equipment_style_editor.png</file>
+		<file>icons/i16_airduct_style_editor.png</file>
+		<file>icons/i16_air_component_style_editor.png</file>
+		<file>icons/i16_mep_air_accessory_style_editor.png</file>
+		<file>icons/i16_wiring_accessory_style_editor.png</file>
+		<file>icons/i16_light_fixture_style_editor.png</file>
+		<file>icons/i16_electrical_distribution_board_style_editor.png</file>
+		<file>icons/i16_conductors_style_editor.png</file>
+		<file>icons/i16_line_electrical_circuit_style_editor.png</file>
+		<file>icons/i16_mep_system_style_editor.png</file>
     </qresource>
 </RCC>
