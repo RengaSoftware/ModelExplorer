@@ -47,6 +47,12 @@ namespace
     Renga::ObjectTypes::Section,
     Renga::ObjectTypes::Dimension,
   };
+
+  const std::map <GUID, GUID> c_parameterToIdDict = 
+  {
+    { Renga::ParameterIds::MaterialStyleId, Renga::StyleTypeIds::Material },
+    { Renga::ParameterIds::LayeredMaterialStyleId, Renga::StyleTypeIds::LayeredMaterial }
+  };
 }
 
 
@@ -179,18 +185,6 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
   pParentItem->appendRow(objectGroupItemList);
 }
 
-const std::map<GUID, GUID>& TreeViewModelBuilder::parameterIdToEntityTypeDict() const
-{
-  using namespace Renga;
-  //static auto less = [](GUID lhs, GUID rhs) { return true; };
-  static const std::map <GUID, GUID> dict = {
-      {ParameterIds::MaterialStyleId, StyleTypeIds::Material},
-      {ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial}
-  };
-
-  return dict;
-}
-
 void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject)
 {
   QList<QStandardItem*> itemList = createModelObjectItem(pObject);
@@ -204,8 +198,8 @@ void TreeViewModelBuilder::addObjectSubtree(QStandardItem* pParentItem, Renga::I
     if (pParameter->Definition->_ParameterType != Renga::ParameterType::ParameterType_IntID)
       continue;
 
-    auto entityTypeIt = parameterIdToEntityTypeDict().find(id);
-    if(entityTypeIt != parameterIdToEntityTypeDict().cend())
+    auto entityTypeIt = c_parameterToIdDict.find(id);
+    if(entityTypeIt != c_parameterToIdDict.cend())
       addStyleSubtree(itemList.at(0), pObject, entityTypeIt->second, pParameter->GetIntValue());
   }
 

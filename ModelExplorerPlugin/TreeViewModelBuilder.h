@@ -131,7 +131,6 @@ private:
 
   void setItemVisibilityState(QList<QStandardItem*>& itemList, bool isVisible) const;
   bool objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const;
-  const std::map<GUID, GUID>& parameterIdToEntityTypeDict() const;
 
 private:
   Renga::IApplicationPtr m_pApplication;
