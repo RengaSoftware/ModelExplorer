@@ -381,7 +381,8 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
       pModelObject->GetParameters(),
       pModelObject->GetProperties(),
-      pModelObject->GetQuantities());
+      pModelObject->GetQuantities(),
+      false);
   m_pPropertyView->showProperties(std::move(builder),
                                   pModelObject->GetParameters(),
                                   pModelObject->GetProperties());
@@ -486,7 +487,8 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
     parameters,
     properties,
-    nullptr);
+    nullptr,
+    true);
   m_pPropertyView->showProperties(std::move(builder),
                                   parameters,
                                   properties);
