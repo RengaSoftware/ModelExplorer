@@ -17,7 +17,8 @@ public:
   EntityPropertyViewBuilder(
       Renga::IParameterContainerPtr pParameters,
       Renga::IPropertyContainerPtr pProperties,
-      Renga::IQuantityContainerPtr pQuantities);
+      Renga::IQuantityContainerPtr pQuantities,
+      bool disableProperties);
 
   // IPropertyViewBuilder
   void createParameters(PropertyManager& mng, PropertyList& propertyList) override;

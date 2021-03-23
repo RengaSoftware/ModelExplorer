@@ -14,8 +14,10 @@
 EntityPropertyViewBuilder::EntityPropertyViewBuilder(
     Renga::IParameterContainerPtr pParameters,
     Renga::IPropertyContainerPtr pProperties,
-    Renga::IQuantityContainerPtr pQuantities)
-  : m_pParameters(pParameters),
+    Renga::IQuantityContainerPtr pQuantities,
+    bool disableProperties)
+  : PropertyViewBuilderBase(disableProperties),
+    m_pParameters(pParameters),
     m_pProperties(pProperties),
     m_pQuantities(pQuantities)
 {

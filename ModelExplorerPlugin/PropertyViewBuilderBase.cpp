@@ -7,6 +7,10 @@
 #include <Renga/QuantityIds.h>
 
 
+PropertyViewBuilderBase::PropertyViewBuilderBase(bool disableProperties) : m_disableProperties(disableProperties)
+{
+}
+
 PropertyList PropertyViewBuilderBase::createParametersInternal(
     PropertyManager& mngr,
     Renga::IParameterContainer& container)
@@ -107,6 +111,7 @@ PropertyList PropertyViewBuilderBase::createPropertiesInternal(
       continue;
     }
     pQtProperty->setModified(true);
+    pQtProperty->setEnabled(!m_disableProperties);
     pQtProperty->setData(propertyIdString);
   }
 
