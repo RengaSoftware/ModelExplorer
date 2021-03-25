@@ -27,12 +27,22 @@
 
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>
+#include <QtCore/QSettings.h>
 
 #include <windows.h>
 
 
 static const unsigned int c_displacementFromParentTop = 100;
 static const unsigned int c_displacementFromParentLeft = 5;
+
+namespace
+{
+  std::unique_ptr<QSettings> createSettings()
+  {
+    auto pSettings = std::make_unique<QSettings>("Renga Software", "ModelExplorerPlugin");
+    return pSettings;
+  }
+}
 
 ModelExplorerWidget::ModelExplorerWidget(Renga::IApplicationPtr pApplication) :
   QWidget(nullptr, Qt::Tool),
@@ -825,8 +835,29 @@ void ModelExplorerWidget::readModelAndShow()
 {
   emit rebuildModelTree();
 
-  updatePlacement();
+  if (!restoreGeometryFromSettings())
+    updatePlacement();
+
   show();
   activateWindow();
   updateOwner();
+}
+
+void ModelExplorerWidget::closeEvent(QCloseEvent* pEvent)
+{
+  saveGeometryToSettings();
+
+  QWidget::closeEvent(pEvent);
+}
+
+void ModelExplorerWidget::saveGeometryToSettings()
+{
+  auto pSettings = createSettings();
+  pSettings->setValue("geometry", saveGeometry());
+}
+
+bool ModelExplorerWidget::restoreGeometryFromSettings()
+{
+  auto pSettings = createSettings();
+  return restoreGeometry(pSettings->value("geometry").toByteArray());
 }

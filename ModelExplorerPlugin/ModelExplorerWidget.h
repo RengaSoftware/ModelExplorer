@@ -35,6 +35,9 @@ public:
 signals:
   void rebuildModelTree();
 
+protected:
+  void closeEvent(QCloseEvent* pEvent) override;
+
 private slots:
   void setPropertyViewMode(int buttonId);
     
@@ -53,6 +56,9 @@ private slots:
   void onRengaObjectSelected(const int modelObjectId);
 
 private:
+  void saveGeometryToSettings();
+  bool restoreGeometryFromSettings();
+
   QPushButton* createPushButton(const QString& iconPath, const QString& tooltip);
   QToolBar* createToolBar(QWidget* parentWidget);
   
