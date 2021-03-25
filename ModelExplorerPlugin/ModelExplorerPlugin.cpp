@@ -117,6 +117,9 @@ void ModelExplorerPlugin::addPluginButtons(const std::wstring& pluginPath)
 
 void ModelExplorerPlugin::onModelExplorerButtonClicked()
 {
+  if (m_pWidget)
+    m_pWidget->close();
+
   m_pWidget.reset(new ModelExplorerWidget(m_pApplication));
   m_pWidget->readModelAndShow();
 }
