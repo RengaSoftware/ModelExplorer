@@ -7,6 +7,27 @@
 #include <Renga/QuantityIds.h>
 
 
+namespace
+{
+  template <typename TFunc>
+  class CActionGuard
+  {
+  public:
+    CActionGuard(const TFunc& func) : m_func(func) {}
+    ~CActionGuard() { m_func(); }
+
+  private:
+    TFunc m_func;
+  };
+
+  template <typename TFunc>
+  CActionGuard<TFunc> makeGuard(const TFunc& func)
+  {
+    return CActionGuard<TFunc>(func);
+  }
+}
+
+
 PropertyViewBuilderBase::PropertyViewBuilderBase(bool disableProperties) : m_disableProperties(disableProperties)
 {
 }
@@ -18,6 +39,8 @@ PropertyList PropertyViewBuilderBase::createParametersInternal(
   PropertyList result;
   // block signals before filling properties
   mngr.blockSignals(true);
+
+  auto unblockSignalsGuard = makeGuard([&mngr] {mngr.blockSignals(false); });
 
   auto pIds = container.GetIds();
   for (int i = 0; i < pIds->Count; ++i)
@@ -69,9 +92,6 @@ PropertyList PropertyViewBuilderBase::createParametersInternal(
     }
   }
 
-  // unblock signals
-  mngr.blockSignals(false);
-
   return result;
 }
 
@@ -110,8 +130,7 @@ PropertyList PropertyViewBuilderBase::createPropertiesInternal(
     default:
       continue;
     }
-    pQtProperty->setModified(true);
-    pQtProperty->setEnabled(!m_disableProperties);
+    pQtProperty->setModified(!m_disableProperties);
     pQtProperty->setData(propertyIdString);
   }
 

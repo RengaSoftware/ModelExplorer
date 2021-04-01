@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "RengaEntityUIData.h"
+#include "GuidMap.h"
 
 #include <Renga/ObjectTypes.h>
 #include <Renga/StyleTypeIds.h>
@@ -10,7 +11,7 @@
 
 const RengaEntityUIData getRengaEntityUIData(GUID entityType)
 {
-  static std::map<GUID, RengaEntityUIData> dict
+  static GuidMap<RengaEntityUIData> dict
   {
     { Renga::ObjectTypes::Wall, { QApplication::translate("me_modelObjects", "Walls"), ":/icons/Wall" } },
     { Renga::ObjectTypes::Column, { QApplication::translate("me_modelObjects", "Columns"), ":/icons/Column" } },

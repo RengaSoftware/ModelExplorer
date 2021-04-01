@@ -8,18 +8,12 @@
 
 #pragma once
 
+#include "GuidMap.h"
+
 #include <QtGui/QStandardItemModel>
 
 #include <comdef.h>
 
-
-struct GuidComparator
-{
-  bool operator () (const GUID& left, const GUID& right) const
-  {
-    return memcmp(&left, &right, sizeof(GUID)) < 0;
-  }
-};
 
 struct LevelObjectGroup
 {
@@ -140,5 +134,5 @@ private:
   // TODO: remove these members
   std::list<Renga::IModelObjectPtr> m_levels;
   std::map<LevelObjectGroup, std::list<Renga::IModelObjectPtr>> m_levelObjects;
-  std::map<GUID, std::list<Renga::IModelObjectPtr>, GuidComparator> m_nonLevelObjects;
+  GuidMap<std::list<Renga::IModelObjectPtr>> m_nonLevelObjects;
 };
