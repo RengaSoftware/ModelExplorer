@@ -19,5 +19,3 @@
 #include <QtWidgets/QApplication>
 
 #include <Renga/CreateApplication.hpp>
-
-bool operator<(const GUID& lhs, const GUID& rhs);

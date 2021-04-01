@@ -188,6 +188,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
   <ItemGroup>
     <ClInclude Include="BoolGuard.h" />
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h" />
+    <ClInclude Include="GuidMap.h" />
     <ClInclude Include="GuidUtils.h" />
     <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />

@@ -74,7 +74,7 @@ namespace
     ObjectTypes::Dimension,
   };
 
-  const std::map <GUID, GUID> c_parameterToIdDict =
+  const GuidMap <GUID> c_parameterToIdDict =
   {
     { ParameterIds::MaterialStyleId, StyleTypeIds::Material },
     { ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial },
