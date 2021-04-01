@@ -14,31 +14,45 @@ ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBui
 {
 }
 
-void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
+PropertyList ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr)
 {
+  auto result = PropertyList();
+
   auto pReinforcementUnitUsage = m_reinforcementUnitUsageAccess();
   if (pReinforcementUnitUsage == nullptr)
-    return;
+    return result;
 
   auto pReinforcementUnitStyle = getReinforcementUnitStyle(pReinforcementUnitUsage->StyleId);
 
   if (pReinforcementUnitStyle != nullptr)
-    mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pReinforcementUnitStyle->Name));
+    mngr.addValue(result, QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pReinforcementUnitStyle->Name));
+  return result;
 }
 
-void ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
+PropertyList ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr)
 {
   using namespace Renga;
 
+  auto result = PropertyList();
+
   auto pReinforcementUnitUsage = m_reinforcementUnitUsageAccess();
   if (pReinforcementUnitUsage == nullptr)
-    return;
+    return result;
 
   auto pQuantities = pReinforcementUnitUsage->GetQuantities();
-
-  mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities->Get(QuantityIds::TotalRebarLength));
-  mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
-  mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "reinforcementUnitCount"), pQuantities->Get(QuantityIds::ReinforcementUnitCount));
+  mngr.addValue(
+      result,
+      QApplication::translate("me_reinforcement", "totalRebarLength"),
+      pQuantities->Get(QuantityIds::TotalRebarLength));
+  mngr.addValue(
+      result,
+      QApplication::translate("me_reinforcement", "totalRebarMass"),
+      pQuantities->Get(QuantityIds::TotalRebarMass));
+  mngr.addValue(
+      result,
+      QApplication::translate("me_reinforcement", "reinforcementUnitCount"),
+      pQuantities->Get(QuantityIds::ReinforcementUnitCount));
+  return result;
 }
 
 Renga::IReinforcementUnitStylePtr ReinforcementUnitUsagePropertyViewBuilder::getReinforcementUnitStyle(int styleId) const

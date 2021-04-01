@@ -26,15 +26,10 @@ namespace
     PropertyList& quantities,
     PropertyList& properties)
   {
-    if (pObjectPropertyViewBuilder == nullptr)
-      return false;
-    
     parameters.clear();
     quantities.clear();
 
-    pObjectPropertyViewBuilder->createParameters(parametersMng, parameters);
-    pObjectPropertyViewBuilder->createQuantities(quantitiesMng /*Why?!*/ , quantities);
-    properties = pObjectPropertyViewBuilder->createProperties(propertiesMng);
+    
 
     return true;
   }
@@ -104,21 +99,9 @@ namespace
                          QtGroupPropertyManager &groupManager,
                          PropertyView::Mode propertyViewMode)
   {
-    PropertyList integratedParameters;
-
-    PropertyList parameters;
-    PropertyList quantities;
-    PropertyList properties;
-
-    if (!createProperties(
-      &propertyViewBuilder, 
-      quantitiesMng, 
-      parametersMng, 
-      propertiesMng, 
-      parameters, 
-      quantities, 
-      properties))
-      return;
+    PropertyList parameters = propertyViewBuilder.createParameters(parametersMng);
+    PropertyList quantities = propertyViewBuilder.createQuantities(quantitiesMng);
+    PropertyList properties = propertyViewBuilder.createProperties(propertiesMng);
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
       buildPropertyViewAsList(propertyBrowser, parameters, quantities, properties);

@@ -16,24 +16,25 @@ MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(
 {
 }
 
-void MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
+PropertyList MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr)
 {
+  auto result = PropertyList();
   auto pMaterialLayer = m_materialLayerAccess();
   if (pMaterialLayer == nullptr)
-    return;
-
+    return result;
+  
   auto pMaterial = pMaterialLayer->GetMaterial();
   QString materialName = pMaterial != nullptr ? QString::fromWCharArray(pMaterial->Name) : QApplication::translate("me_materialLayer", "noMaterial");
-  mngr.addValue(propertyList, QApplication::translate("me_materialLayer", "material"), materialName);
+  mngr.addValue(result, QApplication::translate("me_materialLayer", "material"), materialName);
+  return result;
 }
 
-void MaterialLayerPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
+PropertyList MaterialLayerPropertyViewBuilder::createQuantities(PropertyManager& mngr)
 {
   auto pLayer = m_layerAccess();
   if (pLayer == nullptr)
-    return;
+    return {};
 
   auto pQuantities = pLayer->GetQuantities();
-  auto properties = createQuantitiesInternal(mngr, *pQuantities);
-  propertyList.splice(propertyList.end(), properties);
+  return createQuantitiesInternal(mngr, *pQuantities);
 }
