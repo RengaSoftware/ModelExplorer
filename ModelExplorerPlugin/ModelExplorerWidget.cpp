@@ -7,21 +7,19 @@
 //
 
 #include "stdafx.h"
+
+#include "ScopeGuard.h"
+#include "EntityPropertyViewBuilder.h"
+#include "MaterialLayerPropertyViewBuilder.h"
 #include "ModelExplorerWidget.h"
-
-#include "ui_ModelExplorer.h"
-
+#include "RebarUsagePropertyViewBuilder.h"
+#include "ReinforcementUnitUsagePropertyViewBuilder.h"
+#include "RengaModelUtils.h"
 #include "TreeViewItemRole.h"
 #include "TreeViewItemType.h"
 #include "TreeViewModelBuilder.h"
 #include "TreeViewUtils.h"
-#include "BoolGuard.h"
-
-#include "MaterialLayerPropertyViewBuilder.h"
-#include "RebarUsagePropertyViewBuilder.h"
-#include "ReinforcementUnitUsagePropertyViewBuilder.h"
-#include "EntityPropertyViewBuilder.h"
-#include "RengaModelUtils.h"
+#include "ui_ModelExplorer.h"
 
 #include <Renga/ObjectTypes.h>
 

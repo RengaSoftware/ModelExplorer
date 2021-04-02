@@ -7,7 +7,8 @@
 //
 
 #include "stdafx.h"
-#include "BoolGuard.h"
+#include "ScopeGuard.h"
+
 
 BoolGuard::BoolGuard(bool& variable)
   : m_variable(variable)

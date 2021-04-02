@@ -112,7 +112,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoolGuard.cpp" />
+    <ClCompile Include="ScopeGuard.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerButtonHandler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -186,7 +186,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="TreeViewUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoolGuard.h" />
+    <ClInclude Include="ScopeGuard.h" />
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h" />
     <ClInclude Include="GuidMap.h" />
     <ClInclude Include="GuidUtils.h" />

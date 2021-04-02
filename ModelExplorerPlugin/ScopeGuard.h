@@ -22,3 +22,20 @@ public:
 private:
   bool& m_variable;
 };
+
+template <typename TFunc>
+class CActionGuard
+{
+public:
+  CActionGuard(const TFunc& func) : m_func(func) {}
+  ~CActionGuard() { m_func(); }
+
+private:
+  TFunc m_func;
+};
+
+template <typename TFunc>
+CActionGuard<TFunc> makeGuard(const TFunc& func)
+{
+  return CActionGuard<TFunc>(func);
+}
