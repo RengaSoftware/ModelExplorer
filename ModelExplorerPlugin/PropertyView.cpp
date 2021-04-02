@@ -137,13 +137,12 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication
   initPropertyManagers();
 }
 
-void PropertyView::showProperties(std::unique_ptr<IPropertyViewBuilder> builder,
-                                  Renga::IParameterContainerPtr parameters,
-                                  Renga::IPropertyContainerPtr properties) 
+void PropertyView::showProperties(
+    std::unique_ptr<IPropertyViewBuilder> builder,
+    PropertyContainerAccess propertiesAccess)
 {
   m_builder.swap(builder);
-  m_parameters = parameters,
-  m_properties = properties;
+  m_propertiesAccess = propertiesAccess;
 
   clearPropertyManagers();
   buildPropertyView(
@@ -202,123 +201,6 @@ void PropertyView::clearPropertyManagers()
   m_propertiesMng.clear();
 }
 
-void PropertyView::updateParameters() 
-{
-  clearPropertyManagers();
-  buildPropertyView(
-      *this,
-      m_quantitiesMng,
-      m_parametersMng,
-      m_propertiesMng,
-      *m_builder,
-      *m_pGroupManager,
-      m_propertyViewMode);
-}
-
-void PropertyView::parameterBoolChanged(QtProperty* pProperty, bool val)
-{
-  if (m_parameters == nullptr)
-    return;
-
-  const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-  auto pParameter = m_parameters->Get(parameterId);
-  if (!pParameter)
-    return;
-
-  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Bool)
-    return;
-
-  if (auto pOperation = createOperation())
-  {
-    pOperation->Start();
-    pParameter->SetBoolValue(val);
-    pOperation->Apply();
-
-    updateParameters();
-  }
-}
-
-void PropertyView::parameterIntChanged(QtProperty* pProperty, int val)
-{
-  if (m_parameters == nullptr)
-    return;
-
-  const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-  auto pParameter = m_parameters->Get(parameterId);
-  if (!pParameter)
-    return;
-
-  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Int)
-    return;
-
-  if (auto pOperation = createOperation())
-  {
-    pOperation->Start();
-    pParameter->SetIntValue(val);
-    pOperation->Apply();
-
-    updateParameters();
-  }
-}
-
-void PropertyView::parameterDoubleChanged(QtProperty* pProperty, const QString& newValue)
-{
-  if (m_parameters == nullptr)
-    return;
-
-  if (!newValue.isEmpty())
-  {
-    bool ok = false;
-    double newDoubleValue = QLocale::system().toDouble(newValue, &ok);
-    if (ok)
-    {
-      const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-      auto pParameter = m_parameters->Get(parameterId);
-      if (!pParameter)
-        return;
-
-      if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_Double)
-        return;
-
-      if (auto pOperation = createOperation())
-      {
-        pOperation->Start();
-        pParameter->SetDoubleValue(newDoubleValue);
-        pOperation->Apply();
-
-        updateParameters();
-      }
-    }
-  }
-}
-
-void PropertyView::parameterStringChanged(QtProperty* pProperty, const QString& newValue)
-{
-  if (m_parameters == nullptr)
-    return;
-
-  const auto parameterId = GuidFromString(pProperty->data().toStdString());
-
-  auto pParameter = m_parameters->Get(parameterId);
-  if (!pParameter)
-    return;
-
-  if (pParameter->GetValueType() != Renga::ParameterValueType::ParameterValueType_String)
-    return;
-
-  if (auto pOperation = createOperation())
-  {
-    pOperation->Start();
-    pParameter->SetStringValue(newValue.toStdWString().c_str());
-    pOperation->Apply();
-
-    updateParameters();
-  }
-}
-
 void PropertyView::userDoubleAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
 {
   if (newValue.isEmpty())
@@ -342,11 +224,12 @@ void PropertyView::userStringAttributeChanged(QtProperty* userAttributeProperty,
 
 Renga::IPropertyPtr PropertyView::getProperty(QtProperty* userAttributeProperty)
 {
-  if (m_properties == nullptr)
+  auto properties = m_propertiesAccess();
+  if (properties == nullptr)
     return nullptr;
 
   const auto propertyId = GuidFromString(userAttributeProperty->data().toStdString());
-  return m_properties->Get(propertyId);
+  return properties->Get(propertyId);
 }
 
 Renga::IOperationPtr PropertyView::createOperation()

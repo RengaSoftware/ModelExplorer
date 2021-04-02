@@ -374,16 +374,23 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
-  assert(pModelObject != nullptr);
+  if (pModelObject == nullptr)
+    return;
 
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
       pModelObject->GetParameters(),
       pModelObject->GetProperties(),
       pModelObject->GetQuantities(),
       false);
+
+  auto propertiesAccess = [this, modelObjectId]() 
+  { 
+    auto pObject = getModelObject(modelObjectId);
+    return pObject != nullptr ? pObject->GetProperties() : nullptr;
+  };
+
   m_pPropertyView->showProperties(std::move(builder),
-                                  pModelObject->GetParameters(),
-                                  pModelObject->GetProperties());
+                                  propertiesAccess);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -406,7 +413,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 
   auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, pMaterialLayer, pLayer);;
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -435,7 +442,7 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 
   auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, pRebarUsage);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -458,7 +465,7 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 
   auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, pReinforcementUnitUsage);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr, nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
@@ -487,9 +494,20 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     properties,
     nullptr,
     true);
+
+  auto propertiesAccess = [entityId, pEntityCollection]() -> Renga::IPropertyContainerPtr
+  {
+    auto pEntity = pEntityCollection->GetById(entityId);
+    if (pEntity == nullptr)
+      return nullptr;
+
+    auto properties = Renga::IPropertyContainerPtr();
+    pEntity->QueryInterface(&properties);
+    return properties;
+  };
+
   m_pPropertyView->showProperties(std::move(builder),
-                                  parameters,
-                                  properties);
+                                  propertiesAccess);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
