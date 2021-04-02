@@ -445,10 +445,6 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
-  auto pModelObject = getModelObject(modelObjectId);
-  if (pModelObject == nullptr)
-    return;
-
   int reinforcementUnitStyleId = 0;
 
   tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitStyleId, reinforcementUnitStyleId);
@@ -458,12 +454,18 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::RebarUsageIndex, rebarUsageIndex))
     assert(false);
 
-  Renga::IRebarUsagePtr pRebarUsage = reinforcementUnitStyleId != 0 ?
-    getRebarUsage(reinforcementUnitStyleId, rebarUsageIndex) :
-    getRebarUsage(pModelObject, rebarUsageIndex);
-  assert(pRebarUsage != nullptr);
+  auto rebarUsageAccess = [this, modelObjectId, reinforcementUnitStyleId, rebarUsageIndex]() -> Renga::IRebarUsagePtr
+  {
+    auto pModelObject = getModelObject(modelObjectId);
+    if (pModelObject == nullptr)
+      return nullptr;
 
-  auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, pRebarUsage);
+    return reinforcementUnitStyleId != 0 ?
+      getRebarUsage(reinforcementUnitStyleId, rebarUsageIndex) :
+      getRebarUsage(pModelObject, rebarUsageIndex);
+  };
+
+  auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, rebarUsageAccess);
 
   m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
