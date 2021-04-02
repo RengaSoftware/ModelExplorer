@@ -84,9 +84,6 @@ PropertyList PropertyViewBuilderBase::createParametersInternal(
       if (!pParameter->HasValue())
         pQtProperty->setEnabled(false);
 
-      //TODO: [asv] to enable parameters update
-      pQtProperty->setModified(false);
-
       const auto parameterIdString = QString::fromStdString((GuidToString(id)));
       pQtProperty->setData(parameterIdString);
     }
@@ -130,7 +127,8 @@ PropertyList PropertyViewBuilderBase::createPropertiesInternal(
     default:
       continue;
     }
-    pQtProperty->setModified(!m_disableProperties);
+    
+    pQtProperty->setEnabled(!m_disableProperties);
     pQtProperty->setData(propertyIdString);
   }
 
