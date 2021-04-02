@@ -10,11 +10,10 @@
 #include "PropertyManager.h"
 #include "IPropertyViewBuilder.h"
 #include "IPropertyViewSourceObject.h"
+#include "RengaModelUtils.h"
 
 #include <qttreepropertybrowser.h>
 
-
-using PropertyContainerAccess = std::function<Renga::IPropertyContainerPtr()>;
 
 class PropertyView : public QtTreePropertyBrowser
 {

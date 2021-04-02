@@ -12,38 +12,44 @@
 
 
 EntityPropertyViewBuilder::EntityPropertyViewBuilder(
-    Renga::IParameterContainerPtr pParameters,
-    Renga::IPropertyContainerPtr pProperties,
-    Renga::IQuantityContainerPtr pQuantities,
+    ParameterContainerAccess parametersAccess,
+    PropertyContainerAccess propertiesAccess,
+    QuantityContainerAccess quantitiesAccess,
     bool disableProperties)
   : PropertyViewBuilderBase(disableProperties),
-    m_pParameters(pParameters),
-    m_pProperties(pProperties),
-    m_pQuantities(pQuantities)
+    m_parametersAccess(parametersAccess),
+    m_propertiesAccess(propertiesAccess),
+    m_quantitiesAccess(quantitiesAccess)
 {
 }
 
 void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   // TODO: remove this condition, devide class free functions
-  if (m_pParameters == nullptr)
+  auto pParameters = m_parametersAccess();
+  if (pParameters == nullptr)
     return;
 
-  auto properties = createParametersInternal(mngr, *m_pParameters);
+  auto properties = createParametersInternal(mngr, *pParameters);
   propertyList.splice(propertyList.end(), properties);
 }
 
 void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
   // TODO: remove this condition, devide class free functions
-  if (m_pQuantities == nullptr)
+  auto pQuantities = m_quantitiesAccess();
+  if (pQuantities == nullptr)
     return;
 
-  auto properties = createQuantitiesInternal(mngr, *m_pQuantities);
+  auto properties = createQuantitiesInternal(mngr, *pQuantities);
   propertyList.splice(propertyList.end(), properties);
 }
 
 PropertyList EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
-  return createPropertiesInternal(mngr, m_pProperties);
+  auto pProperties = m_propertiesAccess();
+  if (pProperties == nullptr)
+    return PropertyList{};
+
+  return createPropertiesInternal(mngr, pProperties);
 }

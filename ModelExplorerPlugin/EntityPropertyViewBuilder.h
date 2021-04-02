@@ -9,15 +9,16 @@
 #pragma once
 
 #include "PropertyViewBuilderBase.h"
+#include "RengaModelUtils.h"
 
 
 class EntityPropertyViewBuilder : public PropertyViewBuilderBase
 {
 public:
   EntityPropertyViewBuilder(
-      Renga::IParameterContainerPtr pParameters,
-      Renga::IPropertyContainerPtr pProperties,
-      Renga::IQuantityContainerPtr pQuantities,
+      ParameterContainerAccess parametersAccess,
+      PropertyContainerAccess propertiesAccess,
+      QuantityContainerAccess quantitiesAccess,
       bool disableProperties);
 
   // IPropertyViewBuilder
@@ -26,7 +27,7 @@ public:
   PropertyList createProperties(PropertyManager& mng) override;
 
 protected:
-  Renga::IParameterContainerPtr m_pParameters;
-  Renga::IPropertyContainerPtr m_pProperties;
-  Renga::IQuantityContainerPtr m_pQuantities;
+  ParameterContainerAccess m_parametersAccess;
+  PropertyContainerAccess m_propertiesAccess;
+  QuantityContainerAccess m_quantitiesAccess;
 };

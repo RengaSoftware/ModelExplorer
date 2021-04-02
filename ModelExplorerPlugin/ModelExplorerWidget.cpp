@@ -373,21 +373,29 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
-  auto pModelObject = getModelObject(modelObjectId);
-  if (pModelObject == nullptr)
-    return;
-
-  auto builder = std::make_unique<EntityPropertyViewBuilder>(
-      pModelObject->GetParameters(),
-      pModelObject->GetProperties(),
-      pModelObject->GetQuantities(),
-      false);
-
-  auto propertiesAccess = [this, modelObjectId]() 
-  { 
+  auto parametersAccess = [this, modelObjectId]()
+  {
+    auto pObject = getModelObject(modelObjectId);
+    return pObject != nullptr ? pObject->GetParameters() : nullptr;
+  };
+  
+  auto propertiesAccess = [this, modelObjectId]()
+  {
     auto pObject = getModelObject(modelObjectId);
     return pObject != nullptr ? pObject->GetProperties() : nullptr;
   };
+
+  auto quantitiesAccess = [this, modelObjectId]()
+  {
+    auto pObject = getModelObject(modelObjectId);
+    return pObject != nullptr ? pObject->GetQuantities() : nullptr;
+  };
+
+  auto builder = std::make_unique<EntityPropertyViewBuilder>(
+      parametersAccess,
+      propertiesAccess,
+      quantitiesAccess,
+      false);
 
   m_pPropertyView->showProperties(std::move(builder),
                                   propertiesAccess);
@@ -401,7 +409,8 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
-  assert(pModelObject != nullptr);
+  if (pModelObject == nullptr)
+    return;
 
   int layerIndex = 0;
 
@@ -411,7 +420,7 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
   auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
   auto pLayer = getLayer(pModelObject, layerIndex);
 
-  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, pMaterialLayer, pLayer);;
+  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, pMaterialLayer, pLayer);
 
   m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
@@ -424,7 +433,8 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
-  assert(pModelObject != nullptr);
+  if (pModelObject == nullptr)
+    return;
 
   int reinforcementUnitStyleId = 0;
 
@@ -453,7 +463,8 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
     assert(false);
 
   auto pModelObject = getModelObject(modelObjectId);
-  assert(pModelObject != nullptr);
+  if (pModelObject == nullptr)
+    return;
 
   int reinforcementUnitUsageIndex = 0;
 
@@ -480,21 +491,17 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
   auto pEntityCollection = getProjectEntityCollection(m_pApplication->Project, entityType);
   assert(pEntityCollection != nullptr);
 
-  auto pEntity = pEntityCollection->GetById(entityId);
-  assert(pEntity != nullptr);
+  auto parametersAccess = [entityId, pEntityCollection]() -> Renga::IParameterContainerPtr
+  {
+    auto pEntity = pEntityCollection->GetById(entityId);
+    if (pEntity == nullptr)
+      return nullptr;
 
-  Renga::IPropertyContainerPtr parameters;
-  pEntity->QueryInterface(&parameters);
-
-  Renga::IPropertyContainerPtr properties;
-  pEntity->QueryInterface(&properties);
-
-  auto builder = std::make_unique<EntityPropertyViewBuilder>(
-    parameters,
-    properties,
-    nullptr,
-    true);
-
+    auto parameters = Renga::IParameterContainerPtr();
+    pEntity->QueryInterface(&parameters);
+    return parameters;
+  };
+  
   auto propertiesAccess = [entityId, pEntityCollection]() -> Renga::IPropertyContainerPtr
   {
     auto pEntity = pEntityCollection->GetById(entityId);
@@ -505,6 +512,12 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     pEntity->QueryInterface(&properties);
     return properties;
   };
+  
+  auto builder = std::make_unique<EntityPropertyViewBuilder>(
+    parametersAccess,
+    propertiesAccess,
+    nullptr,
+    true);
 
   m_pPropertyView->showProperties(std::move(builder),
                                   propertiesAccess);
