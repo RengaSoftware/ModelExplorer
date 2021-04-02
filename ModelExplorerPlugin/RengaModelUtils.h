@@ -8,3 +8,5 @@ Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProje
 using PropertyContainerAccess = std::function<Renga::IPropertyContainerPtr()>;
 using ParameterContainerAccess = std::function<Renga::IParameterContainerPtr()>;
 using QuantityContainerAccess = std::function<Renga::IQuantityContainerPtr()>;
+using MaterialLayerAccess = std::function<Renga::IMaterialLayerPtr()>;
+using LayerAccess = std::function<Renga::ILayerPtr()>;
