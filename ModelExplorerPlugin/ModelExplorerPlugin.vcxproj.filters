@@ -104,9 +104,6 @@
       <Filter>RengaEvents</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="BoolGuard.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="GuidUtils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -149,6 +146,9 @@
     <ClCompile Include="EntityPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
+    <ClCompile Include="ScopeGuard.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -157,9 +157,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="RengaObjectVisibility.h">
       <Filter>ModelExplorerWidget\TreeView</Filter>
-    </ClInclude>
-    <ClInclude Include="BoolGuard.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="GuidUtils.h">
       <Filter>Common</Filter>
@@ -211,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="GuidMap.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScopeGuard.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
