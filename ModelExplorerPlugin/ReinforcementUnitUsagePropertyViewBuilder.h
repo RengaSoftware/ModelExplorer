@@ -1,13 +1,15 @@
 #pragma once
 
 #include "IPropertyViewBuilder.h"
+#include "RengaModelUtils.h"
 
 
 class ReinforcementUnitUsagePropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
-  ReinforcementUnitUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
-                                            Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage);
+  ReinforcementUnitUsagePropertyViewBuilder(
+      Renga::IApplicationPtr pApplication,
+      ReinforcementUnitUsageAccess reinforcementUnitUsageAccess);
 
   void createParameters(PropertyManager& mngr, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
@@ -17,5 +19,5 @@ private:
 
 private:
   Renga::IApplicationPtr m_pApplication;
-  Renga::IReinforcementUnitUsagePtr m_pReinforcementUnitUsage;
+  ReinforcementUnitUsageAccess m_reinforcementUnitUsageAccess;
 };

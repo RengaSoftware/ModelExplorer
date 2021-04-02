@@ -6,16 +6,21 @@
 #include <Renga/QuantityIds.h>
 
 
-ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
-                                                                                     Renga::IReinforcementUnitUsagePtr pReinforcementUnitUsage) :
-  m_pApplication(pApplication),
-  m_pReinforcementUnitUsage(pReinforcementUnitUsage)
+ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBuilder(
+    Renga::IApplicationPtr pApplication,
+    ReinforcementUnitUsageAccess reinforcementUnitUsageAccess)
+  : m_pApplication(pApplication),
+    m_reinforcementUnitUsageAccess(reinforcementUnitUsageAccess)
 {
 }
 
 void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
-  auto pReinforcementUnitStyle = getReinforcementUnitStyle(m_pReinforcementUnitUsage->StyleId);
+  auto pReinforcementUnitUsage = m_reinforcementUnitUsageAccess();
+  if (pReinforcementUnitUsage == nullptr)
+    return;
+
+  auto pReinforcementUnitStyle = getReinforcementUnitStyle(pReinforcementUnitUsage->StyleId);
 
   if (pReinforcementUnitStyle != nullptr)
     mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pReinforcementUnitStyle->Name));
@@ -25,7 +30,11 @@ void ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager
 {
   using namespace Renga;
 
-  auto pQuantities = m_pReinforcementUnitUsage->GetQuantities();
+  auto pReinforcementUnitUsage = m_reinforcementUnitUsageAccess();
+  if (pReinforcementUnitUsage == nullptr)
+    return;
+
+  auto pQuantities = pReinforcementUnitUsage->GetQuantities();
 
   mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities->Get(QuantityIds::TotalRebarLength));
   mngr.addValue(propertyList, QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
