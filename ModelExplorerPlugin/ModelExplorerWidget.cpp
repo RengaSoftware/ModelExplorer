@@ -430,16 +430,12 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 {
-  int modelObjectId = 0;
+  int modelObjectId = 0, reinforcementUnitStyleId = 0, rebarUsageIndex = 0;
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
-  int reinforcementUnitStyleId = 0;
-
   tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitStyleId, reinforcementUnitStyleId);
-
-  int rebarUsageIndex = 0;
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::RebarUsageIndex, rebarUsageIndex))
     assert(false);
@@ -462,24 +458,21 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
 {
-  int modelObjectId = 0;
+  int modelObjectId, reinforcementUnitUsageIndex = 0;
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
-  auto pModelObject = getModelObject(modelObjectId);
-  if (pModelObject == nullptr)
-    return;
-
-  int reinforcementUnitUsageIndex = 0;
-
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitUsageIndex, reinforcementUnitUsageIndex))
     assert(false);
 
-  auto pReinforcementUnitUsage = getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex);
-  assert(pReinforcementUnitUsage != nullptr);
+  auto reinforcementUnitUsageAccess = [this, modelObjectId, reinforcementUnitUsageIndex]()
+  {
+    auto pModelObject = getModelObject(modelObjectId);
+    return pModelObject != nullptr ? getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex) : nullptr;
+  };
 
-  auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, pReinforcementUnitUsage);
+  auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, reinforcementUnitUsageAccess);
 
   m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
