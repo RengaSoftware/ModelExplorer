@@ -414,24 +414,27 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 {
   int modelObjectId = 0;
+  int layerIndex = 0;
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     assert(false);
 
-  auto pModelObject = getModelObject(modelObjectId);
-  if (pModelObject == nullptr)
-    return;
-
-  int layerIndex = 0;
-
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::LayerIndex, layerIndex))
     assert(false);
+
+  auto materialLayerAccess = [this, modelObjectId, layerIndex]()
+  {
+    auto pModelObject = getModelObject(modelObjectId);
+    return pModelObject != nullptr ? getMaterialLayer(pModelObject, layerIndex) : nullptr;
+  };
   
-  auto pMaterialLayer = getMaterialLayer(pModelObject, layerIndex);
-  auto pLayer = getLayer(pModelObject, layerIndex);
+  auto layerAccess = [this, modelObjectId, layerIndex]()
+  {
+    auto pModelObject = getModelObject(modelObjectId);
+    return pModelObject != nullptr ? getLayer(pModelObject, layerIndex) : nullptr;
+  };
 
-  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, pMaterialLayer, pLayer);
-
+  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, materialLayerAccess, layerAccess);
   m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 

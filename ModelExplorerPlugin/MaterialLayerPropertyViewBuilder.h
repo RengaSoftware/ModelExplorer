@@ -1,20 +1,21 @@
 #pragma once
 
 #include "PropertyViewBuilderBase.h"
+#include "RengaModelUtils.h"
 
 
 class MaterialLayerPropertyViewBuilder : public PropertyViewBuilderBase
 {
 public:
   MaterialLayerPropertyViewBuilder(Renga::IApplicationPtr pApplication,
-                                   Renga::IMaterialLayerPtr pMaterialLayer,
-                                   Renga::ILayerPtr pLayer);
+                                   MaterialLayerAccess materialLayerAccess,
+                                   LayerAccess layer);
 
   void createParameters(PropertyManager& mngr, PropertyList& propertyList) override;
   void createQuantities(PropertyManager& mngr, PropertyList& propertyList) override;
 
 private:
   Renga::IApplicationPtr m_pApplication;
-  Renga::IMaterialLayerPtr m_pMaterialLayer;
-  Renga::ILayerPtr m_pLayer;
+  MaterialLayerAccess m_materialLayerAccess;
+  LayerAccess m_layerAccess;
 };
