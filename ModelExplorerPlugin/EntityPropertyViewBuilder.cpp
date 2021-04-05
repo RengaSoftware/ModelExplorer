@@ -26,6 +26,9 @@ EntityPropertyViewBuilder::EntityPropertyViewBuilder(
 void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr, PropertyList& propertyList)
 {
   // TODO: remove this condition, devide class free functions
+  if (!m_parametersAccess)
+    return;
+  
   auto pParameters = m_parametersAccess();
   if (pParameters == nullptr)
     return;
@@ -37,6 +40,9 @@ void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr, Property
 void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr, PropertyList& propertyList)
 {
   // TODO: remove this condition, devide class free functions
+  if (!m_quantitiesAccess)
+    return;
+  
   auto pQuantities = m_quantitiesAccess();
   if (pQuantities == nullptr)
     return;
@@ -47,9 +53,12 @@ void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr, Property
 
 PropertyList EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
+  if (!m_propertiesAccess)
+    return {};
+
   auto pProperties = m_propertiesAccess();
   if (pProperties == nullptr)
-    return PropertyList{};
+    return {};
 
   return createPropertiesInternal(mngr, pProperties);
 }
