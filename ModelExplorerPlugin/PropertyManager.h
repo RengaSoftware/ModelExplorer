@@ -30,7 +30,6 @@ public:
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const int value) const;
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const double value) const;
   QtProperty* addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
-  QtProperty* addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const;
 
 private:
   QtProperty* addValue(const QString& name, const bool value) const;
@@ -39,7 +38,6 @@ private:
   QtProperty* addValue(const QString& name, const QString& value) const;
 
 public:
-  
   QtBoolPropertyManager* m_pBoolManager;
   QtIntPropertyManager* m_pIntManager;
   QtStringPropertyManager* m_pDoubleManager;
