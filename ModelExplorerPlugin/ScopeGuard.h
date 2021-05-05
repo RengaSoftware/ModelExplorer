@@ -27,7 +27,7 @@ template <typename TFunc>
 class CActionGuard
 {
 public:
-  CActionGuard(const TFunc& func) : m_func(func) {}
+  CActionGuard(TFunc&& func) : m_func(std::forward<TFunc>(func)) {}
   ~CActionGuard() { m_func(); }
 
 private:
@@ -35,7 +35,7 @@ private:
 };
 
 template <typename TFunc>
-CActionGuard<TFunc> makeGuard(const TFunc& func)
+CActionGuard<TFunc> makeGuard(TFunc&& func)
 {
-  return CActionGuard<TFunc>(func);
+  return CActionGuard<TFunc>(std::forward<TFunc>(func));
 }
