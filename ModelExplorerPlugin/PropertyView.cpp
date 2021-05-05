@@ -17,23 +17,6 @@
 
 namespace
 {
-  bool createProperties(
-    IPropertyViewBuilder* pObjectPropertyViewBuilder,
-    PropertyManager& quantitiesMng,
-    PropertyManager& parametersMng,
-    PropertyManager& propertiesMng,
-    PropertyList& parameters,
-    PropertyList& quantities,
-    PropertyList& properties)
-  {
-    parameters.clear();
-    quantities.clear();
-
-    
-
-    return true;
-  }
-
   void buildPropertyViewAsList(
     QtTreePropertyBrowser& propertyBrowser,
     PropertyList &parameters,
