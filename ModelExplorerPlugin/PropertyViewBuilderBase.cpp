@@ -1,3 +1,11 @@
+//
+// Copyright "Renga Software" LLC, 2016. All rights reserved.
+//
+// "Renga Software" LLC PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// "Renga Software" LLC  DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+//
+
 #include "stdafx.h"
 
 #include "PropertyViewBuilderBase.h"
@@ -123,10 +131,34 @@ PropertyList PropertyViewBuilderBase::createQuantitiesInternal(
     Renga::IQuantityContainer& container)
 {
   using namespace Renga;
+
   PropertyList result;
+
   auto addValue = [&result, &mngr, &container](QString name, GUID id)
   {
-    mngr.addValue(result, name, container.Get(id));
+    auto pQuantity = container.Get(id);
+
+    if (!pQuantity)
+      return;
+
+    switch (pQuantity->GetType())
+    {
+    case Renga::QuantityType::QuantityType_Length:
+      mngr.addValue(result, name, pQuantity->AsLength(Renga::LengthUnit::LengthUnit_Millimeters));
+      break;
+    case Renga::QuantityType::QuantityType_Area:
+      mngr.addValue(result, name, pQuantity->AsArea(Renga::AreaUnit::AreaUnit_Meters2));
+      break;
+    case Renga::QuantityType::QuantityType_Volume:
+      mngr.addValue(result, name, pQuantity->AsVolume(Renga::VolumeUnit::VolumeUnit_Meters3));
+      break;
+    case Renga::QuantityType::QuantityType_Mass:
+      mngr.addValue(result, name, pQuantity->AsMass(Renga::MassUnit::MassUnit_Kilograms));
+      break;
+    case Renga::QuantityType::QuantityType_Count:
+      mngr.addValue(result, name, pQuantity->AsCount());
+      break;
+    }
   };
   
   addValue(QApplication::translate("me_mo", "overallWidth"), QuantityIds::OverallWidth);

@@ -112,36 +112,3 @@ QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString&
   propertyList.push_back(pProperty);
   return pProperty;
 }
-
-QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString& name, Renga::IQuantityPtr pQuantity) const
-{
-  if (!pQuantity)
-    return nullptr;
-
-  const auto quantityType = pQuantity->GetType();
-  if (quantityType == Renga::QuantityType::QuantityType_Unknown)
-    return nullptr;
-
-  if (quantityType == Renga::QuantityType::QuantityType_Count) {
-    addValue(propertyList, name, pQuantity->AsCount());
-    return nullptr;
-  }
-
-  double value;
-  switch (quantityType)
-  {
-  case Renga::QuantityType::QuantityType_Length:
-    value = pQuantity->AsLength(Renga::LengthUnit::LengthUnit_Millimeters);
-    break;
-  case Renga::QuantityType::QuantityType_Area:
-    value = pQuantity->AsArea(Renga::AreaUnit::AreaUnit_Meters2);
-    break;
-  case Renga::QuantityType::QuantityType_Volume:
-    value = pQuantity->AsVolume(Renga::VolumeUnit::VolumeUnit_Meters3);
-    break;
-  case Renga::QuantityType::QuantityType_Mass:
-    value = pQuantity->AsMass(Renga::MassUnit::MassUnit_Kilograms);
-    break;
-  }
-  return addValue(propertyList, name, value);
-}
