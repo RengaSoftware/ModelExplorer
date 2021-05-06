@@ -145,6 +145,8 @@ void PropertyViewBuilderBase::createPropertiesInternal(
     }
     
     pQtProperty->setEnabled(!m_disableProperties);
+    // TODO: text color should depend on control enable state, for now we use "modified" flag to ungrey text in edit box
+    pQtProperty->setModified(true);
     pQtProperty->setData(propertyIdString);
   }
 
