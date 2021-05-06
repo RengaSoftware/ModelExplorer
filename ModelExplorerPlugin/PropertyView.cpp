@@ -102,9 +102,9 @@ namespace
   }
 }
 
-PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication) :
+PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pRenga) :
   QtTreePropertyBrowser(pParent),
-  m_pApplication(pApplication),
+  m_pRenga(pRenga),
   m_propertyViewMode(CategoryMode)
 {
   m_pGroupManager = new QtGroupPropertyManager(this);
@@ -117,7 +117,7 @@ void PropertyView::showProperties(
     PropertyContainerAccess propertiesAccess)
 {
   m_builder.swap(builder);
-  m_propertiesAccess = propertiesAccess;
+  m_pPropertyController = std::make_unique<RengaPropertyController>(m_pRenga, propertiesAccess);
 
   clearPropertyManagers();
   buildPropertyView(
@@ -128,6 +128,18 @@ void PropertyView::showProperties(
       *m_builder,
       *m_pGroupManager,
       m_propertyViewMode);
+
+  QObject::connect(
+      m_propertiesMng.m_pDoubleManager,
+      SIGNAL(valueChanged(QtProperty*, const QString&)),
+      m_pPropertyController.get(),
+      SLOT(qtDoublePropertyChanged(QtProperty*, const QString&)));
+
+  QObject::connect(
+      m_propertiesMng.m_pStringManager,
+      SIGNAL(valueChanged(QtProperty*, const QString&)),
+      m_pPropertyController.get(),
+      SLOT(qtStringPropertyChanged(QtProperty*, const QString&)));
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
@@ -150,22 +162,6 @@ void PropertyView::initPropertyManagers()
   m_quantitiesMng.init(this, true);
   m_parametersMng.init(this, true);
   m_propertiesMng.init(this, false);
-
-  // TODO: connect after property view was built
-  {
-    QObject::connect(m_parametersMng.m_pBoolManager, SIGNAL(valueChanged(QtProperty*, bool)), this, SLOT(parameterBoolChanged(QtProperty*, bool)));
-    QObject::connect(m_parametersMng.m_pIntManager, SIGNAL(valueChanged(QtProperty*, int)), this, SLOT(parameterIntChanged(QtProperty*, int)));
-    QObject::connect(m_parametersMng.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterDoubleChanged(QtProperty*, const QString&)));
-    QObject::connect(m_parametersMng.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)), this, SLOT(parameterStringChanged(QtProperty*, const QString&)));
-  }
-
-   QObject::connect(
-     m_propertiesMng.m_pDoubleManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
-     this, SLOT(userDoubleAttributeChanged(QtProperty*, const QString&)));
-
-   QObject::connect(
-     m_propertiesMng.m_pStringManager, SIGNAL(valueChanged(QtProperty*, const QString&)),
-     this, SLOT(userStringAttributeChanged(QtProperty*, const QString&)));
 }
 
 void PropertyView::clearPropertyManagers()
@@ -174,88 +170,4 @@ void PropertyView::clearPropertyManagers()
   m_quantitiesMng.clear();
   m_parametersMng.clear();
   m_propertiesMng.clear();
-}
-
-void PropertyView::userDoubleAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
-{
-  if (newValue.isEmpty())
-    resetUserAttribute(userAttributeProperty); // will reset the attribute value
-  else
-  {
-    bool ok = false;
-    double newDoubleValue = QLocale::system().toDouble(newValue, &ok);
-    if (ok)
-      changeUserAttribute(userAttributeProperty, newDoubleValue);
-  }
-}
-
-void PropertyView::userStringAttributeChanged(QtProperty* userAttributeProperty, const QString& newValue)
-{
-  if (newValue.isEmpty())
-    resetUserAttribute(userAttributeProperty); // will reset the attribute value
-  else
-    changeUserAttribute(userAttributeProperty, newValue.toStdWString());
-}
-
-Renga::IPropertyPtr PropertyView::getProperty(QtProperty* userAttributeProperty)
-{
-  auto properties = m_propertiesAccess();
-  if (properties == nullptr)
-    return nullptr;
-
-  const auto propertyId = GuidFromString(userAttributeProperty->data().toStdString());
-  return properties->Get(propertyId);
-}
-
-Renga::IOperationPtr PropertyView::createOperation()
-{
-  auto pProject = m_pApplication->GetProject();
-  auto pModel = pProject->GetModel();
-  return pModel->CreateOperation();
-}
-
-void PropertyView::resetUserAttribute(QtProperty* userAttributeProperty)
-{
-  auto pProperty = getProperty(userAttributeProperty);
-  if (!pProperty)
-    return;
-
-  auto pOperation = createOperation();
-  pOperation->Start();
-
-  pProperty->ResetValue();
-
-  pOperation->Apply();
-}
-
-void PropertyView::changeUserAttribute(QtProperty* userAttributeProperty, const double value)
-{
-  auto pProperty = getProperty(userAttributeProperty);
-  if (!pProperty)
-    return;
-
-  if (pProperty->GetType() != Renga::PropertyType::PropertyType_Double)
-    return;
-
-  auto pOperation = createOperation();
-
-  pOperation->Start();
-  pProperty->SetDoubleValue(value);
-  pOperation->Apply();
-}
-
-void PropertyView::changeUserAttribute(QtProperty* userAttributeProperty, const std::wstring& value)
-{
-  auto pProperty = getProperty(userAttributeProperty);
-  if (!pProperty)
-    return;
-
-  if (pProperty->GetType() != Renga::PropertyType::PropertyType_String)
-    return;
-
-  auto pOperation = createOperation();
-
-  pOperation->Start();
-  pProperty->SetStringValue(value.c_str());
-  pOperation->Apply();
 }
