@@ -94,7 +94,7 @@ void PropertyViewBuilderBase::createPropertiesInternal(
     if (!pProperty)
       continue;
 
-    const auto attributeName = QString::fromWCharArray(pProperty->Name);
+    auto name = QString::fromWCharArray(pProperty->Name);
     const auto propertyIdString = QString::fromStdString((GuidToString(id)));
 
 
@@ -102,11 +102,43 @@ void PropertyViewBuilderBase::createPropertiesInternal(
     QtProperty* pQtProperty(nullptr);
     switch (pProperty->Type)
     {
+    case Renga::PropertyType::PropertyType_Angle:
+      name += ", " + QApplication::translate("me_mo", "angle_dimension");
+      pQtProperty = mngr.addValue(name, pProperty->GetAngleValue(Renga::AngleUnit::AngleUnit_Degrees));
+      break;
+    case Renga::PropertyType::PropertyType_Length:
+      name += ", " + QApplication::translate("me_mo", "length_dimension");
+      pQtProperty = mngr.addValue(name, pProperty->GetLengthValue(Renga::LengthUnit::LengthUnit_Meters));
+      break;
+    case Renga::PropertyType::PropertyType_Area:
+      name += ", " + QApplication::translate("me_mo", "area_dimension");
+      pQtProperty = mngr.addValue(name, pProperty->GetAreaValue(Renga::AreaUnit::AreaUnit_Meters2));
+      break;
+    case Renga::PropertyType::PropertyType_Volume:
+      name += ", " + QApplication::translate("me_mo", "volume_dimension");
+      pQtProperty = mngr.addValue(name, pProperty->GetVolumeValue(Renga::VolumeUnit::VolumeUnit_Meters3));
+      break;
+    case Renga::PropertyType::PropertyType_Mass:
+      name += ", " + QApplication::translate("me_mo", "mass_dimension");
+      pQtProperty = mngr.addValue(name, pProperty->GetMassValue(Renga::MassUnit::MassUnit_Kilograms));
+      break;
     case Renga::PropertyType::PropertyType_Double:
-      pQtProperty = mngr.addValue(attributeName, pProperty->GetDoubleValue());
+      pQtProperty = mngr.addValue(name, pProperty->GetDoubleValue());
       break;
     case Renga::PropertyType::PropertyType_String:
-      pQtProperty = mngr.addValue(attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
+      pQtProperty = mngr.addValue(name, QString::fromWCharArray(pProperty->GetStringValue()));
+      break;
+    case Renga::PropertyType::PropertyType_Boolean:
+      pQtProperty = mngr.addValue(name, pProperty->GetBooleanValue());
+      break;
+    case Renga::PropertyType::PropertyType_Logical:
+      pQtProperty = mngr.addValue(name, QString(pProperty->GetLogicalValue()));
+      break;
+    case Renga::PropertyType::PropertyType_Integer:
+      pQtProperty = mngr.addValue(name, pProperty->GetIntegerValue());
+      break;
+    case Renga::PropertyType::PropertyType_Enumeration:
+      pQtProperty = mngr.addValue(name, QString::fromWCharArray(pProperty->GetEnumerationValue()));
       break;
     default:
       continue;
