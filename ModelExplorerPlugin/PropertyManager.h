@@ -23,20 +23,15 @@ public:
 
   void init(PropertyView* pParent, bool readOnly);
   void clear();
-
   void blockSignals(bool b) const;
 
-  QtProperty* addValue(PropertyList& propertyList, const QString& name, const bool value) const;
-  QtProperty* addValue(PropertyList& propertyList, const QString& name, const int value) const;
-  QtProperty* addValue(PropertyList& propertyList, const QString& name, const double value) const;
-  QtProperty* addValue(PropertyList& propertyList, const QString& name, const QString& value) const;
-
-private:
   QtProperty* addValue(const QString& name, const bool value) const;
   QtProperty* addValue(const QString& name, const int value) const;
   QtProperty* addValue(const QString& name, const double value) const;
   QtProperty* addValue(const QString& name, const QString& value) const;
+  PropertyList properties() const;
 
+// TODO: make private
 public:
   QtBoolPropertyManager* m_pBoolManager;
   QtIntPropertyManager* m_pIntManager;

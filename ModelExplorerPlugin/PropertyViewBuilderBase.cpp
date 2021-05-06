@@ -20,11 +20,10 @@ PropertyViewBuilderBase::PropertyViewBuilderBase(bool disableProperties) : m_dis
 {
 }
 
-PropertyList PropertyViewBuilderBase::createParametersInternal(
+void PropertyViewBuilderBase::createParametersInternal(
     PropertyManager& mngr,
     Renga::IParameterContainer& container)
 {
-  PropertyList result;
   // block signals before filling properties
   mngr.blockSignals(true);
 
@@ -54,16 +53,16 @@ PropertyList PropertyViewBuilderBase::createParametersInternal(
     switch (pParameter->GetValueType())
     {
     case Renga::ParameterValueType::ParameterValueType_Bool:
-      pQtProperty = mngr.addValue(result, name, static_cast<bool>(pParameter->GetBoolValue()));
+      pQtProperty = mngr.addValue(name, static_cast<bool>(pParameter->GetBoolValue()));
       break;
     case Renga::ParameterValueType::ParameterValueType_Int:
-      pQtProperty = mngr.addValue(result, name, pParameter->GetIntValue());
+      pQtProperty = mngr.addValue(name, pParameter->GetIntValue());
       break;
     case Renga::ParameterValueType::ParameterValueType_Double:
-      pQtProperty = mngr.addValue(result, name, pParameter->GetDoubleValue());
+      pQtProperty = mngr.addValue(name, pParameter->GetDoubleValue());
       break;
     case Renga::ParameterValueType::ParameterValueType_String:
-      pQtProperty = mngr.addValue(result, name, QString::fromWCharArray(pParameter->GetStringValue()));
+      pQtProperty = mngr.addValue(name, QString::fromWCharArray(pParameter->GetStringValue()));
       break;
     }
 
@@ -76,15 +75,12 @@ PropertyList PropertyViewBuilderBase::createParametersInternal(
       pQtProperty->setData(parameterIdString);
     }
   }
-
-  return result;
 }
 
-PropertyList PropertyViewBuilderBase::createPropertiesInternal(
+void PropertyViewBuilderBase::createPropertiesInternal(
     PropertyManager& mngr,
     Renga::IPropertyContainer& container)
 {
-  PropertyList result;
   // block signals before filling properties
   mngr.blockSignals(true);
 
@@ -107,10 +103,10 @@ PropertyList PropertyViewBuilderBase::createPropertiesInternal(
     switch (pProperty->Type)
     {
     case Renga::PropertyType::PropertyType_Double:
-      pQtProperty = mngr.addValue(result, attributeName, pProperty->GetDoubleValue());
+      pQtProperty = mngr.addValue(attributeName, pProperty->GetDoubleValue());
       break;
     case Renga::PropertyType::PropertyType_String:
-      pQtProperty = mngr.addValue(result, attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
+      pQtProperty = mngr.addValue(attributeName, QString::fromWCharArray(pProperty->GetStringValue()));
       break;
     default:
       continue;
@@ -122,19 +118,15 @@ PropertyList PropertyViewBuilderBase::createPropertiesInternal(
 
   // unblock signals
   mngr.blockSignals(false);
-
-  return result;
 }
 
-PropertyList PropertyViewBuilderBase::createQuantitiesInternal(
+void PropertyViewBuilderBase::createQuantitiesInternal(
     PropertyManager& mngr,
     Renga::IQuantityContainer& container)
 {
   using namespace Renga;
 
-  PropertyList result;
-
-  auto addValue = [&result, &mngr, &container](QString name, GUID id)
+  auto addValue = [&mngr, &container](QString name, GUID id)
   {
     auto pQuantity = container.Get(id);
 
@@ -144,19 +136,19 @@ PropertyList PropertyViewBuilderBase::createQuantitiesInternal(
     switch (pQuantity->GetType())
     {
     case Renga::QuantityType::QuantityType_Length:
-      mngr.addValue(result, name, pQuantity->AsLength(Renga::LengthUnit::LengthUnit_Millimeters));
+      mngr.addValue(name, pQuantity->AsLength(Renga::LengthUnit::LengthUnit_Millimeters));
       break;
     case Renga::QuantityType::QuantityType_Area:
-      mngr.addValue(result, name, pQuantity->AsArea(Renga::AreaUnit::AreaUnit_Meters2));
+      mngr.addValue(name, pQuantity->AsArea(Renga::AreaUnit::AreaUnit_Meters2));
       break;
     case Renga::QuantityType::QuantityType_Volume:
-      mngr.addValue(result, name, pQuantity->AsVolume(Renga::VolumeUnit::VolumeUnit_Meters3));
+      mngr.addValue(name, pQuantity->AsVolume(Renga::VolumeUnit::VolumeUnit_Meters3));
       break;
     case Renga::QuantityType::QuantityType_Mass:
-      mngr.addValue(result, name, pQuantity->AsMass(Renga::MassUnit::MassUnit_Kilograms));
+      mngr.addValue(name, pQuantity->AsMass(Renga::MassUnit::MassUnit_Kilograms));
       break;
     case Renga::QuantityType::QuantityType_Count:
-      mngr.addValue(result, name, pQuantity->AsCount());
+      mngr.addValue(name, pQuantity->AsCount());
       break;
     }
   };
@@ -195,5 +187,4 @@ PropertyList PropertyViewBuilderBase::createQuantitiesInternal(
   addValue(QApplication::translate("me_mo", "treadLength"), QuantityIds::TreadLength);
   addValue(QApplication::translate("me_reinforcement", "totalRebarLength"), QuantityIds::TotalRebarLength);
   addValue(QApplication::translate("me_reinforcement", "totalRebarMass"), QuantityIds::TotalRebarMass);
-  return result;
 }

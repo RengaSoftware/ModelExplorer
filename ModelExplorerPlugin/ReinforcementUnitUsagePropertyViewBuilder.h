@@ -11,9 +11,9 @@ public:
       Renga::IApplicationPtr pApplication,
       ReinforcementUnitUsageAccess reinforcementUnitUsageAccess);
 
-  PropertyList createParameters(PropertyManager& mngr) override;
-  PropertyList createQuantities(PropertyManager& mngr) override;
-  PropertyList createProperties(PropertyManager& mng) override { return{}; };
+  void createParameters(PropertyManager& mngr) override;
+  void createQuantities(PropertyManager& mngr) override;
+  void createProperties(PropertyManager& mng) override {};
 
 private:
   Renga::IReinforcementUnitStylePtr getReinforcementUnitStyle(int styleId) const;

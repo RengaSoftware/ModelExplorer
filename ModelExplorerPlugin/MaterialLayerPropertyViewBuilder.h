@@ -11,9 +11,9 @@ public:
                                    MaterialLayerAccess materialLayerAccess,
                                    LayerAccess layer);
 
-  PropertyList createParameters(PropertyManager& mngr) override;
-  PropertyList createQuantities(PropertyManager& mngr) override;
-  PropertyList createProperties(PropertyManager& mng) override { return{}; };
+  void createParameters(PropertyManager& mngr) override;
+  void createQuantities(PropertyManager& mngr) override;
+  void createProperties(PropertyManager& mng) override {}
 
 private:
   Renga::IApplicationPtr m_pApplication;

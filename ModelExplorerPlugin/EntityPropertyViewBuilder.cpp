@@ -20,43 +20,42 @@ EntityPropertyViewBuilder::EntityPropertyViewBuilder(
     m_parametersAccess(parametersAccess),
     m_propertiesAccess(propertiesAccess),
     m_quantitiesAccess(quantitiesAccess)
-{
-}
+{}
 
-PropertyList EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
 {
   // TODO: remove this condition, devide class free functions
   if (!m_parametersAccess)
-    return {};
+    return;
   
   auto pParameters = m_parametersAccess();
   if (pParameters == nullptr)
-    return {};
+    return;
 
-  return createParametersInternal(mngr, *pParameters);
+  createParametersInternal(mngr, *pParameters);
 }
 
-PropertyList EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
 {
   // TODO: remove this condition, devide class free functions
   if (!m_quantitiesAccess)
-    return {};
+    return;
   
   auto pQuantities = m_quantitiesAccess();
   if (pQuantities == nullptr)
-    return {};
+    return;
 
-  return createQuantitiesInternal(mngr, *pQuantities);
+  createQuantitiesInternal(mngr, *pQuantities);
 }
 
-PropertyList EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
 {
   if (!m_propertiesAccess)
-    return {};
+    return;
 
   auto pProperties = m_propertiesAccess();
   if (pProperties == nullptr)
-    return {};
+    return;
 
-  return createPropertiesInternal(mngr, pProperties);
+  createPropertiesInternal(mngr, pProperties);
 }

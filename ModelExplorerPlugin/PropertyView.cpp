@@ -82,14 +82,23 @@ namespace
                          QtGroupPropertyManager &groupManager,
                          PropertyView::Mode propertyViewMode)
   {
-    PropertyList parameters = propertyViewBuilder.createParameters(parametersMng);
-    PropertyList quantities = propertyViewBuilder.createQuantities(quantitiesMng);
-    PropertyList properties = propertyViewBuilder.createProperties(propertiesMng);
+    propertyViewBuilder.createParameters(parametersMng);
+    propertyViewBuilder.createQuantities(quantitiesMng);
+    propertyViewBuilder.createProperties(propertiesMng);
 
     if (propertyViewMode == PropertyView::Mode::ListMode)
-      buildPropertyViewAsList(propertyBrowser, parameters, quantities, properties);
+      buildPropertyViewAsList(
+          propertyBrowser,
+          parametersMng.properties(),
+          quantitiesMng.properties(),
+          propertiesMng.properties());
     else
-      buildPropertyViewByCategory(propertyBrowser, groupManager, parameters, quantities, properties);
+      buildPropertyViewByCategory(
+          propertyBrowser,
+          groupManager,
+          parametersMng.properties(),
+          quantitiesMng.properties(),
+          propertiesMng.properties());
   }
 }
 

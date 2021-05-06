@@ -16,9 +16,9 @@ class PropertyViewBuilderBase : public IPropertyViewBuilder
 protected:
   PropertyViewBuilderBase(bool disableProperties = true);
 
-  PropertyList createParametersInternal(PropertyManager& mng, Renga::IParameterContainer& container);
-  PropertyList createPropertiesInternal(PropertyManager& mng, Renga::IPropertyContainer& container);
-  PropertyList createQuantitiesInternal(PropertyManager& mng, Renga::IQuantityContainer& container);
+  void createParametersInternal(PropertyManager& mng, Renga::IParameterContainer& container);
+  void createPropertiesInternal(PropertyManager& mng, Renga::IPropertyContainer& container);
+  void createQuantitiesInternal(PropertyManager& mng, Renga::IQuantityContainer& container);
 
   bool m_disableProperties = true;
 };

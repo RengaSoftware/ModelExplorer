@@ -10,9 +10,9 @@ public:
   RebarUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
                                 RebarUsageAccess rebarUsageAccess);
 
-  PropertyList createParameters(PropertyManager& mngr) override;
-  PropertyList createQuantities(PropertyManager& mngr) override;
-  PropertyList createProperties(PropertyManager& mng) override { return {}; };
+  void createParameters(PropertyManager& mngr) override;
+  void createQuantities(PropertyManager& mngr) override;
+  void createProperties(PropertyManager& mng) override {}
 
 private:
   Renga::IRebarStylePtr getRebarStyle(int styleId) const;
