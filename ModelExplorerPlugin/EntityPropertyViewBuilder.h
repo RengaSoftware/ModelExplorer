@@ -22,9 +22,9 @@ public:
       bool disableProperties);
 
   // IPropertyViewBuilder
-  PropertyList createParameters(PropertyManager& mng) override;
-  PropertyList createQuantities(PropertyManager& mng) override;
-  PropertyList createProperties(PropertyManager& mng) override;
+  void createParameters(PropertyManager& mng) override;
+  void createQuantities(PropertyManager& mng) override;
+  void createProperties(PropertyManager& mng) override;
 
 protected:
   ParameterContainerAccess m_parametersAccess;

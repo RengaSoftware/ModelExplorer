@@ -85,30 +85,19 @@ QtProperty* PropertyManager::addValue(const QString& name, const QString& value)
   return pProperty;
 }
 
-QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString& name, const bool value) const
+PropertyList PropertyManager::properties() const
 {
-  auto pProperty = addValue(name, value);
-  propertyList.push_back(pProperty);
-  return pProperty;
-}
+  auto propertySetToList = [](const QSet<QtProperty*>& set, PropertyList& list)
+  {
+    list.insert(list.end(), set.cbegin(), set.cend());
+  };
 
-QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString& name, const int value) const
-{
-  auto pProperty = addValue(name, value);
-  propertyList.push_back(pProperty);
-  return pProperty;
-}
+  auto result = PropertyList();
 
-QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString& name, const double value) const
-{
-  auto pProperty = addValue(name, value);
-  propertyList.push_back(pProperty);
-  return pProperty;
-}
+  propertySetToList(m_pDoubleManager->properties(), result);
+  propertySetToList(m_pStringManager->properties(), result);
+  propertySetToList(m_pBoolManager->properties(), result);
+  propertySetToList(m_pIntManager->properties(), result);
 
-QtProperty* PropertyManager::addValue(PropertyList& propertyList, const QString& name, const QString& value) const
-{
-  auto pProperty = addValue(name, value);
-  propertyList.push_back(pProperty);
-  return pProperty;
+  return result;
 }
