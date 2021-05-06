@@ -149,6 +149,15 @@
     <ClCompile Include="ScopeGuard.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="RengaPropertyController.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RengaPropertyController.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RengaPropertyController.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -238,6 +247,9 @@
     </CustomBuild>
     <CustomBuild Include="PropertyView.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RengaPropertyController.h">
+      <Filter>Generated Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
