@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 
-#include "PropertyViewBuilderBase.h"
+#include "QtPropertiesConstruction.h"
 #include "PropertyManager.h"
 #include "GuidUtils.h"
 #include "ScopeGuard.h"
@@ -16,11 +16,7 @@
 #include <Renga/QuantityIds.h>
 
 
-PropertyViewBuilderBase::PropertyViewBuilderBase(bool disableProperties) : m_disableProperties(disableProperties)
-{
-}
-
-void PropertyViewBuilderBase::createParametersInternal(
+void qtPropertiesFromRengaParameters(
     PropertyManager& mngr,
     Renga::IParameterContainer& container)
 {
@@ -77,7 +73,7 @@ void PropertyViewBuilderBase::createParametersInternal(
   }
 }
 
-void PropertyViewBuilderBase::createPropertiesInternal(
+void qtPropertiesFromRengaProperties(
     PropertyManager& mngr,
     Renga::IPropertyContainer& container)
 {
@@ -138,7 +134,6 @@ void PropertyViewBuilderBase::createPropertiesInternal(
       continue;
     }
     
-    pQtProperty->setEnabled(!m_disableProperties);
     // TODO: text color should depend on control enable state, for now we use "modified" flag to ungrey text in edit box
     pQtProperty->setModified(true);
     pQtProperty->setData(propertyIdString);
@@ -148,9 +143,7 @@ void PropertyViewBuilderBase::createPropertiesInternal(
   mngr.blockSignals(false);
 }
 
-void PropertyViewBuilderBase::createQuantitiesInternal(
-    PropertyManager& mngr,
-    Renga::IQuantityContainer& container)
+void qtPropertiesFromRengaQuantities(PropertyManager& mngr, Renga::IQuantityContainer& container)
 {
   using namespace Renga;
 

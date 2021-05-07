@@ -178,7 +178,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="PropertyManager.cpp" />
     <ClCompile Include="PropertyView.cpp" />
     <ClCompile Include="EntityPropertyViewBuilder.cpp" />
-    <ClCompile Include="PropertyViewBuilderBase.cpp" />
+    <ClCompile Include="QtPropertiesConstruction.cpp" />
     <ClCompile Include="RebarUsagePropertyViewBuilder.cpp" />
     <ClCompile Include="ReinforcementUnitUsagePropertyViewBuilder.cpp" />
     <ClCompile Include="RengaEntityUIData.cpp" />
@@ -210,7 +210,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />
     <ClInclude Include="PropertyList.h" />
-    <ClInclude Include="PropertyViewBuilderBase.h" />
+    <ClInclude Include="QtPropertiesConstruction.h" />
     <ClInclude Include="RengaEntityUIData.h" />
     <ClInclude Include="RengaModelUtils.h" />
     <ClInclude Include="TreeViewUtils.h" />
