@@ -20,8 +20,10 @@ public:
   RengaPropertyController(Renga::IApplicationPtr pRenga, PropertyContainerAccess propertiesAccess);
 
 public slots:
-  void qtDoublePropertyChanged(QtProperty* property, const QString& newValue);
-  void qtStringPropertyChanged(QtProperty* property, const QString& newValue);
+  void onDoublePropertyChanged(QtProperty* property, const QString& newValue);
+  void onStringPropertyChanged(QtProperty* property, const QString& newValue);
+  void onIntPropertyChanged(QtProperty* property, int value);
+  void onBoolPropertyChanged(QtProperty* property, bool value);
 
 private:
   Renga::IPropertyPtr getProperty(QtProperty* property);
@@ -29,7 +31,9 @@ private:
 
   void resetPropertyValue(QtProperty* property);
   void changePropertyValue(QtProperty* property, const double value);
-  void changePropertyValue(QtProperty* property, const std::wstring& value);
+  void changePropertyValue(QtProperty* property, const QString& value);
+  void changePropertyValue(QtProperty* property, int value);
+  void changePropertyValue(QtProperty* property, bool value);
 
 private:
   Renga::IApplicationPtr m_pRenga;

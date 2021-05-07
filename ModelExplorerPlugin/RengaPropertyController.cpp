@@ -22,7 +22,7 @@ RengaPropertyController::RengaPropertyController(
 {
 }
 
-void RengaPropertyController::qtDoublePropertyChanged(QtProperty* pQtProperty, const QString& newValue)
+void RengaPropertyController::onDoublePropertyChanged(QtProperty* pQtProperty, const QString& newValue)
 {
   if (newValue.isEmpty())
     resetPropertyValue(pQtProperty); // will reset the attribute value
@@ -35,12 +35,22 @@ void RengaPropertyController::qtDoublePropertyChanged(QtProperty* pQtProperty, c
   }
 }
 
-void RengaPropertyController::qtStringPropertyChanged(QtProperty* pQtProperty, const QString& newValue)
+void RengaPropertyController::onStringPropertyChanged(QtProperty* pQtProperty, const QString& newValue)
 {
   if (newValue.isEmpty())
     resetPropertyValue(pQtProperty); // will reset the attribute value
   else
-    changePropertyValue(pQtProperty, newValue.toStdWString());
+    changePropertyValue(pQtProperty, newValue);
+}
+
+void RengaPropertyController::onIntPropertyChanged(QtProperty* pQtProperty, int value)
+{
+  changePropertyValue(pQtProperty, value);
+}
+
+void RengaPropertyController::onBoolPropertyChanged(QtProperty* pQtProperty, bool value)
+{
+  changePropertyValue(pQtProperty, value);
 }
 
 Renga::IPropertyPtr RengaPropertyController::getProperty(QtProperty* pQtProperty)
@@ -80,28 +90,77 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
   if (!pProperty)
     return;
 
-  if (pProperty->GetType() != Renga::PropertyType::PropertyType_Double)
-    return;
-
   auto pOperation = createOperation();
-
   pOperation->Start();
-  pProperty->SetDoubleValue(value);
+
+  switch (pProperty->GetType())
+  {
+  case Renga::PropertyType::PropertyType_Angle:
+    pProperty->SetAngleValue(value, Renga::AngleUnit::AngleUnit_Degrees);
+    break;
+  case Renga::PropertyType::PropertyType_Length:
+    pProperty->SetLengthValue(value, Renga::LengthUnit::LengthUnit_Meters);
+    break;
+  case Renga::PropertyType::PropertyType_Area:
+    pProperty->SetAreaValue(value, Renga::AreaUnit::AreaUnit_Meters2);
+    break;
+  case Renga::PropertyType::PropertyType_Volume:
+    pProperty->SetVolumeValue(value, Renga::VolumeUnit::VolumeUnit_Meters3);
+    break;
+  case Renga::PropertyType::PropertyType_Mass:
+    pProperty->SetMassValue(value, Renga::MassUnit::MassUnit_Kilograms);
+    break;
+  case Renga::PropertyType::PropertyType_Double:
+    pProperty->SetDoubleValue(value);
+    break;
+  default: break;
+  }
   pOperation->Apply();
 }
 
-void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const std::wstring& value)
+void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const QString& value)
 {
   auto pProperty = getProperty(pQtProperty);
   if (!pProperty)
     return;
 
-  if (pProperty->GetType() != Renga::PropertyType::PropertyType_String)
+  auto pOperation = createOperation();
+
+  pOperation->Start();
+
+  switch (pProperty->GetType())
+  {
+  case Renga::PropertyType::PropertyType_String:
+    pProperty->SetStringValue(value.toStdWString().c_str());
+    break;
+  default: break;
+  }
+
+  pOperation->Apply();
+}
+
+void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int value)
+{
+  auto pProperty = getProperty(pQtProperty);
+  if (!pProperty)
     return;
 
   auto pOperation = createOperation();
 
   pOperation->Start();
-  pProperty->SetStringValue(value.c_str());
+  pProperty->SetIntegerValue(value);
+  pOperation->Apply();
+}
+
+void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, bool value)
+{
+  auto pProperty = getProperty(pQtProperty);
+  if (!pProperty)
+    return;
+
+  auto pOperation = createOperation();
+
+  pOperation->Start();
+  pProperty->SetBooleanValue(value);
   pOperation->Apply();
 }
