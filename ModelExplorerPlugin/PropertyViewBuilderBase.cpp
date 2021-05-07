@@ -129,16 +129,10 @@ void PropertyViewBuilderBase::createPropertiesInternal(
       pQtProperty = mngr.addValue(name, QString::fromWCharArray(pProperty->GetStringValue()));
       break;
     case Renga::PropertyType::PropertyType_Boolean:
-      pQtProperty = mngr.addValue(name, pProperty->GetBooleanValue());
-      break;
-    case Renga::PropertyType::PropertyType_Logical:
-      pQtProperty = mngr.addValue(name, QString(pProperty->GetLogicalValue()));
+      pQtProperty = mngr.addValue(name, (bool)pProperty->GetBooleanValue());
       break;
     case Renga::PropertyType::PropertyType_Integer:
       pQtProperty = mngr.addValue(name, pProperty->GetIntegerValue());
-      break;
-    case Renga::PropertyType::PropertyType_Enumeration:
-      pQtProperty = mngr.addValue(name, QString::fromWCharArray(pProperty->GetEnumerationValue()));
       break;
     default:
       continue;

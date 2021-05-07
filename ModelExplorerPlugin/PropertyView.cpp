@@ -133,13 +133,25 @@ void PropertyView::showProperties(
       m_propertiesMng.m_pDoubleManager,
       SIGNAL(valueChanged(QtProperty*, const QString&)),
       m_pPropertyController.get(),
-      SLOT(qtDoublePropertyChanged(QtProperty*, const QString&)));
+      SLOT(onDoublePropertyChanged(QtProperty*, const QString&)));
 
   QObject::connect(
       m_propertiesMng.m_pStringManager,
       SIGNAL(valueChanged(QtProperty*, const QString&)),
       m_pPropertyController.get(),
-      SLOT(qtStringPropertyChanged(QtProperty*, const QString&)));
+      SLOT(onStringPropertyChanged(QtProperty*, const QString&)));
+
+  QObject::connect(
+    m_propertiesMng.m_pIntManager,
+    SIGNAL(valueChanged(QtProperty*, int)),
+    m_pPropertyController.get(),
+    SLOT(onIntPropertyChanged(QtProperty*, int)));
+
+  QObject::connect(
+    m_propertiesMng.m_pBoolManager,
+    SIGNAL(valueChanged(QtProperty*, bool)),
+    m_pPropertyController.get(),
+    SLOT(onBoolPropertyChanged(QtProperty*, bool)));
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)
