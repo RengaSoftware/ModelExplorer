@@ -134,9 +134,6 @@
     <ClCompile Include="PropertyManager.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
-    <ClCompile Include="PropertyViewBuilderBase.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="RengaEntityUIData.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -157,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_RengaPropertyController.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="QtPropertiesConstruction.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +203,6 @@
     <ClInclude Include="PropertyManager.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyViewBuilderBase.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="RengaEntityUIData.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -220,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="ScopeGuard.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="QtPropertiesConstruction.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

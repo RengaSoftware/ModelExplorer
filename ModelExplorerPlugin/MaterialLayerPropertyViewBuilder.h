@@ -1,10 +1,10 @@
 #pragma once
 
-#include "PropertyViewBuilderBase.h"
+#include "IPropertyViewBuilder.h"
 #include "RengaModelUtils.h"
 
 
-class MaterialLayerPropertyViewBuilder : public PropertyViewBuilderBase
+class MaterialLayerPropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
   MaterialLayerPropertyViewBuilder(Renga::IApplicationPtr pApplication,

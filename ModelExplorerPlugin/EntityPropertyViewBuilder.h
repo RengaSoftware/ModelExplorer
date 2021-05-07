@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "PropertyViewBuilderBase.h"
+#include "IPropertyViewBuilder.h"
 #include "RengaModelUtils.h"
 
 
-class EntityPropertyViewBuilder : public PropertyViewBuilderBase
+class EntityPropertyViewBuilder : public IPropertyViewBuilder
 {
 public:
   EntityPropertyViewBuilder(
@@ -30,4 +30,5 @@ protected:
   ParameterContainerAccess m_parametersAccess;
   PropertyContainerAccess m_propertiesAccess;
   QuantityContainerAccess m_quantitiesAccess;
+  bool m_disableProperties;
 };

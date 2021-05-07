@@ -2,6 +2,7 @@
 
 #include "MaterialLayerPropertyViewBuilder.h"
 #include "PropertyManager.h"
+#include "QtPropertiesConstruction.h"
 
 #include <Renga/QuantityIds.h>
 
@@ -34,5 +35,5 @@ void MaterialLayerPropertyViewBuilder::createQuantities(PropertyManager& mngr)
     return;
 
   auto pQuantities = pLayer->GetQuantities();
-  createQuantitiesInternal(mngr, *pQuantities);
+  qtPropertiesFromRengaQuantities(mngr, *pQuantities);
 }

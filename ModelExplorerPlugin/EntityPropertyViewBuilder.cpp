@@ -9,18 +9,30 @@
 #include "stdafx.h"
 
 #include "EntityPropertyViewBuilder.h"
+#include "QtPropertiesConstruction.h"
+#include "PropertyManager.h"
 
+
+namespace
+{
+  void setPropertiesEnableFlag(const PropertyList& properties, bool enabled)
+  {
+    for (auto pProperty : properties)
+      pProperty->setEnabled(enabled);
+  }
+}
 
 EntityPropertyViewBuilder::EntityPropertyViewBuilder(
     ParameterContainerAccess parametersAccess,
     PropertyContainerAccess propertiesAccess,
     QuantityContainerAccess quantitiesAccess,
     bool disableProperties)
-  : PropertyViewBuilderBase(disableProperties),
-    m_parametersAccess(parametersAccess),
+  : m_parametersAccess(parametersAccess),
     m_propertiesAccess(propertiesAccess),
-    m_quantitiesAccess(quantitiesAccess)
-{}
+    m_quantitiesAccess(quantitiesAccess),
+    m_disableProperties(disableProperties)
+{
+}
 
 void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
 {
@@ -32,7 +44,7 @@ void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
   if (pParameters == nullptr)
     return;
 
-  createParametersInternal(mngr, *pParameters);
+  qtPropertiesFromRengaParameters(mngr, *pParameters);
 }
 
 void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
@@ -45,7 +57,7 @@ void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
   if (pQuantities == nullptr)
     return;
 
-  createQuantitiesInternal(mngr, *pQuantities);
+  qtPropertiesFromRengaQuantities(mngr, *pQuantities);
 }
 
 void EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
@@ -57,5 +69,6 @@ void EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
   if (pProperties == nullptr)
     return;
 
-  createPropertiesInternal(mngr, pProperties);
+  qtPropertiesFromRengaProperties(mngr, pProperties);
+  setPropertiesEnableFlag(mngr.properties(), m_disableProperties);
 }
