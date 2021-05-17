@@ -16,6 +16,7 @@
 
 class PropertyView;
 
+// TODO: rename this, or devide - responsibility is to create raw Qt properties and hold them
 class PropertyManager
 {
 public:
@@ -29,6 +30,7 @@ public:
   QtProperty* addValue(const QString& name, const int value) const;
   QtProperty* addValue(const QString& name, const double value) const;
   QtProperty* addValue(const QString& name, const QString& value) const;
+  QtProperty* addValue(const QString& name, int valueIdx, const QStringList& values) const;
   PropertyList properties() const;
 
 // TODO: make private
@@ -37,4 +39,5 @@ public:
   QtIntPropertyManager* m_pIntManager;
   QtStringPropertyManager* m_pDoubleManager;
   QtStringPropertyManager* m_pStringManager;
+  QtEnumPropertyManager* m_pEnumManager;
 };

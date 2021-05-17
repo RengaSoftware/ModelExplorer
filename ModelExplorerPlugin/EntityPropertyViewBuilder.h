@@ -19,6 +19,7 @@ public:
       ParameterContainerAccess parametersAccess,
       PropertyContainerAccess propertiesAccess,
       QuantityContainerAccess quantitiesAccess,
+      Renga::IPropertyManagerPtr pRengaPropertyManager,
       bool disableProperties);
 
   // IPropertyViewBuilder
@@ -30,5 +31,6 @@ protected:
   ParameterContainerAccess m_parametersAccess;
   PropertyContainerAccess m_propertiesAccess;
   QuantityContainerAccess m_quantitiesAccess;
+  Renga::IPropertyManagerPtr m_pRengaPropertyManager;
   bool m_disableProperties;
 };

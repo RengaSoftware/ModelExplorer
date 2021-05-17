@@ -8,9 +8,10 @@
 
 #include "stdafx.h"
 
-#include "QtPropertiesConstruction.h"
+#include "COMUtils.h"
 #include "PropertyManager.h"
-#include "GuidUtils.h"
+#include "QtPropertiesConstruction.h"
+#include "RengaModelUtils.h"
 #include "ScopeGuard.h"
 
 #include <Renga/QuantityIds.h>
@@ -75,13 +76,13 @@ void qtPropertiesFromRengaParameters(
 
 void qtPropertiesFromRengaProperties(
     PropertyManager& mngr,
+    Renga::IPropertyManager& rengaPropertyManager,
     Renga::IPropertyContainer& container)
 {
   // block signals before filling properties
   mngr.blockSignals(true);
 
   auto ids = container.GetIds();
-
   for (int i = 0; i < ids->Count; ++i)
   {
     auto id = ids->Get(i);
@@ -107,15 +108,15 @@ void qtPropertiesFromRengaProperties(
       pQtProperty = mngr.addValue(name, pProperty->GetLengthValue(Renga::LengthUnit::LengthUnit_Meters));
       break;
     case Renga::PropertyType::PropertyType_Area:
-      name += ", " + QApplication::translate("me_mo", "area_dimension");
+      name += ", " + QApplication::translate("me_mo", "m2");
       pQtProperty = mngr.addValue(name, pProperty->GetAreaValue(Renga::AreaUnit::AreaUnit_Meters2));
       break;
     case Renga::PropertyType::PropertyType_Volume:
-      name += ", " + QApplication::translate("me_mo", "volume_dimension");
+      name += ", " + QApplication::translate("me_mo", "m3");
       pQtProperty = mngr.addValue(name, pProperty->GetVolumeValue(Renga::VolumeUnit::VolumeUnit_Meters3));
       break;
     case Renga::PropertyType::PropertyType_Mass:
-      name += ", " + QApplication::translate("me_mo", "mass_dimension");
+      name += ", " + QApplication::translate("me_mo", "kg");
       pQtProperty = mngr.addValue(name, pProperty->GetMassValue(Renga::MassUnit::MassUnit_Kilograms));
       break;
     case Renga::PropertyType::PropertyType_Double:
@@ -130,6 +131,21 @@ void qtPropertiesFromRengaProperties(
     case Renga::PropertyType::PropertyType_Integer:
       pQtProperty = mngr.addValue(name, pProperty->GetIntegerValue());
       break;
+    case Renga::PropertyType::PropertyType_Enumeration:
+    {
+      auto pDescription = rengaPropertyManager.GetPropertyDescription2(pProperty->Id);
+      auto values = safeArrayToQStringList(pDescription->GetEnumerationItems());
+      auto valueIndex = values.indexOf(QString::fromWCharArray(pProperty->GetEnumerationValue()), 0);
+      pQtProperty = mngr.addValue(name, valueIndex, values);
+    }
+      break;
+    case Renga::PropertyType::PropertyType_Logical:
+    {
+      auto values = getLogicalValueStringList();
+      auto valueIndex = getLogicalValueIndex(pProperty->GetLogicalValue());
+      pQtProperty = mngr.addValue(name, valueIndex, values);
+    }
+    break;
     default:
       continue;
     }

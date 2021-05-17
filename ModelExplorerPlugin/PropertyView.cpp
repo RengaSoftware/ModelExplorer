@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "PropertyView.h"
-#include "GuidUtils.h"
+#include "COMUtils.h"
 
 #include <qteditorfactory.h>
 
@@ -152,6 +152,12 @@ void PropertyView::showProperties(
     SIGNAL(valueChanged(QtProperty*, bool)),
     m_pPropertyController.get(),
     SLOT(onBoolPropertyChanged(QtProperty*, bool)));
+
+  QObject::connect(
+    m_propertiesMng.m_pEnumManager,
+    SIGNAL(valueChanged(QtProperty*, int)),
+    m_pPropertyController.get(),
+    SLOT(onIntPropertyChanged(QtProperty*, int)));
 }
 
 void PropertyView::changeMode(PropertyView::Mode newMode)

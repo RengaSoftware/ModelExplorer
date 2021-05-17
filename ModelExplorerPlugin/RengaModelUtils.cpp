@@ -40,3 +40,32 @@ Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProje
   else if (entityType == StyleTypeIds::SystemStyle)
     return pProject->SystemStyles;
 }
+
+const QMap<Renga::Logical, QString>& logicalValueToStringMap()
+{
+  static auto valueList = QMap<Renga::Logical, QString>{
+      {Renga::Logical::Logical_False, QApplication::translate("me_mo", "logical_false")},
+      {Renga::Logical::Logical_True, QApplication::translate("me_mo", "logical_true")},
+      {Renga::Logical::Logical_Indeterminate, QApplication::translate("me_mo", "logical_indeterminate")}};
+  return valueList;
+}
+
+QStringList getLogicalValueStringList()
+{
+  QStringList result;
+  for (auto valueString : logicalValueToStringMap())
+    result.push_back(valueString);
+  return result;
+}
+
+int getLogicalValueIndex(Renga::Logical value)
+{
+  auto it = logicalValueToStringMap().find(value);
+  return std::distance(logicalValueToStringMap().cbegin(), it);
+}
+
+Renga::Logical getLogicalValueFromIndex(int index)
+{
+  auto logicalValueString = getLogicalValueStringList().at(index);
+  return logicalValueToStringMap().key(logicalValueString);
+}

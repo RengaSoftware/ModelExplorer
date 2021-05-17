@@ -512,11 +512,35 @@
     </message>
     <message>
         <source>nominalArea</source>
-        <translation>Nominal area</translation>
+        <translation>Nominal area, m²</translation>
     </message>
     <message>
         <source>crossSectionOverallWidth</source>
         <translation>Cross section overall width, mm</translation>
+    </message>
+    <message>
+        <source>logical_false</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <source>logical_true</source>
+        <translation>Yes</translation>
+    </message>
+    <message>
+        <source>logical_indeterminate</source>
+        <translation>Unknown</translation>
+    </message>
+    <message>
+        <source>m2</source>
+        <translation>m²</translation>
+    </message>
+    <message>
+        <source>m3</source>
+        <translation>m³</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
 </context>
 <context>

@@ -104,9 +104,6 @@
       <Filter>RengaEvents</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="GuidUtils.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="TreeViewModelBuilder.cpp">
       <Filter>ModelExplorerWidget\TreeView</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
     <ClCompile Include="QtPropertiesConstruction.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="COMUtils.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h">
@@ -166,9 +166,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="RengaObjectVisibility.h">
       <Filter>ModelExplorerWidget\TreeView</Filter>
-    </ClInclude>
-    <ClInclude Include="GuidUtils.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="TreeViewModelBuilder.h">
       <Filter>ModelExplorerWidget\TreeView</Filter>
@@ -220,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="QtPropertiesConstruction.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMUtils.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
