@@ -26,15 +26,18 @@ void PropertyManager::init(PropertyView* pParent, bool readOnly)
     m_pDoubleManager = new QtStringPropertyManager(pParent, QtStringPropertyManager::valueTupe::doubleType, c_userAttrPrecision, true);
 
   m_pStringManager = new QtStringPropertyManager(pParent);
+  m_pEnumManager = new QtEnumPropertyManager(pParent);
 
   auto pIntPropertyFactory = new QtSpinBoxFactory(pParent, readOnly);
   auto pDoublePropertyFactory = new QtLineEditFactory(pParent, readOnly);
   auto pStringPropertyFactory = new QtLineEditFactory(pParent, readOnly);
+  auto pEnumPropertyFactory = new QtEnumEditorFactory(pParent);
 
   pParent->setFactoryForManager(m_pBoolManager, new QtCheckBoxFactory(pParent));
   pParent->setFactoryForManager(m_pIntManager, pIntPropertyFactory);
   pParent->setFactoryForManager(m_pDoubleManager, pDoublePropertyFactory);
   pParent->setFactoryForManager(m_pStringManager, pStringPropertyFactory);
+  pParent->setFactoryForManager(m_pEnumManager, pEnumPropertyFactory);
 }
 
 void PropertyManager::clear()
@@ -43,6 +46,7 @@ void PropertyManager::clear()
   m_pIntManager->clear();
   m_pDoubleManager->clear();
   m_pStringManager->clear();
+  m_pEnumManager->clear();
 }
 
 void PropertyManager::blockSignals(bool b) const
@@ -51,6 +55,7 @@ void PropertyManager::blockSignals(bool b) const
   m_pIntManager->blockSignals(b);
   m_pStringManager->blockSignals(b);
   m_pDoubleManager->blockSignals(b);
+  m_pEnumManager->blockSignals(b);
 }
 
 QtProperty* PropertyManager::addValue(const QString& name, const bool value) const
@@ -85,6 +90,15 @@ QtProperty* PropertyManager::addValue(const QString& name, const QString& value)
   return pProperty;
 }
 
+QtProperty * PropertyManager::addValue(const QString& name, int valueIdx, const QStringList& values) const
+{
+  auto pManager = m_pEnumManager;
+  auto pProperty = pManager->addProperty(name);
+  pManager->setEnumNames(pProperty, values);
+  pManager->setValue(pProperty, valueIdx);
+  return pProperty;
+}
+
 PropertyList PropertyManager::properties() const
 {
   auto propertySetToList = [](const QSet<QtProperty*>& set, PropertyList& list)
@@ -98,6 +112,6 @@ PropertyList PropertyManager::properties() const
   propertySetToList(m_pStringManager->properties(), result);
   propertySetToList(m_pBoolManager->properties(), result);
   propertySetToList(m_pIntManager->properties(), result);
-
+  propertySetToList(m_pEnumManager->properties(), result);
   return result;
 }

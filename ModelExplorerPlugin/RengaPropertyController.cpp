@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "RengaPropertyController.h"
 
-#include "GuidUtils.h"
+#include "COMUtils.h"
 
 #include <qtpropertybrowser.h>
 
@@ -68,6 +68,21 @@ Renga::IOperationPtr RengaPropertyController::createOperation()
   auto pProject = m_pRenga->GetProject();
   auto pModel = pProject->GetModel();
   return pModel->CreateOperation();
+}
+
+bool RengaPropertyController::tryGetEnumValueByIndex(GUID propertyId, int index, QString& result)
+{
+  auto pProject = m_pRenga->GetProject();
+  if (pProject == nullptr)
+    return false;
+
+  auto pDesc = pProject->PropertyManager->GetPropertyDescription2(propertyId);
+  auto enumValueList = safeArrayToQStringList(pDesc->GetEnumerationItems());
+  if (index >= enumValueList.size())
+    return false;
+
+  result = enumValueList[index];
+  return true;
 }
 
 void RengaPropertyController::resetPropertyValue(QtProperty* pQtProperty)
@@ -148,7 +163,28 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int v
   auto pOperation = createOperation();
 
   pOperation->Start();
-  pProperty->SetIntegerValue(value);
+
+  switch (pProperty->GetType())
+  {
+  case Renga::PropertyType::PropertyType_String:
+    pProperty->SetIntegerValue(value);
+    break;
+  case Renga::PropertyType::PropertyType_Enumeration:
+  {
+    auto enumValue = QString();
+    if (tryGetEnumValueByIndex(pProperty->Id, value, enumValue))
+      pProperty->SetEnumerationValue(_bstr_t(enumValue.toStdWString().c_str()));
+  }
+  break;
+  case Renga::PropertyType::PropertyType_Logical:
+  {
+    auto logicalValue = getLogicalValueFromIndex(value);
+    pProperty->SetLogicalValue(logicalValue);
+  }
+  break;
+  default:
+    break;
+  }
   pOperation->Apply();
 }
 

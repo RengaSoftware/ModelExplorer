@@ -168,7 +168,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClCompile Include="GeneratedFiles\Release\moc_RengaEventsHandler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GuidUtils.cpp" />
+    <ClCompile Include="COMUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialLayerPropertyViewBuilder.cpp" />
     <ClCompile Include="ModelExplorerButtonHandler.cpp" />
@@ -206,7 +206,7 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="ScopeGuard.h" />
     <ClInclude Include="GeneratedFiles\ui_ModelExplorer.h" />
     <ClInclude Include="GuidMap.h" />
-    <ClInclude Include="GuidUtils.h" />
+    <ClInclude Include="COMUtils.h" />
     <ClInclude Include="IPropertyViewBuilder.h" />
     <ClInclude Include="IPropertyViewSourceObject.h" />
     <ClInclude Include="PropertyList.h" />

@@ -12,4 +12,7 @@ class PropertyManager;
 
 void qtPropertiesFromRengaQuantities(PropertyManager& mng, Renga::IQuantityContainer& container);
 void qtPropertiesFromRengaParameters(PropertyManager& mng, Renga::IParameterContainer& container);
-void qtPropertiesFromRengaProperties(PropertyManager& mng, Renga::IPropertyContainer& container);
+void qtPropertiesFromRengaProperties(
+    PropertyManager& mng,
+    Renga::IPropertyManager& rengaPropertyManager,
+    Renga::IPropertyContainer& container);

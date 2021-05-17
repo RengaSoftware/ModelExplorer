@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "TreeViewUtils.h"
-#include "GuidUtils.h"
+#include "COMUtils.h"
 
 
 bool tryGetIntegerData(

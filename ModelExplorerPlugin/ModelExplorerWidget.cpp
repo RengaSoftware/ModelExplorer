@@ -378,6 +378,9 @@ void ModelExplorerWidget::clearPropertyView()
 
 void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 {
+  if (m_pApplication->Project == nullptr)
+    return;
+
   int modelObjectId = 0;
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
@@ -395,8 +398,7 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     return pObject != nullptr ? pObject->GetProperties() : nullptr;
   };
 
-  auto quantitiesAccess = [this, modelObjectId]()
-  {
+  auto quantitiesAccess = [this, modelObjectId]() {
     auto pObject = getModelObject(modelObjectId);
     return pObject != nullptr ? pObject->GetQuantities() : nullptr;
   };
@@ -405,10 +407,10 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
       parametersAccess,
       propertiesAccess,
       quantitiesAccess,
+      m_pApplication->Project->PropertyManager,
       false);
 
-  m_pPropertyView->showProperties(std::move(builder),
-                                  propertiesAccess);
+  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -489,6 +491,9 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
 
 void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
 {
+  if (m_pApplication->Project == nullptr)
+    return;
+
   int entityId = 0;
   GUID entityType;
 
@@ -525,6 +530,7 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     parametersAccess,
     propertiesAccess,
     nullptr,
+    m_pApplication->Project->PropertyManager,
     true);
 
   m_pPropertyView->showProperties(std::move(builder),

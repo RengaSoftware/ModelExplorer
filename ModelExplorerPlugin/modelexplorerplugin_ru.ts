@@ -516,7 +516,31 @@
     </message>
     <message>
         <source>nominalArea</source>
-        <translation>Номинальная площадь</translation>
+        <translation>Номинальная площадь, м²</translation>
+    </message>
+    <message>
+        <source>logical_false</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <source>logical_true</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <source>logical_indeterminate</source>
+        <translation>Неизвестно</translation>
+    </message>
+    <message>
+        <source>m2</source>
+        <translation>м²</translation>
+    </message>
+    <message>
+        <source>m3</source>
+        <translation>м³</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>кг</translation>
     </message>
 </context>
 <context>

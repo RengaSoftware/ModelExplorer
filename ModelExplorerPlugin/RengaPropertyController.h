@@ -28,7 +28,8 @@ public slots:
 private:
   Renga::IPropertyPtr getProperty(QtProperty* property);
   Renga::IOperationPtr createOperation();
-
+  bool tryGetEnumValueByIndex(GUID propertyId, int index, QString& result);
+  
   void resetPropertyValue(QtProperty* property);
   void changePropertyValue(QtProperty* property, const double value);
   void changePropertyValue(QtProperty* property, const QString& value);

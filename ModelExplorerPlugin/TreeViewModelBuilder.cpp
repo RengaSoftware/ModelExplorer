@@ -13,7 +13,7 @@
 #include "RengaObjectVisibility.h"
 #include "RengaEntityUIData.h"
 #include "RengaModelUtils.h"
-#include "GuidUtils.h"
+#include "COMUtils.h"
 
 #include <Renga/ObjectTypes.h>
 #include <Renga/ParameterIds.h>
