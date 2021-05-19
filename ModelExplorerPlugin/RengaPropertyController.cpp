@@ -166,7 +166,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int v
 
   switch (pProperty->GetType())
   {
-  case Renga::PropertyType::PropertyType_String:
+  case Renga::PropertyType::PropertyType_Integer:
     pProperty->SetIntegerValue(value);
     break;
   case Renga::PropertyType::PropertyType_Enumeration:
