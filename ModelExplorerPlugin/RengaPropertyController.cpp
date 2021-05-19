@@ -114,7 +114,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
     pProperty->SetAngleValue(value, Renga::AngleUnit::AngleUnit_Degrees);
     break;
   case Renga::PropertyType::PropertyType_Length:
-    pProperty->SetLengthValue(value, Renga::LengthUnit::LengthUnit_Meters);
+    pProperty->SetLengthValue(value, Renga::LengthUnit::LengthUnit_Millimeters);
     break;
   case Renga::PropertyType::PropertyType_Area:
     pProperty->SetAreaValue(value, Renga::AreaUnit::AreaUnit_Meters2);
