@@ -105,7 +105,7 @@ void qtPropertiesFromRengaProperties(
       break;
     case Renga::PropertyType::PropertyType_Length:
       name += ", " + QApplication::translate("me_mo", "length_dimension");
-      pQtProperty = mngr.addValue(name, pProperty->GetLengthValue(Renga::LengthUnit::LengthUnit_Meters));
+      pQtProperty = mngr.addValue(name, pProperty->GetLengthValue(Renga::LengthUnit::LengthUnit_Millimeters));
       break;
     case Renga::PropertyType::PropertyType_Area:
       name += ", " + QApplication::translate("me_mo", "m2");
