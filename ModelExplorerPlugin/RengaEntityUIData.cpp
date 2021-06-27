@@ -70,6 +70,7 @@ const RengaEntityUIData getRengaEntityUIData(GUID entityType)
     { Renga::StyleTypeIds::ElectricalConductorStyle ,{ "", ":/icons/i16_conductors_style_editor" } },
     { Renga::StyleTypeIds::ElectricCircuitLineStyle ,{ "", ":/icons/i16_line_electrical_circuit_style_editor" } },
     { Renga::StyleTypeIds::SystemStyle, { "", ":/icons/i16_mep_system_style_editor" } },
+    { Renga::StyleTypeIds::Assembly,{ "", ":/icons/Assembly" } },
   };
   auto dataIt = dict.find(entityType);
   return (dataIt != dict.end()) ? dataIt->second : RengaEntityUIData();

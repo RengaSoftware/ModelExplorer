@@ -15,13 +15,27 @@
 #include <comdef.h>
 
 
-struct LevelObjectGroup
+struct BaseObjectGroup
+{
+  BaseObjectGroup(GUID objectType)
+    : objectType(objectType)
+  {
+  }
+
+  bool operator < (const BaseObjectGroup& other) const
+  {
+    return GuidComparator()(objectType, other.objectType);
+  }
+
+  GUID objectType;
+};
+
+struct LevelObjectGroup : BaseObjectGroup
 {
   int levelId;
-  GUID objectType;
 
   LevelObjectGroup(int levelId, GUID objectType)
-    : levelId(levelId), objectType(objectType)
+    : BaseObjectGroup(objectType), levelId(levelId)
   {
   }
 
@@ -30,7 +44,7 @@ struct LevelObjectGroup
     if (levelId != other.levelId)
       return levelId < other.levelId;
 
-    return GuidComparator()(objectType, other.objectType);
+    return BaseObjectGroup::operator < (other);
   }
 };
 
@@ -54,12 +68,15 @@ private:
     Renga::IModelObjectPtr pLevelModelObject,
     Renga::IModelObjectCollectionPtr pModelObjectCollection);
 
+  void addAssemblySubtree(QStandardItem* pParentItem, Renga::IEntityPtr assembly);
+
   void addObjectGroupSubtree(
     QStandardItem* pParentItem,
     const std::list<Renga::IModelObjectPtr>& objectGroup,
-    const QString groupName);
+    const QString groupName,
+    bool createVisibilityItem = true);
 
-  void addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject);
+  void addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject, bool createVisibilityItem);
 
   void addStyleSubtree(
       QStandardItem* pParentItem,
@@ -101,7 +118,7 @@ private:
 
   QList<QStandardItem*> createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const;
   QList<QStandardItem*> createOtherGroupItem() const;
-  QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject) const;
+  QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject, bool createVisibilityItem) const;
   QList<QStandardItem*> createMaterialLayerItem(
     Renga::IModelObjectPtr pModelObject,
     Renga::IMaterialLayerPtr pMaterialLayer,
@@ -127,6 +144,7 @@ private:
 
   void setItemVisibilityState(QList<QStandardItem*>& itemList, bool isVisible) const;
   bool objectGroupHasVisibleObject(const std::list<Renga::IModelObjectPtr>& objectsGroup) const;
+  std::list<Renga::IModelObjectPtr> getAssemblyObjects(int assemblyId, GUID objectType) const;
 
 private:
   Renga::IApplicationPtr m_pApplication;

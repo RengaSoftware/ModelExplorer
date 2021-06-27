@@ -727,6 +727,10 @@ void ModelExplorerWidget::setTreeViewVisibilityIconState(const QModelIndex& visi
 {
   QStandardItem* pItem = m_pTreeViewModel->itemFromIndex(visibilityIconIndex);
 
+  // TODO: remove this after assembly object will be able to change it's visibility
+  if (pItem == nullptr)
+    return;
+
   QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
 
   pItem->setIcon(QIcon(iconPath));
