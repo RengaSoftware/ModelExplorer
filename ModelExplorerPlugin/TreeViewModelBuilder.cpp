@@ -93,6 +93,7 @@ namespace
     { ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle },
     { ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle },
     { ParameterIds::MepSystemStyleId, StyleTypeIds::SystemStyle },
+    { ParameterIds::AssemblyStyleId, StyleTypeIds::Assembly },
   };
 }
 
