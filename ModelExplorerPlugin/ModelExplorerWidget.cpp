@@ -537,8 +537,46 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
                                   propertiesAccess);
 }
 
+Renga::IModelObjectPtr ModelExplorerWidget::findAssemblyModelObject(int id)
+{
+  auto pProject = m_pApplication->Project;
+  if (!pProject)
+    return nullptr;
+
+  auto pAssemblies = pProject->Assemblies;
+  if (!pAssemblies)
+    return nullptr;
+
+  CComSafeArray<int> ids(pAssemblies->GetIds());
+
+  for (auto i = 0u; i < ids.GetCount(); i++)
+  {
+    auto pAssembly = pAssemblies->GetById(ids.GetAt(i));
+    if (!pAssembly)
+      continue;
+
+    Renga::IModelPtr pModel = nullptr;
+    pAssembly->QueryInterface(&pModel);
+    if (!pModel)
+      continue;
+
+    auto pObjectCollection = pModel->GetObjects();
+    if (!pObjectCollection)
+      continue;
+
+    auto pModelObject = pObjectCollection->GetById(id);
+    if (pModelObject)
+      return pModelObject;
+  }
+
+  return nullptr;
+}
+
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
 {
+  if (auto pAssemblyModelObject = findAssemblyModelObject(id))
+    return pAssemblyModelObject;
+
   auto pProject = m_pApplication->Project;
   if (pProject == nullptr)
     return nullptr;
