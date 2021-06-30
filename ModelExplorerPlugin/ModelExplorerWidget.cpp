@@ -380,27 +380,33 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
 {
   if (m_pApplication->Project == nullptr)
     return;
-
-  int modelObjectId = 0;
-
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
-    assert(false);
-
-  auto parametersAccess = [this, modelObjectId]()
+  
+  auto parametersAccess = [this, index]()
   {
-    auto pObject = getModelObject(modelObjectId);
+    auto pObject = getModelObjectByIndex(index);
     return pObject != nullptr ? pObject->GetParameters() : nullptr;
   };
   
-  auto propertiesAccess = [this, modelObjectId]()
+  auto propertiesAccess = [this, index]()
   {
-    auto pObject = getModelObject(modelObjectId);
+    auto pObject = getModelObjectByIndex(index);
     return pObject != nullptr ? pObject->GetProperties() : nullptr;
   };
 
-  auto quantitiesAccess = [this, modelObjectId]() {
-    auto pObject = getModelObject(modelObjectId);
+  auto quantitiesAccess = [this, index]() {
+    auto pObject = getModelObjectByIndex(index);
     return pObject != nullptr ? pObject->GetQuantities() : nullptr;
+  };
+
+  int assemblyId = 0;
+  bool isModelObjectFromAssembly =
+    tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::AssemblyId, assemblyId);
+
+  auto createOperation = [this, isModelObjectFromAssembly, assemblyId]() {
+    if (isModelObjectFromAssembly)
+      return getAssemblyModel(assemblyId)->CreateOperation();
+
+    return getMainModel()->CreateOperation();
   };
 
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
@@ -410,51 +416,48 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
       m_pApplication->Project->PropertyManager,
       false);
 
-  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
+  m_pPropertyView->showProperties(std::move(builder), propertiesAccess, createOperation);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
 {
-  int modelObjectId = 0;
   int layerIndex = 0;
-
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
-    assert(false);
-
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::LayerIndex, layerIndex))
     assert(false);
 
-  auto materialLayerAccess = [this, modelObjectId, layerIndex]()
+  auto materialLayerAccess = [this, index, layerIndex]()
   {
-    auto pModelObject = getModelObject(modelObjectId);
+    auto pModelObject = getModelObjectByIndex(index);
     return pModelObject != nullptr ? getMaterialLayer(pModelObject, layerIndex) : nullptr;
   };
   
-  auto layerAccess = [this, modelObjectId, layerIndex]()
+  auto layerAccess = [this, index, layerIndex]()
   {
-    auto pModelObject = getModelObject(modelObjectId);
+    auto pModelObject = getModelObjectByIndex(index);
     return pModelObject != nullptr ? getLayer(pModelObject, layerIndex) : nullptr;
   };
 
+  auto createOperation = [this]()
+  {
+    return getMainModel()->CreateOperation();
+  };
+
   auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, materialLayerAccess, layerAccess);
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
 {
-  int modelObjectId = 0, reinforcementUnitStyleId = 0, rebarUsageIndex = 0;
-
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
-    assert(false);
+  int reinforcementUnitStyleId = 0, rebarUsageIndex = 0;
 
   tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitStyleId, reinforcementUnitStyleId);
 
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::RebarUsageIndex, rebarUsageIndex))
     assert(false);
 
-  auto rebarUsageAccess = [this, modelObjectId, reinforcementUnitStyleId, rebarUsageIndex]() -> Renga::IRebarUsagePtr
+  auto rebarUsageAccess = [this, index, reinforcementUnitStyleId, rebarUsageIndex]() -> Renga::IRebarUsagePtr
   {
-    auto pModelObject = getModelObject(modelObjectId);
+    auto pModelObject = getModelObjectByIndex(index);
     if (pModelObject == nullptr)
       return nullptr;
 
@@ -463,30 +466,36 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
       getRebarUsage(pModelObject, rebarUsageIndex);
   };
 
+  auto createOperation = [this]()
+  {
+    return getMainModel()->CreateOperation();
+  };
+
   auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, rebarUsageAccess);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
 {
-  int modelObjectId, reinforcementUnitUsageIndex = 0;
-
-  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
-    assert(false);
-
+  int reinforcementUnitUsageIndex = 0;
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::ReinforcementUnitUsageIndex, reinforcementUnitUsageIndex))
     assert(false);
 
-  auto reinforcementUnitUsageAccess = [this, modelObjectId, reinforcementUnitUsageIndex]()
+  auto reinforcementUnitUsageAccess = [this, index, reinforcementUnitUsageIndex]()
   {
-    auto pModelObject = getModelObject(modelObjectId);
+    auto pModelObject = getModelObjectByIndex(index);
     return pModelObject != nullptr ? getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex) : nullptr;
+  };
+
+  auto createOperation = [this]()
+  {
+    return getMainModel()->CreateOperation();
   };
 
   auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, reinforcementUnitUsageAccess);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
 }
 
 void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
@@ -525,6 +534,11 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     pEntity->QueryInterface(&properties);
     return properties;
   };
+
+  auto createOperation = [this]()
+  {
+    return getMainModel()->CreateOperation();
+  };
   
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
     parametersAccess,
@@ -533,63 +547,48 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     m_pApplication->Project->PropertyManager,
     true);
 
-  m_pPropertyView->showProperties(std::move(builder),
-                                  propertiesAccess);
+  m_pPropertyView->showProperties(std::move(builder), propertiesAccess, createOperation);
 }
 
-Renga::IModelObjectPtr ModelExplorerWidget::findAssemblyModelObject(int id)
+Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIndex& index)
+{
+  auto modelObjectId = 0;
+  if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
+    return nullptr;
+
+  int assemblyId = 0;
+  bool isModelObjectFromAssembly =
+    tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::AssemblyId, assemblyId);
+
+  auto pModel = isModelObjectFromAssembly ? getAssemblyModel(assemblyId) : getMainModel();
+  auto pObjectCollection = pModel->GetObjects();
+  
+  return pObjectCollection->GetById(modelObjectId);
+}
+
+Renga::IModelPtr ModelExplorerWidget::getMainModel()
 {
   auto pProject = m_pApplication->Project;
   if (!pProject)
     return nullptr;
 
-  auto pAssemblies = pProject->Assemblies;
-  if (!pAssemblies)
-    return nullptr;
-
-  CComSafeArray<int> ids(pAssemblies->GetIds());
-
-  for (auto i = 0u; i < ids.GetCount(); i++)
-  {
-    auto pAssembly = pAssemblies->GetById(ids.GetAt(i));
-    if (!pAssembly)
-      continue;
-
-    Renga::IModelPtr pModel = nullptr;
-    pAssembly->QueryInterface(&pModel);
-    if (!pModel)
-      continue;
-
-    auto pObjectCollection = pModel->GetObjects();
-    if (!pObjectCollection)
-      continue;
-
-    auto pModelObject = pObjectCollection->GetById(id);
-    if (pModelObject)
-      return pModelObject;
-  }
-
-  return nullptr;
+  return pProject->Model;
 }
 
-Renga::IModelObjectPtr ModelExplorerWidget::getModelObject(int id)
+Renga::IModelPtr ModelExplorerWidget::getAssemblyModel(int assemblyId)
 {
-  if (auto pAssemblyModelObject = findAssemblyModelObject(id))
-    return pAssemblyModelObject;
-
   auto pProject = m_pApplication->Project;
-  if (pProject == nullptr)
+  if (!pProject)
     return nullptr;
 
-  auto pModel = pProject->Model;
-  if (pModel == nullptr)
+  auto pAssembly = pProject->Assemblies->GetById(assemblyId);
+  if (!pAssembly)
     return nullptr;
 
-  auto pModelObjectCollection = pModel->GetObjects();
-  if (pModelObjectCollection == nullptr)
-    return nullptr;
+  Renga::IModelPtr pModel;
+  pAssembly->QueryInterface(&pModel);
 
-  return pModelObjectCollection->GetById(id);
+  return pModel;
 }
 
 Renga::IMaterialLayerPtr ModelExplorerWidget::getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex)

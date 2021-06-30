@@ -74,9 +74,14 @@ private:
     QStandardItem* pParentItem,
     const std::list<Renga::IModelObjectPtr>& objectGroup,
     const QString groupName,
-    bool createVisibilityItem = true);
+    bool createVisibilityItem = true,
+    Renga::IEntityPtr pParentAssembly = nullptr);
 
-  void addObjectSubtree(QStandardItem* pParentItem, Renga::IModelObjectPtr pObject, bool createVisibilityItem);
+  void addObjectSubtree(
+      QStandardItem* pParentItem,
+      Renga::IModelObjectPtr pObject,
+      bool createVisibilityItem,
+      Renga::IEntityPtr pParentAssembly = nullptr);
 
   void addStyleSubtree(
       QStandardItem* pParentItem,
@@ -118,7 +123,10 @@ private:
 
   QList<QStandardItem*> createLevelItem(Renga::IModelObjectPtr pLevelModelObject) const;
   QList<QStandardItem*> createOtherGroupItem() const;
-  QList<QStandardItem*> createModelObjectItem(Renga::IModelObjectPtr pModelObject, bool createVisibilityItem) const;
+  QList<QStandardItem*> createModelObjectItem(
+    Renga::IModelObjectPtr pModelObject,
+    bool createVisibilityItem,
+    Renga::IEntityPtr pParentAssembly) const;
   QList<QStandardItem*> createMaterialLayerItem(
     Renga::IModelObjectPtr pModelObject,
     Renga::IMaterialLayerPtr pMaterialLayer,

@@ -75,8 +75,9 @@ private:
   void onReinforcementUnitUsageSelected(const QModelIndex& index);
   void onStyleSelected(const QModelIndex& index);
 
-  Renga::IModelObjectPtr findAssemblyModelObject(int id);
-  Renga::IModelObjectPtr getModelObject(int id);
+  Renga::IModelObjectPtr getModelObjectByIndex(const QModelIndex& index);
+  Renga::IModelPtr getMainModel();
+  Renga::IModelPtr getAssemblyModel(int assemblyId);
   Renga::IMaterialLayerPtr getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex);
   Renga::ILayerPtr getLayer(Renga::IModelObjectPtr pModelObject, int layerIndex);
   Renga::ILayeredMaterialPtr getLayeredMaterial(int id);

@@ -12,5 +12,6 @@ enum eTreeViewItemRole
   IsVisible,
   RebarUsageIndex,
   ReinforcementUnitUsageIndex,
-  ReinforcementUnitStyleId
+  ReinforcementUnitStyleId,
+  AssemblyId
 };

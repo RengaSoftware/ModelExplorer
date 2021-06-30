@@ -214,7 +214,7 @@ void TreeViewModelBuilder::addAssemblySubtree(QStandardItem* pParentItem, IEntit
     QString::fromWCharArray(assembly->Name), ":/icons/Level", eTreeViewItemType::Style, false, true);
 
   itemList.first()->setData(assembly->Id, eTreeViewItemRole::EntityId);
-
+  
   for (const auto& objectType : c_levelTreeTypes)
   {
     LevelObjectGroup group(assembly->Id, objectType);
@@ -228,7 +228,8 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
   QStandardItem* pParentItem,
   const std::list<IModelObjectPtr>& objectGroup,
   const QString groupName,
-  bool createVisibilityItem)
+  bool createVisibilityItem,
+  Renga::IEntityPtr pParentAssembly)
 {
   QList<QStandardItem*> objectGroupItemList =
     createItem(groupName, ":/icons/Folder", eTreeViewItemType::ObjectGroup, createVisibilityItem, true);
@@ -237,7 +238,7 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
     return;
 
   for (auto pObject : objectGroup)
-    addObjectSubtree(objectGroupItemList.at(0), pObject, createVisibilityItem);
+    addObjectSubtree(objectGroupItemList.at(0), pObject, createVisibilityItem, pParentAssembly);
 
   setItemVisibilityState(objectGroupItemList, objectGroupHasVisibleObject(objectGroup));
   pParentItem->appendRow(objectGroupItemList);
@@ -246,9 +247,10 @@ void TreeViewModelBuilder::addObjectGroupSubtree(
 void TreeViewModelBuilder::addObjectSubtree(
     QStandardItem* pParentItem,
     IModelObjectPtr pObject,
-    bool createVisibilityItem)
+    bool createVisibilityItem,
+    Renga::IEntityPtr pParentAssembly)
 {
-  QList<QStandardItem*> itemList = createModelObjectItem(pObject, createVisibilityItem);
+  QList<QStandardItem*> itemList = createModelObjectItem(pObject, createVisibilityItem, pParentAssembly);
 
   auto pObjectParameters = pObject->GetParameters();
   auto pIds = pObjectParameters->GetIds();
@@ -339,7 +341,8 @@ void TreeViewModelBuilder::addEntitySubtree(QStandardItem * pParentItem, Renga::
           itemList.at(0),
           getAssemblyObjects(entity->GetId(), objectType),
           getRengaEntityUIData(objectType).pluralName,
-          false);
+          false,
+          entity);
   }
 }
 
@@ -524,7 +527,8 @@ QList<QStandardItem*> TreeViewModelBuilder::createLevelItem(IModelObjectPtr pLev
 
 QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(
     IModelObjectPtr pModelObject,
-    bool createVisibilityItem) const
+    bool createVisibilityItem,
+    Renga::IEntityPtr pParentAssembly) const
 {
   bool isModelObjectVisible = getRengaObjectVisibility(m_pApplication, pModelObject->Id);
   auto name = QString::fromWCharArray(pModelObject->Name);
@@ -533,6 +537,9 @@ QList<QStandardItem*> TreeViewModelBuilder::createModelObjectItem(
     createItem(name, iconPath, eTreeViewItemType::ModelObject, createVisibilityItem, isModelObjectVisible);
 
   itemList.first()->setData(pModelObject->Id, eTreeViewItemRole::EntityId);
+
+  if (pParentAssembly)
+    itemList.first()->setData(pParentAssembly->GetId(), eTreeViewItemRole::AssemblyId);
 
   return itemList;
 }
