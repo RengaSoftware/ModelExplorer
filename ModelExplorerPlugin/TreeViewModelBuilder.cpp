@@ -211,7 +211,7 @@ void TreeViewModelBuilder::addLevelSubtree(
 void TreeViewModelBuilder::addAssemblySubtree(QStandardItem* pParentItem, IEntityPtr assembly)
 {
   auto itemList = createItem(
-    QString::fromWCharArray(assembly->Name), ":/icons/Level", eTreeViewItemType::Style, false, true);
+    QString::fromWCharArray(assembly->Name), ":/icons/Assembly", eTreeViewItemType::Style, false, true);
 
   itemList.first()->setData(assembly->Id, eTreeViewItemRole::EntityId);
   

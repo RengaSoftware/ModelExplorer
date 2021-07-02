@@ -398,15 +398,8 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     return pObject != nullptr ? pObject->GetQuantities() : nullptr;
   };
 
-  int assemblyId = 0;
-  bool isModelObjectFromAssembly =
-    tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::AssemblyId, assemblyId);
-
-  auto createOperation = [this, isModelObjectFromAssembly, assemblyId]() {
-    if (isModelObjectFromAssembly)
-      return getAssemblyModel(assemblyId)->CreateOperation();
-
-    return getMainModel()->CreateOperation();
+  auto createOperation = [this, index]() {
+    return getModelByIndex(index)->CreateOperation();
   };
 
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
@@ -556,13 +549,9 @@ Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIn
   if (!tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::EntityId, modelObjectId))
     return nullptr;
 
-  int assemblyId = 0;
-  bool isModelObjectFromAssembly =
-    tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::AssemblyId, assemblyId);
-
-  auto pModel = isModelObjectFromAssembly ? getAssemblyModel(assemblyId) : getMainModel();
+  auto pModel = getModelByIndex(index);
   auto pObjectCollection = pModel->GetObjects();
-  
+
   return pObjectCollection->GetById(modelObjectId);
 }
 
@@ -589,6 +578,18 @@ Renga::IModelPtr ModelExplorerWidget::getAssemblyModel(int assemblyId)
   pAssembly->QueryInterface(&pModel);
 
   return pModel;
+}
+
+Renga::IModelPtr ModelExplorerWidget::getModelByIndex(const QModelIndex& index)
+{
+  int assemblyId = 0;
+  bool isModelObjectFromAssembly =
+    tryGetIntegerData(m_pTreeViewModel.get(), index, eTreeViewItemRole::AssemblyId, assemblyId);
+
+  if (isModelObjectFromAssembly)
+    return getAssemblyModel(assemblyId);
+
+  return getMainModel();
 }
 
 Renga::IMaterialLayerPtr ModelExplorerWidget::getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex)
