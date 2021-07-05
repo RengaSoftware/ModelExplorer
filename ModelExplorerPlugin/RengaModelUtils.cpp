@@ -39,6 +39,8 @@ Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProje
     return pProject->ElectricalCircuitLineStyles;
   else if (entityType == StyleTypeIds::SystemStyle)
     return pProject->SystemStyles;
+  else if (entityType == StyleTypeIds::Assembly)
+    return pProject->Assemblies;
 }
 
 const QMap<Renga::Logical, QString>& logicalValueToStringMap()

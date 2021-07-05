@@ -17,7 +17,10 @@ class RengaPropertyController : public QObject
 {
   Q_OBJECT
 public:
-  RengaPropertyController(Renga::IApplicationPtr pRenga, PropertyContainerAccess propertiesAccess);
+  RengaPropertyController(
+      Renga::IApplicationPtr pRenga,
+      PropertyContainerAccess propertiesAccess,
+      CreateOperationCallback createOperation);
 
 public slots:
   void onDoublePropertyChanged(QtProperty* property, const QString& newValue);
@@ -27,7 +30,6 @@ public slots:
 
 private:
   Renga::IPropertyPtr getProperty(QtProperty* property);
-  Renga::IOperationPtr createOperation();
   bool tryGetEnumValueByIndex(GUID propertyId, int index, QString& result);
   
   void resetPropertyValue(QtProperty* property);
@@ -39,4 +41,5 @@ private:
 private:
   Renga::IApplicationPtr m_pRenga;
   PropertyContainerAccess m_propertiesAccess;
+  CreateOperationCallback m_createOperation;
 };

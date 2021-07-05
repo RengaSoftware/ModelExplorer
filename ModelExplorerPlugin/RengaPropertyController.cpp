@@ -16,10 +16,13 @@
 
 RengaPropertyController::RengaPropertyController(
     Renga::IApplicationPtr pRenga,
-    PropertyContainerAccess propertiesAccess)
+    PropertyContainerAccess propertiesAccess,
+    CreateOperationCallback createOperation)
   : m_pRenga(pRenga),
-    m_propertiesAccess(propertiesAccess)
+    m_propertiesAccess(propertiesAccess),
+    m_createOperation(createOperation)
 {
+  Q_ASSERT(m_createOperation);
 }
 
 void RengaPropertyController::onDoublePropertyChanged(QtProperty* pQtProperty, const QString& newValue)
@@ -63,13 +66,6 @@ Renga::IPropertyPtr RengaPropertyController::getProperty(QtProperty* pQtProperty
   return properties->Get(propertyId);
 }
 
-Renga::IOperationPtr RengaPropertyController::createOperation()
-{
-  auto pProject = m_pRenga->GetProject();
-  auto pModel = pProject->GetModel();
-  return pModel->CreateOperation();
-}
-
 bool RengaPropertyController::tryGetEnumValueByIndex(GUID propertyId, int index, QString& result)
 {
   auto pProject = m_pRenga->GetProject();
@@ -91,7 +87,7 @@ void RengaPropertyController::resetPropertyValue(QtProperty* pQtProperty)
   if (!pProperty)
     return;
 
-  auto pOperation = createOperation();
+  auto pOperation = m_createOperation();
   pOperation->Start();
 
   pProperty->ResetValue();
@@ -105,7 +101,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
   if (!pProperty)
     return;
 
-  auto pOperation = createOperation();
+  auto pOperation = m_createOperation();
   pOperation->Start();
 
   switch (pProperty->GetType())
@@ -139,7 +135,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
   if (!pProperty)
     return;
 
-  auto pOperation = createOperation();
+  auto pOperation = m_createOperation();
 
   pOperation->Start();
 
@@ -160,7 +156,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int v
   if (!pProperty)
     return;
 
-  auto pOperation = createOperation();
+  auto pOperation = m_createOperation();
 
   pOperation->Start();
 
@@ -194,7 +190,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, bool 
   if (!pProperty)
     return;
 
-  auto pOperation = createOperation();
+  auto pOperation = m_createOperation();
 
   pOperation->Start();
   pProperty->SetBooleanValue(value);

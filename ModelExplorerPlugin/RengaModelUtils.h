@@ -16,3 +16,4 @@ using MaterialLayerAccess = std::function<Renga::IMaterialLayerPtr()>;
 using LayerAccess = std::function<Renga::ILayerPtr()>;
 using RebarUsageAccess = std::function<Renga::IRebarUsagePtr()>;
 using ReinforcementUnitUsageAccess = std::function<Renga::IReinforcementUnitUsagePtr()>;
+using CreateOperationCallback = std::function<Renga::IOperationPtr()>;
