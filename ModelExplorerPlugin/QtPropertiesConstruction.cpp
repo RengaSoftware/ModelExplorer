@@ -203,7 +203,7 @@ void qtPropertiesFromRengaQuantities(PropertyManager& mngr, Renga::IQuantityCont
   addValue(QApplication::translate("me_mo", "mass"), QuantityIds::NetMass);
   addValue(QApplication::translate("me_mo", "crossSectionOverallWidth"), QuantityIds::CrossSectionOverallWidth);
   addValue(QApplication::translate("me_mo", "crossSectionOverallHeight"), QuantityIds::CrossSectionOverallHeight);
-  addValue(QApplication::translate("me_mo", "crossSectionArea"), QuantityIds::CrossSectionArea);
+  addValue(QApplication::translate("me_mo", "netCrossSectionArea"), QuantityIds::NetCrossSectionArea);
   addValue(QApplication::translate("me_mo", "innerSurfaceArea"), QuantityIds::InnerSurfaceArea);
   addValue(QApplication::translate("me_mo", "innerSurfaceInternalArea"), QuantityIds::InnerSurfaceInternalArea);
   addValue(QApplication::translate("me_mo", "innerSurfaceExternalArea"), QuantityIds::InnerSurfaceExternalArea);

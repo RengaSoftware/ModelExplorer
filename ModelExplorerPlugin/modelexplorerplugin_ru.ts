@@ -447,10 +447,6 @@
         <translation>Полная высота поперечного сечения, мм</translation>
     </message>
     <message>
-        <source>crossSectionArea</source>
-        <translation>Площадь сечения, м² / Площадь поперечного сечения, м²</translation>
-    </message>
-    <message>
         <source>outerSurfaceArea</source>
         <translation>Площадь боковой поверхности, м²</translation>
     </message>
@@ -541,6 +537,10 @@
     <message>
         <source>kg</source>
         <translation>кг</translation>
+    </message>
+    <message>
+        <source>netCrossSectionArea</source>
+        <translation>Чистая площадь поперечного сечения, м²</translation>
     </message>
 </context>
 <context>

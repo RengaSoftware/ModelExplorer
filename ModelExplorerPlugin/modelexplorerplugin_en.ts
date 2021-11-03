@@ -443,10 +443,6 @@
         <translation>Cross section overall height, mm</translation>
     </message>
     <message>
-        <source>crossSectionArea</source>
-        <translation>Cross section area, m²</translation>
-    </message>
-    <message>
         <source>outerSurfaceArea</source>
         <translation>Outer surface area, m²</translation>
     </message>
@@ -541,6 +537,10 @@
     <message>
         <source>kg</source>
         <translation>kg</translation>
+    </message>
+    <message>
+        <source>netCrossSectionArea</source>
+        <translation>Net cross section area, m²</translation>
     </message>
 </context>
 <context>
