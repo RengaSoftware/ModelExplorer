@@ -84,7 +84,7 @@ namespace
     { ParameterIds::PipeComponentStyleId, StyleTypeIds::PipeFittingStyle },
     { ParameterIds::PipeAccessoryStyleId, StyleTypeIds::PipeAccessoryStyle },
     { ParameterIds::AirEquipmentStyleId, StyleTypeIds::MechanicalEquipmentStyle },
-    { ParameterIds::AirDuctStyleId, StyleTypeIds::DuctStyle },
+    { ParameterIds::DuctStyleId, StyleTypeIds::DuctStyle },
     { ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle },
     { ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle },
     { ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle },
