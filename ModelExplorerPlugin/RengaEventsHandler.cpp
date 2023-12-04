@@ -15,11 +15,11 @@ RengaEventsHandler::RengaEventsHandler(Renga::IApplicationPtr pApplication) :
 {
 }
 
-void RengaEventsHandler::OnApplicationClose(Renga::IApplicationCloseEvent* pEvent)
+void RengaEventsHandler::OnBeforeApplicationClose(Renga::IApplicationCloseEvent* pEvent)
 {
 }
 
-void RengaEventsHandler::OnProjectClose(Renga::IProjectCloseEvent* pEvent)
+void RengaEventsHandler::OnBeforeProjectClose(Renga::IProjectCloseEvent* pEvent)
 {
   emit projectAboutToClose();
 }

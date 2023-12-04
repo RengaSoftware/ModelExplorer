@@ -20,8 +20,8 @@ class RengaEventsHandler : public QObject, public Renga::ApplicationEventHandler
 public:
   RengaEventsHandler(Renga::IApplicationPtr pApplication);
 
-  void OnApplicationClose(Renga::IApplicationCloseEvent* pEvent) override;
-  void OnProjectClose(Renga::IProjectCloseEvent* pEvent) override;
+  void OnBeforeApplicationClose(Renga::IApplicationCloseEvent* pEvent) override;
+  void OnBeforeProjectClose(Renga::IProjectCloseEvent* pEvent) override;
 
 signals:
   void projectAboutToClose();

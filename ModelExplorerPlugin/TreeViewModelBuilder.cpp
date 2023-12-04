@@ -51,7 +51,7 @@ namespace
     ObjectTypes::MechanicalEquipment,
     ObjectTypes::Line3D,
     ObjectTypes::Hatch,
-    ObjectTypes::TextShape,
+    ObjectTypes::TextObject,
     ObjectTypes::Rebar
   };
 
@@ -88,7 +88,7 @@ namespace
     { ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle },
     { ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle },
     { ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle },
-    { ParameterIds::LightFixtureStyleId, StyleTypeIds::LightFixtureStyle },
+    { ParameterIds::LightFixtureStyleId, StyleTypeIds::LightingFixtureStyle },
     { ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle },
     { ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle },
     { ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle },

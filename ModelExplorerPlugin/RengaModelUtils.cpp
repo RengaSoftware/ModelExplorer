@@ -29,7 +29,7 @@ Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProje
     return pProject->DuctAccessoryStyles;
   else if (entityType == StyleTypeIds::WiringAccessoryStyle)
     return pProject->WiringAccessoryStyles;
-  else if (entityType == StyleTypeIds::LightFixtureStyle)
+  else if (entityType == StyleTypeIds::LightingFixtureStyle)
     return pProject->LightFixtureStyles;
   else if (entityType == StyleTypeIds::ElectricDistributionBoardStyle)
     return pProject->ElectricDistributionBoardStyles;
