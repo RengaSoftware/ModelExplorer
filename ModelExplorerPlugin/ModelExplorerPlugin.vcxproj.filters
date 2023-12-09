@@ -39,12 +39,6 @@
     <Filter Include="RengaEvents">
       <UniqueIdentifier>{ec60d0a6-310c-4a21-9bee-70cf5e194e4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ModelExplorerWidget\PropertyView\ModelObjectBuilders">
-      <UniqueIdentifier>{019d140b-17a8-4ff9-95ff-d9ec492debb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ModelExplorerWidget\PropertyView\PropertyViewSourceObjects">
-      <UniqueIdentifier>{7603b7c2-6b78-464b-8b98-38fce7f60dc0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\Debug\moc_ModelExplorerWidget.cpp">
