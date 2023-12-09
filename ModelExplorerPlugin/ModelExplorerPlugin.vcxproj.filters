@@ -119,17 +119,8 @@
     <ClCompile Include="GeneratedFiles\Release\moc_PropertyView.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="TreeViewUtils.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="PropertyManager.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClCompile>
-    <ClCompile Include="RengaEntityUIData.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RengaModelUtils.cpp">
-      <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityPropertyViewBuilder.cpp">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
@@ -137,20 +128,29 @@
     <ClCompile Include="ScopeGuard.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="RengaPropertyController.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_RengaPropertyController.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_RengaPropertyController.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="QtPropertiesConstruction.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="COMUtils.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeViewUtils.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="RengaEntityUIData.cpp">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="RengaModelUtils.cpp">
+      <Filter>ModelExplorerWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="RengaPropertyController.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClCompile>
+    <ClCompile Include="QtPropertiesConstruction.cpp">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,41 +179,41 @@
     <ClInclude Include="IPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="TreeViewItemRole.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeViewItemType.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeViewUtils.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertyList.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="PropertyManager.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
-    </ClInclude>
-    <ClInclude Include="RengaEntityUIData.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RengaModelUtils.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityPropertyViewBuilder.h">
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
-    <ClInclude Include="GuidMap.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="ScopeGuard.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="QtPropertiesConstruction.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="COMUtils.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeViewUtils.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeViewItemType.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeViewItemRole.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="RengaEntityUIData.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="RengaModelUtils.h">
+      <Filter>ModelExplorerWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="GuidMap.h">
+      <Filter>ModelExplorerWidget\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyList.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
+    </ClInclude>
+    <ClInclude Include="QtPropertiesConstruction.h">
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -243,7 +243,7 @@
       <Filter>ModelExplorerWidget\PropertyView</Filter>
     </CustomBuild>
     <CustomBuild Include="RengaPropertyController.h">
-      <Filter>Generated Files</Filter>
+      <Filter>ModelExplorerWidget\PropertyView</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
