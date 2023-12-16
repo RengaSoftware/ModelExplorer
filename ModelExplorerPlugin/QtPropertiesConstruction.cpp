@@ -30,8 +30,11 @@ void qtPropertiesFromRengaParameters(
   for (int i = 0; i < pIds->Count; ++i)
   {
     const auto id = pIds->Get(i);
-
     auto pParameter = container.Get(id);
+
+    if (!pParameter->HasValue())
+      continue;
+
     auto pDefinition = pParameter->Definition;
 
     QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
@@ -65,9 +68,6 @@ void qtPropertiesFromRengaParameters(
 
     if (pQtProperty)
     {
-      if (!pParameter->HasValue())
-        pQtProperty->setEnabled(false);
-
       const auto parameterIdString = QString::fromStdString((GuidToString(id)));
       pQtProperty->setData(parameterIdString);
     }

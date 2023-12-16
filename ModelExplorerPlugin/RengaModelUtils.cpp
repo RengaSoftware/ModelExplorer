@@ -1,46 +1,47 @@
 #include "stdafx.h"
 
 #include "RengaModelUtils.h"
+#include "GuidMap.h"
 
 #include <Renga/StyleTypeIds.h>
 
+#include <map>
+
 
 // TODO: replace with universal IProject method
+// TODO: combine with "parameter to type" dictionary
 Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProject, GUID entityType)
 {
   using namespace Renga;
-  if (entityType == StyleTypeIds::PlumbingFixtureStyle)
-    return pProject->PlumbingFixtureStyles;
-  else if (entityType == StyleTypeIds::EquipmentStyle)
-    return pProject->EquipmentStyles;
-  else if (entityType == StyleTypeIds::PipeStyle)
-    return pProject->PipeStyles;
-  else if (entityType == StyleTypeIds::PipeAccessoryStyle)
-    return pProject->PipeAccessoryStyles;
-  else if (entityType == StyleTypeIds::PipeFittingStyle)
-    return pProject->PipeFittingStyles;
-  else if (entityType == StyleTypeIds::MechanicalEquipmentStyle)
-    return pProject->MechanicalEquipmentStyles;
-  else if (entityType == StyleTypeIds::DuctStyle)
-    return pProject->DuctStyles;
-  else if (entityType == StyleTypeIds::DuctFittingStyle)
-    return pProject->DuctFittingStyles;
-  else if (entityType == StyleTypeIds::DuctAccessoryStyle)
-    return pProject->DuctAccessoryStyles;
-  else if (entityType == StyleTypeIds::WiringAccessoryStyle)
-    return pProject->WiringAccessoryStyles;
-  else if (entityType == StyleTypeIds::LightingFixtureStyle)
-    return pProject->LightFixtureStyles;
-  else if (entityType == StyleTypeIds::ElectricDistributionBoardStyle)
-    return pProject->ElectricDistributionBoardStyles;
-  else if (entityType == StyleTypeIds::ElectricalConductorStyle)
-    return pProject->ElectricalConductorStyles;
-  else if (entityType == StyleTypeIds::ElectricCircuitLineStyle)
-    return pProject->ElectricalCircuitLineStyles;
-  else if (entityType == StyleTypeIds::SystemStyle)
-    return pProject->SystemStyles;
-  else if (entityType == StyleTypeIds::Assembly)
-    return pProject->Assemblies;
+  using namespace Renga::StyleTypeIds;
+  using EntityCollectionGetter = std::function<IEntityCollectionPtr(IProject&)>;
+
+  static auto entityCollectionGetterMap = GuidMap<EntityCollectionGetter>{
+      {PlumbingFixtureStyle, [](IProject& project) { return project.PlumbingFixtureStyles; }},
+      {EquipmentStyle, [](IProject& project) { return project.EquipmentStyles; }},
+      {PipeStyle, [](IProject& project) { return project.PipeStyles; }},
+      {PipeAccessoryStyle, [](IProject& project) { return project.PipeAccessoryStyles; }},
+      {PipeFittingStyle, [](IProject& project) { return project.PipeFittingStyles; }},
+      {MechanicalEquipmentStyle, [](IProject& project) { return project.MechanicalEquipmentStyles; }},
+      {DuctStyle, [](IProject& project) { return project.DuctStyles; }},
+      {DuctFittingStyle, [](IProject& project) { return project.DuctFittingStyles; }},
+      {DuctAccessoryStyle, [](IProject& project) { return project.DuctAccessoryStyles; }},
+      {WiringAccessoryStyle, [](IProject& project) { return project.WiringAccessoryStyles; }},
+      {LightingFixtureStyle, [](IProject& project) { return project.LightFixtureStyles; }},
+      {ElectricDistributionBoardStyle, [](IProject& project) { return project.ElectricDistributionBoardStyles; }},
+      {ElectricalConductorStyle, [](IProject& project) { return project.ElectricalConductorStyles; }},
+      {ElectricCircuitLineStyle, [](IProject& project) { return project.ElectricalCircuitLineStyles; }},
+      {SystemStyle, [](IProject& project) { return project.SystemStyles; }},
+      {Assembly, [](IProject& project) { return project.Assemblies; }},
+      {BeamStyle, [](IProject& project) { return project.BeamStyles; }},
+      {ColumnStyle, [](IProject& project) { return project.ColumnStyles; }},
+      {WindowStyle, [](IProject& project) { return project.WindowStyles; }},
+      {DoorStyle, [](IProject& project) { return project.DoorStyles; }},
+      {ElementStyle, [](IProject& project) { return project.ElementStyles; }},
+      {PlateStyle, [](IProject& project) { return project.PlateStyles; }},
+  };
+
+  return entityCollectionGetterMap.at(entityType)(*pProject);
 }
 
 const QMap<Renga::Logical, QString>& logicalValueToStringMap()
