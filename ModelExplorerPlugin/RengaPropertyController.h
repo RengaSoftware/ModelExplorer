@@ -17,10 +17,7 @@ class RengaPropertyController : public QObject
 {
   Q_OBJECT
 public:
-  RengaPropertyController(
-      Renga::IApplicationPtr pRenga,
-      PropertyContainerAccess propertiesAccess,
-      CreateOperationCallback createOperation);
+  RengaPropertyController(Renga::IApplicationPtr pRenga, PropertyContainerAccess propertiesAccess);
 
 public slots:
   void onDoublePropertyChanged(QtProperty* property, const QString& newValue);
@@ -41,5 +38,4 @@ private:
 private:
   Renga::IApplicationPtr m_pRenga;
   PropertyContainerAccess m_propertiesAccess;
-  CreateOperationCallback m_createOperation;
 };

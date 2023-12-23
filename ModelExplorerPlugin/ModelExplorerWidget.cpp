@@ -398,10 +398,6 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     return pObject != nullptr ? pObject->GetQuantities() : nullptr;
   };
 
-  auto createOperation = [this, index]() {
-    return getModelByIndex(index)->CreateOperation();
-  };
-
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
       parametersAccess,
       propertiesAccess,
@@ -409,7 +405,7 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
       m_pApplication->Project->PropertyManager,
       false);
 
-  m_pPropertyView->showProperties(std::move(builder), propertiesAccess, createOperation);
+  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -430,13 +426,8 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
     return pModelObject != nullptr ? getLayer(pModelObject, layerIndex) : nullptr;
   };
 
-  auto createOperation = [this]()
-  {
-    return getMainModel()->CreateOperation();
-  };
-
   auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, materialLayerAccess, layerAccess);
-  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -459,14 +450,9 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
       getRebarUsage(pModelObject, rebarUsageIndex);
   };
 
-  auto createOperation = [this]()
-  {
-    return getMainModel()->CreateOperation();
-  };
-
   auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, rebarUsageAccess);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -481,14 +467,9 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
     return pModelObject != nullptr ? getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex) : nullptr;
   };
 
-  auto createOperation = [this]()
-  {
-    return getMainModel()->CreateOperation();
-  };
-
   auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, reinforcementUnitUsageAccess);
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr, createOperation);
+  m_pPropertyView->showProperties(std::move(builder), nullptr);
 }
 
 void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
@@ -527,11 +508,6 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     pEntity->QueryInterface(&properties);
     return properties;
   };
-
-  auto createOperation = [this]()
-  {
-    return getMainModel()->CreateOperation();
-  };
   
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
     parametersAccess,
@@ -540,7 +516,7 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     m_pApplication->Project->PropertyManager,
     true);
 
-  m_pPropertyView->showProperties(std::move(builder), propertiesAccess, createOperation);
+  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIndex& index)
@@ -555,7 +531,7 @@ Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIn
   return pObjectCollection->GetById(modelObjectId);
 }
 
-Renga::IModelPtr ModelExplorerWidget::getMainModel()
+Renga::IModelPtr ModelExplorerWidget::getBuildingModel()
 {
   auto pProject = m_pApplication->Project;
   if (!pProject)
@@ -589,7 +565,7 @@ Renga::IModelPtr ModelExplorerWidget::getModelByIndex(const QModelIndex& index)
   if (isModelObjectFromAssembly)
     return getAssemblyModel(assemblyId);
 
-  return getMainModel();
+  return getBuildingModel();
 }
 
 Renga::IMaterialLayerPtr ModelExplorerWidget::getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex)

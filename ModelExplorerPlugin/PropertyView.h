@@ -28,10 +28,7 @@ public:
   };
 
   PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
-  void showProperties(
-      std::unique_ptr<IPropertyViewBuilder> builder,
-      PropertyContainerAccess propertiesAccess,
-      CreateOperationCallback createOperation);
+  void showProperties(std::unique_ptr<IPropertyViewBuilder> builder, PropertyContainerAccess propertiesAccess);
   void changeMode(PropertyView::Mode newMode);
 
 private:

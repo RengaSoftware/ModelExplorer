@@ -76,7 +76,7 @@ private:
   void onStyleSelected(const QModelIndex& index);
 
   Renga::IModelObjectPtr getModelObjectByIndex(const QModelIndex& index);
-  Renga::IModelPtr getMainModel();
+  Renga::IModelPtr getBuildingModel();
   Renga::IModelPtr getAssemblyModel(int assemblyId);
   Renga::IModelPtr getModelByIndex(const QModelIndex& index);
   Renga::IMaterialLayerPtr getMaterialLayer(Renga::IModelObjectPtr pModelObject, int layerIndex);

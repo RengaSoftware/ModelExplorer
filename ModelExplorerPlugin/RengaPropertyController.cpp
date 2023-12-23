@@ -14,15 +14,31 @@
 #include <qtpropertybrowser.h>
 
 
+namespace
+{
+  class CRengaOperationScope
+  {
+  public:
+    CRengaOperationScope(Renga::IApplicationPtr& pRenga)
+    {
+      Q_ASSERT(pRenga->Project);
+      m_pOperation = pRenga->Project->CreateOperation();
+      m_pOperation->Start();
+    }
+
+    ~CRengaOperationScope() { m_pOperation->Apply(); }
+
+  private:
+    Renga::IOperationPtr m_pOperation;
+  };
+}
+
 RengaPropertyController::RengaPropertyController(
     Renga::IApplicationPtr pRenga,
-    PropertyContainerAccess propertiesAccess,
-    CreateOperationCallback createOperation)
+    PropertyContainerAccess propertiesAccess)
   : m_pRenga(pRenga),
-    m_propertiesAccess(propertiesAccess),
-    m_createOperation(createOperation)
+    m_propertiesAccess(propertiesAccess)
 {
-  Q_ASSERT(m_createOperation);
 }
 
 void RengaPropertyController::onDoublePropertyChanged(QtProperty* pQtProperty, const QString& newValue)
@@ -87,12 +103,13 @@ void RengaPropertyController::resetPropertyValue(QtProperty* pQtProperty)
   if (!pProperty)
     return;
 
-  auto pOperation = m_createOperation();
-  pOperation->Start();
+  // TODO: replace with assert when plugin state will listen Renga model events
+  if (m_pRenga->Project)
+    return;
+
+  auto rengaOperationScope = CRengaOperationScope{m_pRenga};
 
   pProperty->ResetValue();
-
-  pOperation->Apply();
 }
 
 void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const double value)
@@ -101,8 +118,11 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
   if (!pProperty)
     return;
 
-  auto pOperation = m_createOperation();
-  pOperation->Start();
+  // TODO: replace with assert when plugin state will listen Renga model events
+  if (m_pRenga->Project)
+    return;
+
+  auto rengaOperationScope = CRengaOperationScope{m_pRenga};
 
   switch (pProperty->GetType())
   {
@@ -126,7 +146,6 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
     break;
   default: break;
   }
-  pOperation->Apply();
 }
 
 void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const QString& value)
@@ -135,9 +154,11 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
   if (!pProperty)
     return;
 
-  auto pOperation = m_createOperation();
+  // TODO: replace with assert when plugin state will listen Renga model events
+  if (!m_pRenga->Project)
+    return;
 
-  pOperation->Start();
+  auto rengaOperationScope = CRengaOperationScope{m_pRenga};
 
   switch (pProperty->GetType())
   {
@@ -146,8 +167,6 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
     break;
   default: break;
   }
-
-  pOperation->Apply();
 }
 
 void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int value)
@@ -156,9 +175,11 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int v
   if (!pProperty)
     return;
 
-  auto pOperation = m_createOperation();
+  // TODO: replace with assert when plugin state will listen Renga model events
+  if (!m_pRenga->Project)
+    return;
 
-  pOperation->Start();
+  auto rengaOperationScope = CRengaOperationScope{m_pRenga};
 
   switch (pProperty->GetType())
   {
@@ -181,7 +202,6 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, int v
   default:
     break;
   }
-  pOperation->Apply();
 }
 
 void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, bool value)
@@ -190,9 +210,10 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, bool 
   if (!pProperty)
     return;
 
-  auto pOperation = m_createOperation();
+  // TODO: replace with assert when plugin state will listen Renga model events
+  if (!m_pRenga->Project)
+    return;
 
-  pOperation->Start();
+  auto rengaOperationScope = CRengaOperationScope{m_pRenga};
   pProperty->SetBooleanValue(value);
-  pOperation->Apply();
 }

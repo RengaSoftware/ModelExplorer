@@ -114,11 +114,10 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pRenga) :
 
 void PropertyView::showProperties(
     std::unique_ptr<IPropertyViewBuilder> builder,
-    PropertyContainerAccess propertiesAccess,
-    CreateOperationCallback createOperation)
+    PropertyContainerAccess propertiesAccess)
 {
   m_builder.swap(builder);
-  m_pPropertyController = std::make_unique<RengaPropertyController>(m_pRenga, propertiesAccess, createOperation);
+  m_pPropertyController = std::make_unique<RengaPropertyController>(m_pRenga, propertiesAccess);
 
   clearPropertyManagers();
   buildPropertyView(
