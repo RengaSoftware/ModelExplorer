@@ -699,7 +699,7 @@
     </message>
     <message>
         <source>LightFixtures</source>
-        <translation>Осветитетльные приборы</translation>
+        <translation>Осветительные приборы</translation>
     </message>
     <message>
         <source>DistributionBoards</source>
