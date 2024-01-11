@@ -173,7 +173,7 @@ class QT_QTPROPERTYBROWSER_EXPORT QtCheckBoxFactory : public QtAbstractEditorFac
 {
     Q_OBJECT
 public:
-    QtCheckBoxFactory(QObject *parent = 0);
+    QtCheckBoxFactory(QObject *parent = 0, bool readOnly = false);
     ~QtCheckBoxFactory();
 protected:
     void connectPropertyManager(QtBoolPropertyManager *manager);
@@ -182,6 +182,8 @@ protected:
     void disconnectPropertyManager(QtBoolPropertyManager *manager);
 private:
     QtCheckBoxFactoryPrivate *d_ptr;
+    bool m_readOnly;
+
     Q_DECLARE_PRIVATE(QtCheckBoxFactory)
     Q_DISABLE_COPY(QtCheckBoxFactory)
     Q_PRIVATE_SLOT(d_func(), void slotPropertyChanged(QtProperty *, bool))

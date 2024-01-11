@@ -24,16 +24,16 @@ void PropertyManager::init(PropertyView* pParent, bool readOnly)
     m_pDoubleManager = new QtStringPropertyManager(pParent, QtStringPropertyManager::valueTupe::doubleType, c_defaultPrecision, false);
   else
     m_pDoubleManager = new QtStringPropertyManager(pParent, QtStringPropertyManager::valueTupe::doubleType, c_userAttrPrecision, true);
-
   m_pStringManager = new QtStringPropertyManager(pParent);
   m_pEnumManager = new QtEnumPropertyManager(pParent);
 
-  auto pIntPropertyFactory = new QtSpinBoxFactory(pParent, readOnly);
+  auto pIntPropertyFactory    = new QtSpinBoxFactory(pParent, readOnly);
   auto pDoublePropertyFactory = new QtLineEditFactory(pParent, readOnly);
   auto pStringPropertyFactory = new QtLineEditFactory(pParent, readOnly);
-  auto pEnumPropertyFactory = new QtEnumEditorFactory(pParent);
+  auto pEnumPropertyFactory   = new QtEnumEditorFactory(pParent);
+  auto pBoolPropertyFactory   = new QtCheckBoxFactory(pParent, readOnly);
 
-  pParent->setFactoryForManager(m_pBoolManager, new QtCheckBoxFactory(pParent));
+  pParent->setFactoryForManager(m_pBoolManager, pBoolPropertyFactory);
   pParent->setFactoryForManager(m_pIntManager, pIntPropertyFactory);
   pParent->setFactoryForManager(m_pDoubleManager, pDoublePropertyFactory);
   pParent->setFactoryForManager(m_pStringManager, pStringPropertyFactory);

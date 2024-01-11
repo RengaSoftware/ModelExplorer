@@ -701,12 +701,12 @@ void QtCheckBoxFactoryPrivate::slotSetValue(bool value)
 /*!
     Creates a factory with the given \a parent.
 */
-QtCheckBoxFactory::QtCheckBoxFactory(QObject *parent)
-    : QtAbstractEditorFactory<QtBoolPropertyManager>(parent)
+QtCheckBoxFactory::QtCheckBoxFactory(QObject* parent, bool readOnly)
+  : QtAbstractEditorFactory<QtBoolPropertyManager>(parent),
+    m_readOnly(readOnly)
 {
-    d_ptr = new QtCheckBoxFactoryPrivate();
+    d_ptr        = new QtCheckBoxFactoryPrivate();
     d_ptr->q_ptr = this;
-
 }
 
 /*!
@@ -737,6 +737,9 @@ void QtCheckBoxFactory::connectPropertyManager(QtBoolPropertyManager *manager)
 QWidget *QtCheckBoxFactory::createEditor(QtBoolPropertyManager *manager, QtProperty *property,
         QWidget *parent)
 {
+    if (m_readOnly)
+        return nullptr;
+
     QtBoolEdit *editor = d_ptr->createEditor(property, parent);
     editor->setChecked(manager->value(property));
 
