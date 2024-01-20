@@ -68,8 +68,6 @@ private:
     Renga::IModelObjectPtr pLevelModelObject,
     Renga::IModelObjectCollectionPtr pModelObjectCollection);
 
-  void addAssemblySubtree(QStandardItem* pParentItem, Renga::IEntityPtr assembly);
-
   void addObjectGroupSubtree(
     QStandardItem* pParentItem,
     const std::list<Renga::IModelObjectPtr>& objectGroup,

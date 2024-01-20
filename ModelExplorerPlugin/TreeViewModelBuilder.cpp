@@ -26,35 +26,36 @@ using namespace Renga;
 
 namespace
 {
-  const std::list<GUID> c_levelTreeTypes =
-  {
-    ObjectTypes::Wall,
-    ObjectTypes::Column,
-    ObjectTypes::Floor,
-    ObjectTypes::Opening,
-    ObjectTypes::Roof,
-    ObjectTypes::Beam,
-    ObjectTypes::Stair,
-    ObjectTypes::Ramp,
-    ObjectTypes::Window,
-    ObjectTypes::Door,
-    ObjectTypes::Railing,
-    ObjectTypes::Room,
-    ObjectTypes::IsolatedFoundation,
-    ObjectTypes::WallFoundation,
-    ObjectTypes::AssemblyInstance,
-    ObjectTypes::Element,
-    ObjectTypes::Plate,
-    ObjectTypes::RoutePoint,
-    ObjectTypes::Equipment,
-    ObjectTypes::PlumbingFixture,
-    ObjectTypes::MechanicalEquipment,
-    ObjectTypes::Line3D,
-    ObjectTypes::Hatch,
-    ObjectTypes::TextObject,
-    ObjectTypes::Rebar
+  // TODO: remove this, check ObjectOnLevel interface
+  const std::list<GUID> c_levelTreeTypes = {
+      ObjectTypes::Wall,
+      ObjectTypes::Column,
+      ObjectTypes::Floor,
+      ObjectTypes::Opening,
+      ObjectTypes::Roof,
+      ObjectTypes::Beam,
+      ObjectTypes::Stair,
+      ObjectTypes::Ramp,
+      ObjectTypes::Window,
+      ObjectTypes::Door,
+      ObjectTypes::Railing,
+      ObjectTypes::Room,
+      ObjectTypes::IsolatedFoundation,
+      ObjectTypes::WallFoundation,
+      ObjectTypes::AssemblyInstance,
+      ObjectTypes::Element,
+      ObjectTypes::Plate,
+      ObjectTypes::RoutePoint,
+      ObjectTypes::Equipment,
+      ObjectTypes::PlumbingFixture,
+      ObjectTypes::MechanicalEquipment,
+      ObjectTypes::Line3D,
+      ObjectTypes::Hatch,
+      ObjectTypes::TextObject,
+      ObjectTypes::Rebar,
   };
 
+  // TODO: remove this, check ObjectOnLevel interface
   const std::list<GUID> c_nonLevelTreeTypes{
       ObjectTypes::PipeAccessory,
       ObjectTypes::PipeFitting,
@@ -70,7 +71,10 @@ namespace
       ObjectTypes::Axis,
       ObjectTypes::Elevation,
       ObjectTypes::Section,
-      ObjectTypes::Dimension,
+      ObjectTypes::LinearDimension,
+      ObjectTypes::DiametralDimension,
+      ObjectTypes::RadialDimension,
+      ObjectTypes::AngularDimension,
   };
 
   const auto c_parameterToIdDict = GuidMap<GUID>{
@@ -210,22 +214,6 @@ void TreeViewModelBuilder::addLevelSubtree(
   }
 
   pItemModel->appendRow(pItem);
-}
-
-void TreeViewModelBuilder::addAssemblySubtree(QStandardItem* pParentItem, IEntityPtr assembly)
-{
-  auto itemList = createItem(
-    QString::fromWCharArray(assembly->Name), ":/icons/Assembly", eTreeViewItemType::Style, false, true);
-
-  itemList.first()->setData(assembly->Id, eTreeViewItemRole::EntityId);
-  
-  for (const auto& objectType : c_levelTreeTypes)
-  {
-    LevelObjectGroup group(assembly->Id, objectType);
-    addObjectGroupSubtree(itemList.at(0), m_levelObjects[group], getRengaEntityUIData(objectType).pluralName);
-  }
-
-  pParentItem->appendRow(itemList);
 }
 
 void TreeViewModelBuilder::addObjectGroupSubtree(
