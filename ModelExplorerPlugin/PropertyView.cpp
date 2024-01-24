@@ -74,18 +74,25 @@ namespace
     buildPropertyViewSingleCategory(propertyBrowser, groupManager, QApplication::translate("me_propertyView", "Properties"), properties);
   }
 
-  void buildPropertyView(QtTreePropertyBrowser& propertyBrowser, 
-                         PropertyManager& quantitiesMng,
-                         PropertyManager& parametersMng,
-                         PropertyManager& propertiesMng,
-                         IPropertyViewBuilder& propertyViewBuilder,
-                         QtGroupPropertyManager &groupManager,
-                         PropertyView::Mode propertyViewMode)
+  void createPropertiesInManagers(
+      const IPropertyViewBuilder& propertyViewBuilder,
+      PropertyManager& quantitiesMng,
+      PropertyManager& parametersMng,
+      PropertyManager& propertiesMng)
   {
     propertyViewBuilder.createParameters(parametersMng);
     propertyViewBuilder.createQuantities(quantitiesMng);
     propertyViewBuilder.createProperties(propertiesMng);
+  }
 
+  void showPropertiesFromManagers(
+      QtTreePropertyBrowser& propertyBrowser,
+      QtGroupPropertyManager& groupManager,
+      PropertyManager& quantitiesMng,
+      PropertyManager& parametersMng,
+      PropertyManager& propertiesMng,
+      PropertyView::Mode propertyViewMode)
+  {
     if (propertyViewMode == PropertyView::Mode::ListMode)
       buildPropertyViewAsList(
           propertyBrowser,
@@ -113,20 +120,20 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pRenga) :
 }
 
 void PropertyView::showProperties(
-    std::unique_ptr<IPropertyViewBuilder> builder,
+    const IPropertyViewBuilder& builder,
     PropertyContainerAccess propertiesAccess)
 {
-  m_builder.swap(builder);
   m_pPropertyController = std::make_unique<RengaPropertyController>(m_pRenga, propertiesAccess);
 
+  clear();
   clearPropertyManagers();
-  buildPropertyView(
+  createPropertiesInManagers(builder, m_quantitiesMng, m_parametersMng, m_propertiesMng);
+  showPropertiesFromManagers(
       *this,
+      *m_pGroupManager,
       m_quantitiesMng,
       m_parametersMng,
       m_propertiesMng,
-      *m_builder,
-      *m_pGroupManager,
       m_propertyViewMode);
 
   QObject::connect(
@@ -164,14 +171,14 @@ void PropertyView::changeMode(PropertyView::Mode newMode)
 {
   m_propertyViewMode = newMode;
 
-  clearPropertyManagers();
-  buildPropertyView(
+  clear();
+
+  showPropertiesFromManagers(
       *this,
+      *m_pGroupManager,
       m_quantitiesMng,
       m_parametersMng,
       m_propertiesMng,
-      *m_builder,
-      *m_pGroupManager,
       m_propertyViewMode);
 }
 

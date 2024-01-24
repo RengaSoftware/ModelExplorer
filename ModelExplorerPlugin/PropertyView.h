@@ -8,13 +8,14 @@
 
 #pragma once
 #include "PropertyManager.h"
-#include "IPropertyViewBuilder.h"
 #include "IPropertyViewSourceObject.h"
 #include "RengaModelUtils.h"
 #include "RengaPropertyController.h"
 
 #include <qttreepropertybrowser.h>
 
+
+class IPropertyViewBuilder;
 
 class PropertyView : public QtTreePropertyBrowser
 {
@@ -28,7 +29,7 @@ public:
   };
 
   PropertyView(QWidget* pParent, Renga::IApplicationPtr pApplication);
-  void showProperties(std::unique_ptr<IPropertyViewBuilder> builder, PropertyContainerAccess propertiesAccess);
+  void showProperties(const IPropertyViewBuilder& builder, PropertyContainerAccess propertiesAccess);
   void changeMode(PropertyView::Mode newMode);
 
 private:
@@ -41,6 +42,5 @@ private:
   PropertyManager m_parametersMng;
   PropertyManager m_propertiesMng;
   Mode m_propertyViewMode;
-  std::unique_ptr<IPropertyViewBuilder> m_builder;
   std::unique_ptr<RengaPropertyController> m_pPropertyController;
 };

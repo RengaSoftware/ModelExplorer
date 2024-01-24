@@ -414,15 +414,15 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     return QString{};
   };
 
-  auto builder = std::make_unique<EntityPropertyViewBuilder>(
+  auto builder = EntityPropertyViewBuilder{
       parametersAccess,
       propertiesAccess,
       quantitiesAccess,
       styleOrObjectNameGetter,
       m_pApplication->Project->PropertyManager,
-      false);
+      false};
 
-  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
+  m_pPropertyView->showProperties(builder, propertiesAccess);
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -443,8 +443,8 @@ void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
     return pModelObject != nullptr ? getLayer(pModelObject, layerIndex) : nullptr;
   };
 
-  auto builder = std::make_unique<MaterialLayerPropertyViewBuilder>(m_pApplication, materialLayerAccess, layerAccess);
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  auto builder = MaterialLayerPropertyViewBuilder{m_pApplication, materialLayerAccess, layerAccess};
+  m_pPropertyView->showProperties(builder, nullptr);
 }
 
 void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
@@ -467,9 +467,9 @@ void ModelExplorerWidget::onRebarUsageSelected(const QModelIndex& index)
       getRebarUsage(pModelObject, rebarUsageIndex);
   };
 
-  auto builder = std::make_unique<RebarUsagePropertyViewBuilder>(m_pApplication, rebarUsageAccess);
+  auto builder = RebarUsagePropertyViewBuilder{m_pApplication, rebarUsageAccess};
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  m_pPropertyView->showProperties(builder, nullptr);
 }
 
 void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& index)
@@ -484,9 +484,9 @@ void ModelExplorerWidget::onReinforcementUnitUsageSelected(const QModelIndex& in
     return pModelObject != nullptr ? getReinforcementUnitUsage(pModelObject, reinforcementUnitUsageIndex) : nullptr;
   };
 
-  auto builder = std::make_unique<ReinforcementUnitUsagePropertyViewBuilder>(m_pApplication, reinforcementUnitUsageAccess);
+  auto builder = ReinforcementUnitUsagePropertyViewBuilder{m_pApplication, reinforcementUnitUsageAccess};
 
-  m_pPropertyView->showProperties(std::move(builder), nullptr);
+  m_pPropertyView->showProperties(builder, nullptr);
 }
 
 void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
@@ -536,15 +536,15 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
       return QString{};
   };
 
-  auto builder = std::make_unique<EntityPropertyViewBuilder>(
+  auto builder = EntityPropertyViewBuilder{
       parametersAccess,
       propertiesAccess,
       nullptr,
       styleNameGetter,
       m_pApplication->Project->PropertyManager,
-      true);
+      true};
 
-  m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
+  m_pPropertyView->showProperties(builder, propertiesAccess);
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIndex& index)
