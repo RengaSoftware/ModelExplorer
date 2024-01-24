@@ -8,10 +8,16 @@
 
 #pragma once
 
+#include "RengaModelUtils.h"
+
+
 class PropertyManager;
 
 void qtPropertiesFromRengaQuantities(PropertyManager& mng, Renga::IQuantityContainer& container);
-void qtPropertiesFromRengaParameters(PropertyManager& mng, Renga::IParameterContainer& container);
+void qtPropertiesFromRengaParameters(
+    PropertyManager& mng,
+    Renga::IParameterContainer& container,
+    EntityByParameterIdNameGetter nameGetter);
 void qtPropertiesFromRengaProperties(
     PropertyManager& mng,
     Renga::IPropertyManager& rengaPropertyManager,

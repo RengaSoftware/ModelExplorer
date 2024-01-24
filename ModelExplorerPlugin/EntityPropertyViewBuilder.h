@@ -19,6 +19,7 @@ public:
       ParameterContainerAccess parametersAccess,
       PropertyContainerAccess propertiesAccess,
       QuantityContainerAccess quantitiesAccess,
+      EntityByParameterIdNameGetter entityNameGetter,
       Renga::IPropertyManagerPtr pRengaPropertyManager,
       bool disableProperties);
 
@@ -31,6 +32,7 @@ protected:
   ParameterContainerAccess m_parametersAccess;
   PropertyContainerAccess m_propertiesAccess;
   QuantityContainerAccess m_quantitiesAccess;
+  EntityByParameterIdNameGetter m_entityNameGetter;
   Renga::IPropertyManagerPtr m_pRengaPropertyManager;
   bool m_disableProperties;
 };

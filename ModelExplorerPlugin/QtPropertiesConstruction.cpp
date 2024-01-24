@@ -11,7 +11,6 @@
 #include "COMUtils.h"
 #include "PropertyManager.h"
 #include "QtPropertiesConstruction.h"
-#include "RengaModelUtils.h"
 #include "ScopeGuard.h"
 
 #include <Renga/QuantityIds.h>
@@ -19,7 +18,8 @@
 
 void qtPropertiesFromRengaParameters(
     PropertyManager& mngr,
-    Renga::IParameterContainer& container)
+    Renga::IParameterContainer& container,
+    EntityByParameterIdNameGetter nameGetter)
 {
   // block signals before filling properties
   mngr.blockSignals(true);
@@ -56,8 +56,23 @@ void qtPropertiesFromRengaParameters(
       pQtProperty = mngr.addValue(name, static_cast<bool>(pParameter->GetBoolValue()));
       break;
     case Renga::ParameterValueType::ParameterValueType_Int:
+    {
+      // Try to show related entity name instead of id
+      // If the name is empty - show id
+      // TODO: show both id and name, refactoring needed
+      if (pParameter->GetDefinition()->GetParameterType() == Renga::ParameterType_IntID)
+      {
+        auto entityName = nameGetter(id, pParameter->GetIntValue());
+        if (!entityName.isEmpty())
+        {
+          pQtProperty = mngr.addValue(name, entityName);
+          break;
+        }
+      }
+      
       pQtProperty = mngr.addValue(name, pParameter->GetIntValue());
       break;
+    }
     case Renga::ParameterValueType::ParameterValueType_Double:
       pQtProperty = mngr.addValue(name, pParameter->GetDoubleValue());
       break;

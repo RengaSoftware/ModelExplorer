@@ -4,15 +4,51 @@
 #include "GuidMap.h"
 
 #include <Renga/StyleTypeIds.h>
+#include <Renga/ParameterIds.h>
 
 #include <map>
 
+
+using namespace Renga;
+
+GUID parameterIdToEntityType(GUID parameterId)
+{
+  const auto c_parameterToIdDict = GuidMap<GUID>{
+      {ParameterIds::MaterialStyleId, StyleTypeIds::Material},
+      {ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial},
+      {ParameterIds::PlumbingFixtureStyleId, StyleTypeIds::PlumbingFixtureStyle},
+      {ParameterIds::MepEquipmentStyleId, StyleTypeIds::EquipmentStyle},
+      {ParameterIds::MepPipeStyleId, StyleTypeIds::PipeStyle},
+      {ParameterIds::PipeComponentStyleId, StyleTypeIds::PipeFittingStyle},
+      {ParameterIds::PipeAccessoryStyleId, StyleTypeIds::PipeAccessoryStyle},
+      {ParameterIds::AirEquipmentStyleId, StyleTypeIds::MechanicalEquipmentStyle},
+      {ParameterIds::DuctStyleId, StyleTypeIds::DuctStyle},
+      {ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle},
+      {ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle},
+      {ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle},
+      {ParameterIds::LightFixtureStyleId, StyleTypeIds::LightingFixtureStyle},
+      {ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle},
+      {ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle},
+      {ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle},
+      {ParameterIds::MepSystemStyleId, StyleTypeIds::SystemStyle},
+      {ParameterIds::AssemblyId, StyleTypeIds::Assembly},
+      {ParameterIds::BeamStyleId, StyleTypeIds::BeamStyle},
+      {ParameterIds::ColumnStyleId, StyleTypeIds::ColumnStyle},
+      {ParameterIds::WindowStyleId, StyleTypeIds::WindowStyle},
+      {ParameterIds::DoorStyleId, StyleTypeIds::DoorStyle},
+      {ParameterIds::BuildingElementStyleId, StyleTypeIds::ElementStyle},
+      {ParameterIds::PlateProfileStyleId, StyleTypeIds::PlateStyle},
+      //{ParameterIds::TopicId, StyleTypeIds::Topic},
+  };
+
+  auto it = c_parameterToIdDict.find(parameterId);
+  return it != c_parameterToIdDict.end() ? it->second : GUID_NULL;
+}
 
 // TODO: replace with universal IProject method
 // TODO: combine with "parameter to type" dictionary
 Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProject, GUID entityType)
 {
-  using namespace Renga;
   using namespace Renga::StyleTypeIds;
   using EntityCollectionGetter = std::function<IEntityCollectionPtr(IProject&)>;
 
@@ -39,8 +75,11 @@ Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProje
       {DoorStyle, [](IProject& project) { return project.DoorStyles; }},
       {ElementStyle, [](IProject& project) { return project.ElementStyles; }},
       {PlateStyle, [](IProject& project) { return project.PlateStyles; }},
+      {Material, [](IProject& project) { return project.Materials; }},
+      {LayeredMaterial, [](IProject& project) { return project.LayeredMaterials; }},
+      //{Topic, [](IProject& project) { return project.Topics; }},
   };
-
+ 
   return entityCollectionGetterMap.at(entityType)(*pProject);
 }
 
@@ -71,4 +110,11 @@ Renga::Logical getLogicalValueFromIndex(int index)
 {
   auto logicalValueString = getLogicalValueStringList().at(index);
   return logicalValueToStringMap().key(logicalValueString);
+}
+
+QString getEntityName(Renga::IProjectPtr pProject, GUID entityType, int entityId)
+{
+  auto pCollection = getProjectEntityCollection(pProject, entityType);
+  auto pEntity = pCollection->GetById(entityId);
+  return pEntity ? QString::fromWCharArray(pEntity->Name) : QString{};
 }

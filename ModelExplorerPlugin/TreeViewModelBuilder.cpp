@@ -76,33 +76,6 @@ namespace
       ObjectTypes::RadialDimension,
       ObjectTypes::AngularDimension,
   };
-
-  const auto c_parameterToIdDict = GuidMap<GUID>{
-      {ParameterIds::MaterialStyleId, StyleTypeIds::Material},
-      {ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial},
-      {ParameterIds::PlumbingFixtureStyleId, StyleTypeIds::PlumbingFixtureStyle},
-      {ParameterIds::MepEquipmentStyleId, StyleTypeIds::EquipmentStyle},
-      {ParameterIds::MepPipeStyleId, StyleTypeIds::PipeStyle},
-      {ParameterIds::PipeComponentStyleId, StyleTypeIds::PipeFittingStyle},
-      {ParameterIds::PipeAccessoryStyleId, StyleTypeIds::PipeAccessoryStyle},
-      {ParameterIds::AirEquipmentStyleId, StyleTypeIds::MechanicalEquipmentStyle},
-      {ParameterIds::DuctStyleId, StyleTypeIds::DuctStyle},
-      {ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle},
-      {ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle},
-      {ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle},
-      {ParameterIds::LightFixtureStyleId, StyleTypeIds::LightingFixtureStyle},
-      {ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle},
-      {ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle},
-      {ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle},
-      {ParameterIds::MepSystemStyleId, StyleTypeIds::SystemStyle},
-      {ParameterIds::AssemblyId, StyleTypeIds::Assembly},
-      {ParameterIds::BeamStyleId, StyleTypeIds::BeamStyle},
-      {ParameterIds::ColumnStyleId, StyleTypeIds::ColumnStyle},
-      {ParameterIds::WindowStyleId, StyleTypeIds::WindowStyle},
-      {ParameterIds::DoorStyleId, StyleTypeIds::DoorStyle},
-      {ParameterIds::BuildingElementStyleId, StyleTypeIds::ElementStyle},
-      {ParameterIds::PlateProfileStyleId, StyleTypeIds::PlateStyle},
-  };
 }
 
 TreeViewModelBuilder::TreeViewModelBuilder(IApplicationPtr pApplication) :
@@ -253,9 +226,9 @@ void TreeViewModelBuilder::addObjectSubtree(
     if (pParameter->Definition->_ParameterType != ParameterType::ParameterType_IntID)
       continue;
 
-    auto entityTypeIt = c_parameterToIdDict.find(id);
-    if (entityTypeIt != c_parameterToIdDict.cend())
-      addStyleSubtree(itemList.at(0), pObject, entityTypeIt->second, pParameter->GetIntValue());
+    auto entityTypeId = parameterIdToEntityType(id);
+    if (entityTypeId != GUID_NULL)
+      addStyleSubtree(itemList.at(0), pObject, entityTypeId, pParameter->GetIntValue());
   }
 
   pParentItem->appendRow(itemList);

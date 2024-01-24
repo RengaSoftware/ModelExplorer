@@ -398,10 +398,27 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
     return pObject != nullptr ? pObject->GetQuantities() : nullptr;
   };
 
+  auto styleOrObjectNameGetter = [this](GUID parameterId, int entityId)
+  {
+    // INFO: works only for entities located directly in project (styles, materials, drawings, etc.)
+    // Here we are trying to get name of the entity located directly in project
+    auto entityType = parameterIdToEntityType(parameterId);
+    if (entityType != GUID_NULL)
+      return getEntityName(m_pApplication->Project, entityType, entityId);
+    
+    // Here we assume we need to get the name of the object of the building model
+    auto pObject = m_pApplication->Project->Model->GetObjects()->GetById(entityId);
+    if (pObject != nullptr)
+      return QString::fromWCharArray(pObject->Name);
+
+    return QString{};
+  };
+
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
       parametersAccess,
       propertiesAccess,
       quantitiesAccess,
+      styleOrObjectNameGetter,
       m_pApplication->Project->PropertyManager,
       false);
 
@@ -509,12 +526,23 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
     return properties;
   };
   
+  // Here we assume styles can refer only styles
+  auto styleNameGetter = [this](GUID parameterId, int entityId)
+  {
+    auto entityType = parameterIdToEntityType(parameterId);
+    if (entityType != GUID_NULL)
+      return getEntityName(m_pApplication->Project, entityType, entityId);
+    else
+      return QString{};
+  };
+
   auto builder = std::make_unique<EntityPropertyViewBuilder>(
-    parametersAccess,
-    propertiesAccess,
-    nullptr,
-    m_pApplication->Project->PropertyManager,
-    true);
+      parametersAccess,
+      propertiesAccess,
+      nullptr,
+      styleNameGetter,
+      m_pApplication->Project->PropertyManager,
+      true);
 
   m_pPropertyView->showProperties(std::move(builder), propertiesAccess);
 }

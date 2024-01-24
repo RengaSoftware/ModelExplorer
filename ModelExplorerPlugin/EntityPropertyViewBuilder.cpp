@@ -26,11 +26,13 @@ EntityPropertyViewBuilder::EntityPropertyViewBuilder(
     ParameterContainerAccess parametersAccess,
     PropertyContainerAccess propertiesAccess,
     QuantityContainerAccess quantitiesAccess,
+    EntityByParameterIdNameGetter entityNameGetter,
     Renga::IPropertyManagerPtr pRengaPropertyManager,
     bool disableProperties)
   : m_parametersAccess(parametersAccess),
     m_propertiesAccess(propertiesAccess),
     m_quantitiesAccess(quantitiesAccess),
+    m_entityNameGetter(entityNameGetter),
     m_pRengaPropertyManager(pRengaPropertyManager),
     m_disableProperties(disableProperties)
 {
@@ -46,7 +48,7 @@ void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
   if (pParameters == nullptr)
     return;
 
-  qtPropertiesFromRengaParameters(mngr, *pParameters);
+  qtPropertiesFromRengaParameters(mngr, *pParameters, m_entityNameGetter);
 }
 
 void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
