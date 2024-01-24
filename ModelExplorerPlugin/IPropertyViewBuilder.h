@@ -17,7 +17,7 @@ public:
   virtual ~IPropertyViewBuilder() {}
 
   // TODO: return pure virtual
-  virtual void createParameters(PropertyManager& mng) = 0;
-  virtual void createQuantities(PropertyManager& mng) = 0;
-  virtual void createProperties(PropertyManager& mng) = 0;
+  virtual void createParameters(PropertyManager& mng) const = 0;
+  virtual void createQuantities(PropertyManager& mng) const = 0;
+  virtual void createProperties(PropertyManager& mng) const = 0;
 };

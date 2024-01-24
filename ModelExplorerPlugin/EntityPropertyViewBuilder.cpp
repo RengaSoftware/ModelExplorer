@@ -38,7 +38,7 @@ EntityPropertyViewBuilder::EntityPropertyViewBuilder(
 {
 }
 
-void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr) const
 {
   // TODO: remove this condition, devide class free functions
   if (!m_parametersAccess)
@@ -51,7 +51,7 @@ void EntityPropertyViewBuilder::createParameters(PropertyManager& mngr)
   qtPropertiesFromRengaParameters(mngr, *pParameters, m_entityNameGetter);
 }
 
-void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr) const
 {
   // TODO: remove this condition, devide class free functions
   if (!m_quantitiesAccess)
@@ -64,7 +64,7 @@ void EntityPropertyViewBuilder::createQuantities(PropertyManager& mngr)
   qtPropertiesFromRengaQuantities(mngr, *pQuantities);
 }
 
-void EntityPropertyViewBuilder::createProperties(PropertyManager& mngr)
+void EntityPropertyViewBuilder::createProperties(PropertyManager& mngr) const
 {
   if (!m_propertiesAccess)
     return;

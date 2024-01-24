@@ -17,7 +17,7 @@ MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(
 {
 }
 
-void MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr)
+void MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr) const
 {
   auto pMaterialLayer = m_materialLayerAccess();
   if (pMaterialLayer == nullptr)
@@ -28,7 +28,7 @@ void MaterialLayerPropertyViewBuilder::createParameters(PropertyManager& mngr)
   mngr.addValue(QApplication::translate("me_materialLayer", "material"), materialName);
 }
 
-void MaterialLayerPropertyViewBuilder::createQuantities(PropertyManager& mngr)
+void MaterialLayerPropertyViewBuilder::createQuantities(PropertyManager& mngr) const
 {
   auto pLayer = m_layerAccess();
   if (pLayer == nullptr)

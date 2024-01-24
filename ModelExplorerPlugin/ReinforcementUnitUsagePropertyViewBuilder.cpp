@@ -14,7 +14,7 @@ ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBui
 {
 }
 
-void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr)
+void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager& mngr) const
 {
   auto pReinforcementUnitUsage = m_reinforcementUnitUsageAccess();
   if (pReinforcementUnitUsage == nullptr)
@@ -25,7 +25,7 @@ void ReinforcementUnitUsagePropertyViewBuilder::createParameters(PropertyManager
     mngr.addValue(QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pReinforcementUnitStyle->Name));
 }
 
-void ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr)
+void ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr) const
 {
   using namespace Renga;
 

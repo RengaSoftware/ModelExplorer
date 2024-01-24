@@ -13,7 +13,7 @@ RebarUsagePropertyViewBuilder::RebarUsagePropertyViewBuilder(Renga::IApplication
 {
 }
 
-void RebarUsagePropertyViewBuilder::createParameters(PropertyManager& mngr)
+void RebarUsagePropertyViewBuilder::createParameters(PropertyManager& mngr) const
 {
   auto pRebarUsage = m_rebarUsageAccess();
   if (pRebarUsage == nullptr)
@@ -25,7 +25,7 @@ void RebarUsagePropertyViewBuilder::createParameters(PropertyManager& mngr)
     mngr.addValue(QApplication::translate("me_reinforcement", "name"), QString::fromWCharArray(pRebarStyle->Name));
 }
 
-void RebarUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr)
+void RebarUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr) const
 {
   using namespace Renga;
 
