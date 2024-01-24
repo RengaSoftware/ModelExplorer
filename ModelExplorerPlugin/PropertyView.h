@@ -7,8 +7,8 @@
 //
 
 #pragma once
+#include "IPropertyViewBuilder.h"
 #include "PropertyManager.h"
-#include "IPropertyViewSourceObject.h"
 #include "RengaModelUtils.h"
 #include "RengaPropertyController.h"
 

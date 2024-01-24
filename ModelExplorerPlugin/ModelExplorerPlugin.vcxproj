@@ -208,7 +208,6 @@ copy /y "$(ProjectDir)Resources\ModelExplorerIcon.png" "$(OutDir)ModelExplorerIc
     <ClInclude Include="GuidMap.h" />
     <ClInclude Include="COMUtils.h" />
     <ClInclude Include="IPropertyViewBuilder.h" />
-    <ClInclude Include="IPropertyViewSourceObject.h" />
     <ClInclude Include="PropertyList.h" />
     <ClInclude Include="QtPropertiesConstruction.h" />
     <ClInclude Include="RengaEntityUIData.h" />
