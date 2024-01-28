@@ -7,8 +7,11 @@
 //
 
 #include "stdafx.h"
-#include "PropertyView.h"
+
 #include "COMUtils.h"
+#include "IPropertyViewBuilder.h"
+#include "PropertyView.h"
+#include "RengaPropertyController.h"
 
 #include <qteditorfactory.h>
 
@@ -109,10 +112,7 @@ namespace
   }
 }
 
-PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pRenga) :
-  QtTreePropertyBrowser(pParent),
-  m_pRenga(pRenga),
-  m_propertyViewMode(CategoryMode)
+PropertyView::PropertyView(QWidget* pParent) : QtTreePropertyBrowser(pParent), m_propertyViewMode(CategoryMode)
 {
   m_pGroupManager = new QtGroupPropertyManager(this);
 
@@ -121,9 +121,9 @@ PropertyView::PropertyView(QWidget* pParent, Renga::IApplicationPtr pRenga) :
 
 void PropertyView::showProperties(
     const IPropertyViewBuilder& builder,
-    PropertyContainerAccess propertiesAccess)
+    std::unique_ptr<RengaPropertyController> pPropertyController)
 {
-  m_pPropertyController = std::make_unique<RengaPropertyController>(m_pRenga, propertiesAccess);
+  m_pPropertyController = std::move(pPropertyController);
 
   clear();
   clearPropertyManagers();

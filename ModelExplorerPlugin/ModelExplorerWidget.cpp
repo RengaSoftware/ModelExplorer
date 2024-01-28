@@ -8,13 +8,14 @@
 
 #include "stdafx.h"
 
-#include "ScopeGuard.h"
 #include "EntityPropertyViewBuilder.h"
 #include "MaterialLayerPropertyViewBuilder.h"
 #include "ModelExplorerWidget.h"
 #include "RebarUsagePropertyViewBuilder.h"
 #include "ReinforcementUnitUsagePropertyViewBuilder.h"
 #include "RengaModelUtils.h"
+#include "RengaPropertyController.h"
+#include "ScopeGuard.h"
 #include "TreeViewItemRole.h"
 #include "TreeViewItemType.h"
 #include "TreeViewModelBuilder.h"
@@ -342,7 +343,7 @@ void ModelExplorerWidget::createTreeView()
 
 void ModelExplorerWidget::createPropertyView()
 {
-  m_pPropertyView = new PropertyView(this, m_pApplication);
+  m_pPropertyView = new PropertyView(this);
   m_pPropertyView->setResizeMode(QtTreePropertyBrowser::Interactive);
   m_pPropertyView->setHeaderVisible(true);
   m_pPropertyView->setAlternatingRowColors(false);
@@ -422,7 +423,9 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
       m_pApplication->Project->PropertyManager,
       false};
 
-  m_pPropertyView->showProperties(builder, propertiesAccess);
+  auto pPropertyController = std::make_unique<RengaPropertyController>(m_pApplication, propertiesAccess);
+
+  m_pPropertyView->showProperties(builder, std::move(pPropertyController));
 }
 
 void ModelExplorerWidget::onMaterialLayerSelected(const QModelIndex& index)
@@ -544,7 +547,8 @@ void ModelExplorerWidget::onStyleSelected(const QModelIndex & index)
       m_pApplication->Project->PropertyManager,
       true};
 
-  m_pPropertyView->showProperties(builder, propertiesAccess);
+  auto pPropertyController = std::make_unique<RengaPropertyController>(m_pApplication, propertiesAccess);
+  m_pPropertyView->showProperties(builder, std::move(pPropertyController));
 }
 
 Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIndex& index)
