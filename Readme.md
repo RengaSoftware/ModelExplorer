@@ -6,9 +6,9 @@ ModelExplorer - The Renga plugin for browsing and editing Renga model
 About
 -----
 
-This plugin allows you to browse Renga model, obtain the object parameters and quantities, change values of custom user-defined object attributes, set visibility state to model objects, select model object from browser.
+This plugin allows you to browse Renga building model and assembly models, obtain parameters and quantities of the object, style, material etc., change values of user-defined object properties, set visibility state to model objects, select model object from the tree view.
 
-How to make plugin working
+How to install the plugin
 -----
 
 1. Open Renga installation folder.
@@ -21,8 +21,8 @@ How to build the plugin
 -----
 
 To build the plugin you need RengaSDK and Qt 5.9.3.
-You can download the latest version of RengaSDK from "http://rengacad.com/ru/support/sdk/".
-There are two environment variables (renga_com_sdk, qt5_path) used in plugin.
+You can download the latest version of RengaSDK from "https://rengabim.com/sdk/".
+There are two environment variables (renga_com_sdk, qt5_path) used in the plugin.
 You should add these variables to the system, and specify paths to RengaSDK folder and Qt folder accordingly.
 Alternatively you can set required paths in Visual Studio.
 
