@@ -6,7 +6,7 @@ ModelExplorer - The Renga plugin for browsing and editing Renga model
 About
 -----
 
-This plugin allows you to browse Renga building model and assembly models, obtain parameters and quantities of the object, style, material etc., change values of user-defined object properties, set visibility state to model objects, select model object from the tree view.
+This plugin allows you to browse Renga building model and assembly models, obtain parameters and quantities of the object, style, material etc., change values of object properties, set visibility state to model objects, select model object from the tree view.
 
 How to install the plugin
 -----
