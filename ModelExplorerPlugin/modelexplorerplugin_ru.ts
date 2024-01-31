@@ -504,7 +504,7 @@
     </message>
     <message>
         <source>angle_dimension</source>
-        <translation>рад</translation>
+        <translation>град</translation>
     </message>
     <message>
         <source>length_dimension</source>

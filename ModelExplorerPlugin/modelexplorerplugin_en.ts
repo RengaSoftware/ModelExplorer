@@ -500,7 +500,7 @@
     </message>
     <message>
         <source>angle_dimension</source>
-        <translation>rad</translation>
+        <translation>deg</translation>
     </message>
     <message>
         <source>length_dimension</source>
