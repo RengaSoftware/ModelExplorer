@@ -118,3 +118,15 @@ QString getEntityName(Renga::IProjectPtr pProject, GUID entityType, int entityId
   auto pEntity = pCollection->GetById(entityId);
   return pEntity ? QString::fromWCharArray(pEntity->Name) : QString{};
 }
+
+Renga::IModelObjectCollectionPtr getModelObjectsSafe(Renga::IModel& model)
+{
+  try
+  {
+    return model.GetObjects();
+  }
+  catch (...)
+  {
+    return nullptr;
+  }
+}
