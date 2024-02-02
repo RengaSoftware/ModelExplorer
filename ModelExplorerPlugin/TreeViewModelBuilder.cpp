@@ -100,22 +100,22 @@ static bool compareLevelElevations(IModelObjectPtr pLeftModelObject, IModelObjec
 
 QStandardItemModel* TreeViewModelBuilder::build()
 {
-  QStandardItemModel* pItemModel = new QStandardItemModel();
+    auto pProject               = m_pApplication->GetProject();
+    auto pModel                 = pProject->GetModel();
+    auto pModelObjectCollection = getModelObjectsSafe(*pModel);
+    if (pModelObjectCollection == nullptr)
+      return nullptr;
 
-  auto pProject = m_pApplication->GetProject();
-  auto pModel = pProject->GetModel();
-  auto pModelObjectCollection = pModel->GetObjects();
+    processModelObjectCollection(pModelObjectCollection);
 
-  processModelObjectCollection(pModelObjectCollection);
+    m_levels.sort(compareLevelElevations);
 
-  m_levels.sort(compareLevelElevations);
+    auto* pItemModel = new QStandardItemModel();
+    for (auto pLevelModelObject : m_levels)
+      addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
 
-  for (auto pLevelModelObject : m_levels)
-    addLevelSubtree(pItemModel, pLevelModelObject, pModelObjectCollection);
-
-  addNonLevelSubtree(pItemModel, pModelObjectCollection);
-
-  return pItemModel;
+    addNonLevelSubtree(pItemModel, pModelObjectCollection);
+    return pItemModel;
 }
 
 void TreeViewModelBuilder::processModelObjectCollection(IModelObjectCollectionPtr pModelObjectCollection)
@@ -276,7 +276,9 @@ std::list<Renga::IModelObjectPtr> TreeViewModelBuilder::getAssemblyObjects(int a
   pAssembly->QueryInterface(&pModel);
   assert(pModel != nullptr);
 
-  auto pModelObjects = pModel->GetObjects();
+  auto pModelObjects = getModelObjectsSafe(*pModel);
+  if (pModelObjects == nullptr)
+    return {};
 
   for (int i = 0; i < pModelObjects->Count; ++i)
   {

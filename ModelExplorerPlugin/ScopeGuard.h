@@ -14,8 +14,10 @@ public:
   explicit BoolGuard(bool& variable);
   explicit BoolGuard(bool& variable, bool initialValue);
 
-  BoolGuard(const BoolGuard& guard) = delete;
-  BoolGuard& operator = (const BoolGuard& guard) = delete;
+  BoolGuard(const BoolGuard& guard)            = delete;
+  BoolGuard(BoolGuard&& guard)                 = default;
+  BoolGuard& operator=(const BoolGuard& guard) = delete;
+  BoolGuard& operator=(BoolGuard&& guard)      = default;
 
   ~BoolGuard();
 

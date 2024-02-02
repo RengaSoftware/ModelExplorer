@@ -11,6 +11,10 @@ int getLogicalValueIndex(Renga::Logical value);
 Renga::Logical getLogicalValueFromIndex(int index);
 // INFO: works only for entities located directly in project (styles, materials, drawings, etc.)
 QString getEntityName(Renga::IProjectPtr pProject, GUID entityType, int entityId);
+// Renga may fail on pModel->GetObjects(); because of internal issue
+// when phantom objects are in the collection
+// Issue #40 workaround
+Renga::IModelObjectCollectionPtr getModelObjectsSafe(Renga::IModel& model);
 
 using PropertyContainerAccess = std::function<Renga::IPropertyContainerPtr()>;
 using ParameterContainerAccess = std::function<Renga::IParameterContainerPtr()>;

@@ -123,11 +123,15 @@ void ModelExplorerWidget::setPropertyViewMode(int pressedButtonId)
 
 void ModelExplorerWidget::buildTreeViewModel()
 {
-  TreeViewModelBuilder treeViewModelBuilder(m_pApplication);
-  m_pTreeViewModel.reset(treeViewModelBuilder.build());
+  auto treeViewModelBuilder = TreeViewModelBuilder(m_pApplication);
+  auto pRootItem = treeViewModelBuilder.build();
+  if (pRootItem == nullptr)
+    return;
+
+  m_pTreeViewModel.reset(pRootItem);
   m_pTreeView->setModel(m_pTreeViewModel.get());
 
-  QItemSelectionModel* pItemSelectionModel = m_pTreeView->selectionModel();
+  auto* pItemSelectionModel = m_pTreeView->selectionModel();
 
   connect(
     pItemSelectionModel,
@@ -137,11 +141,11 @@ void ModelExplorerWidget::buildTreeViewModel()
 
   const unsigned int visibilityIconColumnSize = 30;
 
-  QHeaderView* treeViewHeader = m_pTreeView->header();
-  treeViewHeader->setStretchLastSection(false);
-  treeViewHeader->setSectionResizeMode(treeViewHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
-  treeViewHeader->setSectionResizeMode(treeViewHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
-  treeViewHeader->resizeSection(1, visibilityIconColumnSize);
+  auto* pTreeViewHeader = m_pTreeView->header();
+  pTreeViewHeader->setStretchLastSection(false);
+  pTreeViewHeader->setSectionResizeMode(pTreeViewHeader->logicalIndex(0), QHeaderView::ResizeMode::Stretch);
+  pTreeViewHeader->setSectionResizeMode(pTreeViewHeader->logicalIndex(1), QHeaderView::ResizeMode::Fixed);
+  pTreeViewHeader->resizeSection(1, visibilityIconColumnSize);
 
   pItemSelectionModel->select(m_pTreeViewModel->index(0, 0), QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
 }
@@ -277,27 +281,23 @@ void ModelExplorerWidget::hideSelectedModelObject()
 
 void ModelExplorerWidget::onRengaObjectSelected(const int modelObjectId)
 {
-  BoolGuard guard(m_wasObjectSelectedInRenga, true);
-  if (!m_wasObjectSelectedInCode)
+  auto guard = BoolGuard{m_wasObjectSelectedInRenga, true};
+  if (!m_wasObjectSelectedInCode && m_pTreeViewModel->rowCount() > 0)
   {
-    QModelIndexList indexList = m_pTreeViewModel->match(m_pTreeViewModel->index(0, 0),
-      eTreeViewItemRole::EntityId,
-      modelObjectId,
-      1,
-      Qt::MatchRecursive);
+    auto startIndex     = m_pTreeViewModel->index(0, 0);
+    auto mathRole       = eTreeViewItemRole::EntityId;
+    auto matchedIndices = m_pTreeViewModel->match(startIndex, mathRole, modelObjectId, 1, Qt::MatchRecursive);
 
-    if (!indexList.empty())
+    if (!matchedIndices.empty())
     {
-      QItemSelectionModel* pItemSelectionModel = m_pTreeView->selectionModel();
+      auto selectedIndex        = matchedIndices.first(); // multiselect not supported
+      auto* pItemSelectionModel = m_pTreeView->selectionModel();
 
-      pItemSelectionModel->setCurrentIndex(
-        indexList.first(),
-        QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
-      pItemSelectionModel->select(
-        indexList.first(),
-        QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+      auto selectionFlags = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
+      pItemSelectionModel->setCurrentIndex(selectedIndex, selectionFlags);
+      pItemSelectionModel->select(selectedIndex, selectionFlags);
 
-      m_pTreeView->expand(indexList.first());
+      m_pTreeView->expand(selectedIndex);
     }
   }
 }
@@ -407,9 +407,13 @@ void ModelExplorerWidget::onModelObjectSelected(const QModelIndex& index)
       return getEntityName(m_pApplication->Project, entityType, entityId);
     
     // Here we assume we need to get the name of the object of the building model
-    auto pObject = m_pApplication->Project->Model->GetObjects()->GetById(entityId);
-    if (pObject != nullptr)
-      return QString::fromWCharArray(pObject->Name);
+    auto pModelObjectCollection = getModelObjectsSafe(*m_pApplication->Project->Model);
+    if (pModelObjectCollection != nullptr)
+    {
+      auto pObject = pModelObjectCollection->GetById(entityId);
+      if (pObject != nullptr)
+        return QString::fromWCharArray(pObject->Name);
+    }
 
     return QString{};
   };
@@ -554,7 +558,10 @@ Renga::IModelObjectPtr ModelExplorerWidget::getModelObjectByIndex(const QModelIn
     return nullptr;
 
   auto pModel = getModelByIndex(index);
-  auto pObjectCollection = pModel->GetObjects();
+  auto pObjectCollection = getModelObjectsSafe(*pModel);
+  
+  if (pObjectCollection == nullptr)
+    return nullptr;
 
   return pObjectCollection->GetById(modelObjectId);
 }
