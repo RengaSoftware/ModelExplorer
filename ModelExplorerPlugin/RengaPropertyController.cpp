@@ -104,7 +104,7 @@ void RengaPropertyController::resetPropertyValue(QtProperty* pQtProperty)
     return;
 
   // TODO: replace with assert when plugin state will listen Renga model events
-  if (m_pRenga->Project)
+  if (!m_pRenga->Project)
     return;
 
   auto rengaOperationScope = CRengaOperationScope{m_pRenga};
@@ -119,7 +119,7 @@ void RengaPropertyController::changePropertyValue(QtProperty* pQtProperty, const
     return;
 
   // TODO: replace with assert when plugin state will listen Renga model events
-  if (m_pRenga->Project)
+  if (!m_pRenga->Project)
     return;
 
   auto rengaOperationScope = CRengaOperationScope{m_pRenga};
