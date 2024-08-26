@@ -15,6 +15,8 @@
 #include "RengaModelUtils.h"
 #include "COMUtils.h"
 
+#include <QtCore/QDirIterator>
+
 #include <Renga/ObjectTypes.h>
 #include <Renga/ParameterIds.h>
 #include <Renga/StyleTypeIds.h>
@@ -81,6 +83,12 @@ namespace
 TreeViewModelBuilder::TreeViewModelBuilder(IApplicationPtr pApplication) :
   m_pApplication(pApplication)
 {
+    QDirIterator resourceIterator{":/icons", QDirIterator::Subdirectories };
+    while(resourceIterator.hasNext())
+    {
+      const auto iconPath = resourceIterator.next().remove(".png");
+      m_icons[iconPath] = QIcon(iconPath);
+    }
 }
 
 static double getLevelElevation(IModelObjectPtr pModelObject)
@@ -598,7 +606,9 @@ QList<QStandardItem*> TreeViewModelBuilder::createItem(
 
   auto pItem = new QStandardItem(name);
 
-  pItem->setIcon(QIcon(iconPath));
+  const auto icon = m_icons.find(iconPath);
+  if(icon != m_icons.cend())
+    pItem->setIcon(icon->second);
   pItem->setData(itemType, eTreeViewItemRole::ItemType);
 
   itemList.append(pItem);
@@ -623,7 +633,7 @@ void TreeViewModelBuilder::setItemVisibilityState(QList<QStandardItem*>& itemLis
 
   QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
 
-  pVisibilityItem->setIcon(QIcon(iconPath));
+  pVisibilityItem->setIcon(m_icons.at(iconPath));
   pVisibilityItem->setData(isVisible, eTreeViewItemRole::IsVisible);
 }
 

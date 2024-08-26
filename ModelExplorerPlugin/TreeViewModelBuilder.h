@@ -10,9 +10,13 @@
 
 #include "GuidMap.h"
 
+#include <QtCore/QString>
 #include <QtGui/QStandardItemModel>
+#include <QtGui/QIcon>
 
 #include <comdef.h>
+
+#include <unordered_map>
 
 
 struct BaseObjectGroup
@@ -45,6 +49,14 @@ struct LevelObjectGroup : BaseObjectGroup
       return levelId < other.levelId;
 
     return BaseObjectGroup::operator < (other);
+  }
+};
+
+struct QStringHasher
+{
+  size_t operator()(const QString& s) const
+  {
+    return qHash(s);
   }
 };
 
@@ -154,6 +166,7 @@ private:
 
 private:
   Renga::IApplicationPtr m_pApplication;
+  std::unordered_map<QString, QIcon, QStringHasher> m_icons;
 
   // TODO: remove these members
   std::list<Renga::IModelObjectPtr> m_levels;
