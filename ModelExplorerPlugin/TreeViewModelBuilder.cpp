@@ -64,7 +64,7 @@ namespace
       ObjectTypes::DuctAccessory,
       ObjectTypes::DuctFitting,
       ObjectTypes::LineElectricalCircuit,
-      ObjectTypes::LightFixture,
+      ObjectTypes::LightingFixture,
       ObjectTypes::ElectricDistributionBoard,
       ObjectTypes::WiringAccessory,
       ObjectTypes::Route,

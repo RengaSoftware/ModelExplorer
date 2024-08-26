@@ -55,7 +55,7 @@ const RengaEntityUIData getRengaEntityUIData(GUID entityType)
        {QApplication::translate("me_modelObjects", "AirFittings"), ":/icons/AirComponent"}},
       {Renga::ObjectTypes::LineElectricalCircuit,
        {QApplication::translate("me_modelObjects", "LineElectricalCircuits"), ":/icons/LineElectricalCircuit"}},
-      {Renga::ObjectTypes::LightFixture,
+      {Renga::ObjectTypes::LightingFixture,
        {QApplication::translate("me_modelObjects", "LightFixtures"), ":/icons/LightFixture"}},
       {Renga::ObjectTypes::ElectricDistributionBoard,
        {QApplication::translate("me_modelObjects", "DistributionBoards"), ":/icons/DistributionBoard"}},
