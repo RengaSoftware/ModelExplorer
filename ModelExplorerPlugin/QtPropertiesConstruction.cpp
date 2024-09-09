@@ -37,7 +37,7 @@ void qtPropertiesFromRengaParameters(
 
     auto pDefinition = pParameter->Definition;
 
-    QString name = QString::fromStdWString(pDefinition->Name.operator wchar_t *());
+    auto name = QString::fromStdWString(pDefinition->Text.operator wchar_t *());
 
     switch (pDefinition->GetParameterType())
     {
@@ -60,7 +60,7 @@ void qtPropertiesFromRengaParameters(
       // Try to show related entity name instead of id
       // If the name is empty - show id
       // TODO: show both id and name, refactoring needed
-      if (pParameter->GetDefinition()->GetParameterType() == Renga::ParameterType_IntID)
+      if (pDefinition->GetParameterType() == Renga::ParameterType_IntID)
       {
         auto entityName = nameGetter(id, pParameter->GetIntValue());
         if (!entityName.isEmpty())
