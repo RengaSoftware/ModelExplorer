@@ -3,6 +3,6 @@
 	<Version>1.9</Version>
 	<Vendor>Renga Software</Vendor>
 	<Copyright>Copyright “Renga Software” LLC, 2016. All rights reserved.</Copyright>
-	<RequiredAPIVersion>2.31</RequiredAPIVersion>
+	<RequiredAPIVersion>2.35</RequiredAPIVersion>
 	<PluginFilename>ModelExplorerPlugin.rne</PluginFilename>
 </RengaPlugin>
