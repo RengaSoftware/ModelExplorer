@@ -13,7 +13,7 @@
 #include "QtPropertiesConstruction.h"
 #include "ScopeGuard.h"
 
-#include <Renga/QuantityIds.h>
+#include <Renga/Quantities.h>
 
 
 void qtPropertiesFromRengaParameters(
@@ -32,7 +32,7 @@ void qtPropertiesFromRengaParameters(
     const auto id = pIds->Get(i);
     auto pParameter = container.Get(id);
 
-    if (!pParameter->HasValue())
+    if (!pParameter->HasValue)
       continue;
 
     auto pDefinition = pParameter->Definition;
@@ -205,38 +205,38 @@ void qtPropertiesFromRengaQuantities(PropertyManager& mngr, Renga::IQuantityCont
     }
   };
   
-  addValue(QApplication::translate("me_mo", "overallWidth"), QuantityIds::OverallWidth);
-  addValue(QApplication::translate("me_mo", "overallHeight"), QuantityIds::OverallHeight);
-  addValue(QApplication::translate("me_mo", "overallLength"), QuantityIds::OverallLength);
-  addValue(QApplication::translate("me_mo", "thickness"), QuantityIds::NominalThickness);
-  addValue(QApplication::translate("me_mo", "length"), QuantityIds::NominalLength);
-  addValue(QApplication::translate("me_mo", "width"), QuantityIds::NominalWidth);
-  addValue(QApplication::translate("me_mo", "height"), QuantityIds::NominalHeight);
-  addValue(QApplication::translate("me_mo", "perimeter"), QuantityIds::Perimeter);
-  addValue(QApplication::translate("me_mo", "volume"), QuantityIds::Volume);
-  addValue(QApplication::translate("me_mo", "netVolume"), QuantityIds::NetVolume);
-  addValue(QApplication::translate("me_mo", "mass"), QuantityIds::NetMass);
-  addValue(QApplication::translate("me_mo", "crossSectionOverallWidth"), QuantityIds::CrossSectionOverallWidth);
-  addValue(QApplication::translate("me_mo", "crossSectionOverallHeight"), QuantityIds::CrossSectionOverallHeight);
-  addValue(QApplication::translate("me_mo", "netCrossSectionArea"), QuantityIds::NetCrossSectionArea);
-  addValue(QApplication::translate("me_mo", "innerSurfaceArea"), QuantityIds::InnerSurfaceArea);
-  addValue(QApplication::translate("me_mo", "innerSurfaceInternalArea"), QuantityIds::InnerSurfaceInternalArea);
-  addValue(QApplication::translate("me_mo", "innerSurfaceExternalArea"), QuantityIds::InnerSurfaceExternalArea);
-  addValue(QApplication::translate("me_mo", "outerSurfaceArea"), QuantityIds::OuterSurfaceArea);
-  addValue(QApplication::translate("me_mo", "area"), QuantityIds::Area);
-  addValue(QApplication::translate("me_mo", "nominalArea"), QuantityIds::NominalArea);
-  addValue(QApplication::translate("me_mo", "netArea"), QuantityIds::NetArea);
-  addValue(QApplication::translate("me_mo", "netFloorArea"), QuantityIds::NetFloorArea);
-  addValue(QApplication::translate("me_mo", "netFootprintArea"), QuantityIds::NetFootprintArea);
-  addValue(QApplication::translate("me_mo", "netSideArea"), QuantityIds::NetSideArea);
-  addValue(QApplication::translate("me_mo", "totalSurfaceArea"), QuantityIds::TotalSurfaceArea);
-  addValue(QApplication::translate("me_mo", "grossVolume"), QuantityIds::GrossVolume);
-  addValue(QApplication::translate("me_mo", "grossFloorArea"), QuantityIds::GrossFloorArea);
-  addValue(QApplication::translate("me_mo", "grossPerimeter"), QuantityIds::GrossPerimeter);
-  addValue(QApplication::translate("me_mo", "numberOfRiser"), QuantityIds::NumberOfRiser);
-  addValue(QApplication::translate("me_mo", "numberOfTreads"), QuantityIds::NumberOfTreads);
-  addValue(QApplication::translate("me_mo", "riserHeight"), QuantityIds::RiserHeight);
-  addValue(QApplication::translate("me_mo", "treadLength"), QuantityIds::TreadLength);
-  addValue(QApplication::translate("me_reinforcement", "totalRebarLength"), QuantityIds::TotalRebarLength);
-  addValue(QApplication::translate("me_reinforcement", "totalRebarMass"), QuantityIds::TotalRebarMass);
+  addValue(QApplication::translate("me_mo", "overallWidth"), Quantities::OverallWidth);
+  addValue(QApplication::translate("me_mo", "overallHeight"), Quantities::OverallHeight);
+  addValue(QApplication::translate("me_mo", "overallLength"), Quantities::OverallLength);
+  addValue(QApplication::translate("me_mo", "thickness"), Quantities::NominalThickness);
+  addValue(QApplication::translate("me_mo", "length"), Quantities::NominalLength);
+  addValue(QApplication::translate("me_mo", "width"), Quantities::NominalWidth);
+  addValue(QApplication::translate("me_mo", "height"), Quantities::NominalHeight);
+  addValue(QApplication::translate("me_mo", "perimeter"), Quantities::Perimeter);
+  addValue(QApplication::translate("me_mo", "volume"), Quantities::Volume);
+  addValue(QApplication::translate("me_mo", "netVolume"), Quantities::NetVolume);
+  addValue(QApplication::translate("me_mo", "mass"), Quantities::NetMass);
+  addValue(QApplication::translate("me_mo", "crossSectionOverallWidth"), Quantities::CrossSectionOverallWidth);
+  addValue(QApplication::translate("me_mo", "crossSectionOverallHeight"), Quantities::CrossSectionOverallHeight);
+  addValue(QApplication::translate("me_mo", "netCrossSectionArea"), Quantities::NetCrossSectionArea);
+  addValue(QApplication::translate("me_mo", "innerSurfaceArea"), Quantities::InnerSurfaceArea);
+  addValue(QApplication::translate("me_mo", "innerSurfaceInternalArea"), Quantities::InnerSurfaceInternalArea);
+  addValue(QApplication::translate("me_mo", "innerSurfaceExternalArea"), Quantities::InnerSurfaceExternalArea);
+  addValue(QApplication::translate("me_mo", "outerSurfaceArea"), Quantities::OuterSurfaceArea);
+  addValue(QApplication::translate("me_mo", "area"), Quantities::Area);
+  addValue(QApplication::translate("me_mo", "nominalArea"), Quantities::NominalArea);
+  addValue(QApplication::translate("me_mo", "netArea"), Quantities::NetArea);
+  addValue(QApplication::translate("me_mo", "netFloorArea"), Quantities::NetFloorArea);
+  addValue(QApplication::translate("me_mo", "netFootprintArea"), Quantities::NetFootprintArea);
+  addValue(QApplication::translate("me_mo", "netSideArea"), Quantities::NetSideArea);
+  addValue(QApplication::translate("me_mo", "totalSurfaceArea"), Quantities::TotalSurfaceArea);
+  addValue(QApplication::translate("me_mo", "grossVolume"), Quantities::GrossVolume);
+  addValue(QApplication::translate("me_mo", "grossFloorArea"), Quantities::GrossFloorArea);
+  addValue(QApplication::translate("me_mo", "grossPerimeter"), Quantities::GrossPerimeter);
+  addValue(QApplication::translate("me_mo", "numberOfRiser"), Quantities::NumberOfRiser);
+  addValue(QApplication::translate("me_mo", "numberOfTreads"), Quantities::NumberOfTreads);
+  addValue(QApplication::translate("me_mo", "riserHeight"), Quantities::RiserHeight);
+  addValue(QApplication::translate("me_mo", "treadLength"), Quantities::TreadLength);
+  addValue(QApplication::translate("me_reinforcement", "totalRebarLength"), Quantities::TotalRebarLength);
+  addValue(QApplication::translate("me_reinforcement", "totalRebarMass"), Quantities::TotalRebarMass);
 }

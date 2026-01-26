@@ -3,7 +3,7 @@
 #include "ReinforcementUnitUsagePropertyViewBuilder.h"
 #include "PropertyManager.h"
 
-#include <Renga/QuantityIds.h>
+#include <Renga/Quantities.h>
 
 
 ReinforcementUnitUsagePropertyViewBuilder::ReinforcementUnitUsagePropertyViewBuilder(
@@ -36,13 +36,13 @@ void ReinforcementUnitUsagePropertyViewBuilder::createQuantities(PropertyManager
   auto pQuantities = pReinforcementUnitUsage->GetQuantities();
   mngr.addValue(
       QApplication::translate("me_reinforcement", "totalRebarLength"),
-      pQuantities->Get(QuantityIds::TotalRebarLength));
+      pQuantities->Get(Quantities::TotalRebarLength));
   mngr.addValue(
       QApplication::translate("me_reinforcement", "totalRebarMass"),
-      pQuantities->Get(QuantityIds::TotalRebarMass));
+      pQuantities->Get(Quantities::TotalRebarMass));
   mngr.addValue(
       QApplication::translate("me_reinforcement", "reinforcementUnitCount"),
-      pQuantities->Get(QuantityIds::ReinforcementUnitCount));
+      pQuantities->Get(Quantities::ReinforcementUnitCount));
 }
 
 Renga::IReinforcementUnitStylePtr ReinforcementUnitUsagePropertyViewBuilder::getReinforcementUnitStyle(int styleId) const

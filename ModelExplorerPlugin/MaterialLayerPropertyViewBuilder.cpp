@@ -4,7 +4,7 @@
 #include "PropertyManager.h"
 #include "QtPropertiesConstruction.h"
 
-#include <Renga/QuantityIds.h>
+#include <Renga/Quantities.h>
 
 
 MaterialLayerPropertyViewBuilder::MaterialLayerPropertyViewBuilder(

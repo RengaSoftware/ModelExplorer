@@ -21,7 +21,7 @@
 #include "TreeViewUtils.h"
 #include "ui_ModelExplorer.h"
 
-#include <Renga/ObjectTypes.h>
+#include <Renga/EntityTypes.h>
 
 #include <QtCore/QFile.h>
 #include <QtWidgets/QButtonGroup.h>

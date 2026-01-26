@@ -3,8 +3,8 @@
 #include "RengaModelUtils.h"
 #include "GuidMap.h"
 
-#include <Renga/StyleTypeIds.h>
-#include <Renga/ParameterIds.h>
+#include <Renga/EntityTypes.h>
+#include <Renga/Parameters.h>
 
 #include <map>
 
@@ -14,31 +14,31 @@ using namespace Renga;
 GUID parameterIdToEntityType(GUID parameterId)
 {
   const auto c_parameterToIdDict = GuidMap<GUID>{
-      {ParameterIds::MaterialStyleId, StyleTypeIds::Material},
-      {ParameterIds::LayeredMaterialStyleId, StyleTypeIds::LayeredMaterial},
-      {ParameterIds::PlumbingFixtureStyleId, StyleTypeIds::PlumbingFixtureStyle},
-      {ParameterIds::MepEquipmentStyleId, StyleTypeIds::EquipmentStyle},
-      {ParameterIds::MepPipeStyleId, StyleTypeIds::PipeStyle},
-      {ParameterIds::PipeComponentStyleId, StyleTypeIds::PipeFittingStyle},
-      {ParameterIds::PipeAccessoryStyleId, StyleTypeIds::PipeAccessoryStyle},
-      {ParameterIds::AirEquipmentStyleId, StyleTypeIds::MechanicalEquipmentStyle},
-      {ParameterIds::DuctStyleId, StyleTypeIds::DuctStyle},
-      {ParameterIds::AirComponentStyleId, StyleTypeIds::DuctFittingStyle},
-      {ParameterIds::AirAccessoryStyleId, StyleTypeIds::DuctAccessoryStyle},
-      {ParameterIds::WiringAccessoryStyleId, StyleTypeIds::WiringAccessoryStyle},
-      {ParameterIds::LightingFixtureStyleId, StyleTypeIds::LightingFixtureStyle},
-      {ParameterIds::DistributionBoardStyleId, StyleTypeIds::ElectricDistributionBoardStyle},
-      {ParameterIds::ConductorStyleId, StyleTypeIds::ElectricalConductorStyle},
-      {ParameterIds::LineElectricalCircuitStyleId, StyleTypeIds::ElectricCircuitLineStyle},
-      {ParameterIds::MepSystemStyleId, StyleTypeIds::SystemStyle},
-      {ParameterIds::AssemblyId, StyleTypeIds::Assembly},
-      {ParameterIds::BeamStyleId, StyleTypeIds::BeamStyle},
-      {ParameterIds::ColumnStyleId, StyleTypeIds::ColumnStyle},
-      {ParameterIds::WindowStyleId, StyleTypeIds::WindowStyle},
-      {ParameterIds::DoorStyleId, StyleTypeIds::DoorStyle},
-      {ParameterIds::BuildingElementStyleId, StyleTypeIds::ElementStyle},
-      {ParameterIds::PlateProfileStyleId, StyleTypeIds::PlateStyle},
-      //{ParameterIds::TopicId, StyleTypeIds::Topic},
+      {Parameters::MaterialId, EntityTypes::Material},
+      {Parameters::LayeredMaterialId, EntityTypes::LayeredMaterial},
+      {Parameters::PlumbingFixtureStyleId, EntityTypes::PlumbingFixtureStyle},
+      {Parameters::EquipmentStyleId, EntityTypes::EquipmentStyle},
+      {Parameters::PipeStyleId, EntityTypes::PipeStyle},
+      {Parameters::PipeFittingStyleId, EntityTypes::PipeFittingStyle},
+      {Parameters::PipeAccessoryStyleId, EntityTypes::PipeAccessoryStyle},
+      {Parameters::MechanicalEquipmentStyleId, EntityTypes::MechanicalEquipmentStyle},
+      {Parameters::DuctStyleId, EntityTypes::DuctStyle},
+      {Parameters::DuctFittingStyleId, EntityTypes::DuctFittingStyle},
+      {Parameters::DuctAccessoryStyleId, EntityTypes::DuctAccessoryStyle},
+      {Parameters::WiringAccessoryStyleId, EntityTypes::WiringAccessoryStyle},
+      {Parameters::LightingFixtureStyleId, EntityTypes::LightingFixtureStyle},
+      {Parameters::DistributionBoardStyleId, EntityTypes::ElectricDistributionBoardStyle},
+      {Parameters::ConductorStyleId, EntityTypes::ElectricalConductorStyle},
+      {Parameters::ElectricalCircuitLineStyleId, EntityTypes::ElectricCircuitLineStyle},
+      {Parameters::SystemStyleId, EntityTypes::SystemStyle},
+      {Parameters::AssemblyId, EntityTypes::Assembly},
+      {Parameters::BeamStyleId, EntityTypes::BeamStyle},
+      {Parameters::ColumnStyleId, EntityTypes::ColumnStyle},
+      {Parameters::WindowStyleId, EntityTypes::WindowStyle},
+      {Parameters::DoorStyleId, EntityTypes::DoorStyle},
+      {Parameters::ElementStyleId, EntityTypes::ElementStyle},
+      {Parameters::PlateStyleId, EntityTypes::PlateStyle},
+      //{ParameterIds::TopicId, EntityTypes::Topic},
   };
 
   auto it = c_parameterToIdDict.find(parameterId);
@@ -49,7 +49,7 @@ GUID parameterIdToEntityType(GUID parameterId)
 // TODO: combine with "parameter to type" dictionary
 Renga::IEntityCollectionPtr getProjectEntityCollection(Renga::IProjectPtr pProject, GUID entityType)
 {
-  using namespace Renga::StyleTypeIds;
+  using namespace Renga::EntityTypes;
   using EntityCollectionGetter = std::function<IEntityCollectionPtr(IProject&)>;
 
   static auto entityCollectionGetterMap = GuidMap<EntityCollectionGetter>{

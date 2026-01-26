@@ -17,7 +17,7 @@ class PluginToolButtons;
 class RengaEventsHandler;
 class ModelExplorerWidget;
 
-class ModelExplorerPlugin : public QObject, public plugins::IPlugin
+class ModelExplorerPlugin : public QObject, public Renga::IPlugin
 {
   Q_OBJECT
 

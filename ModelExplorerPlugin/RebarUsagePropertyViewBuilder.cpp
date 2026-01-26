@@ -3,7 +3,7 @@
 #include "RebarUsagePropertyViewBuilder.h"
 #include "PropertyManager.h"
 
-#include <Renga/QuantityIds.h>
+#include <Renga/Quantities.h>
 
 
 RebarUsagePropertyViewBuilder::RebarUsagePropertyViewBuilder(Renga::IApplicationPtr pApplication,
@@ -35,10 +35,10 @@ void RebarUsagePropertyViewBuilder::createQuantities(PropertyManager& mngr)
 
   auto pQuantities = pRebarUsage->GetQuantities();
 
-  mngr.addValue(QApplication::translate("me_reinforcement", "count"), pQuantities->Get(QuantityIds::Count));
-  mngr.addValue(QApplication::translate("me_reinforcement", "nominalLength"), pQuantities->Get(QuantityIds::NominalLength));
-  mngr.addValue(QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities->Get(QuantityIds::TotalRebarLength));
-  mngr.addValue(QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(QuantityIds::TotalRebarMass));
+  mngr.addValue(QApplication::translate("me_reinforcement", "count"), pQuantities->Get(Quantities::Count));
+  mngr.addValue(QApplication::translate("me_reinforcement", "nominalLength"), pQuantities->Get(Quantities::NominalLength));
+  mngr.addValue(QApplication::translate("me_reinforcement", "totalRebarLength"), pQuantities->Get(Quantities::TotalRebarLength));
+  mngr.addValue(QApplication::translate("me_reinforcement", "totalRebarMass"), pQuantities->Get(Quantities::TotalRebarMass));
 }
 
 Renga::IRebarStylePtr RebarUsagePropertyViewBuilder::getRebarStyle(int styleId) const

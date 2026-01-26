@@ -15,11 +15,8 @@
 #include "RengaModelUtils.h"
 #include "COMUtils.h"
 
-#include <QtCore/QDirIterator>
-
-#include <Renga/ObjectTypes.h>
-#include <Renga/ParameterIds.h>
-#include <Renga/StyleTypeIds.h>
+#include <Renga/EntityTypes.h>
+#include <Renga/Parameters.h>
 
 #include <comdef.h>
 
@@ -30,65 +27,59 @@ namespace
 {
   // TODO: remove this, check ObjectOnLevel interface
   const std::list<GUID> c_levelTreeTypes = {
-      ObjectTypes::Wall,
-      ObjectTypes::Column,
-      ObjectTypes::Floor,
-      ObjectTypes::Opening,
-      ObjectTypes::Roof,
-      ObjectTypes::Beam,
-      ObjectTypes::Stair,
-      ObjectTypes::Ramp,
-      ObjectTypes::Window,
-      ObjectTypes::Door,
-      ObjectTypes::Railing,
-      ObjectTypes::Room,
-      ObjectTypes::IsolatedFoundation,
-      ObjectTypes::WallFoundation,
-      ObjectTypes::AssemblyInstance,
-      ObjectTypes::Element,
-      ObjectTypes::Plate,
-      ObjectTypes::RoutePoint,
-      ObjectTypes::Equipment,
-      ObjectTypes::PlumbingFixture,
-      ObjectTypes::MechanicalEquipment,
-      ObjectTypes::Line3D,
-      ObjectTypes::Hatch,
-      ObjectTypes::TextObject,
-      ObjectTypes::Rebar,
+      EntityTypes::Wall,
+      EntityTypes::Column,
+      EntityTypes::Floor,
+      EntityTypes::Opening,
+      EntityTypes::Roof,
+      EntityTypes::Beam,
+      EntityTypes::Stair,
+      EntityTypes::Ramp,
+      EntityTypes::Window,
+      EntityTypes::Door,
+      EntityTypes::Railing,
+      EntityTypes::Room,
+      EntityTypes::IsolatedFoundation,
+      EntityTypes::WallFoundation,
+      EntityTypes::AssemblyInstance,
+      EntityTypes::Element,
+      EntityTypes::Plate,
+      EntityTypes::RoutePoint,
+      EntityTypes::Equipment,
+      EntityTypes::PlumbingFixture,
+      EntityTypes::MechanicalEquipment,
+      EntityTypes::Line3D,
+      EntityTypes::Hatch,
+      EntityTypes::ModelText,
+      EntityTypes::Rebar,
   };
 
   // TODO: remove this, check ObjectOnLevel interface
   const std::list<GUID> c_nonLevelTreeTypes{
-      ObjectTypes::PipeAccessory,
-      ObjectTypes::PipeFitting,
-      ObjectTypes::Pipe,
-      ObjectTypes::Duct,
-      ObjectTypes::DuctAccessory,
-      ObjectTypes::DuctFitting,
-      ObjectTypes::LineElectricalCircuit,
-      ObjectTypes::LightingFixture,
-      ObjectTypes::ElectricDistributionBoard,
-      ObjectTypes::WiringAccessory,
-      ObjectTypes::Route,
-      ObjectTypes::Axis,
-      ObjectTypes::Elevation,
-      ObjectTypes::Section,
-      ObjectTypes::LinearDimension,
-      ObjectTypes::DiametralDimension,
-      ObjectTypes::RadialDimension,
-      ObjectTypes::AngularDimension,
+      EntityTypes::PipeAccessory,
+      EntityTypes::PipeFitting,
+      EntityTypes::Pipe,
+      EntityTypes::Duct,
+      EntityTypes::DuctAccessory,
+      EntityTypes::DuctFitting,
+      EntityTypes::ElectricCircuitLineStyle,
+      EntityTypes::LightingFixture,
+      EntityTypes::ElectricDistributionBoard,
+      EntityTypes::WiringAccessory,
+      EntityTypes::Route,
+      EntityTypes::Axis,
+      EntityTypes::Elevation,
+      EntityTypes::Section,
+      EntityTypes::LinearDimension,
+      EntityTypes::DiametralDimension,
+      EntityTypes::RadialDimension,
+      EntityTypes::AngularDimension,
   };
 }
 
 TreeViewModelBuilder::TreeViewModelBuilder(IApplicationPtr pApplication) :
   m_pApplication(pApplication)
 {
-    QDirIterator resourceIterator{":/icons", QDirIterator::Subdirectories };
-    while(resourceIterator.hasNext())
-    {
-      const auto iconPath = resourceIterator.next().remove(".png");
-      m_icons[iconPath] = QIcon(iconPath);
-    }
 }
 
 static double getLevelElevation(IModelObjectPtr pModelObject)
@@ -136,7 +127,7 @@ void TreeViewModelBuilder::processModelObjectCollection(IModelObjectCollectionPt
   {
     auto pModelObject = pModelObjectCollection->GetByIndex(i);
 
-    if (pModelObject->GetObjectType() == ObjectTypes::Level)
+    if (pModelObject->GetObjectType() == EntityTypes::Level)
     {
       m_levels.push_back(pModelObject);
     }
@@ -184,7 +175,7 @@ void TreeViewModelBuilder::addLevelSubtree(
   IModelObjectPtr pLevelModelObject,
   IModelObjectCollectionPtr pModelObjectCollection)
 {
-  assert(pLevelModelObject->GetObjectType() == ObjectTypes::Level);
+  assert(pLevelModelObject->GetObjectType() == EntityTypes::Level);
 
   auto pItem = createLevelItem(pLevelModelObject);
 
@@ -248,7 +239,7 @@ void TreeViewModelBuilder::addStyleSubtree(
   GUID styleType,
   int id)
 {
-  if (styleType == StyleTypeIds::LayeredMaterial)
+  if (styleType == EntityTypes::LayeredMaterial)
   {
     IObjectWithLayeredMaterialPtr pObjectWithLayeredMaterial;
     pModelObject->QueryInterface(&pObjectWithLayeredMaterial);
@@ -256,7 +247,7 @@ void TreeViewModelBuilder::addStyleSubtree(
     if (pObjectWithLayeredMaterial != nullptr && pObjectWithLayeredMaterial->HasLayeredMaterial())
       addLayersSubtree(pParentItem, pModelObject, pObjectWithLayeredMaterial->LayeredMaterialId);
   }
-  else if (styleType == StyleTypeIds::Material)
+  else if (styleType == EntityTypes::Material)
   {
     IObjectWithMaterialPtr pObjectWithMaterial;
     pModelObject->QueryInterface(&pObjectWithMaterial);
@@ -308,7 +299,7 @@ void TreeViewModelBuilder::addEntitySubtree(QStandardItem * pParentItem, Renga::
 
   pParentItem->appendRow(itemList);
 
-  if (entity->TypeId == Renga::StyleTypeIds::Assembly)
+  if (entity->TypeId == Renga::EntityTypes::Assembly)
   {
     // Here we assume only level based objects can be inserted in Assembly // Tyan
     for (const auto& objectType : c_levelTreeTypes)
@@ -606,9 +597,7 @@ QList<QStandardItem*> TreeViewModelBuilder::createItem(
 
   auto pItem = new QStandardItem(name);
 
-  const auto icon = m_icons.find(iconPath);
-  if(icon != m_icons.cend())
-    pItem->setIcon(icon->second);
+  pItem->setIcon(QIcon(iconPath));
   pItem->setData(itemType, eTreeViewItemRole::ItemType);
 
   itemList.append(pItem);
@@ -633,7 +622,7 @@ void TreeViewModelBuilder::setItemVisibilityState(QList<QStandardItem*>& itemLis
 
   QString iconPath = isVisible ? ":/icons/Visible" : ":/icons/Hidden";
 
-  pVisibilityItem->setIcon(m_icons.at(iconPath));
+  pVisibilityItem->setIcon(QIcon(iconPath));
   pVisibilityItem->setData(isVisible, eTreeViewItemRole::IsVisible);
 }
 
